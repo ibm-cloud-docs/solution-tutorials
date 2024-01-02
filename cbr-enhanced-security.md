@@ -2,14 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-06-28"
 lasttested: "2023-01-26"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
 account-plan: paid
 completion-time: 2h
-
+use-case: Cybersecurity
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -38,12 +38,10 @@ The tutorial discusses how to create network zones and context rules and how to 
 * Create rules that define context for access to your cloud resources
 * Know how to test and monitor context rules
 
-The following diagram shows the solution architecture as used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). The additional boxes with dashed, blue lines around the {{site.data.keyword.containershort_notm}} cluster, {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.cos_short}} denote context-based restrictions implemented as context rules.
+The following diagram shows the solution architecture as used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). The additional boxes with dashed, blue lines around the {{site.data.keyword.containershort_notm}} cluster, {{site.data.keyword.registryshort_notm}}, {{site.data.keyword.keymanagementserviceshort}}, and {{site.data.keyword.cos_short}} denote context-based restrictions implemented as context rules. Note that {{site.data.keyword.secrets-manager_short}} could have been protected, too, but is only an optional service and not used in this tutorial.
 
 ![Architecture](images/solution67-cbr-enhanced-security/architecture-e2e-security-cbr.svg){: caption="Solution architecture" caption-side="bottom"}
 
-
-<!--##istutorial#-->
 ## Before you begin
 {: #cbr-security-prereqs}
 

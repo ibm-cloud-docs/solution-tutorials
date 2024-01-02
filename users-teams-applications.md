@@ -2,14 +2,22 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
-lasttested: "2022-11-03"
+lastupdated: "2023-09-04"
+lasttested: "2023-09-04"
 
+content-type: tutorial
+services: openshift, log-analysis, monitoring, containers, Cloudant
+account-plan: paid
+completion-time: 1h
+use-case: Cybersecurity, IdentityAndAccessManagement
 ---
 {{site.data.keyword.attribute-definition-list}}
 
 # Best practices for organizing users, teams, applications
 {: #users-teams-applications}
+{: toc-content-type="tutorial"}
+{: toc-services="openshift, log-analysis, monitoring, containers, Cloudant"}
+{: toc-completion-time="1h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
@@ -22,7 +30,7 @@ This tutorial gives an overview of the concepts available in {{site.data.keyword
 
 When building an application, it is very common to define multiple environments. They reflect the development lifecycle of a project from a developer committing code to the application code being made available to the end-users. *Sandbox*, *test*, *staging*, *UAT* (user acceptance testing), *pre-production*, *production* are typical names for these environments.
 
-Isolating the underlying resources, implementing governance and access policies, protecting a production workload, validating changes before pushing them to production, are some of the reasons why you would want to create these separate environments.
+Isolating the underlying resources, implementing governance and access policies, protecting a production workload, validating changes before pushing them to production, are some reasons why you would want to create these separate environments.
 
 ## Objectives
 {: #users-teams-applications-objectives}
@@ -82,12 +90,12 @@ Although the three environments needed by this sample project require different 
 Let's start by building the Development environment. Note that {{site.data.keyword.registrylong_notm}} is always present and you don't need to provision it.
 
 1. Most cloud service instances are regional. Keep this in mind and choose the same region for all resources in this tutorial.
-1. [Create a resource group for the environment](/account/resource-groups).
-1. Create an instance of [{{site.data.keyword.at_full_notm}}](/observe/activitytracker/create) for the region to allow the audit of all API calls for the region.
-1. In that resource group create the services [{{site.data.keyword.contdelivery_short}}](/catalog/services/continuous-delivery),  [{{site.data.keyword.cos_full_notm}}](/objectstorage/create), [{{site.data.keyword.la_full_notm}}](/catalog/services/logdna?callback=%2Fobserve%2Flogging%2Fcreate), [{{site.data.keyword.mon_full_notm}}](/catalog/services/ibm-cloud-monitoring?callback=%2Fobserve%2Fmonitoring%2Fcreate) and [{{site.data.keyword.cloudant_short_notm}}](/catalog/services/cloudant).
-1. Create a [Virtual Private Cloud](/vpc-ext/network/vpcs) including subnets. Select the resource group you created earlier and the region.
-1. [Create a new Kubernetes cluster](/kubernetes/catalog/cluster) in {{site.data.keyword.containershort_notm}}, under **Infrastructure** select the new VPC as target, make sure to select the resource group created above.
-1. Create a [{{site.data.keyword.vsi_is_short}} instance](/vpc-ext/compute/vs) in the same VPC.
+1. [Create a resource group for the environment](/account/resource-groups){: external}.
+1. Create an instance of [{{site.data.keyword.at_full_notm}}](/observe/activitytracker/create){: external} for the region to allow the audit of all API calls for the region.
+1. In that resource group create the services [{{site.data.keyword.contdelivery_short}}](/catalog/services/continuous-delivery){: external}, [{{site.data.keyword.cos_full_notm}}](/objectstorage/create){: external}, [{{site.data.keyword.la_full_notm}}](/catalog/services/logdna?callback=%2Fobserve%2Flogging%2Fcreate){: external}, [{{site.data.keyword.mon_full_notm}}](/catalog/services/ibm-cloud-monitoring?callback=%2Fobserve%2Fmonitoring%2Fcreate){: external} and [{{site.data.keyword.cloudant_short_notm}}](/catalog/services/cloudant){: external}.
+1. Create a [Virtual Private Cloud](/vpc-ext/network/vpcs){: external} including subnets. Select the resource group you created earlier and the region.
+1. [Create a new Kubernetes cluster](/kubernetes/catalog/cluster){: external} in {{site.data.keyword.containershort_notm}}, under **Infrastructure** select the new VPC as target, make sure to select the resource group created above.
+1. Create a [{{site.data.keyword.vsi_is_short}} instance](/vpc-ext/compute/vs){: external} in the same VPC.
 1. From the Kubernetes cluster connect to the {{site.data.keyword.la_full_notm}} and {{site.data.keyword.mon_full_notm}} service instances to send logs and to monitor the cluster.
 
 The following diagram shows where the project resources are created under the account:
@@ -114,10 +122,10 @@ Some services also provide IAM-based data access controls, i.e. IAM groups combi
 - [Using groups to control data access in IBM Cloud Activity Tracker](/docs/activity-tracker?topic=activity-tracker-group_data_access)
 - [Monitoring RBAC, teams, and IAM integration](/docs/monitoring?topic=monitoring-iam_grant_team)
 
-Note that by default accounts are configured for [unrestricted user view access](/docs/account?topic=account-iam-user-setting). Any user in the account can see any other user information. You can [change the setting](/iam/settings) to a restrictive mode.
+Note that by default accounts are configured for [unrestricted user view access](/docs/account?topic=account-iam-user-setting). Any user in the account can see any other user information. You can [change the setting](/iam/settings){: external} to a restrictive mode.
 {: tip}
 
-A good practice is to start with the minimum set of permissions then expand carefully as needed. For Kubernetes, you will want to look at its [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/admin/authorization/rbac/){: external} to configure in-cluster authorizations.
+A good practice is to start with the minimum set of permissions then expand carefully as needed. For Kubernetes, you will want to look at its [Role-Based Access Control (RBAC)](https://kubernetes.io/docs/reference/access-authn-authz/rbac/){: external} to configure in-cluster authorizations.
 
 For the Development environment, the user responsibilities defined earlier could translate to the following:
 
@@ -147,7 +155,7 @@ From there, you can replicate similar steps to build the other environments.
 
 1. Create one resource group per environment.
 2. Create one VPC per environment in the related resource group, each with a cluster and VSI.
-3. Create the required service instances per environment in the related resource group.
+3. Provision the required service instances per environment in the related resource group.
 
 The following diagram shows the development, testing, and production resource groups each having the same components with the VPC, cluster and VSI, and services.
 

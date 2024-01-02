@@ -2,13 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-06-14"
 lasttested: "2022-12-27"
 
 content-type: tutorial
 services: cloud-object-storage, sql-query
 account-plan: paid
 completion-time: 1h
+use-case: AIAndML
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -57,7 +58,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: tip}
 
 Optionally:
-- [Install Aspera Connect](https://downloads.asperasoft.com/connect2/){: external} for high-speed data upload to {{site.data.keyword.cos_short}}.
+- [Install Aspera Connect](https://www.ibm.com/aspera/connect/){: external} for high-speed data upload to {{site.data.keyword.cos_short}}.
 
 ## Create services
 {: #smart-data-lake-2}

@@ -1,9 +1,0 @@
-{
-  "name": "lastupdated",
-  "version": "1.0.0",
-  "description": "",
-  "dependencies": {
-    "handlebars": "4.7.7",
-    "moment": "2.29.2"
-  }
-}

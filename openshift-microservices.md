@@ -2,13 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-31"
+lastupdated: "2023-05-18"
 lasttested: "2023-02-24"
 
 content-type: tutorial
 services: openshift, log-analysis, monitoring, containers, Cloudant
 account-plan: paid
 completion-time: 3h
+use-case: ApplicationModernization, Containers
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -103,6 +104,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 6. Under **Worker pool**,
    - Select **4 vCPUs 16GB Memory** as the flavor
    - Select **2** Worker nodes per data center for this tutorial (classic only: Leave **Encrypt local disk**)
+6. Under **Integrations**, enable and configure **Logging** and **Monitoring**.
 7. Under **Resource details**,Set **Cluster name** to **&lt;your-initials&gt;-myopenshiftcluster** by replacing `<your-initials>` with your own initials.
 8. Click **Create** to provision a {{site.data.keyword.openshiftshort}} cluster.
 
@@ -185,12 +187,12 @@ A project is a collection of resources managed by a DevOps team.  An administrat
    ![Project View](images/solution55-openshift-microservices/ocp48-project-view.png){: caption="Project View" caption-side="bottom"}
 2. Let's build and deploy the application by selecting **Import from Git**.
 3. Enter the repository `https://github.com/IBM-Cloud/patient-health-frontend.git` in the Git Repo URL field.
-   * Note the `Validated` indication.
+   * Note the green check `Builder image detected` and the Node.js 16 (UBI 8).
    * Note that the builder image automatically detected the language Node.js. If not detected, select `Node.js` from the provided list.
    * **Builder Image Version** leave at the default.
    * **Application Name** delete all of the characters and leave it empty (this will default to the **Name**)
    * **Name :** patient-health-frontend.
-   * Select **Deployment Config**.
+   * Click the **Resource type** link and choose **DeploymentConfig**.
    * Leave defaults for other selections.
 4. Click **Create** at the bottom of the window to build and deploy the application.
 
@@ -489,7 +491,7 @@ Currently, the Example Health `patient-health-frontend` app is using a dummy in-
 ### Enable the IBM Cloud Operator
 {: #openshift-microservices-22}
 
-Let's understand exactly how Operators work. In the first exercise, you used a builder to deploy a simple application using a DeploymentConfig and Pods -- these are "default resources" that come with {{site.data.keyword.redhat_openshift_notm}}. A custom resource definition allows you to create resources that do not come preinstalled with {{site.data.keyword.openshiftshort}} such an IBM Cloud service. Operators manage the lifecycle of resources and create Custom Resource Descriptors, CRDs, allowing you to manage custom resources the native "Kubernetes" way.
+Let's understand exactly how Operators work. In the first exercise, you used a builder to deploy a simple application using a **DeploymentConfig** a default resource type that come with {{site.data.keyword.redhat_openshift_notm}}. A custom resource definition allows you to create resource types that do not come preinstalled with {{site.data.keyword.openshiftshort}} such an IBM Cloud service. Operators manage the lifecycle of resources and create Custom Resource Descriptors, CRDs, allowing you to manage custom resources the native "Kubernetes" way.
 
 1. In the **Administrator** perspective, and click **Operators > OperatorHub**.
 2. Find the **IBM Cloud Operator**, and click **Install**.
@@ -535,7 +537,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {: pre}
 
-4. Back in the {{site.data.keyword.redhat_openshift_notm}} web console, click the **Create Service** under the **Service** tab on the **Installed Operators** of the **IBM Cloud Operator** page and select **YAML view** to bring up the yaml editor.
+4. Back in the {{site.data.keyword.redhat_openshift_notm}} web console, click the **Create instance** under the **Service** tab on the **Installed Operators** of the **IBM Cloud Operator** page and select **YAML view** to bring up the yaml editor.
 5. Make the suggested substitutions where the serviceClass is **cloudantnosqldb** and the plan can be **lite** or **standard** (only one lite plan is allowed per account). Replace `<your-initials>`:
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1
@@ -818,20 +820,20 @@ With the application now connected to a database for its data, to simulate load 
 
 1. Verify access to the application. It outputs patient information:
    ```sh
-   curl -s -L http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06
+   curl -s -L "http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06"
    ```
    {: pre}
 
    Output should look like:
    ```sh
-   $ curl -L http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06
+   $ curl -L "http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06"
    {"personal":{"name":"Opal Larkin","age":22,"street":"805 Bosco Vale","city":"Lincoln","zipcode":"68336"},"medications":["Cefaclor ","Amoxicillin ","Ibuprofen ","Trinessa ","Mirena ","Naproxen sodium "],"appointments":["2009-01-29 10:46 - GENERAL PRACTICE","1999-07-01 10:46 - GENERAL PRACTICE","2001-12-27 10:46 - GENERAL PRACTICE","2005-01-06 10:46 - GENERAL PRACTICE","2004-01-01 10:46 - GENERAL PRACTICE","1999-09-30 10:46 - GENERAL PRACTICE","2018-10-29 10:46 - GENERAL PRACTICE","2012-02-16 10:46 - GENERAL PRACTICE","2015-11-23 10:46 - GENERAL PRACTICE","2000-03-30 10:46 - GENERAL PRACTICE","1999-04-29 10:46 - GENERAL PRACTICE","2015-01-07 10:46 - GENERAL PRACTICE","1999-02-25 10:46 - GENERAL PRACTICE","2010-07-23 10:46 - GENERAL PRACTICE","2008-01-24 10:46 - GENERAL PRACTICE","2004-05-24 10:46 - GENERAL PRACTICE","1999-01-21 10:46 - GENERAL PRACTICE","2015-03-05 10:46 - GENERAL PRACTICE","2002-06-27 10:46 - GENERAL PRACTICE","2000-06-29 10:46 - GENERAL PRACTICE","2005-01-06 10:46 - GENERAL PRACTICE","2015-01-10 10:46 - GENERAL PRACTICE","2000-12-28 10:46 - GENERAL PRACTICE","2016-06-02 10:46 - GENERAL PRACTICE","2016-03-10 10:46 - GENERAL PRACTICE","2013-09-08 10:46 - GENERAL PRACTICE","2011-02-10 10:46 - GENERAL PRACTICE","2013-02-21 10:46 - GENERAL PRACTICE","2003-04-30 10:46 - GENERAL PRACTICE","2004-07-23 10:46 - GENERAL PRACTICE","2006-01-12 10:46 - GENERAL PRACTICE","2002-12-26 10:46 - GENERAL PRACTICE","1999-12-30 10:46 - GENERAL PRACTICE","2017-01-04 10:46 - GENERAL PRACTICE","2018-03-22 10:46 - GENERAL PRACTICE","2010-02-04 10:46 - GENERAL PRACTICE","2009-11-29 10:46 - GENERAL PRACTICE","2013-02-26 10:46 - GENERAL PRACTICE","2003-02-04 10:46 - GENERAL PRACTICE","2003-03-01 10:46 - GENERAL PRACTICE","2000-04-15 10:46 - GENERAL PRACTICE","2001-06-28 10:46 - GENERAL PRACTICE","2007-01-18 10:46 - GENERAL PRACTICE","2018-08-30 10:46 - GENERAL PRACTICE","2017-03-16 10:46 - GENERAL PRACTICE","2014-02-27 10:46 - GENERAL PRACTICE","2000-09-27 10:46 - GENERAL PRACTICE"]}
    ```
    {: screen}
 
 1. Run the following script which will endlessly send requests to the application and generates traffic:
    ```bash
-   while sleep 0.2; do curl --max-time 2 -s -L http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06 >/dev/null; echo -n "."
+   while sleep 0.2; do curl --max-time 2 -s -L "http://$HOST/info?id=ef5335dd-db17-491e-8150-20ce24712b06" >/dev/null; echo -n "."
    done
    ```
    {: pre}

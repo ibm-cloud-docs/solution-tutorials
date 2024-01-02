@@ -11,7 +11,7 @@ DOMAIN_NAME_RULES=( \
 )
 for rule in "${DOMAIN_NAME_RULES[@]}"
 do
-  if grep -rI "$rule" --exclude=README.md --exclude solution-template.md *.md
+  if grep -rI "$rule" --exclude=README.md --exclude=*.hidden.md *.md
   then
     echo "  -> Found references to $rule. Replace them with {DomainName}."
     errorCode=1

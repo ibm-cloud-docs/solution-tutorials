@@ -1,9 +1,11 @@
 #!/bin/bash
+set -e
+
 COMMIT_MESSAGE=`date +"%Y-%m-%d %T%z"`' ('`git rev-parse HEAD`')'
 
-# get the publish branch
+# get the $BRANCH_FOR_PUBLISH branch
 mkdir build
-git clone --depth=1 --branch=publish git@github.ibm.com:cloud-docs-solutions/solution-tutorials.git build
+git clone --depth=1 --branch=$BRANCH_FOR_PUBLISH git@github.ibm.com:cloud-docs-solutions/solution-tutorials.git build
 
 git config --global push.default simple
 git config --global user.email "autobuild@not-a-dom.ain"
@@ -33,6 +35,7 @@ tar cf - \
 # remove the custom markup used by tutorials-to-gitbook conversion
 (cd scripts/remove-markup && npm install)
 for source in build/*.md; do
+  echo "Removing markup from $source..."
   node scripts/remove-markup/main.js $source $source
 done
 

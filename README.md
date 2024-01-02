@@ -1,9 +1,9 @@
 <!-- markdownlint-disable -->
 # Tutorials
 
-[![Build Status](https://travis.ibm.com/cloud-docs-solutions/solution-tutorials.svg?token=pqpHRY2jt29xa8JqgKgx&branch=draft)](https://travis.ibm.com/cloud-docs-solutions/solution-tutorials)
+[![Build Status](https://v3.travis.ibm.com/cloud-docs-solutions/solution-tutorials.svg?token=3zVsKWBpyuw2qWyZGMDS&branch=draft)](https://v3.travis.ibm.com/cloud-docs-solutions/solution-tutorials)
 
-[Quick builds](https://pages.github.ibm.com/cloud-docs-solutions/solution-tutorials/) done by [Travis](https://travis.ibm.com/cloud-docs-solutions/solution-tutorials) using [this script](./scripts/preview-build.sh) and [this script](./scripts/preview-push.sh) on the `draft` branch.
+[Quick builds](https://pages.github.ibm.com/cloud-docs-solutions/solution-tutorials/) done by [Travis](https://v3.travis.ibm.com/github/cloud-docs-solutions/solution-tutorials) using [this script](./scripts/preview-build.sh) and [this script](./scripts/preview-push.sh) on the `draft` branch.
 
 [Full builds](https://test.cloud.ibm.com/docs/solution-tutorials/index.html#tutorials) done by the doc team in test environment.
 
@@ -13,8 +13,8 @@
 
 ## I want to contribute a new tutorial
 
-1. Fork this https://github.ibm.com/cloud-docs/tutorials
-1. Use https://github.ibm.com/cloud-docs/tutorials/blob/draft/solution-template.md as a starting point
+1. Fork this https://github.ibm.com/cloud-docs-solutions/solution-tutorials
+1. Use https://github.ibm.com/cloud-docs-solutions/solution-tutorials/blob/draft/solution-template.md as a starting point
 1. Follow the guidelines https://test.cloud.ibm.com/docs/writing?topic=writing-creating-tutorials.
 1. Use draw.io to create your architecture diagram https://www.diagrams.net/.
 1. When ready send a pull request.

@@ -2,13 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-03-31"
-lasttested: "2022-12-08"
+lastupdated: "2023-09-14"
+lasttested: "2022-09-14"
 
 content-type: tutorial
 services: containers, Registry, cis
 account-plan: paid
 completion-time: 2h
+use-case: ApplicationModernization, Cybersecurity, Containers
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -78,31 +79,37 @@ This tutorial deploys a Kubernetes application to clusters in multiple locations
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
 
-When creating the Kubernetes cluster below:
+When creating the following Kubernetes cluster:
 1. Set **Cluster name** to **my-us-cluster**.
 1. Locate in **North America** and **Dallas**
 
-Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
-- Click **Standard tier cluster**
-- For Kubernetes on VPC infrastructure see reference documentation [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
-   - Click **Create VPC**:
-      - Enter a **name** for the VPC.
-      - Chose the same resource group as the cluster.
-      - Click **Create**.
-   - Attach a Public Gateway to each of the subnets that you create:
-      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
-      - Click the previously created VPC used for the cluster.
-      - Scroll down to subnets section and click a subnet.
-      - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
-      - Click the browser **back** button to return to the VPC details page.
-      - Repeat the previous three steps to attach a public gateway to each subnet.
-- For Kubernetes on Classic infrastructure see reference documentation [Creating classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui).
-- Choose a resource group.
-- Uncheck all zones except one.
-- Scale down to 1 **Worker nodes per zone**.
-- Choose the smallest **Worker Pool flavor**.
-- Enter a **Cluster name**.
-- Click **Create**.
+1. Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. 
+
+2. Create a cluster on your choice of **Infrastructure**. 
+   - The following steps are if you select **VPC** for Kubernetes on VPC infrastructure. You are required to create a VPC and subnet(s) before creating the Kubernetes cluster. Reference the [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui) documentation for more details.
+      1. Click **Create VPC**.
+      2. Under the **Location** section, select a **Geography** and **Region**, for example `North America` and `Dallas`.
+      3. Enter a **Name** of your VPC, select a **Resource group** and optionally, add **Tags** to organize your resources.
+      4. Uncheck **Allow SSH** and **Allow ping** from the **Default security group**.
+      5. Uncheck **Create subnet in every zone**.
+      5. Click on **Create**.
+      6. Under **Worker zones and subnets**, uncheck the two zones for which the subnet wasn't created.
+      7. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
+      8. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
+      8. Enter a **Cluster name** and select the same **Resource group** that you used for the VPC.
+      9. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
+      10. While you waiting for the cluster to become active, attach a public gateway to the VPC. Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
+      11. Click on the name for the VPC used by the cluster and scroll down to subnets section.
+      13. Click on the name of the subnet created earlier and in the **Public Gateway** section, click on **Detached** to change the state to **Attached**.
+
+   - The following steps are if you select **Classic** for Kubernetes on Classic infrastructure. Reference the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) documentation for more details.
+      1. Under the **Location** section, select a **Geography**, multizone **Availability**, and **Metro** for example `North America` and `Dallas`.
+      2. Under **Worker zones and VLANs**, uncheck all zones except for one.
+      3. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
+      4. Under **Master service endpoint**, select **Both private & public endpoints**.
+      5. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
+      6. Enter a **Cluster name** and select the **Resource group** to create these resources under.
+      7. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
 
 While the cluster is getting ready, you are going to prepare the application.
 
@@ -169,7 +176,7 @@ This tutorial uses the Ingress Subdomain to configure the Global Load Balancer. 
 ### Configure the Ingress for your DNS subdomain
 {: #multi-region-k8s-cis-ingress}
 
-It will be required to have your own DNS domain name and a global load balancer subdomain will be created below: `<glb_name>.<your_domain_name>`.  Something like hello-world-service.example.com `<glb_name> = hello-world-service` and `<your_domain_name> = example.com`
+It will be required to have your own DNS domain name and a global load balancer subdomain will be created in the following task: `<glb_name>.<your_domain_name>`.  Something like hello-world-service.example.com `<glb_name> = hello-world-service` and `<your_domain_name> = example.com`
 
 1. Create the file glb-ingress.yaml and replace the placeholders with their respective values:
    ```bash
@@ -218,7 +225,7 @@ It will be required to have your own DNS domain name and a global load balancer 
 {: #multi-region-k8s-cis-0}
 {: step}
 
-Repeat the steps from above for the London location with the following replacements:
+Repeat the previous steps for the London location with the following replacements:
 * In [Create a Kubernetes cluster](#multi-region-k8s-cis-3) replace:
    * the cluster name **my-us-cluster** with **my-uk-cluster**;
    * the location from **North America** and **Dallas** with **Europe** and **London**.
@@ -232,7 +239,7 @@ Repeat the steps from above for the London location with the following replaceme
 
 Your application is now running in two clusters but it is missing one component for the users to access either clusters transparently from a single entry point.
 
-In this section, you will configure {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) to distribute the load between the two clusters. {{site.data.keyword.cis_short_notm}} is a one stop-shop service providing *Global Load Balancer (GLB)*, *Caching*, *Web Application Firewall (WAF)* and *Page rule* to secure your applications while ensuring the reliability and performance for your Cloud applications.
+In this section, you will configure {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) to distribute the load between the two clusters. {{site.data.keyword.cis_short_notm}} is a one-stop shopping service providing *Global Load Balancer (GLB)*, *Caching*, *Web Application Firewall (WAF)* and *Page rule* to secure your applications while ensuring the reliability and performance for your Cloud applications.
 
 To configure a global load balancer, you will need:
 * to point a custom domain to {{site.data.keyword.cis_short_notm}} name servers,
@@ -245,14 +252,14 @@ To configure a global load balancer, you will need:
 
 The first step is to create an instance of {{site.data.keyword.cis_short_notm}} and to point your custom domain to {{site.data.keyword.cis_short_notm}} name servers.
 
-1. If you do not own a domain, you can buy one from a registrar.
+1. If you don't own a domain, you can buy one from a registrar.
 2. Navigate to [{{site.data.keyword.cis_full_notm}}](/catalog/services/internet-services) in the {{site.data.keyword.Bluemix_notm}} catalog.
-3. Set the service name, and click **Create** to create an instance of the service.
+3. Pick a plan, set the service name and resource group, and click **Create** to create an instance of the service. 
 4. When the service instance is provisioned, click on **Add domain**.
 5. Enter your domain name and click **Next**.
-6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next**
+6. Setup your DNS records is an optional step and can be skipped for this tutorial. click on **Next**.
 7. When the name servers are assigned, configure your registrar or domain name provider to use the name servers listed.
-8. After you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
+8. At this point you can click on **Cancel** to get back to the main page, after you've configured your registrar or the DNS provider, it may require up to 24 hours for the changes to take effect.
 
    When the domain's status on the Overview page changes from *Pending* to *Active*, you can use the `dig <your_domain_name> ns` command to verify that the new name servers have taken effect.
    {: tip}
@@ -262,7 +269,7 @@ The first step is to create an instance of {{site.data.keyword.cis_short_notm}} 
 
 Health Checks monitor responses to HTTP/HTTPS requests from origin pools on a set interval. They are used with origin pools to determine if the pools are still running properly.
 
-1. In the {{site.data.keyword.cis_full_notm}} dashboard, use the left navigation menu to select **Reliability** > **Global Load Balancers**.
+1. In the {{site.data.keyword.cis_full_notm}} dashboard, use the navigation menu to select **Reliability** > **Global Load Balancers**.
 1. Select the **Health checks** tab and click **Create**.
    1. Set **Name** to **hello-world-service**
    1. Set **Monitor Type** to **HTTP**.
@@ -283,35 +290,35 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 {: #multi-region-k8s-cis-14}
 
 1. Select the **Origin pools** tab and click **Create**.
-1. Set **Name** to **US**
-1. Set **Origin Name** to **us-cluster**
-1. Set **Origin Address** to the kubernetes service `<IngressSubdomain>` printed by `ibmcloud ks cluster get --cluster $MYCLUSTER` for the US cluster
-1. Set **Health check** to the one created in the previous section
-1. Set **Health Check Region** to **Western North America**
-1. Click **Save**
+1. Set **Name** to `US`.
+1. Set **Origin Name** to `us-cluster`.
+1. Set **Origin Address** to the kubernetes service `<IngressSubdomain>` printed by `ibmcloud ks cluster get --cluster $MYCLUSTER` for the US cluster.
+1. Set **Health check** to the one created in the previous section.
+1. Set **Health Check Region** to `Western North America`.
+1. Click **Save**.
 
 #### One pool for the cluster in London
 {: #multi-region-k8s-cis-15}
 
 1. Select the **Origin pools** tab and click **Create**.
-1. Set **Name** to **UK**
-1. Set **Origin Name** to **uk-cluster**
-1. Set **Origin Address** to the kubernetes service `<IngressSubdomain>` printed by `ibmcloud ks cluster get --cluster $MYCLUSTER` for the UK cluster
-1. Set **Health check** to the one created in the previous section
-1. Set **Health Check Region** to **Western Europe**
-1. Click **Save**
+1. Set **Name** to `UK`.
+1. Set **Origin Name** to `uk-cluster`.
+1. Set **Origin Address** to the kubernetes service `<IngressSubdomain>` printed by `ibmcloud ks cluster get --cluster $MYCLUSTER` for the UK cluster.
+1. Set **Health check** to the one created in the previous section.
+1. Set **Health Check Region** to `Western Europe`.
+1. Click **Save**.
 
 #### And one pool with both clusters
 {: #multi-region-k8s-cis-16}
 
 1. Select the **Origin pools** tab and click **Create**.
-1. Set **Name** to **All**
+1. Set **Name** to `All`.
 1. Add two origins:
-   1. one with **Origin Name** set to **us-cluster** and the **Origin Address** set to ``<IngressSubdomain>`` in Dallas
-   1. one with **Origin Name** set to **uk-cluster** and the **Origin Address** set to ``<IngressSubdomain>`` in London
-1. Set **Health Check Region** to **Eastern North America**
-1. Set **Health check** to the one created in the previous section
-1. Click **Save**
+   1. one with **Origin Name** set to `us-cluster` and the **Origin Address** set to `<IngressSubdomain>` in Dallas.
+   1. one with **Origin Name** set to `uk-cluster` and the **Origin Address** set to `<IngressSubdomain>` in London.
+1. Set **Health Check Region** to `Eastern North America`.
+1. Set **Health check** to the one created in the previous section.
+1. Click **Save**.
 
 ### Create the Global Load Balancer
 {: #multi-region-k8s-cis-17}
@@ -320,10 +327,10 @@ With the origin pools defined, you can complete the configuration of the load ba
 
 1. Select the **Load balancers** tab and click **Create**.
 1. Enter a name, `<glb_name>`, under **Name** for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the location.
-1. Under **Geo routes**, click **Add route**
-   1. Select **Default** from the **Region** drop down
-   1. Select the pool **All**
-   1. Click Add
+1. Under **Geo routes**, click **Add route**.
+   1. Select **Default** from the **Region** drop down.
+   1. Select the pool **All**.
+   1. Click **Add**.
 
    Repeat the process to create the following:
 
@@ -361,7 +368,7 @@ The Web Application Firewall(WAF) protects your web application against ISO Laye
    1. Set **Action** to `Simulate` to log all the events.
 1. Click **CIS Rule Set**. This page shows additional rules based on common technology stacks for hosting websites.
 
-For a secured connection with HTTPS, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/){: external} as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates){: external} or through [{{site.data.keyword.secrets-manager_full_notm}}](/docs/secrets-manager?topic=secrets-manager-certificates#order-certificates).
+For a secured connection with HTTPS, you can either obtain a certificate from [Let's Encrypt](https://letsencrypt.org/){: external} as described in the following [{{site.data.keyword.cloud}} blog](https://www.ibm.com/cloud/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates){: external} or through [{{site.data.keyword.secrets-manager_full_notm}}](/docs/secrets-manager?topic=secrets-manager-public-certificates&interface=ui).
 {: tip}
 
 ### Increase performance and protect from Denial of Service attacks

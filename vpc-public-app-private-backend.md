@@ -2,13 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
-lasttested: "2022-12-12"
+lastupdated: "2023-09-13"
+lasttested: "2023-09-12"
 
 content-type: tutorial
 services: vpc
 account-plan: paid
 completion-time: 2h
+use-case: ApplicationModernization, Cybersecurity, VirtualPrivateCloud
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -70,7 +71,7 @@ In this section, you will create the VPC and the bastion host.
 This tutorial also comes with companion shell scripts and a Terraform template, that can be used to generate the resources that you will create using the UI below. They are available [in this Github repository](https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-public-app-private-backend){: external}.
 {: note}
 
-1. Navigate to the **[Virtual Private Clouds](/vpc-ext/network/vpcs)** page and click on **Create**.
+1. Navigate to the **[Virtual Private Clouds](/vpc-ext/network/vpcs){: external}** page and click on **Create**.
 1. Under **New Virtual Private Cloud** section:
    1. Enter **vpc-pubpriv** as name for your VPC.
    2. Select a **Resource group**.
@@ -93,7 +94,7 @@ This tutorial also comes with companion shell scripts and a Terraform template, 
    * Click **Save**
 1. Click **Create virtual private cloud**.
 
-To confirm the creation of the subnet, go to the [**Subnets**](/vpc-ext/network/subnets) page and wait until the status changes to **Available**.
+To confirm the creation of the subnet, go to the [**Subnets**](/vpc-ext/network/subnets){: external} page and wait until the status changes to **Available**.
 
 ### Create and configure bastion security group
 {: #vpc-public-app-private-backend-3}
@@ -122,7 +123,7 @@ In this section, you will create a security group and a virtual server instance 
 The backend security group controls the inbound and outbound connections for the backend servers.
 
 To create a new security group for the backend:
-1. Select [**Security groups**](/vpc-ext/network/securityGroups) under **Network**, then click **Create**.
+1. Select [**Security groups**](/vpc-ext/network/securityGroups){: external} under **Network**, then click **Create**.
 2. Enter **vpc-pubpriv-backend-sg** as name and select the VPC you created earlier.
 3. Select a resource group same as your VPC.
 4. Click **Create security group**.
@@ -134,17 +135,16 @@ You will later edit the security group to add the inbound and outbound rules.
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the backend subnet under [**Subnets**](/vpc-ext/network/subnets).
+1. Click on the backend subnet under [**Subnets**](/vpc-ext/network/subnets){: external}.
 1. Click **Attached resources**, under **Attached instances** click **Create**.
 1. To configure the instance:
-   1. Set the **name** to **vpc-pubpriv-backend-vsi**.
-   2. Select the resource group as earlier.
-   3. Select the same **Location** as before.
-   4. Select **Public** type of virtual server.
-   5. Set the **Operating System** to **Ubuntu Linux**.  You can pick any version of the image.
-   6. Select **Compute** with 2vCPUs and 4 GB RAM as your profile. To check available profiles, click **View all profiles**.
-   7. Set **SSH keys** to the the SSH key you created earlier.
-   8. Set **User data** to
+   1. Select **Architecture** as **Intel** and the same **Location** as before.
+   2. Set the **name** to **vpc-pubpriv-backend-vsi**.
+   3. Select the resource group as earlier.
+   4. Under **Image** click on **Change image**. Use the search field to select **Ubuntu Linux** as your **Operating system**. You can pick any version of the image.
+   5. Click **Change profile**, select **Compute** as category and pick **cx2-2x4** (2 vCPUs and 4 GB RAM) as your profile.
+   6. Set **SSH keys** to the SSH key you created earlier.
+   7. Under **Advanced options** set **User data** to
       ```sh
       #!/bin/bash
       apt-get update
@@ -155,12 +155,12 @@ To create a virtual server instance in the newly created subnet:
       {: pre}
 
       This will install a simple web server into the instance.
-1. Under **Networking**, select the VPC your created.
-1. Under **Network interfaces**, click on the **Edit** icon
+2. Under **Networking**, select the VPC your created.
+3. Under **Network interfaces**, click on the **Edit** icon
    1. Select **vpc-pubpriv-backend-subnet** as the subnet.
    2. Uncheck the default security group and check **vpc-pubpriv-backend-sg** and **vpc-secure-maintenance-sg**.
    3. Click **Save**.
-1. Click **Create virtual server instance**.
+4. Click **Create virtual server instance**.
 
 ## Create a frontend security group and VSI
 {: #vpc-public-app-private-backend-frontend-subnet-vsi}
@@ -182,17 +182,16 @@ To create a new security group for the frontend:
 
 To create a virtual server instance in the newly created subnet:
 
-1. Click on the frontend subnet under [**Subnets**](/vpc-ext/network/subnets).
+1. Click on the frontend subnet under [**Subnets**](/vpc-ext/network/subnets){: external}.
 2. Click **Attached resources**, under **Attached instances** click **Create**.
 3. To configure the instance:
-   1. Set the **name** to **vpc-pubpriv-frontend-vsi**.
-   2. Select the resource group as earlier.
-   3. Select the same **Location** as before.
-   4. Select **Public** type of virtual server.
-   5. Set the **Operating System** to **Ubuntu Linux**.  You can pick any version of the image.
-   6. Select **Compute** with 2 vCPUs and 4 GB RAM as your profile. To check available profiles, click **View all profiles**.
-   7. Set **SSH keys** to the the SSH key you created earlier.
-   8. Set **User data** to
+   1. Select **Architecture** as **Intel** and the same **Location** as before.
+   2. Set the **name** to **vpc-pubpriv-frontend-vsi**.
+   3. Select the resource group as earlier.
+   4. Under **Image** click on **Change image**. Use the search field to select **Ubuntu Linux** as your **Operating system**. You can pick any version of the image.
+   5. Click **Change profile**, select **Compute** as category and pick **cx2-2x4** (2 vCPUs and 4 GB RAM) as your profile.
+   6. Set **SSH keys** to the the SSH key you created earlier.
+   7. Under **Advanced options** set **User data** to
       ```sh
       #!/bin/bash
       apt-get update
@@ -220,7 +219,7 @@ With all servers running, in this section you will set up the connectivity to al
 ### Configure the frontend security group
 {: #vpc-public-app-private-backend-15}
 
-The frontend instance has its software installed but it can not yet be reached.
+The frontend instance has its software installed, but it cannot yet be reached due to the configuration.
 
 1. To confirm the web server can not yet be accessed, open a web browser pointing to `http://<floating-ip-address-of-the-frontend-vsi>` or use:
    ```sh
@@ -253,7 +252,7 @@ The frontend instance has its software installed but it can not yet be reached.
 
 The backend server is running the same web server software as the frontend server. It could be considered as a microservice exposing an HTTP interface that the frontend would be calling. In this section, you will attempt to connect to the backend from the frontend server instance.
 
-1. In the [**Virtual Server Instances**](/vpc-ext/compute/vs) list, retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
+1. In the [**Virtual Server Instances**](/vpc-ext/compute/vs){: external} list, retrieve the floating IP address of the bastion server host (**vpc-secure-bastion**) and the private IP addresses of the frontend (**vpc-pubpriv-frontend-vsi**) and backend (**vpc-pubpriv-backend-vsi**) server instances.
 1. Use `ssh` to connect to the frontend virtual server:
    ```sh
    ssh -J root@<floating-ip-address-of-the-bastion-vsi> root@<private-ip-address-of-the-frontend-vsi>
@@ -269,7 +268,7 @@ The backend server is running the same web server software as the frontend serve
    ```
    {: pre}
 
-   _After 30 seconds, the call should timeout. Indeed, the security group for the backend server has not yet been configured and is not allowing any inbound connection._
+   _After 30 seconds, the call should time out. Indeed, the security group for the backend server has not yet been configured and is not allowing any inbound connection._
 
 ### Configure the backend security group
 {: #vpc-public-app-private-backend-17}
@@ -307,7 +306,7 @@ With the frontend and backend server software properly installed and working, th
 1. **Save** the configuration.
 1. Access the frontend instance again at `http://<floating-ip-address-of-the-frontend-vsi>` to confirm it is still working as expected.
 
-Once the servers are removed from the maintenance group, they can no longer be accessed with `ssh`. They will only allow  traffic to their web servers.
+Once the servers are removed from the maintenance group, they can no longer be accessed with `ssh`. They will only allow traffic to their web servers.
 
 In this tutorial, you deployed two tiers of an application, one frontend server visible from the public Internet and one backend server only accessible within the VPC by the frontend server. You configured security group rules to ensure traffic would be allowed only the specific ports required by the application.
 
@@ -315,10 +314,17 @@ In this tutorial, you deployed two tiers of an application, one frontend server 
 {: #vpc-public-app-private-backend-remove-resources}
 {: step}
 
-1. In the VPC Infrastructure console, click on **Floating IPs** under **Network**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
+1. In the [VPC Infrastructure console](/vpc-ext/overview){: external}, click on **Floating IPs** under **Network**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
 2. Next, switch to **Virtual server instances**, **Stop** and **Delete** your instances by clicking on the respective action menu.
 3. Once the VSIs are gone, switch to **Subnets**. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
 4. After the subnets have been deleted, switch to **VPCs** tab and delete your VPC.
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {: tip}
+
+## Related content
+{: #vpc-public-app-private-backend-related}
+
+- [Install software on virtual server instances in VPC](/docs/solution-tutorials?topic=solution-tutorials-vpc-app-deploy)
+- [Securely access remote instances with a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
+- [How to deploy isolated workloads across multiple locations and regions](/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)

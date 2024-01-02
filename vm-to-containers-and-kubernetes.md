@@ -2,14 +2,22 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-03-29"
-lasttested: "2022-12-01"
+lastupdated: "2023-09-05"
+lasttested: "2023-09-05"
 
+content-type: tutorial
+services: containers
+account-plan: paid
+completion-time: 2h
+use-case: ApplicationModernization, Containers
 ---
 {{site.data.keyword.attribute-definition-list}}
 
 # Moving a VM based app to Kubernetes
 {: #vm-to-containers-and-kubernetes}
+{: toc-content-type="tutorial"}
+{: toc-services="containers"}
+{: toc-completion-time="2h"}
 
 <!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
@@ -64,7 +72,7 @@ The following diagram shows an example of a modern container architecture that r
 1. The user sends a request to the public endpoint of the app. The public endpoint is represented by an Ingress application load balancer (ALB) that load balances incoming network traffic across app pods in the cluster. The ALB is a collection of rules that allow inbound network traffic to a publicly exposed app.
 2. The ALB forwards the request to one of the available app pods in the cluster. App pods run on worker nodes that can be a virtual or physical machine.
 3. App pods store data in persistent volumes. Persistent volumes can be used to share data between app instances or worker nodes.
-4. App pods store data in an {{site.data.keyword.cloud_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed database-as-a-service (DBaaS) is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services).
+4. App pods store data in an {{site.data.keyword.cloud_notm}} database service. You can run your own database inside the Kubernetes cluster, but using a managed database-as-a-service (DBaaS) is usually easier to configure and provides built-in backups and scaling. You can find many types of databases in the [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services).
 
 ### VMs, containers, and Kubernetes
 {: #vm-to-containers-and-kubernetes-4}
@@ -83,16 +91,16 @@ The following diagram shows an example of a modern container architecture that r
 
 **Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, runtime, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
-In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers [here](https://www.ibm.com/docs/en/linux-on-systems?topic=linuxonibm/com.ibm.linux.z.ldvd/ldvd_r_plan_container_vm.htm){: external}.
+In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers in the [Linux on IBM Systems documentation](https://www.ibm.com/docs/en/linux-on-systems?topic=linuxonibm/com.ibm.linux.z.ldvd/ldvd_r_plan_container_vm.htm){: external}.
 
 #### Kubernetes orchestration
 {: #vm-to-containers-and-kubernetes-6}
 
 [Kubernetes](https://kubernetes.io/){: external} is a container orchestrator to manage the lifecycle of containerized apps in a cluster of worker nodes. Your apps might need many other resources to run, such as volumes, networks, and secrets which will help you connect to other cloud services, and secure keys. Kubernetes helps you to add these resources to your app. The key paradigm of Kubernetes is its declarative model. The user provides the desired state and Kubernetes attempts to conform to, and then maintains the described state.
 
-This [self-paced workshop](https://ibm.github.io/kube101/){: external} can help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/){: external} documentation page to learn more about the concepts of Kubernetes.
+This [self-paced Kubernetes workshop](https://ibm.github.io/kube101/){: external} can help you to get your first hands-on experience with Kubernetes. Additionally, check out the Kubernetes [concepts](https://kubernetes.io/docs/concepts/){: external} documentation page to learn more about the concepts of Kubernetes.
 
-### What IBM's doing for you
+### What IBM is doing for you
 {: #vm-to-containers-and-kubernetes-7}
 
 By using Kubernetes clusters with {{site.data.keyword.containerlong_notm}}, you get the following benefits:
@@ -114,16 +122,16 @@ To run a production app in the cloud by using Kubernetes, consider the following
 3. What [hardware](/docs/containers?topic=containers-planning_worker_nodes) do you need for the worker nodes? Virtual machines or bare metal?
 4. How many worker nodes do you need? This depends highly on the apps scale, the more nodes you have the more resilient your app will be.
 5. How many replicas should you have for higher availability? Deploy replica clusters in multiple locations to make your app more available and protect the app from being down due to a location failure.
-6. Which is the minimal set of resources your app needs to startup? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
+6. Which is the minimal set of resources your app needs to start up? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
 7. When to increase the number of worker nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis).
 8. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind an {{site.data.keyword.cloud_notm}} database service to your pod.
 9. Do you need to deploy a cluster on [Virtual Private Cloud infrastructure](/docs/containers?topic=containers-plan_vpc_basics) or in [Classic infrastructure](/docs/containers?topic=containers-plan_basics)? VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud.
 
-To make the above more specific, let's assume you want to run a production web application in the cloud and expect a medium to high load of traffic. Let's explore what resources you would need:
+To make the preceding steps more specific, let's assume you want to run a production web application in the cloud and expect a medium to high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one for testing and one for production.
-2. The development and testing clusters can start with minimum RAM and CPU option (for example 2 CPU's, 4GB of RAM and one worker node for each cluster).
-3. For the production cluster, you might want to have more resources for performance, high availability, and resiliency. We might choose a dedicated or even a bare metal option and have at least 4 CPU's, 16GB of RAM, and two workers nodes.
+2. The development and testing clusters can start with minimum RAM and CPU option (for example 2 CPUs, 4GB of RAM and one worker node for each cluster).
+3. For the production cluster, you might want to have more resources for performance, high availability, and resiliency. We might choose a dedicated or even a bare metal option and have at least 4 CPUs, 16GB of RAM, and two workers nodes.
 
 ## Decide what Database option to use
 {: #vm-to-containers-and-kubernetes-database_options}
@@ -134,9 +142,9 @@ With Kubernetes, you have two options for handling databases:
    - Create a MySQL Dockerfile, see an example [MySQL Dockerfile](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile){: external} here.
    - You would need to use secrets to store the database credential. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/db/Dockerfile.secret){: external}.
    - You would need a `deployment.yaml` file with the configuration of your database to deployed to Kubernetes. See example of this [here](https://github.com/IBM-Cloud/jpetstore-kubernetes/blob/master/jpetstore/jpetstore.yaml){: external}.
-2. The second option would be to use the managed database-as-a-service (DBaaS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many different types of databases in the  [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services). To use this option, you would need to do the following:
+2. The second option would be to use the managed database-as-a-service (DBaaS) option. This option is usually easier to configure and provides built-in backups and scaling. You can find many types of databases in the [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services). To use this option, you would need to do the following:
    - Create a managed database-as-a-service (DBaaS) from the [{{site.data.keyword.cloud_notm}} catalog](/catalog?category=databases#services).
-   - Store database credentials inside a secret. You will learn more on secrets in the "Store credentials in Kubernetes secrets" section.
+   - Store database credentials inside a secret. You will learn more on secrets in the [Store credentials in Kubernetes secrets](#vm-to-containers-and-kubernetes-17) section.
    - Use the database-as-a-service (DBaaS) in your application.
 
 ## Decide where to store application files
@@ -153,7 +161,7 @@ Containers and pods are, by design, short-lived and can fail unexpectedly. You c
 ### Learn how to create persistent data storage for your app
 {: #vm-to-containers-and-kubernetes-12}
 
-You can persist app data and container data on [NFS file storage](https://www.ibm.com/cloud/file-storage/features){: external} or [block storage](https://www.ibm.com/cloud/block-storage){: external} by using native Kubernetes persistent volumes.
+You can persist app data and container data on [NFS file storage](https://www.ibm.com/products/file-storage){: external} or [block storage](https://www.ibm.com/products/block-storage){: external} by using native Kubernetes persistent volumes.
 {: shortdesc}
 
 To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data retention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.cloud_notm}}. You can mount the PVC to your pod to read from and write to the PV. Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM to provide high availability for your data.
@@ -221,8 +229,8 @@ The [twelve-factor app](https://12factor.net/){: external} is a methodology for 
 The following key principles are required:
 
 - **Codebase** - All source code and configuration files are tracked inside a version control system (for example a GIT repository), this is required if using DevOps pipeline for deployment.
-- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the app before deploying it to the cluster. Check out the [Continuous Deployment to Kubernetes tutorial](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) to learn how to set up a continuous integration and delivery pipeline. It covers the set up of source control, build, test and deploy stages and shows you how to add integrations such as security scanners, notifications, and analytics.
-- **Config** - All configuration information is stored in environment variables. No service credentials are hard-coded within the app code. To store credentials, you can use Kubernetes secrets. More on credentials covered below.
+- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the app before deploying it to the cluster. Check out the [Continuous Deployment to Kubernetes tutorial](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes) to learn how to set up a continuous integration and delivery pipeline. It covers the setup of source control, build, test and deploy stages and shows you how to add integrations such as security scanners, notifications, and analytics.
+- **Config** - All configuration information is stored in environment variables. No service credentials are hard-coded within the app code. To store credentials, you can use Kubernetes secrets. More on credentials later.
 
 ### Store credentials in Kubernetes secrets
 {: #vm-to-containers-and-kubernetes-17}
@@ -241,7 +249,7 @@ One way of using secrets in Kubernetes is by doing something like this:
    ```
    {: codeblock}
 
-2. Then, create a Kubernetes secret by running a command below and verify that the secret is created by using `kubectl get secrets` after running the command below:
+2. Then, create a Kubernetes secret by running the following command and verify that the secret is created by using `kubectl get secrets` after running the following command:
 
    ```sh
    kubectl create secret generic cloud-service-secret --from-file=cloud-secrets.txt=./cloud-secrets.txt
@@ -270,7 +278,7 @@ Images are typically stored in a registry that can either be accessible by the p
 
 To containerize an app and store it in {{site.data.keyword.registrylong_notm}}:
 
-1. You would need to create a Dockerfile, below is an example of a Dockerfile.
+1. You would need to create a Dockerfile, the following code is an example of a Dockerfile.
    ```sh
    # Build JPetStore war
    FROM openjdk:8 as builder
@@ -311,7 +319,7 @@ To create Kubernetes deployment.yaml files, you would need to do something like 
 
 2. In your deployment.yaml file, you can define [resource quotas](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/){: external} for your containers to specify how much CPU and memory each container needs to properly start. If containers have resource quotas specified, the Kubernetes scheduler can make better decisions about the worker node where to place your pods on.
 
-3. Next, you can use below commands to create and view the deployment and services created:
+3. Next, you can use following commands to create and view the deployment and services created:
 
    ```sh
    kubectl create -f <filepath/deployment.yaml>
@@ -341,7 +349,6 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 ## Related Content
 {: #vm-to-containers-and-kubernetes-related}
 
-- [Get started](https://developer.ibm.com/learningpaths/get-started-containers/){: external} with Kubernetes and {{site.data.keyword.containershort_notm}}.
 - {{site.data.keyword.containershort_notm}} labs on [GitHub](https://github.com/IBM/container-service-getting-started-wt){: external}.
 - Kubernetes main [docs](https://kubernetes.io/){: external}.
 - [Persistent storage](/docs/containers?topic=containers-storage-plan) in {{site.data.keyword.containershort_notm}}.

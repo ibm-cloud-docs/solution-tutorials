@@ -2,14 +2,16 @@
 subcollection: solution-tutorials
 copyright:
   years: 2022, 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-09-01"
 lasttested: "2022-02-22"
 
-# services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
+# services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 services: service1, service2
 account-plan: paid
 completion-time: 2h
+# use-case is a comma-separated list or yaml bullet format. Select one or more use cases that represent your architecture from the Digital Taxonomy [use case](https://github.ibm.com/digital/taxonomy/blob/main/subsets/use_cases/use_cases_flat_list.csv) list. Use the value in the code column. The list available under [Topics](https://github.ibm.com/digital/taxonomy/blob/main/topics/topics_flat_list.csv) can also be used, but don't go too crazy. 
+use-case: usecase1, usecase2 
 ---
 
 {{site.data.keyword.attribute-definition-list}}
@@ -234,14 +236,14 @@ For anchors within the same document always only use the following format:
 For anchors or any links to external documents, even for those are are within our tutorials use the following format:
    [following these steps](/docs/cli?topic=cloud-cli-getting-started#overview)
 
-If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, i.e. https://test.cloud.ibm.com/docs/tutorials/serverless-api-webapp.html, you will be redirected to the new ?topic= format which is: https://test.cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp
+If you have an old format html link that you are trying to translate to the new ?topic= format, enter the link uri, i.e. /docs/tutorials/serverless-api-webapp.html in the test.cloud.ibm.com, such as [this one](/docs/tutorials/serverless-api-webapp.html), you will be redirected to the new ?topic= format which is [this link](/docs/solution-tutorials?topic=solution-tutorials-serverless-api-webapp#serverless-api-webapp)
 
-Finally refer to the link topic under the content and design documentation if you have any other questions: https://test.cloud.ibm.com/docs/writing?topic=writing-link-format
+Finally refer to [the link topic under the content and design documentation](/docs/writing?topic=writing-link-format) if you have any other questions.
 
-### Conrefs
+### Keyrefs
 {: #solution-template-13}
 
-Use conrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the conrefs will take care. Check the [conrefs table](https://pages.github.ibm.com/cloud-docs-solutions/solution-tutorials/conref-table.html){: external}. E.g., conref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}.
+Use keyrefs in place of IBM & IBM Cloud service names/branding. Just in case the service name gets updated/rebranded, the keyrefs will magically update them. Check the [keyrefs table](https://pages.github.ibm.com/cloud-docs-solutions/solution-tutorials/conref-table.html){: external}. E.g., keyref for IBM cloud is \{{site.data.keyword.Bluemix_notm}}. Check out the [using keyrefs for product names](https://github.ibm.com/cloud-docs-internal/writing/blob/draft/keyrefs.md) in the content writing repository for additional details.
 
 ## Markup for workshops
 {: #solution-template-10}

@@ -2,13 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
-lasttested: "2022-12-19"
+lastupdated: "2023-09-07"
+lasttested: "2023-09-07"
 
 content-type: tutorial
 services: vpc
 account-plan: paid
 completion-time: 2h
+use-case: ApplicationModernization, VirtualPrivateCloud
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -25,7 +26,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc){: external}. This combination of software - more commonly called a LAMP stack - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
+This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc){: external}. This combination of software - more commonly called a [LAMP stack](https://en.wikipedia.org/wiki/LAMP_(software_bundle)){: external} - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
 {: shortdesc}
 
 ## Objectives
@@ -57,7 +58,7 @@ This tutorial requires:
 * `git` to clone source code repository,
 
 <!--##istutorial#-->
-You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
+You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell){: external}.
 {: tip}
 
 <!--#/istutorial#-->
@@ -66,13 +67,13 @@ You will find instructions to download and install these tools for your operatin
 {: #lamp-stack-on-vpc-2}
 {: step}
 
-In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](/shell) and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
+In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](/shell){: external} and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
    
 If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp and follow the instructions in the README.md. This template can also be used in [{{site.data.keyword.bpshort}}](/schematics/overview){: external}.
 {: tip}
 
-1. From the [{{site.data.keyword.Bluemix_notm}} Console](/), launch the [{{site.data.keyword.cloud-shell_notm}}](/shell).
-1. You are automatically logged into one of the IBM Cloud regions, you can switch to a different region if desired by running the following command:
+1. While logged in to your [{{site.data.keyword.Bluemix_notm}} account](/){: external}, launch the [{{site.data.keyword.cloud-shell_notm}}](/shell){: external}.
+1. In the shell, you are automatically logged into one of the IBM Cloud regions, you can switch to a different region if desired by running the following command:
    ```sh
    ibmcloud target -r <region-name> -g <resource-group>
    ```
@@ -255,13 +256,13 @@ In this section, you'll verify that Apache, MySQL and PHP are up to date and run
    ```
    {: pre}
 
-1. Run the following script to secure the MySQL database.
+1. Run the following script to secure the MySQL database. Choose the options that best fit your preferences or simply press the ENTER key to quickly steps through the setup.
    ```sh
    mysql_secure_installation
    ```
    {: pre}
 
-1. Additionally you can quickly create a PHP info page with the following command.
+1. Additionally, you can quickly create a PHP info page with the following command.
    ```sh
    echo "<?php phpinfo(); ?>" > /var/www/html/info.php
    ```
@@ -524,3 +525,13 @@ The VSI was created using one of the smallest profiles available in VPC, i.e. 2 
 
 When using the console, you may need to refresh your browser to see updated status information after deleting a resource.
 {: tip}
+
+Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
+{: tip}
+
+## Related Content
+{: #lamp-stack-on-vpc-related}
+
+- [LAMP stack](https://en.wikipedia.org/wiki/LAMP_(software_bundle)){: external}
+- [Install software on virtual server instances in VPC](/docs/solution-tutorials?topic=solution-tutorials-vpc-app-deploy)
+- [Securely access remote instances with a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)

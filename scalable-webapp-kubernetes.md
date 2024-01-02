@@ -2,13 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-31"
-lasttested: "2023-02-08"
+lastupdated: "2023-09-14"
+lasttested: "2023-09-14"
 
 content-type: tutorial
 services: containers, Registry, secrets-manager
 account-plan: paid
 completion-time: 2h
+use-case: ApplicationModernization, Cybersecurity, Containers
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -64,41 +65,60 @@ You will find instructions to download and install these tools for your operatin
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-In addition, make sure you:
-- [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup)
-- and [understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/){: external}.
+In addition:
+- You will need a {{site.data.keyword.secrets-manager_short}} instance. With {{site.data.keyword.secrets-manager_short}}, you can create, lease, and centrally manage secrets that are used in IBM Cloud services or your custom-built applications. Secrets are stored in a dedicated {{site.data.keyword.secrets-manager_short}} instance and you can use built in features to monitor for expiration, schedule or manually rotate your secrets. In this tutorial, you will use a Kubernetes Operator to retrieve a TLS certificate from {{site.data.keyword.secrets-manager_short}} and inject into a Kubernetes secret. You can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a {{site.data.keyword.secrets-manager_short}} service instance](/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui).
+- Optionally [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup). It is only needed if you will build your own custom container image.
+- [Understand the basics of Kubernetes](https://kubernetes.io/docs/tutorials/kubernetes-basics/){: external}.
+
+## Enable service-to-service communication with {{site.data.keyword.secrets-manager_short}}
+{: #secrets-mgr_setup_s2s} 
+{: step}
+
+Integrating {{site.data.keyword.secrets-manager_short}} with your {{site.data.keyword.containerlong_notm}} cluster requires service-to-service communication authorization. Follow these steps to set up the authorization. For more information, see [Integrations for {{site.data.keyword.secrets-manager_short}}](/docs/secrets-manager?topic=secrets-manager-integrations#create-authorization).
+
+1. In the {{site.data.keyword.cloud_notm}} console, click **Manage > Access (IAM)**.
+2. Click **Authorizations**.
+3. Click **Create**.
+4. In the **Source service** list, select **Kubernetes Service**.
+5. Select the option to scope the access to **All resources**.
+6. In the **Target service** list, select **{{site.data.keyword.secrets-manager_short}}**.
+7. Select the option to scope the access to **All resources**.
+8. In the **Service access** section, check the **Manager** option.
+9. Click **Authorize**.
 
 ## Create a Kubernetes cluster
 {: #scalable-webapp-kubernetes-create_kube_cluster}
 {: step}
 
-{{site.data.keyword.containershort_notm}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
+The {{site.data.keyword.containerlong_notm}} is a managed offering to create your own Kubernetes cluster of compute hosts to deploy and manage containerized apps on IBM Cloud. A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 
-A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
+1. Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. 
 
-Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
-- Click **Standard tier cluster**
-- For Kubernetes on VPC infrastructure see reference documentation[Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
-   - Click **Create VPC**:
-      - Enter a **name** for the VPC.
-      - Chose the same resource group as the cluster.
-      - Click **Create**.
-   - Attach a Public Gateway to each of the subnets that you create:
-      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
-      - Click the previously created VPC used for the cluster.
-      - Scroll down to subnets section and click a subnet.
-      - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
-      - Click the browser **back** button to return to the VPC details page.
-      - Repeat the previous three steps to attach a public gateway to each subnet.
-- For Kubernetes on Classic infrastructure see reference documentation [Creating classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui).
-- Choose a resource group.
-- Uncheck all zones except one.
-- Scale down to 1 **Worker nodes per zone**.
-- Choose the smallest **Worker Pool flavor**.
-- Enter a **Cluster name**.
-- Click **Create**.
-{: #create_cluster}
+2. Create a cluster on your choice of **Infrastructure**. 
+   - The following steps are if you select **VPC** for Kubernetes on VPC infrastructure. You are required to create a VPC and subnet(s) before creating the Kubernetes cluster. Reference the [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui) documentation for more details.
+      1. Click **Create VPC**.
+      2. Under the **Location** section, select a **Geography** and **Region**, for example `Europe` and `London`.
+      3. Enter a **Name** of your VPC, select a **Resource group** and optionally, add **Tags** to organize your resources.
+      4. Uncheck **Allow SSH** and **Allow ping** from the **Default security group**.
+      5. Uncheck **Create subnet in every zone**.
+      5. Click on **Create**.
+      6. Under **Worker zones and subnets**, uncheck the two zones for which the subnet wasn't created.
+      7. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
+      8. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
+      8. Enter a **Cluster name** and select the same **Resource group** that you used for the VPC.
+      9. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
+      10. While you waiting for the cluster to become active, attach a public gateway to the VPC. Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
+      11. Click on the name for the VPC used by the cluster and scroll down to subnets section.
+      13. Click on the name of the subnet created earlier and in the **Public Gateway** section, click on **Detached** to change the state to **Attached**.
 
+   - The following steps are if you select **Classic** for Kubernetes on Classic infrastructure. Reference the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) documentation for more details.
+      1. Under the **Location** section, select a **Geography**, multizone **Availability**, and **Metro** for example `Europe` and `London`.
+      2. Under **Worker zones and VLANs**, uncheck all zones except for one.
+      3. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
+      4. Under **Master service endpoint**, select **Both private & public endpoints**.
+      5. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
+      6. Enter a **Cluster name** and select the **Resource group** to create these resources under.
+      7. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
@@ -117,9 +137,9 @@ Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster*
 {: #scalable-webapp-kubernetes-clone_application}
 {: step}
 
-In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](https://nodejs.dev){: external} sample application with a landing page and two endpoints to get started. You can always extend the sample application based on your requirement.
+In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](https://nodejs.dev){: external} sample application with a landing page and two endpoints to get started. You can always extend the sample application based on your requirements.
 
-1. On a terminal, run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/){: external} to your machine:
+1. On a terminal, run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/){: external}:
    ```sh
    git clone https://github.com/IBM-Cloud/kubernetes-node-app
    ```
@@ -140,9 +160,9 @@ This sample application code contains all the necessary configuration files for 
 ### Deploy the application with Helm 3
 {: #scalable-webapp-kubernetes-9}
 
-The container image for the application as already been built and pushed to a public Container Registry. In this section you will deploy the sample application using [Helm](https://helm.sh/){: external}. Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
+The container image for the application as already been built and pushed to a public registry in the {{site.data.keyword.registryfull_notm}}. In this section you will deploy the sample application using [Helm](https://helm.sh/){: external}. Helm helps you manage Kubernetes applications through Helm Charts, which helps define, install, and upgrade even the most complex Kubernetes application.
 
-Note: If you want to build and push the application to your own container registry you can use the Docker CLI to do so. The Dockerfile is provided in the repository and images can be pushed to the {{site.data.keyword.registryshort_notm}} or any other container registry.  
+Note: If you want to build and push the application to your own container registry you can use the Docker CLI to do so. The Dockerfile is provided in the repository and images can be pushed to the {{site.data.keyword.registryfull_notm}} or any other container registry.  
 {: tip}
 
 
@@ -226,7 +246,7 @@ Note: If you want to build and push the application to your own container regist
 {: #scalable-webapp-kubernetes-ibm_domain}
 {: step}
 
-Paid clusters come with an IBM-provided domain. This gives you a better option to expose applications with a proper URL and on standard HTTP/S ports.
+Clusters come with an IBM-provided domain. This gives you a better option to expose applications with a proper URL and on standard HTTP/S ports.
 
 Use Ingress to set up the cluster inbound connection to the service.
 
@@ -313,27 +333,23 @@ This section requires you to own a custom domain. You will need to create a `CNA
 
 If you were to try to access your application with HTTPS at this time `https://<myapp>.example.com/`, you will likely get a security warning from your web browser telling you the connection is not private.
 
-In this section we will use {{site.data.keyword.secrets-manager_short}}.  With {{site.data.keyword.secrets-manager_short}}, you can create, lease, and centrally manage secrets that are used in IBM Cloud services or your custom-built applications. Secrets are stored in a dedicated {{site.data.keyword.secrets-manager_short}} instance and you can use built in features to monitor for expiration, schedule or manually rotate your secrets. In this tutorial, we will use a Kubernetes Operator to retrieve the TLS certificate from {{site.data.keyword.secrets-manager_short}} and inject into a Kubernetes secret.
-
-You can use an existing instance if you already have one or create a new one by following the steps outlined in [Creating a {{site.data.keyword.secrets-manager_short}} service instance](/docs/secrets-manager?topic=secrets-manager-create-instance&interface=ui).
-
-Now, import your certificate into the {{site.data.keyword.secrets-manager_short}} instance.
+Now, import your certificate into the {{site.data.keyword.secrets-manager_short}} instance you configured earlier to your cluster.
 
 1. Access the {{site.data.keyword.secrets-manager_short}} service instance from the [Resource List](/resources) Under **Security**.
 2. Click on **Secrets** in the left navigation.
-3. Click **Add** and then **TLS certificates**.
-4. You can select either **Import certificate**, **Order a public certificate** or **Create a private certificate**. Detailed steps are available in the [Adding SSL or TLS certificates](/docs/secrets-manager?topic=secrets-manager-certificates&interface=ui) topic. If you selected to import a certificate, make sure to upload the certificate, private key and intermediate certificate files using the **Add file** button for each.
-5. Locate the secret entry for the imported or ordered certificate and click on it.
+3. Click **Add**.
+4. You can select either **Public certificate**, **Imported certificate** or **Private certificate**. Detailed steps are available in the respective documentation topics: [Ordering SSL/TLS public certificates](/docs/secrets-manager?topic=secrets-manager-public-certificates&interface=ui), [Importing SSL/TLS certificates](/docs/secrets-manager?topic=secrets-manager-certificates&interface=ui) or [Creating SSL/TLS private certificates](/docs/secrets-manager?topic=secrets-manager-private-certificates&interface=ui). If you selected to import a certificate, make sure to upload the certificate, private key and intermediate certificate files.
+5. Locate the entry for the imported or ordered certificate and click on it.
    * Verify the domain name matches your $CUSTOM_DOMAIN. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
-   * Click the **copy** symbol next to the secret's **ID**.
-   * Create an environment variable pointing to the secret ID:
+   * Click the **copy** icon next to the certificate's **ID**.
+   * Create an environment variable pointing to the value you just copied:
 
    ```sh
-   export SECRET_ID=<secret ID>
+   export CERTIFICATE_ID=<certificate ID>
    ```
    {: pre}
 
-6. In {{site.data.keyword.secrets-manager_short}}, certificates that you import to the service are imported certificates (imported_cert). Certificates that you order through {{site.data.keyword.secrets-manager_short}} from a third-party certificate authority are public certificates (public_cert). This information is needed in the helm chart you will be using later on to configure the ingress.  Select and run the command that is appropriate for your selection in the previous step.  
+6. In {{site.data.keyword.secrets-manager_short}}, certificates that you import to the service are imported certificates (imported_cert). Certificates that you order through {{site.data.keyword.secrets-manager_short}} from a third-party certificate authority are public certificates (public_cert). This information is needed in the helm chart you will be using later on to configure the ingress. Select and run the command that is appropriate for your selection in the previous step.  
    ```sh
    export CERTIFICATE_TYPE=imported_cert
    ```
@@ -407,6 +423,12 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
 8. Validate the secret was created:
    ```sh
    kubectl get secret kubernetesnodeapp-certificate -n $KUBERNETES_NAMESPACE
+   ```
+   {: pre}
+
+   If you encounter any errors running the above command, you can run the following command to obtain more details on the reasons for that error. 
+   ```sh
+    kubectl get externalsecret.external-secrets.io/kubernetesnodeapp-external-secret -o json
    ```
    {: pre}
 

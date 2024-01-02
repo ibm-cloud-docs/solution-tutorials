@@ -6,7 +6,6 @@ errorCode=0
 
 TESTS=(
   $SCRIPT_DIR/check-domainname.sh
-  $SCRIPT_DIR/check-translation.sh
   $SCRIPT_DIR/check-a11y.sh
   $SCRIPT_DIR/check-lastmodified.sh
   $SCRIPT_DIR/check-unused-images.sh
@@ -14,6 +13,7 @@ TESTS=(
   $SCRIPT_DIR/check-images-with-no-caption.sh
   $SCRIPT_DIR/check-marked-it.sh
   $SCRIPT_DIR/check-linkrules.sh
+  $SCRIPT_DIR/check-with-vale.sh
 )
 failedTests=""
 for test in "${TESTS[@]}"; do
@@ -22,7 +22,13 @@ for test in "${TESTS[@]}"; do
   if $test; then
     echo "✅ Passed - $testBasename"
   else
-    echo "❌ Failed - $testBasename"
+    echo "❌
+❌
+❌
+❌ Failed - $testBasename
+❌
+❌
+❌"
     failedTests="$testBasename $failedTests"
     errorCode=1
   fi

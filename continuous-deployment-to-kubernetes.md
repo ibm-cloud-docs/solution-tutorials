@@ -2,14 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-07-25"
 lasttested: "2023-02-21"
 
 content-type: tutorial
 services: containers, Registry, ContinuousDelivery
 account-plan: paid
 completion-time: 1h
-
+use-case: ApplicationModernization, Containers
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -64,7 +64,7 @@ This tutorial requires:
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. The name `mycluster` will be used in this tutorial.
 
-Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the following documentation for more details based on the cluster type.  Summary:
 - Click **Standard tier cluster**
 - For Kubernetes on VPC infrastructure see reference documentation [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
    - Click **Create VPC**:
@@ -104,7 +104,7 @@ Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster*
 {: #continuous-deployment-to-kubernetes-create_application}
 {: step}
 
-1. From the [{{site.data.keyword.cloud_notm}} console](/), use the left side menu option and select [DevOps](/devops).
+1. From the [{{site.data.keyword.cloud_notm}} console](/), from the menu and select [DevOps](/devops).
 2. Click **Create toolchain**.
 3. In the **search box** type **kubernetes** as a filter.
 4. Click on the **Develop a Kubernetes app with Helm** tile.
@@ -124,7 +124,7 @@ The toolchain will build your application and deploy it to the cluster.
 1. Once the pipeline is created, click the pipeline under **Delivery Pipelines**.
 1. Wait for the DEPLOY stage to complete.  The **Check health** job will fail for VPC clusters.
 1. Click on the settings cog in the DEPLOY stage and click **Configure stage**.
-   - Click the **Environment properties** tab at the top.
+   - Click the **Environment properties** tab.
    - Click **Add property**, click **Text property**.
    - Enter **Name**: HELM_UPGRADE_EXTRA_ARGS.
    - Enter **Value**: --set ingress.enabled=true,ingress.hosts={dev.INGRESS_SUBDOMAIN} something like: --set ingress.enabled=true,ingress.hosts={dev.vpc-e7f2ca73139645ddf61a8702003a483a-0000.us-south.containers.appdomain.cloud}.
@@ -138,7 +138,7 @@ The toolchain will build your application and deploy it to the cluster.
 {: #continuous-deployment-to-kubernetes-6}
 {: step}
 
-1. Follow the breadcrumbs on the upper left of the screen and click on the first entry after of `<your-initials>-mynodestarter` after `Toolchains`.
+1. Follow the breadcrumbs and click on the first entry after of `<your-initials>-mynodestarter` after `Toolchains`.
 1. Click the link under the **Repositories** tile, a new browser tab will open to the repository.
 1. Click on the `utils.js` file and then click on **Open in Web IDE**/**Edit** drop down and choose **EDIT** then click **EDIT**. 
 1. Make a simple change, for example change "Welcome to" to something else.
@@ -185,7 +185,7 @@ You now have the full deployment setup. To deploy from dev to production, you ma
 3. Search for Slack in the search box or scroll down to see **Slack**. Click to see the configuration page.
     ![Configure the Slack integration](images/solution21/configure_slack.png){: caption="Configure the Slack integration" caption-side="bottom"}
 4. Once the Incoming webhook integration is added, copy the **Webhook URL** captured earlier and paste under **Slack webhook**.
-5. The Slack channel is the channel name you provided while creating a webhook integration above.
+5. The Slack channel is the channel name you provided while creating a webhook integration.
 6. **Slack team name** is the team-name(first part) of team-name.slack.com. for example, kube is the team name in kube.slack.com
 7. Click **Create Integration**. A new tile will be added to your toolchain.
     ![Toolchain with new Slack integration](images/solution21/toolchain_slack.png){: caption="Toolchain with new Slack integration" caption-side="bottom"}
@@ -196,11 +196,11 @@ You now have the full deployment setup. To deploy from dev to production, you ma
 {: #continuous-deployment-to-kubernetes-removeresources}
 {: step}
 
-In this step, you will clean up the resources to remove what you created above.
+In this step, you will clean up the resources to remove what you created previously.
 
 - Delete the Git repository.
    - Back to the toolchain, click  the link under the **Repositories** tile, a new browser tab will open to the repository.
-   - In the git repository: select **Settings** on the left then **General** scroll down and click **Advanced** **Expand**  then scroll down and click **Delete Project**.
+   - In the git repository: select **Settings** then **General** scroll down and click **Advanced** **Expand**  then scroll down and click **Delete Project**.
 - Delete the toolchain.<!-- markdownlint-disable-line -->
 - Delete the images from the [{{site.data.keyword.registryshort}}](/registry/images).<!-- markdownlint-disable-line -->
 <!--##istutorial#-->

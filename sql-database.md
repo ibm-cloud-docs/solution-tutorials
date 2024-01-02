@@ -2,13 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
-lasttested: "2022-12-29"
+lastupdated: "2023-09-11"
+lasttested: "2023-09-11"
 
 content-type: tutorial
 services: codeengine, Db2whc
 account-plan: paid
-completion-time: 2h
+completion-time: 1h
+use-case: ApplicationModernization
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -24,7 +25,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeengineshort}}](/codeengine/). The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com){: external}.
+This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeenginefull}}](/codeengine/){: external}. The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com){: external}.
 {: shortdesc}
 
 ![Architecture diagram](images/solution5/cloud-sql-database.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
@@ -46,7 +47,7 @@ This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI with the Code Engine plugin,
 * `git` to clone the source code repository.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell){: external} from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
 <!--##istutorial#-->
@@ -67,7 +68,7 @@ You will find instructions to download and install these tools for your operatin
 {: #sql-database-2}
 {: step}
 
-Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](/catalog/services/db2-warehouse)** service.
+Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](/catalog/services/db2-warehouse){: external}** service.
 
 1. Visit the [{{site.data.keyword.Bluemix_short}} console](/). Click on **Catalog** in the top navigation bar.
 2. Click on **Databases** on the left pane and select **Db2 Warehouse**.
@@ -84,7 +85,7 @@ You need a table to hold the sample data. Create it using the console.
 
 1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **Run SQL** in the navigation bar. 
 2. Click on the **+** symbol (**Add a new script**) next to the **Untitled - 1** tab.
-3. Click on **From file** and select the file `cityschema.txt` from the Github repository that was previously cloned to your local directory and open it.
+3. Click on **From file** and select the file `cityschema.txt` from the GitHub repository that was previously cloned to your local directory and open it.
 4. Click on **Run all** to execute the statement. It should show a success message.
 
 ## Load data
@@ -94,9 +95,9 @@ You need a table to hold the sample data. Create it using the console.
 Now that the table "cities" has been created, you are going to load data into it. This can be done in different ways, for example from your local machine or from cloud object storage (COS) or Amazon S3 interface. For this tutorial, you are going to upload data from your machine. During that process, you adapt the table structure and data format to fully match the file content.
 
 1. In the console for {{site.data.keyword.dashdbshort_notm}} click on the upper left menu icon, then **Data** in the navigation bar. 
-2. From the **Load Data** tab, click on **My Computer**.
+2. As **Source** keep the selection on **My Computer**.
 3. Under **File selection**, click on **Drag a file here or browse files** to locate and pick the file "cities1000.txt" you downloaded in the first section of this guide.
-2. Click **Next** to get to the schema overview. Choose the schema starting with **BLUADMIN**, then the table **CITIES**. Click on **Next** again.   
+2. Click **Next** to get to the **Target** overview with a **Schema** selection. Choose the schema **BLUADMIN**, then the table **CITIES**. Click on **Next** again.   
 
    Because the table is empty it does not make a difference to either append to or overwrite existing data.
    {: tip}
@@ -125,7 +126,7 @@ The data has been loaded into the relational database. There were no errors, but
    ```
    {: codeblock}
 
-   Select the text of the query, then, in dropdown next to **Run All**, choose **Run selected**. In the results section the same number of rows as reported by the load process should be shown.   
+   Select the text of the query, then, in dropdown next to **Run All**, choose **Run selected**. In the section with results, the same number of rows as reported by the load process should be shown.   
 3. In the "SQL Editor" enter the following statement on a new line:
    ```sql
    select countrycode, count(name) from cities
@@ -193,22 +194,22 @@ Change back to the terminal. Now you are going to deploy the application code, u
 {: #sql-database-7}
 {: step}
 
-The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage access](/docs/Db2whc?topic=Db2whc-iam) and to configure [enhanced data encryption](/docs/Db2whc?topic=Db2whc-key-protect). 
+The {{site.data.keyword.dashdbshort_notm}} is a managed service. IBM takes care of securing the environment, daily backups and system monitoring. When you are using one of the enterprise plans there are [several options to manage access](/docs/Db2whc?topic=Db2whc-iam) and to configure [enhanced data encryption](/docs/Db2whc?topic=Db2whc-key-protect-v2). 
 
-In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](/apidocs/db2-warehouse-on-cloud/db2-warehouse-on-cloud-v4#introduction).
+In addition to the traditional administration options the [{{site.data.keyword.dashdbshort_notm}} service also offers a REST API for monitoring, user management, utilities, load, storage access and more](/apidocs/db2-warehouse-on-cloud/db2-warehouse-on-cloud-v4#introduction){: external}.
 
 ## Test the App
 {: #sql-database-8}
 {: step}
 
-The app to display city information based on the loaded data set is reduced to a minimum. It offers a search form to specify a city name - names are case sensitive - and few preconfigured cities. They are translated to either `/search?name=cityname` (search form) or `/city/cityname` (directly specified cities). Both requests are served from the same lines of code in the background. The cityname is passed as value to a prepared SQL statement using a parameter marker for security reasons. The rows are fetched from the database and passed to an HTML template for rendering.
+The app to display city information based on the loaded data set is reduced to a minimum. It offers a search form to specify a city name - names are case sensitive - and few preconfigured cities. They are translated to either `/search?name=cityname` (search form) or `/city/cityname` (directly specified cities). Both requests are served from the same lines of code in the background. The `cityname` is passed as value to a prepared SQL statement using a parameter marker for security reasons. The rows are fetched from the database and passed to an HTML template for rendering.
 
 ## Cleanup
 {: #sql-database-9}
 {: step}
 
 To clean up resources used by the tutorial, follow these steps:
-1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](/resources). 
+1. Visit the [{{site.data.keyword.Bluemix_short}} Resource List](/resources){: external}. 
 2. In the {{site.data.keyword.codeengineshort}} section locate the project **sqldatabase**. Click on the three dots and select **Delete** to delete the project and its app.
 3. Locate the database `sqldatabase` under **Databases**. Again, click on the three dots and select **Delete** to delete the database.
 
@@ -229,4 +230,4 @@ Want to extend this app? Here are some ideas:
 
 * Documentation: [API Description for the ibm_db Python driver](https://github.com/ibmdb/python-ibmdb/wiki/APIs){: external}
 * [Db2 Data Management Console](https://www.ibm.com/products/db2-data-management-console){: external}
-* [Db2 on Cloud](/catalog/services/db2)
+* [Db2 on Cloud](/catalog/services/db2){: external}

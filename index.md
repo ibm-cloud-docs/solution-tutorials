@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-06-14"
 lasttested: "2022-12-21"
 
 ---
@@ -168,7 +168,7 @@ The following sections assume you are running macOS High Sierra or later under a
 ### Docker
 {: #getting-started-macos_docker}
 
-1. Docker Desktop on Mac is one option to run container images on macOS. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/#docker-desktop-license-agreement){: external} before proceeding with the installation. Other options include [Podman](https://podman.io/getting-started/){: external}.
+1. Docker Desktop on Mac is one option to run container images on macOS. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/#docker-desktop-license-agreement){: external} before proceeding with the installation. Other options include [Podman](https://podman.io/get-started){: external}.
 1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Download and install Docker Desktop on Mac from https://docs.docker.com/docker-for-mac/install/.
 1. Verify the installation with:

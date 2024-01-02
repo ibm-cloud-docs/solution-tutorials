@@ -2,13 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-03-29"
+lastupdated: "2023-05-05"
 lasttested: "2019-04-23"
 
 content-type: tutorial
 services: virtual-router-appliance, loadbalancer-service, virtual-servers
 account-plan: paid
 completion-time:
+use-case: Cybersecurity, CloudInfrastructure
 ---
 {{site.data.keyword.attribute-definition-list}}
 

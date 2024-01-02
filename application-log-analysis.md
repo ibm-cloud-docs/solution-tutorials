@@ -1,14 +1,15 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022
-lastupdated: "2023-03-29"
+  years: 2023
+lastupdated: "2023-05-05"
 lasttested: "2023-02-23"
 
 content-type: tutorial
 services: containers, log-analysis, Registry, monitoring
 account-plan: paid
 completion-time: 2h
+use-case: Analytics, ApplicationModernization
 ---
 {{site.data.keyword.attribute-definition-list}}
 
