@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-09-29"
+lastupdated: "2023-12-21"
 lasttested: "2023-09-17"
 
 content-type: tutorial
@@ -21,7 +21,7 @@ use-case: ApplicationModernization, Containers
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -104,7 +104,7 @@ Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster*
 {: #continuous-deployment-to-kubernetes-create_application}
 {: step}
 
-1. From the [{{site.data.keyword.cloud_notm}} console](/), from the menu and select [DevOps](/devops).
+1. From the [{{site.data.keyword.cloud_notm}} console](/), from the menu and select [DevOps](/devops/toolchains).
 2. Click **Create toolchain**.
 3. In the **search box** type **kubernetes** as a filter.
 4. Click on the **Develop a Kubernetes app with Helm** tile.
