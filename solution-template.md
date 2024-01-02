@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022, 2023
-lastupdated: "2023-10-03"
+  years: 2022, 2023, 2024
+lastupdated: "2024-01-02"
 lasttested: "2022-02-22"
 
 content-type: tutorial
@@ -22,7 +22,7 @@ use-case: usecase1, usecase2
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -256,7 +256,7 @@ To mark content as visible only in a tutorials enclose the content with `<!--##i
 
 ```markdown
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](/estimator) to generate a cost estimate based on your projected usage.
 <!--#/istutorial#-->
 ```
 

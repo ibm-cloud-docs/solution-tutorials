@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-10-25"
+  years: 2024
+lastupdated: "2024-01-02"
 lasttested: "2023-10-24"
 
 content-type: tutorial
@@ -20,7 +20,7 @@ use-case: Analytics, Cybersecurity, AIAndML
 {: toc-completion-time="3h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->

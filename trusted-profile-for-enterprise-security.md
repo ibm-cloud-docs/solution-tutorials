@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-10-10"
+  years: 2024
+lastupdated: "2024-01-02"
 lasttested: "2023-10-10"
 
 content-type: tutorial
@@ -20,7 +20,7 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 {: toc-services="secure-enterprise, containers, activity-tracker, Registry"}
 {: toc-completion-time="2h"}
 
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review){: external} to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}
 
 {{site.data.keyword.cloud_notm}} [Identity and Access Management (IAM)](/docs/account?topic=account-cloudaccess) enables you to control which users see, create, use, and manage resources in your cloud environment. Your environment might be a single {{site.data.keyword.cloud_notm}} account, multiples accounts, or an [enterprise](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) with a hierarchy of many account groups and accounts. When operating with account resources, often, users and service IDs are involved. Yet, there are more options available to manage access, assign privileges, and to identify: [Trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract).
