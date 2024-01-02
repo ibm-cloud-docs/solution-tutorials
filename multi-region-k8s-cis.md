@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2023
-lastupdated: "2023-10-10"
+lastupdated: "2023-12-21"
 lasttested: "2022-09-14"
 
 content-type: tutorial
@@ -21,7 +21,7 @@ use-case: ApplicationModernization, Cybersecurity, Containers
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -436,4 +436,4 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 * [{{site.data.keyword.containershort_notm}}](/docs/containers)
 * [Building containers from images](/docs/containers?topic=containers-images)
 * [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
-* [Improving App Availability with Multizone Clusters](https://www.ibm.com/blog/announcements/improving-app-availability-multizone-clusters){: external}
+* [Improving App Availability with Multizone Clusters](https://www.ibm.com/blog/announcement/improving-app-availability-multizone-clusters/){: external}
