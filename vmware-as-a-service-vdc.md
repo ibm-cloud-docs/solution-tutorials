@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} using the VMware Cloud Director Console
+# Configuring a virtual data center in a {{site.data.keyword.vmware-service_short}} using the VMware Cloud Director Console
 {: #vmware-as-a-service-vdc}
 {: toc-content-type="tutorial"}
 {: toc-services="vmware-service"}
@@ -25,8 +25,9 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 30-60 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
+This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single or multi-tenant virtual data center after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
 {: shortdesc}
+
 
 ## Objectives
 {: #vmware-as-a-service-vdc-objectives}
@@ -199,14 +200,17 @@ The next step is to create NAT rules to allow your virtual machines to access th
 
 You will create the following NAT rules in this tutorial.
 
-| Name               | Type            | External IP       | Internal IP         | Application
-| -------------------|-----------------|-------------------|---------------------|-----------------------
-| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | N/A
-| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | N/A
-| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A
+| Name               | Type            | External IP       | Internal IP         | Application  | Priority     | Firewall Match         |
+| -------------------|-----------------|-------------------|---------------------|--------------|--------------|------------------------|
+| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | N/A          | 90           | Match External Address |
+| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | N/A          | 100          | Match Internal Address |
+| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A          | 100          | Match Internal Address |
 {: caption="NAT rules" caption-side="bottom"}
 
 Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console.
+{: important}
+
+Some values, such as `Priority`, `Firewall Match` are configured under Advanced Settings. If an address has multiple NAT rules, the rule with the highest priority is applied. A lower value means a higher precedence for this rule. Firewall Match determines how the firewall matches the address during NATing. You can use `Match Internal Address`, `Match External Address` or `Bypass`.
 {: important} 
 
 To create a destination NAT (DNAT) rule:
@@ -221,7 +225,8 @@ To create a destination NAT (DNAT) rule:
    3. **External IP** – Input one of the public IP addresses provided by {{site.data.keyword.cloud_notm}} to your instance. You may click on the information button to the right of the field to see these IP addresses. In this example, `public-ip-0` (the first actual public IP obtained in the previous step) is used.
    4. ** Internal IP** – This is the IP address of the virtual machines you created in the previous step. In this example, `192.168.100.10/32` is used.
    5. **Application** - Leave empty.
-6. Click **Save** when complete.
+   6. Expand **Advanced Settings** and configure values for `Priority` and `Firewall Match`.
+1. Click **Save** when complete.
 
 The new NAT rule will be created. This may take a few seconds to complete. Repeat the process for other destination NAT rules, if needed in your solution.
 
@@ -237,7 +242,8 @@ To create a source NAT (SNAT) rule:
    3. **External IP** – Input one of the public IP addresses provided by {{site.data.keyword.cloud_notm}} to your instance. You may click on the information button to the right of the field to see these IP addresses. In this example, `public-ip-1` (the second actual public IP obtained in the previous step) is used.
    4. **Internal IP** – This is the CIDR range of the network you created in the previous step. In this example, `192.168.100.0/24` is used.
    5. **Application** - Leave empty.
-6. Click **Save** when complete.
+   6. Expand **Advanced Settings** and configure values for `Priority` and `Firewall Match`.
+1. Click **Save** when complete.
 
 The new NAT rule will be created. This may take a few seconds to complete. Repeat the process for other source NAT rules, if needed in your solution.
 
@@ -256,6 +262,14 @@ The next step is to create firewall rules. By default, the {{site.data.keyword.v
 {: caption="Firewall rules" caption-side="bottom"}
 
 The `default_rule` has been pre-provisioned by {{site.data.keyword.cloud_notm}}. It is listed above just for illustration purposes.
+{: note}
+
+
+The IP addresses used in the firewall rules must match with the settings in your NAT rules. In this example, two different ways have been used for illustration purposes.
+{: note}
+
+
+It is generally not advised to use RDP over public Internet. The rule listed above is just used for illustration purposes.
 {: note}
 
 To create a firewall rule: 

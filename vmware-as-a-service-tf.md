@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Creating a virtual data center in a {{site.data.keyword.vmware-service_short}} with Terraform
+# Configuring a virtual data center in a {{site.data.keyword.vmware-service_short}} with Terraform
 {: #vmware-as-a-service-tf}
 {: toc-content-type="tutorial"}
 {: toc-services="vmware-service"}
@@ -25,7 +25,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to ge
 
 <!--#/istutorial#-->
 
-This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single tenant instance after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} – single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
+This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single or multi-tenant virtual data center after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
 {: shortdesc}
 
 ## Objectives
@@ -229,15 +229,18 @@ You can use it as such, add more networks, more virtual machines and customize N
    vmwaas_org = "put-your-org-id-here"
    vmwaas_vdc_name = "put-your-vdc-name-here"
    
-   vmwaas_user = "put-your-username-here"
-   vmwaas_password = "put-your-password-here"
-   #vmwaas_api_token = ""                                  # Note. This will be supported in the near future.
+   vmwaas_api_token = ""                                    # Note. See VMware Docs to create API token.
+   #vmwaas_user = "put-your-username-here"                  # Note. When using a username and password, create a new local user in Director for terraform.
+   #vmwaas_password = "put-your-password-here"              # Note. When using a username and password, create a new local user in Director for terraform.
    ```
 
-   For these variables, you could alternatively create environment variables named TF_VAR_ for `vmwaas_user` and `vmwaas_password` rather than defining them in `terraform.tfvars` as shown through the `vmwaas.sh` script. In this case, comment these lines out in your `terraform.tfvars`.
+   To create an API token, see [VMware Docs](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-A1B3B2FA-7B2C-4EE1-9D1B-188BE703EEDE.html).
    {: tip}
 
-   If you change the authentication method, the provider block in the code needs to changed to use a different authentication method. Currently only username and password method is supported in {{site.data.keyword.vmware-service_full}} - single tenant instance.
+   For these variables, you could alternatively create environment variables named TF_VAR_ for `vmwaas_api_token`, `vmwaas_user` and `vmwaas_password` rather than defining them in `terraform.tfvars` as shown through the `vmwaas.sh` script. In this case, comment these lines out in your `terraform.tfvars`.
+   {: tip}
+
+   If you change the authentication method, the provider block in the code needs to changed to use a different authentication method.
    {: tip}
 
 2. Set a common name prefix to identify and separate your virtual data center networks, virtual machines and so on.
@@ -653,6 +656,8 @@ You can use it as such, add more networks, more virtual machines and customize N
    }
    ```
 
+It is generally not advised to use RDP over public Internet. The rule listed above is just used for illustration purposes.
+{: note}
 
 ## Init, plan and apply
 {: #vmware-as-a-service-vdc-apply}
