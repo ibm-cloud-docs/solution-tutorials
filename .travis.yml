@@ -5,7 +5,7 @@ node_js:
 branches:
   only:
   - master
-  - draft
+  - review
 
 # BRANCH_WHERE_WE_WORK
 #   --> travis --> BRANCH_FOR_PAGES
@@ -13,7 +13,7 @@ branches:
 env:
   global:
     # the place where we do our daily commits
-    - BRANCH_WHERE_WE_WORK=draft
+    - BRANCH_WHERE_WE_WORK=review
     # the place where we copy files before they get sent to publication
     # we remove the labinabox markup, hidden files, scripts...
     - BRANCH_WHERE_WE_PREPARE_FOR_PUBLISH=master
