@@ -6,7 +6,7 @@ lastupdated: "2024-01-03"
 lasttested: "2023-10-05"
 
 content-type: tutorial
-services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis
+services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-postgresql
 account-plan: paid
 completion-time: 2h
 use-case: ApplicationModernization, Cybersecurity, VirtualPrivateCloud
@@ -16,7 +16,7 @@ use-case: ApplicationModernization, Cybersecurity, VirtualPrivateCloud
 # Centralize communication through a VPC Transit Hub and Spoke architecture - Part two
 {: #vpc-transit2}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis"}
+{: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-postgresql"}
 {: toc-completion-time="2h"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
@@ -375,9 +375,9 @@ Below is the transit VPC ingress route table discussed earlier.  The next hop wi
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|0.0.0.0/0|10.1.15.196
-Dallas 2|0.0.0.0/0|10.2.15.196
-Dallas 3|0.0.0.0/0|10.3.15.197
+Dallas 1|10.0.0.0/8|10.1.15.196
+Dallas 2|10.0.0.0/8|10.2.15.196
+Dallas 3|10.0.0.0/8|10.3.15.197
 
 
 ## DNS
@@ -434,14 +434,14 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 ![Adding virtual private endpoint gateways](images/vpc-transit/vpc-transit-vpe.svg){: caption="Adding virtual private endpoint gateways" caption-side="bottom"}
 {: style="text-align: center;"}
 
-1. Create a {{site.data.keyword.databases-for-redis_full_notm}} instance and VPEs for the transit and each of the spoke VPCs, by applying the vpe_transit_tf and vpe_spokes_tf layers:
+1. Create a {{site.data.keyword.databases-for-postgresql_full_notm}} instance and VPEs for the transit and each of the spoke VPCs, by applying the vpe_transit_tf and vpe_spokes_tf layers:
    ```sh
    ./apply.sh vpe_transit_tf vpe_spokes_tf
    ```
    {: codeblock}
 
-1. There is a set of **vpe** and **vpedns** tests that are available in the pytest script. The **vpedns** test will verify that the DNS name of a {{site.data.keyword.databases-for-redis}} instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **redli** command to access the {{site.data.keyword.databases-for-redis}} instance remotely. Test vpe and vpedns from spoke 0 zone 1:
-   - Expected fail: cross vpc access to the redis DNS names.
+1. There is a set of **vpe** and **vpedns** tests that are available in the pytest script. The **vpedns** test will verify that the DNS name of a {{site.data.keyword.databases-for-postgresql}} instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **psql** command to access the {{site.data.keyword.databases-for-postgresql}} instance remotely. Test vpe and vpedns from spoke 0 zone 1:
+   - Expected fail: cross vpc access to the postgresql DNS names.
 
    ```sh
    pytest -m 'vpe or vpedns' -k spoke0-z1
@@ -454,8 +454,8 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 
    To make the DNS names for the VPE available outside the DNS owning service it is required to update the DNS forwarding rules.
    - For enterprise `appdomain.com` will forward to the transit.
-   - For transit the fully qualified DNS name of the {{site.data.keyword.databases-for-redis}} instance will be forwarded to the spoke instance that owns the {{site.data.keyword.databases-for-redis}} instance.
-   - For spoke_from -> spoke_to access to Redis the spoke_from needs the DNS name for the {{site.data.keyword.databases-for-redis}} instance. The fully qualified Redis name in spoke_from DNS instance will be forwarded to the transit.
+   - For transit the fully qualified DNS name of the {{site.data.keyword.databases-for-postgresql}} instance will be forwarded to the spoke instance that owns the {{site.data.keyword.databases-for-postgresql}} instance.
+   - For spoke_from -> spoke_to access to Redis the spoke_from needs the DNS name for the {{site.data.keyword.databases-for-postgresql}} instance. The fully qualified Redis name in spoke_from DNS instance will be forwarded to the transit.
    - The transit forward fully qualified Redis names to the corresponding spoke.
 
    ![Enabling DNS for virtual private endpoints](images/vpc-transit/vpc-transit-dns-vpe.svg){: caption="Enabling DNS for virtual private endpoints" caption-side="bottom"}
