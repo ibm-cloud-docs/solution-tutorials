@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-09-07"
+  years: 2024
+lastupdated: "2024-01-02"
 lasttested: "2023-09-01"
 
 content-type: tutorial
@@ -21,7 +21,7 @@ use-case: ApplicationModernization
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->

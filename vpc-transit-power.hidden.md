@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-12-18"
+  years: 2024
+lastupdated: "2024-01-02"
 lasttested: "2023-12-18"
 
 content-type: tutorial
@@ -19,7 +19,7 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis, power-iaas"}
 {: toc-completion-time="2h"}
 
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getting-started) can host {{site.data.keyword.powerSys_notm}} instances. The {{site.data.keyword.cloud_notm}} also supports Virtual Private Cloud (VPC). {{site.data.keyword.powerSys_notm}} can connect to VPCs via a {{site.data.keyword.tg_full}} and access VPC resources. This tutorial will walk through an example implementation and explore the architecture depicted in this high-level view:
