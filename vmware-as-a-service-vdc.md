@@ -198,20 +198,32 @@ Upon completion of these tasks, the new IP Sets and Static Groups will be added.
 
 The next step is to create NAT rules to allow your virtual machines to access the public Internet and you to access the virtual machines over the public Internet.
 
-You will create the following NAT rules in this tutorial.
+You will create the following NAT rules in this tutorial.   
 
-| Name               | Type            | External IP       | Internal IP         | Application  | Priority     | Firewall Match         |
-| -------------------|-----------------|-------------------|---------------------|--------------|--------------|------------------------|
-| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | N/A          | 90           | Match External Address |
-| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | N/A          | 100          | Match Internal Address |
-| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | N/A          | 100          | Match Internal Address |
-{: caption="NAT rules" caption-side="bottom"}
+| Name               | Type            | External IP       | Internal IP         | Destination IP | Priority     | Firewall Match         |
+| -------------------|-----------------|-------------------|---------------------|----------------|--------------|------------------------|
+| `snat-to-inet-app` | SNAT            | `public-ip-1`     | `192.168.100.0/24`  | any            | 100          | Match Internal Address |
+| `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | any            | 100          | Match Internal Address |
+{: caption="SNAT rules" caption-side="bottom"}
 
-Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console.
+
+| Name               | Type            | External IP       | Internal IP         | Application    | Priority     | Firewall Match         |
+| -------------------|-----------------|-------------------|---------------------|----------------|--------------|------------------------|
+| `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | -              | 90           | Match External Address |
+{: caption="DNAT rules" caption-side="bottom"}
+
+
+Double-check the IP addresses of the virtual machines you created using the VMware Cloud Director Console. You can use the info button during the rule creation to check available external IP addresses.
+{: important}
+
+When creating your own NAT rules, understand your required traffic flows and design your NAT rules to match this. Check that your rules do not overlap to cause unwanted effects.
 {: important}
 
 Some values, such as `Priority`, `Firewall Match` are configured under Advanced Settings. If an address has multiple NAT rules, the rule with the highest priority is applied. A lower value means a higher precedence for this rule. Firewall Match determines how the firewall matches the address during NATing. You can use `Match Internal Address`, `Match External Address` or `Bypass`.
-{: important} 
+{: important}
+
+In some cases you may need to prevent network address translation for some traffic when a `DNAT` or `SNAT` rule is in place to match an `any` rule. A `NO SNAT` rule prevents the translation of the internal IP address of packets sent from an organization VDC out to an external network or to another organization VDC network. A `NO DNAT` rule prevents the translation of the external IP address of packets received by an organization VDC from an external network or from another organization VDC network.
+{: important}
 
 To create a destination NAT (DNAT) rule:
 
