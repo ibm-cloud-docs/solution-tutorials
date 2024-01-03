@@ -29,7 +29,7 @@ A Virtual Private Cloud (VPC) provides network isolation and security in the {{s
 
 This is part two of a two part tutorial. This part will focus on routing all traffic between VPCs through a transit hub firewall-router. A scalable firewall-router using a Network Load Balancer is discussed and implemented. Private DNS is used for both for microservice identification and {{site.data.keyword.cloud_notm}} service instance identification using a virtual private endpoint gateway.
 
-This tutorial is stand alone and it is not required to execute the steps in [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1). If you are not familiar with VPC, network IP layout and planning in the {{site.data.keyword.cloud_notm}},
+This tutorial is stand alone so it is not required to execute the steps in [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1). If you are not familiar with VPC, network IP layout and planning in the {{site.data.keyword.cloud_notm}},
 {{site.data.keyword.tg_short}}, {{site.data.keyword.BluDirectLink}} or asymmetric routing consider reading through part one.
 
 The hub and spoke model supports a number of different scenarios:
@@ -66,7 +66,6 @@ This tutorial requires:
 * `terraform` to use Infrastructure as Code to provision resources,
 * `python` to optionally run the pytest commands,
 * Implementing a firewall-router will require that you [enable IP spoofing checks](/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check),
-* An SSH key to connect to the virtual servers. If you don't have an SSH key, follow [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
 
 See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites){: external} for a few options including a Dockerfile to easily create the prerequisite environment.
 
@@ -141,7 +140,6 @@ If continuing from part one make special note of the configuration in the terraf
 1. Edit **config_tf/terraform.tfvars**.
    - Make the required changes.
    - Change the value `all_firwewall = true`.
-   - Change the value `enterprise_phantom_address_prefixes_in_transit = false`.
 
 2. If you don't already have one, obtain a [Platform API key](/iam/apikeys) and export the API key for use by Terraform:
 
@@ -174,9 +172,9 @@ If you were following along in part one some additional ingress routes were adde
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|0.0.0.0/0|10.1.0.196
-Dallas 2|0.0.0.0/0|10.2.0.196
-Dallas 3|0.0.0.0/0|10.3.0.196
+Dallas 1|10.1.0.0/16|10.1.15.196
+Dallas 2|10.2.0.0/16|10.2.15.196
+Dallas 3|10.3.0.0/16|10.3.15.196
 
 To observe this:
 1. Open the [VPCs](/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
@@ -191,41 +189,41 @@ Routing all cloud traffic originating at the spokes through the transit VPC fire
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.0.0.0/8|10.1.0.196
-Dallas 2|10.0.0.0/8|10.2.0.196
-Dallas 3|10.0.0.0/8|10.3.0.196
+Dallas 1|10.0.0.0/8|10.1.15.196
+Dallas 2|10.0.0.0/8|10.2.15.196
+Dallas 3|10.0.0.0/8|10.3.15.196
 
-Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating instance. For example a transit test instance 10.1.0.4 (Dallas 1) attempting to connect with 10.2.1.4 (spoke 0, zone 2) will be sent through the firewall-router in zone 1: 10.1.0.196.
+Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating instance. For example a transit test instance 10.1.15.4 (Dallas 1) attempting to connect with 10.2.0.4 (spoke 0, zone 2) will be sent through the firewall-router in zone 1: 10.1.15.196.
 
 Routes in transit's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.0.0.0/8|10.1.0.196
-Dallas 2|10.0.0.0/8|10.2.0.196
-Dallas 3|10.0.0.0/8|10.3.0.196
-Dallas 1|192.168.0.0/16|10.1.0.196
-Dallas 2|192.168.0.0/16|10.2.0.196
-Dallas 3|192.168.0.0/16|10.3.0.196
+Dallas 1|10.0.0.0/8|10.1.15.196
+Dallas 2|10.0.0.0/8|10.2.15.196
+Dallas 3|10.0.0.0/8|10.3.15.196
+Dallas 1|192.168.0.0/16|10.1.15.196
+Dallas 2|192.168.0.0/16|10.2.15.196
+Dallas 3|192.168.0.0/16|10.3.15.196
 
 ### Do not route Intra VPC traffic to the firewall-router
 {: #vpc-transit2-do-not-route-intra-zone-traffic-to-firewall-router}
 
-In this example Intra-VPC traffic will not pass through the firewall-router. For example resources in spoke 0 can connect to other resources on spoke 0 directly. To accomplish this additional more specific routes can be added to delegate internal traffic. For example in spoke 0, which has the CIDR ranges: 10.1.1.0/24, 10.2.1.0/24, 10.3.1.0/24 the internal routes can be delegated.
+In this example Intra-VPC traffic will not pass through the firewall-router. For example resources in spoke 0 can connect to other resources on spoke 0 directly. To accomplish this additional more specific routes can be added to delegate internal traffic. For example in spoke 0, which has the CIDR ranges: 10.1.0.0/24, 10.2.0.0/24, 10.3.0.0/24 the internal routes can be delegated.
 
 Routes in spoke 0's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.1.1.0/24|delegate
-Dallas 1|10.2.1.0/24|delegate
-Dallas 1|10.3.1.0/24|delegate
-Dallas 2|10.1.1.0/24|delegate
-Dallas 2|10.2.1.0/24|delegate
-Dallas 2|10.3.1.0/24|delegate
-Dallas 3|10.1.1.0/24|delegate
-Dallas 3|10.2.1.0/24|delegate
-Dallas 3|10.3.1.0/24|delegate
+Dallas 1|10.1.0.0/24|delegate
+Dallas 1|10.2.0.0/24|delegate
+Dallas 1|10.3.0.0/24|delegate
+Dallas 2|10.1.0.0/24|delegate
+Dallas 2|10.2.0.0/24|delegate
+Dallas 2|10.3.0.0/24|delegate
+Dallas 3|10.1.0.0/24|delegate
+Dallas 3|10.2.0.0/24|delegate
+Dallas 3|10.3.0.0/24|delegate
 
 Similar routes are added to the transit and other spokes.
 
@@ -260,11 +258,11 @@ As mentioned earlier for a system to be resilient across zonal failures it is be
 ![Fixing cross zone routing](images/vpc-transit/vpc-transit-asymmetric-spoke-fw.svg){: caption="Fixing cross zone routing" caption-side="bottom"}
 {: style="text-align: center;"}
 
-The green path is an example of the originator spoke 0 zone 2 10.2.1.4 routing to spoke 1 zone 1 10.1.2.4. The matching egress route is:
+The green path is an example of the originator spoke 0 zone 2 10.2.0.4 routing to spoke 1 zone 1 10.1.1.4. The matching egress route is:
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 2|10.0.0.0/8|10.2.0.196
+Dallas 2|10.0.0.0/8|10.2.15.196
 
 Moving left to right the firewall-router in the middle zone, zone 2, of the diagram is selected. On the return path zone 1 is selected.
 
@@ -277,11 +275,11 @@ Routes in each spoke's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 2|10.1.0.0/16|10.1.0.196
-Dallas 3|10.1.0.0/16|10.1.0.196
-Dallas 3|10.2.0.0/16|10.2.0.196
+Dallas 2|10.1.0.0/16|10.1.15.196
+Dallas 3|10.1.0.0/16|10.1.15.196
+Dallas 3|10.2.0.0/16|10.2.15.196
 
-These routes are also going to correct a similar transit <--> spoke cross zone asymmetric routing problem. Consider transit worker 10.1.0.4 -> spoke worker 10.2.1.4. Traffic from transit worker in zone 1 will choose the firewall-router in the zone 1 (same zone). On the return trip instead of firewall-router in zone 2 (same zone) now firewall-router in zone 1 will be used.
+These routes are also going to correct a similar transit <--> spoke cross zone asymmetric routing problem. Consider transit worker 10.1.15.4 -> spoke worker 10.2.0.4. Traffic from transit worker in zone 1 will choose the firewall-router in the zone 1 (same zone). On the return trip instead of firewall-router in zone 2 (same zone) now firewall-router in zone 1 will be used.
 
 1. Apply the all_firewall_asym layer:
    ```sh
@@ -377,9 +375,9 @@ Below is the transit VPC ingress route table discussed earlier.  The next hop wi
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|0.0.0.0/0|10.1.0.196
-Dallas 2|0.0.0.0/0|10.2.0.196
-Dallas 3|0.0.0.0/0|10.3.0.197
+Dallas 1|0.0.0.0/0|10.1.15.196
+Dallas 2|0.0.0.0/0|10.2.15.196
+Dallas 3|0.0.0.0/0|10.3.15.197
 
 
 ## DNS
