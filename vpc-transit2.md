@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2024
 lastupdated: "2024-01-04"
-lasttested: "2023-10-05"
+lasttested: "2024-10-04"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-postgresql
