@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2022, 2023
-lastupdated: "2023-09-01"
+  years: 2022, 2023, 2024
+lastupdated: "2024-01-02"
 lasttested: "2022-02-22"
 
 content-type: tutorial
@@ -13,7 +13,6 @@ completion-time: 2h
 # use-case is a comma-separated list or yaml bullet format. Select one or more use cases that represent your architecture from the Digital Taxonomy [use case](https://github.ibm.com/digital/taxonomy/blob/main/subsets/use_cases/use_cases_flat_list.csv) list. Use the value in the code column. The list available under [Topics](https://github.ibm.com/digital/taxonomy/blob/main/topics/topics_flat_list.csv) can also be used, but don't go too crazy. 
 use-case: usecase1, usecase2 
 ---
-
 {{site.data.keyword.attribute-definition-list}}
 
 # How to write a tutorial
@@ -23,7 +22,7 @@ use-case: usecase1, usecase2
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -257,7 +256,7 @@ To mark content as visible only in a tutorials enclose the content with `<!--##i
 
 ```markdown
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Pricing Calculator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Pricing Calculator](/estimator) to generate a cost estimate based on your projected usage.
 <!--#/istutorial#-->
 ```
 
@@ -277,7 +276,7 @@ This section will only appear in a workshop and not in the tutorial.
 <!--#/isworkshop#-->
 ```
 
-Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs-solutions/solution-tutorials/blob/draft/scripts/sync.sh#L32){: external} makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
+Notice that the all section content is surrounded by html comments markup `<!--` and `-->`. This makes sure the content is not visible when the docs framework builds `test.cloud.ibm.com`. When we push changes to the `publish` branch, [`sync.sh`](https://github.ibm.com/cloud-docs-solutions/solution-tutorials/blob/review/scripts/sync.sh#L35){: external} makes sure to remove all markup so the workshop specific sections do not show up in our GitHub public repo.
 
 ### Testing coding styles
 {: #solution-template-18}
@@ -291,3 +290,32 @@ resource "ibm_is_vpc" "myvpc" {
 }
 ```
 {: codeblock}
+
+## The following images are referenced by Lab in a box
+{: #solution-template-labinabox}
+
+DO NOT REMOVE THESE FILES. They are referenced in https://github.ibm.com/lab-in-a-box/tutorials-to-gitbook/blob/master/src/static/tutorials.json
+
+![Architecture](images/gettingstarted/logo.jpg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution12/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution21/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution2/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution34-cloud-e2e-security/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution55-openshift-microservices/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution57-openshift-service-mesh/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution54-code-engine/architecture_diagram.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution58-vmware-solutions-getting-started/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution-satellite-tour-hidden/architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+
+![Architecture](images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}

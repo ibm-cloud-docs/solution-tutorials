@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-05-18"
-lasttested: "2023-02-24"
+  years: 2024
+lastupdated: "2024-01-02"
+lasttested: "2023-09-26"
 
 content-type: tutorial
 services: openshift, log-analysis, monitoring, containers, Cloudant
@@ -21,7 +21,7 @@ use-case: ApplicationModernization, Containers
 {: toc-completion-time="3h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -496,12 +496,12 @@ Let's understand exactly how Operators work. In the first exercise, you used a b
 1. In the **Administrator** perspective, and click **Operators > OperatorHub**.
 2. Find the **IBM Cloud Operator**, and click **Install**.
 3. Keep the default options and click **Install**.
-4. You may need to wait a few seconds and refresh for the operator to show the status as `Succeeded`.
+4. After a few seconds `installed operator - ready for use` should be displayed.
 
 ### Create a Cloudant Service and Bind using the CRDs
 {: #openshift-microservices-23}
 
-Click on the **IBM Cloud Operator** to open it.  Scroll down to the **Prerequisites** section.
+Click to open it.  Scroll down to the **Prerequisites** section.
 
 An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database is required in this section. The API key is going to be stored in a Kubernetes Secret resource. This will need to be created using the shell. There are instructions in the **Prerequisites** section of the installed operator.  Steps:
 
@@ -514,17 +514,21 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    To see the the resource groups in your account, run `ibmcloud resource groups` command
    {: tip}
 
-2. Verify that it looks something like this.  CF API endpoint, Org and Space can be empty, Resource group matches your cluster:
+2. Verify that the resource group and region matches your cluster.  The following command should return your cluster.
    ```sh
-   API endpoint:      https://{DomainName}
-   Region:            us-south
-   User:              YOU@us.ibm.com
-   Account:           YOURs Account (32cdeadbeefdeadbeef1234132412343) <-> 1234567
-   Resource group:    YOUR resource group
-   CF API endpoint:
-   Org:
-   Space:
+   ibmcloud oc cluster ls
    ```
+   {: pre}
+
+Output looks something like this:
+   ```sh
+   $ ibmcloud oc cluster ls
+   OK
+   Name      ID                     State    Created        Workers   Location   Version                  Resource Group Name   Provider
+   osmicro   ck68svdd0vvcfs6ad9ag   normal   18 hours ago   2         Dallas     4.12.26_1562_openshift   default               vpc-gen2
+   ```
+   {: screen}
+
 3. Use the helper script provided by IBM to create the following resources:
    - {{site.data.keyword.Bluemix_notm}} API key that represents you and your permissions to use {{site.data.keyword.Bluemix_notm}}
    - Kubernetes Secret named `secret-ibm-cloud-operator` in the `default` namespace.  This secret has the keys `api-key` and `region`.  The operator will use this data to create the cloudant service instance.
@@ -537,7 +541,7 @@ An API key with the appropriate permissions to create a {{site.data.keyword.clou
    ```
    {: pre}
 
-4. Back in the {{site.data.keyword.redhat_openshift_notm}} web console, click the **Create instance** under the **Service** tab on the **Installed Operators** of the **IBM Cloud Operator** page and select **YAML view** to bring up the yaml editor.
+4. Back in the {{site.data.keyword.redhat_openshift_notm}} web console, click the **Create service** under the **Service** tab on the **Installed Operators** of the **IBM Cloud Operator** page and select **YAML view** to bring up the yaml editor.
 5. Make the suggested substitutions where the serviceClass is **cloudantnosqldb** and the plan can be **lite** or **standard** (only one lite plan is allowed per account). Replace `<your-initials>`:
    ```yaml
    apiVersion: ibmcloud.ibm.com/v1
@@ -790,7 +794,7 @@ Launch the web UI within the context of a {{site.data.keyword.la_short}} instanc
 
 1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](/kubernetes/clusters?platformType=openshift)
 2. Click on your cluster and verify the **Overview** tab on the left is selected
-3. Next to **Logging**, click the **Launch** button.
+3. In the **Integrations** section next to **Logging**, click the **Launch** button.
 
 The {{site.data.keyword.la_short}} UI should open in a new tab.
 
@@ -940,7 +944,6 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 
 1. In the {{site.data.keyword.la_short}} web UI, click the **Boards** icon.
 1. Select **NEW BOARD** to create a new dashboard.
-1. Click **Add Graph**.
 1. Select the Field **All lines** under Graph a field.
 1. Select the Filter **app:patient-health-frontend**.
 
@@ -954,11 +957,11 @@ Complete the following steps to create a dashboard to monitor logs from the lab'
 
    A new page opens with the relevant log entries.  Click the browser's back button when done with the log lines to return to the graph.
 
-1. Add subplots to analyze the data by applying additonal filtering criteria.
+1. Add breakdowns to analyze the data by applying additonal filtering criteria.
 
    ![Show subplots](images/solution55-openshift-microservices/board-img-8.png){: caption="Show subplots" caption-side="bottom"}
 
-   1. Click **Show subplots**.
+   1. Click **View breakdowns**.
    2. Select **Histogram** and **level**.Click **Add Breakdown**.
 
    ![Histogram](images/solution55-openshift-microservices/board-img-11.png){: caption="Histogram" caption-side="bottom"}
@@ -1072,7 +1075,7 @@ The following table lists the different types of pre-defined dashboards:
 
 1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](/kubernetes/clusters?platformType=openshift) and notice the {{site.data.keyword.redhat_openshift_notm}} clusters
 2. Click on your cluster and verify the **Overview** tab on the left is selected
-3. Next to **Monitoring**, click the **Launch** button.
+3. In the **Integrations** section next to **Monitoring**, click the **Launch** button.
 
 Initial data may NOT be available on newly created **Monitoring** instances.
 - After a few minutes, raw data will be displayed
@@ -1089,26 +1092,25 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    * **Containers > Container Resource Usage**
    * **Host Infrastructure > Host Resource Usage**
 
-2. Select the **Pod Rightsizing & Workload Capacity Optimization** template. This dashboard helps you to optimize your infrastructure and better control cluster spend by ensure pods are sized correctly. Understand if you can free up resources by reducing memory and/or CPU requests.
+2. Select **Kubernetes** > **Pod Rightsizing & Workload Capacity Optimization** template. This dashboard helps you to optimize your infrastructure and better control cluster spend by ensure pods are sized correctly. Understand if you can free up resources by reducing memory and/or CPU requests.
 
-### Explore the Network
+### Explore the Application
 {: #openshift-microservices-45}
 
-1. Select **Dashboards** and the template **Host Infrastructure > Network**.
+1. Select **Dashboards** and the template **Kubernetes > Workload Status & Performance**.
 
-   The following dashboard is displayed. It shows information about all resources that are monitored through the instance.
-
-   ![Network](images/solution55-openshift-microservices/dashboard-img-2.png){: caption="Network" caption-side="bottom"}
+   A detailed dashboard showing all the pods in the cluster.
 
 2. Create a customized dashboard and then scope it to a specific namespace.
-   - In the action menu in the upper right click **Create Custom Dashboard** and name it `Yourname Network`
-   - Click **Create and Open**.
+   - In the upper right click **Copy to my Dashboards** and name it `Workload Status & Performanceapp example-health`
+   - Click **Create and Open** to create your own dashboard.
    - Edit the dashboard scope.
-   - Set the filter to `kube.namespace.name`, `is`, `ibm-observe`.
-      ![Configure Filter](images/solution55-openshift-microservices/explore-img-10.png){: caption="Configure Filter" caption-side="bottom"}
+   - Set the filter for `kube_namespace_name`, `is`, `example-health`.
    - Click **Save**.
 
-    The dashboard now shows information about the ibm-observe namespace.
+    The dashboard now shows information focused on the example-health namespace.
+    
+    Scroll down to the TimeCharts for HTTP Requests, Latency, Error, ... to understand the performance of the application.
 
     ![Custom Network Traffic and Bandwidth](images/solution55-openshift-microservices/dashboard-img-5.png){: caption="Custom Network Traffic and Bandwidth" caption-side="bottom"}
 

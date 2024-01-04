@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-28"
-lasttested: "2023-01-26"
+lastupdated: "2023-12-20"
+lasttested: "2023-12-20"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
@@ -20,7 +20,7 @@ use-case: Cybersecurity
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -77,7 +77,7 @@ The context for a restriction is made up of network zones and service endpoints.
 
 Network zones can be used for the definition of multiple rules. Rules have an enforcement mode which is one of disabled, report-only, or enabled.
 
-At the moment, not all cloud services support the report-only mode. Moreover, these service also do not generate any CBR-related log entries when enabled. Check the individual service documentation for details.
+At the moment, not all cloud services support the report-only mode. Moreover, these services also do not generate any CBR-related log entries when enabled. Check the individual service documentation for details.
 {: note}
 
 ![Context-based restrictions](images/solution67-cbr-enhanced-security/CBR-diagram.svg){: caption="A diagram that shows how context-based restrictions work" caption-side="bottom"}
@@ -94,6 +94,7 @@ For evaluating the impact of context-based restrictions, you are going to create
 3. Enter **VPCzone** as name. Under **Allowed VPCs**, select the one with your {{site.data.keyword.containershort_notm}} cluster. Click **Next** to review, then **Create** the zone.
 4. Next, create a rule using the zone by clicking on **Rules** in the navigation on the left, then **Create**.
 5. Select **{{site.data.keyword.registryshort_notm}}** in the **Service** section and click **Next**.
+5. Leave the **APIs** section with **All** Service APIs click **Next**.
 6. Then, under **Resources**, choose **Specific resources**. Pick **Resource Type** as attribute and specify **namespace** as value. Add another condition and configure **Resource Name** as **YOUR_INITIALS-e2esec** (the same value as in step 1). Click **Review**, then **Continue**.
 7. Select the **VPCzone** you created earlier from the list. Then use **Add** and **Continue** to get to the last step of the dialog. Mark the **Enforcement** as **Report-only**. Thereafter, **Create** the rule.
 
@@ -171,7 +172,7 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 
 When working with the {{site.data.keyword.at_short}} logs, you can utilize query strings like the following to easily find the relevant log records:
 - When in report mode, `"context restriction" permit OR deny` returns the log lines with access which would have rendered a **Permit** or **Deny**.
-- In report mode, you can use `"context restriction" permit` to only show access which would have been the permitted. Similarly, use `"context restriction" deny` for denied access.
+- In report mode, you can use `"context restriction" permit` to only show access which would have been permitted. Similarly, use `"context restriction" deny` for denied access.
 - Last, when in **enforced** mode, use a query string like `context restriction rendered` for log lines related to denied access.
 
 Monitoring a new rule is recommended for 30 days prior to enforcing it. Learn more about [**Monitoring context-based restrictions**](/docs/account?topic=account-cbr-monitor) both in report-only and enabled mode in the CBR documentation.
@@ -197,16 +198,21 @@ In summary, these questions should be asked:
 Use the report mode to be aware of activities matching the context-based restrictions. Do the rule-based decisions render a permit or deny? Does that match your expectation? To learn about activities and to handle them correctly with CBR rules, a test phase in reporting mode of at least a month is recommended. This allows for an iterative approach towards the desired set of network zones and context rules.
 
 For this tutorial, we are going to define the following network zones:
-* a zone for each of the deployed services which are supported as service reference for originating traffic
-* a zone for each for the Kubernetes cluster
+* a zone for the {{site.data.keyword.containershort_notm}} cluster
+* a zone for {{site.data.keyword.cos_short}}
 * for an IP range with the addresses of a home network (corporate or bastion) to serve as **homezone**
-* a zone for each of the CBR-enabled platform services
 
 Thereafter, we are going to define context rules as follows:
-* for the access to the [{{site.data.keyword.keymanagementserviceshort}} instance](/docs/key-protect?topic=key-protect-access-control-with-cbr)
-* for the access to the [{{site.data.keyword.cos_short}} instance and its bucket](/docs/cloud-object-storage?topic=cloud-object-storage-setting-a-firewall)
-* for the access to the [{{site.data.keyword.registryshort_notm}} and the namespace with the container image](/docs/Registry?topic=Registry-iam#iam_cbr)
-* for the access to the [{{site.data.keyword.containershort_notm}} cluster and its management API](/docs/containers?topic=containers-cbr#protect-api-types-cbr)
+* for the access to the [{{site.data.keyword.keymanagementserviceshort}} instance](/docs/key-protect?topic=key-protect-access-control-with-cbr) from zones:
+   * {{site.data.keyword.containershort_notm}} cluster
+   * {{site.data.keyword.cos_short}}
+* for the access to the [{{site.data.keyword.cos_short}} instance and its bucket](/docs/cloud-object-storage?topic=cloud-object-storage-setting-a-firewall) from zones:
+   * {{site.data.keyword.containershort_notm}} cluster
+   * homezone
+* for the access to the [{{site.data.keyword.registryshort_notm}} and the namespace with the container image](/docs/Registry?topic=Registry-iam#iam_cbr) from zones:
+   * {{site.data.keyword.containershort_notm}} cluster
+* for the access to the [{{site.data.keyword.containershort_notm}} cluster and its management API](/docs/containers?topic=containers-cbr#protect-api-types-cbr) from zones:
+   * homezone
 
 All the above zones and rules can be deployed in either report-only or enforced mode with a single Terraform command. Note that the rules are not meant for production use, but as a sample to investigate usage and traffic in report-only mode.
 
@@ -330,7 +336,7 @@ To remove the resource, use the browser and navigate to the [{{site.data.keyword
 {: #cbr-security-12}
 {: related}
 
-* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/cloud/blog/towards-zero-trust-with-context-based-restrictions){: external}
-* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/cloud/blog/announcements/introducing-context-based-restrictions){: external}
+* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/blog/towards-zero-trust-with-context-based-restrictions){: external}
+* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/blog/announcement/introducing-context-based-restrictions/){: external}
 * [What is Zero Trust?](https://www.ibm.com/topics/zero-trust){: external}
-* Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
+* [Best practices for organizing users, teams, applications](/docs/account?topic=account-account_setup)

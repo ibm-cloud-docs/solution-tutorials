@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-08-31"
+  years: 2024
+lastupdated: "2024-01-04"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -24,7 +24,7 @@ This tutorial describes the use of **Classic Infrastructure**.  Most workloads c
 {: note}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -75,10 +75,10 @@ The [Isolate workloads with a secure private network](/docs/solution-tutorials?t
 | APP zone subnet & CIDR | &lt;DC1 APP zone subnet/CIDR&gt; | &lt;DC2 APP zone subnet/CIDR&gt; |
 {: caption="Network details to write down for next steps" caption-side="bottom"}
 
-1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances](/classic/network/gatewayappliances) page.
-2. Locate the Gateway VLANs section and click on the Gateway [VLAN](/classic/network/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
+1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances](/netsec/gateway-appliances) page.
+2. Locate the Gateway VLANs section and click on the Gateway [VLAN](/networking/vlans) on the **Private** network to view the VLAN details. The name should contain the id, `bcrxxx`, standing for 'backend customer router' and be of the form `nnnxx.bcrxxx.xxxx`.
 3. The provisioned VRA will be seen under the **Devices** section. From under the **Subnets** section, make a note of the VRA private subnet IP address and CIDR (/26). The subnet will be of type primary with 64 IPs. These details are required later for routing configuration.
-4. Again on the Gateway Details page, locate the **Associated VLANs** section and click on the [VLAN](/classic/network/vlans) on the **Private** network that was associated to create the secure network and APP zone.
+4. Again on the Gateway Details page, locate the **Associated VLANs** section and click on the [VLAN](/networking/vlans) on the **Private** network that was associated to create the secure network and APP zone.
 5. The provisioned VSI will be seen under the **Devices** section. From under the **Subnets** section, make a note of the  VSI subnet IP address and CIDR (/26) as these are required for routing configuration. This VLAN and subnet is identified as the APP zone in both VRA firewall configurations and is recorded as the &lt;APP Zone subnet/CIDR&gt;.
 
 
@@ -92,7 +92,7 @@ VLANs associated with VRAs can only communicate via their associated VRA, as det
 
 VLANs not associated with the secure private networks created by the VRAs, are allowing interconnection of these ‘unassociated’ VLANs across data centers. This includes the VRA Gateway (transit) VLANs belonging to the same IBM Cloud account in different data centers. Hence allowing VRAs to communicate across data centers when backend network connectivity is enabled. With VRA to VRA connectivity, the VRA firewall and routing configuration enable servers within the secure networks to connect.
 
-Check your account to enable VRF or VLAN spanning.  Only one of these can be enabled and VRF is preferred. To determine if VRF is enabled see [Enabling VRF and service endpoints](docs/account?topic=account-vrf-service-endpoint). See [VLAN spanning](docs/vlans?topic=vlans-vlan-spanning) to determine if VLAN spanning is enabled.
+Check your account to enable VRF or VLAN spanning.  Only one of these can be enabled and VRF is preferred. To determine if VRF is enabled see [Enabling VRF and service endpoints](/docs/account?topic=account-vrf-service-endpoint). See [VLAN spanning](/docs/vlans?topic=vlans-vlan-spanning) to determine if VLAN spanning is enabled.
 
 Confirm that the two VRAs can now communicate:
 
@@ -179,7 +179,7 @@ The existing APP zone firewall rules are only configured to allow traffic to and
 
 Steps to take to remove the resources created in this tutorial.
 
-The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](/classic/network/gatewayappliances) page.
+The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](/netsec/gateway-appliances) page.
 {: tip}
 
 1. Cancel any virtual servers or bare-metal servers

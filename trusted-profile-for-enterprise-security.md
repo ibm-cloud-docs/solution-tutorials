@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-07-14"
-lasttested: "2023-07-14"
+  years: 2024
+lastupdated: "2024-01-02"
+lasttested: "2023-10-10"
 
 content-type: tutorial
 services: secure-enterprise, containers, activity-tracker, Registry
@@ -17,10 +17,10 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 # Use trusted profiles as foundation for secure cloud environments
 {: #trusted-profile-for-enterprise-security}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, activity-tracker, Registry"}
+{: toc-services="secure-enterprise, containers, activity-tracker, Registry"}
 {: toc-completion-time="2h"}
 
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}
 
 {{site.data.keyword.cloud_notm}} [Identity and Access Management (IAM)](/docs/account?topic=account-cloudaccess) enables you to control which users see, create, use, and manage resources in your cloud environment. Your environment might be a single {{site.data.keyword.cloud_notm}} account, multiples accounts, or an [enterprise](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) with a hierarchy of many account groups and accounts. When operating with account resources, often, users and service IDs are involved. Yet, there are more options available to manage access, assign privileges, and to identify: [Trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract).
@@ -56,7 +56,7 @@ Similar to users and service IDs, [trusted profiles](/docs/account?topic=account
 
 You configure that someone or something else (see below) as part of the trusted profile setup. All the usual options are available, the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs, Terraform or the {{site.data.keyword.cloud_notm}} console. 
 
-In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles) have their own section. There, you can easily create and manage them. The following screenshot shows the second step of the dialog to create a trusted profile. You can [configure how to establish trust](/docs/account?topic=account-create-trusted-profile), which entity can assume the identity of the trusted profile. It is one or more of:
+In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles){: external} have their own section. There, you can easily create and manage them. The following screenshot shows the second step of the dialog to create a trusted profile. You can [configure how to establish trust](/docs/account?topic=account-create-trusted-profile), which entity can assume the identity of the trusted profile. It is one or more of:
 - Federated users
 - Compute resources
 - {{site.data.keyword.cloud_notm}} services
@@ -99,7 +99,7 @@ Instead of through user properties supplied by an identity provider, in this cas
 
 The benefit of utilizing a trusted profile based on a compute resource is that this solution avoids using an API key. Thus, there are no requirements and challenges on how to create, store and protect any shared API key, how to assign and manage privileges. The app which assumes the identity of a trusted profile simply fetches a special compute resource token, then turns it into a regular IAM access token for the trusted profile. Thereafter, the intended tasks can be performed with the token provided for authentication.
 
-See the blog post [Developer Tricks: Simulate Cloud Security for Local App Development](https://www.ibm.com/cloud/blog/developer-tricks-simulate-cloud-security-for-local-app-development){: external} for some background on the compute resource token. Learn how to locally develop and test apps utilizing that token.
+See the blog post [Developer Tricks: Simulate Cloud Security for Local App Development](https://www.ibm.com/blog/developer-tricks-simulate-cloud-security-for-local-app-development){: external} for some background on the compute resource token. Learn how to locally develop and test apps utilizing that token.
 {: tip}
 
 
@@ -123,7 +123,7 @@ To put theory into praxis, you are going to authorize a containerized app to per
 
 For security reasons, the app is operating in a read-only mode. It tries to gather a list of your deployed resources. You will assign privileges to the app which determine which resources it can read. Moreover, you will deploy the app in a way, so that it is accessible from within the Kubernetes cluster only, not from the public internet.
 
-The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity) discusses the same scenario.
+The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/blog/turn-your-container-into-a-trusted-cloud-identity){: external} discusses the same scenario.
 {: tip}
 
 ## Kubernetes cluster as compute resource
@@ -137,7 +137,7 @@ Skip this section if you have an existing cluster you want to reuse with this tu
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. A **minimum Kubernetes version of 1.21 is required**. Make sure to select an appropriate version when creating the cluster.
 
-Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
+Open the [Kubernetes clusters](/kubernetes/clusters){: external} and click **Create cluster**. See the documentation referenced below for more details based on the cluster type.  Summary:
 - Click **Standard tier cluster**
 - For Kubernetes on VPC infrastructure see the reference documentation [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui).
    - Click **Create VPC**:
@@ -145,18 +145,18 @@ Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster*
       - Chose the same resource group as the cluster.
       - Click **Create**.
    - Attach a Public Gateway to each of the subnets that you create:
-      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs).
+      - Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs){: external}.
       - Click the previously created VPC used for the cluster.
       - Scroll down to subnets section and click a subnet.
       - In the **Public Gateway** section, click **Detached** to change the state to **Attached**.
       - Click the browser **back** button to return to the VPC details page.
       - Repeat the previous three steps to attach a public gateway to each subnet.
-- For Kubernetes on Classic infrastructure see reference documentation [Creating classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui).
+- For Kubernetes on Classic infrastructure see the reference documentation [Creating classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui).
 - Choose a resource group.
 - Uncheck all zones except one.
 - Scale down to 1 **Worker nodes per zone**.
 - Choose the smallest **Worker Pool flavor**.
-- Enter a **Cluster name** **mycluster-tpcr**.
+- For the **Cluster name** use **mycluster-tpcr**.
 - Click **Create**.
   
 When the cluster is provisioned, leave the browser (*cluster overview*) tab open and available for later. You can move on to the next steps nonetheless.
@@ -184,7 +184,7 @@ When the cluster is provisioned, leave the browser (*cluster overview*) tab open
 {: #trusted-profile-for-enterprise-security-cr3}
 {: step}
 
-With the Kubernetes cluster and the trusted profile in place, it is time to deploy a simple test app. The source code for the app and the configuration is in the [GitHub repository **trusted-profile-enterprise-security**](https://github.com/IBM-Cloud/trusted-profile-enterprise-security){: external} You don't need it for the deployment, but might be interested in how it works nonetheless.
+With the Kubernetes cluster and the trusted profile in place, it is time to deploy a simple test app. The source code for the app and the configuration is in the GitHub repository [**trusted-profile-enterprise-security**](https://github.com/IBM-Cloud/trusted-profile-enterprise-security){: external}. You don't need it for the deployment, but might be interested in how it works nonetheless.
 
 1. In the browser tab *cluster overview*, check that the cluster has been fully deployed.  You might want to refresh the browser and check that all checkmarks are green. If this is the case, click on **Kubernetes dashboard** and a new browser tab opens (*Kubernetes dashboard*).
 2. In the top left, find the namespace selector and switch to **All namespaces**.
@@ -294,7 +294,7 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
    
    ![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/solution68-trusted-profile-for-enterprise-security/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
 
-5. Now, visit the browser tab *Kubernetes dashboard* and check the container log. The app prints details on the [JWT access token](https://www.ibm.com/cloud/blog/json-web-tokens-as-building-blocks-for-cloud-security){: external} it uses to authenticate for listing the resources. Examine the individual key/value pairs, including **sub** (subject) twice. They relate to the trusted profile and the compute resource.
+5. Now, visit the browser tab *Kubernetes dashboard* and check the container log. The app prints details on the [JWT access token](https://www.ibm.com/blog/json-web-tokens-as-building-blocks-for-cloud-security){: external} it uses to authenticate for listing the resources. Examine the individual key/value pairs, including **sub** (subject) twice. They relate to the trusted profile and the compute resource.
 6. Switch to the browser tab *IAM trusted profile* with the configuration for **TPwithCR**. In the form, click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
 7. Move back to the browser tab *container shell* and run this command again to list resources:
    ```sh
@@ -322,5 +322,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #trusted-profile-for-enterprise-security-related}
 
 - The source code for the app and the configuration is in the [GitHub repository **trusted-profile-enterprise-security**](https://github.com/IBM-Cloud/trusted-profile-enterprise-security){: external}
-- Blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/cloud/blog/turn-your-container-into-a-trusted-cloud-identity){: external}
-- Blog post [Secure Onboarding for Your Workshops and Hackathons](https://www.ibm.com/cloud/blog/secure-onboarding-for-your-workshops-and-hackathons){: external}
+- Blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/blog/turn-your-container-into-a-trusted-cloud-identity){: external}
+- Blog post [Secure Onboarding for Your Workshops and Hackathons](https://www.ibm.com/blog/secure-onboarding-for-your-workshops-and-hackathons){: external}

@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2023-02-07"
+  years: 2024
+lastupdated: "2024-01-04"
+lasttested: "2023-12-28"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link
@@ -18,8 +18,8 @@ use-case: ApplicationModernization, Cybersecurity, VirtualPrivateCloud
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, transit-gateway, direct-link"}
 {: toc-completion-time="2h"}
-
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+/
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 A Virtual Private Cloud (VPC) provides network isolation and security in the {{site.data.keyword.cloud_notm}}. A VPC can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. VPCs can be connected to an on-premises enterprise and each other. This may create the need to route traffic through centralized firewall-gateway appliances. This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
@@ -31,10 +31,10 @@ A Virtual Private Cloud (VPC) provides network isolation and security in the {{s
 This is part one of a two part tutorial. This part will introduce the VPC transit hub as the conduit to the enterprise. Enterprise to spoke VPC connectivity between microservices will be discussed and implemented. This architecture will support a number of scenarios:
 
 - The hub is a central point of traffic routing between enterprise and the cloud.
-- Enterprise to cloud traffic is routed through the hub, and can be monitored, and logged through Network Function Virtualization (NFV) appliance running inside the hub.
-- The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
-- The hub can be the repository for shared microservices used by spokes.
-- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
+- Enterprise to cloud traffic is routed through the hub, and can be monitored, and logged through a Network Function Virtualization (NFV) appliance running inside the hub.
+- The hub can monitor all or some of the traffic: spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
+- The hub can hold shared microservices used by spokes.
+- The hub can hold shared cloud resources, like databases, accessed through [virtual private endpoint gateways](/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes.
 - The hub can hold the VPN resources that are shared by the spokes.
 
 ([Part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2)) will extend this tutorial by routing all VPC to VPC traffic through the hub, implement a highly available firewall-router and route traffic to {{site.data.keyword.cloud_notm}} service instances with DNS resolution.
@@ -98,22 +98,21 @@ Above the enterprise is on the left and the {{site.data.keyword.cloud_notm}} on 
    - 10.1.0.0/16, zone 1, Dallas 1, us-south-1.
    - 10.2.0.0/16, zone 2, Dallas 2, us-south-2.
    - 10.3.0.0/16, zone 3, Dallas 3, us-south-3.
-- The transit VPC consumes CIDRs 10.\*.0.0/24:
+- The transit VPC consumes CIDRs 10.\*.15.0/24:
+   - 10.1.15.0/24, zone 1.
+   - 10.2.15.0/24, zone 2.
+   - 10.3.15.0/24, zone 3.
+- Spoke 0 consumes 10.\*.0.0/24 or CIDRs:
    - 10.1.0.0/24, zone 1.
    - 10.2.0.0/24, zone 2.
    - 10.3.0.0/24, zone 3.
-- Spoke 0 consumes 10.\*.1.0/24 or CIDRs:
-   - 10.1.1.0/24, zone 1.
-   - 10.2.1.0/24, zone 2.
-   - 10.3.1.0/24, zone 3.
-- The zone box within a VPC shows the Address Prefix. In the transit for zone 1 this is 10.1.0.0/16 overlaps with the spokes and seems incorrect. CIDR 10.1.0.0/24 more accurately describes the transit VPC zone. This is a routing requirement that will be discussed in a later section.
 - The subnet CIDRs further divide the /24 into /26.
 
-The subnets in the transit and spoke are for the different resources:
+The subnets in the transit and spoke are for the different resource types:
 - worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift){: external}, etc. VPC instances are demonstrated in this tutorial.
 - dns - {{site.data.keyword.dns_short}} location appliances used in part two.
 - vpe - [{{site.data.keyword.vpe_short}}](/docs/vpc?topic=vpc-about-vpe) used in part two.
-- firewall - firewall-router VPC instances.
+- fw - firewall-router VPC instances (only in transit).
 
 ## Provision VPC network resources
 {: #vpc-transit-provision-vpc-network-resources}
@@ -142,7 +141,7 @@ The subnets in the transit and spoke are for the different resources:
    ```
    {: codeblock}
 
-1. You could apply all of the layers configured by executing `./apply.sh : :`. The colons are shorthand for first (or config_tf) and last (vpe_dns_forwarding_rules_tf). The **-p** prints the layers:
+1. You could apply all of the layers configured by executing `./apply.sh : :`. The colons are shorthand for first (or config_tf) and last (power_tf). The **-p** prints the layers:
 
    ```sh
    ./apply.sh -p : :
@@ -151,7 +150,7 @@ The subnets in the transit and spoke are for the different resources:
 
    It will look something like:
    ```sh
-   directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf all_firewall_tf spokes_egress_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf vpe_dns_forwarding_rules_tf
+   directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf all_firewall_tf spokes_egress_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf vpe_dns_forwarding_rules_tf power_tf
    ```
 
 1. If you don't already have one, obtain a [Platform API key](/iam/apikeys) and export the API key for use by Terraform:
@@ -167,6 +166,8 @@ The subnets in the transit and spoke are for the different resources:
    ./apply.sh : spokes_tf
    ```
    {: codeblock}
+
+The VPCs and subnets have been created.  Open the [Virtual Private Clouds](/vpc-ext/network/vpcs) in the browser. Open the tvpc-transit VPC and note the CIDR blocks for address prefixes and subnets.
 
 ## Create test instances
 {: #vpc-transit-create-test-instances}
@@ -210,43 +211,46 @@ Each **pytest** test will SSH to one of the instances and perform a type of conn
    ```sh
 
    root@ac4518168076:/usr/src/app# pytest -m "curl and lz1 and rz1"
-   ================================= test session starts ==================================
-   platform linux -- Python 3.11.1, pytest-7.2.1, pluggy-1.0.0 -- /usr/local/bin/python
+   ============================================ test session starts =============================================
+   platform linux -- Python 3.12.1, pytest-7.4.3, pluggy-1.3.0 -- /usr/local/bin/python
    cachedir: .pytest_cache
-   rootdir: /usr/src/app, configfile: pytest.ini, testpaths: py
+   rootdir: /usr/src/app
+   configfile: pytest.ini
+   testpaths: py
+   plugins: xdist-3.5.0
    collected 292 items / 276 deselected / 16 selected
    
-   py/test_transit.py::test_curl[l-enterprise-z1 -> r-enterprise-z1] PASSED         [  6%]
-   py/test_transit.py::test_curl[l-enterprise-z1 -> r-transit-z1] FAILED            [ 12%]
-   py/test_transit.py::test_curl[l-enterprise-z1 -> r-spoke0-z1] FAILED             [ 18%]
-   py/test_transit.py::test_curl[l-enterprise-z1 -> r-spoke1-z1] FAILED             [ 25%]
-   py/test_transit.py::test_curl[l-transit-z1    -> r-enterprise-z1] FAILED         [ 31%]
-   py/test_transit.py::test_curl[l-transit-z1    -> r-transit-z1] PASSED            [ 37%]
-   py/test_transit.py::test_curl[l-transit-z1    -> r-spoke0-z1] FAILED             [ 43%]
-   py/test_transit.py::test_curl[l-transit-z1    -> r-spoke1-z1] FAILED             [ 50%]
-   py/test_transit.py::test_curl[l-spoke0-z1     -> r-enterprise-z1] FAILED         [ 56%]
-   py/test_transit.py::test_curl[l-spoke0-z1     -> r-transit-z1] FAILED            [ 62%]
-   py/test_transit.py::test_curl[l-spoke0-z1     -> r-spoke0-z1] PASSED             [ 68%]
-   py/test_transit.py::test_curl[l-spoke0-z1     -> r-spoke1-z1] FAILED             [ 75%]
-   py/test_transit.py::test_curl[l-spoke1-z1     -> r-enterprise-z1] FAILED         [ 81%]
-   py/test_transit.py::test_curl[l-spoke1-z1     -> r-transit-z1] FAILED            [ 87%]
-   py/test_transit.py::test_curl[l-spoke1-z1     -> r-spoke0-z1] FAILED             [ 93%]
-   py/test_transit.py::test_curl[l-spoke1-z1     -> r-spoke1-z1] PASSED             [100%]
+   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-enterprise-z1-worker] PASSED                 [  6%]
+   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-transit-z1-worker] FAILED                    [ 12%]
+   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke0-z1-worker] FAILED                     [ 18%]
+   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke1-z1-worker] FAILED                     [ 25%]
+   py/test_transit.py::test_curl[l-transit-z1-worker -> r-enterprise-z1-worker] FAILED                    [ 31%]
+   py/test_transit.py::test_curl[l-transit-z1-worker -> r-transit-z1-worker] PASSED                       [ 37%]
+   py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke0-z1-worker] FAILED                        [ 43%]
+   py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke1-z1-worker] FAILED                        [ 50%]
+   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-enterprise-z1-worker] FAILED                     [ 56%]
+   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-transit-z1-worker] FAILED                        [ 62%]
+   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-spoke0-z1-worker] PASSED                         [ 68%]
+   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-spoke1-z1-worker] FAILED                         [ 75%]
+   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-enterprise-z1-worker] FAILED                     [ 81%]
+   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-transit-z1-worker] FAILED                        [ 87%]
+   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-spoke0-z1-worker] FAILED                         [ 93%]
+   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-spoke1-z1-worker] PASSED                         [100%]
    
-   =============================== short test summary info ================================
-   FAILED py/test_transit.py::test_curl[l-enterprise-z1 -> r-transit-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-enterprise-z1 -> r-spoke0-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-enterprise-z1 -> r-spoke1-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-transit-z1    -> r-enterprise-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-transit-z1    -> r-spoke0-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-transit-z1    -> r-spoke1-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-spoke0-z1     -> r-enterprise-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-spoke0-z1     -> r-transit-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-spoke0-z1     -> r-spoke1-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-spoke1-z1     -> r-enterprise-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-spoke1-z1     -> r-transit-z1] - assert False
-   FAILED py/test_transit.py::test_curl[l-spoke1-z1     -> r-spoke0-z1] - assert False
-   =============== 12 failed, 4 passed, 276 deselected in 72.80s (0:01:12) ================
+   ========================================== short test summary info ===========================================
+   FAILED py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-transit-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke0-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke1-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-transit-z1-worker -> r-enterprise-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke0-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke1-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-enterprise-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-transit-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-spoke1-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-enterprise-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-transit-z1-worker] - assert False
+   FAILED py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-spoke0-z1-worker] - assert False
+   ========================== 12 failed, 4 passed, 276 deselected in 63.00s (0:01:02) ===========================
    ```
    {: codeblock}
 
@@ -300,7 +304,7 @@ Provision a {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_sho
 
 {{site.data.keyword.dl_full}} is a high speed secure data path for connecting an enterprise to the {{site.data.keyword.cloud_notm}}. In this tutorial {{site.data.keyword.tg_short}} is used for distribution. The use of {{site.data.keyword.tg_short}} is optional for an on-premises connection.
 
-The enterprise in this tutorial is simulated in the form of another VPC. Connecting this simulated enterprise (actually another VPC) via the {{site.data.keyword.tg_short}} will ensure an experience very close to what you would experience with a {{site.data.keyword.dl_short}}.
+The enterprise in this tutorial is simulated with another VPC. Connecting this simulated enterprise (actually another VPC) via the {{site.data.keyword.tg_short}} will ensure an experience very close to what you would experience with a {{site.data.keyword.dl_short}}.
 
 1. Apply the enterprise_link_tf layer:
    ```sh
@@ -331,7 +335,7 @@ Provision the firewall-router appliances. An ingress route table for {{site.data
 ![Firewall](images/vpc-transit/vpc-transit-firewall.svg){: caption="Firewall" caption-side="bottom"}
 {: style="text-align: center;"}
 
-Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](/docs/vpc?topic=vpc-about-vnf), firewall-router instance in the transit VPC. In production you can choose one from the catalog or bring your own. This demonstration will use an Ubuntu stock image with kernel iptables set up to forward all packets from the source to destination. In this tutorial, no firewall inspection is actually performed.
+Connectivity from the enterprise to a spoke is achieved through a Network Function Virtualization, [NFV](/docs/vpc?topic=vpc-about-vnf), firewall-router instance in the transit VPC. In production you can choose one from the catalog or bring your own. This demonstration will use an Ubuntu stock image with kernel iptables set up to forward all packets from the source to destination. In this tutorial, no firewall inspection is performed.
 
 The Terraform configuration will configure the firewall-router instance with [allow_ip_spoofing](/docs/vpc?topic=vpc-ip-spoofing-about). You must [enable IP spoofing checks](/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check) before continuing.
 {: note}
@@ -344,7 +348,7 @@ The Terraform configuration will configure the firewall-router instance with [al
 
 1. Run the test suite.
 
-   **Your expected results are:** Connectivity within a VPC, enterprise -> transit, enterprise <-> spoke same zone pass. But all transit -> spoke, all transit -> enterprise and enterprise <--> spoke cross zone fail due to asymmetric routing issues.
+   **Your expected results are:** Connectivity within a VPC, enterprise -> transit, enterprise <-> spoke same zone pass. But all transit -> spoke, all transit -> enterprise fail due to asymmetric routing issues.
    
 
    ```sh
@@ -352,7 +356,7 @@ The Terraform configuration will configure the firewall-router instance with [al
    ```
    {: codeblock}
 
-   [Part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2) of this tutorial will route all VPC <-> different VPC traffic through the router and resolve these issues. But first it is important to learn what is happening.
+   [Part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2) of this tutorial will route all VPC <-> different VPC traffic through the firewall-router and resolve these issues. But first it is important to learn what is happening.
 
 ### Ingress Routing
 {: #vpc-transit-ingress-routing}
@@ -363,51 +367,23 @@ Traffic reaches the firewall-router appliance through routing tables.
 1. Click on **Manage routing tables**.
 1. Click on the **tgw-ingress** routing table.
 
-The zone is determined by the {{site.data.keyword.tg_short}} which will examine the destination IP address of each packet and route it to the matching zone based on VPC Address Prefixes discussed in the next section.
+The zone is determined by the {{site.data.keyword.tg_short}} which will examine the destination IP address of each packet and route it to the matching zone based on the routes learned. The {{site.data.keyword.tg_short}} learns the routes advertised from the connections. Each VPC will advertise its address prefixes which allows VPCs to communicate with each other after connecting to a {{site.data.keyword.tg_short}}. But how would the spokes learn the routes to the enterprise?  How does the enterprise learn the routes to the spokes? The enterprise and spokes are not connected to the same {{site.data.keyword.tg_short}}.
 
-Notice how wide the routes are in the transit's ingress routing table (shown for Dallas/us-south):
+Both sets of routes are in the transit's ingress routing table (shown for Dallas/us-south). And the **Advertise** flag is set to **ON** to pass those routes to all {{site.data.keyword.tg_short}}s.
 
-Zone|Destination|Next hop
---|--|--
-Dallas 1|0.0.0.0/0|10.1.0.196
-Dallas 2|0.0.0.0/0|10.2.0.196
-Dallas 3|0.0.0.0/0|10.3.0.196
+Zone|Destination|Next hop|Advertise
+--|--|--|--
+Dallas 1|10.1.0.0/16|10.1.15.197|On
+Dallas 2|10.2.0.0/16|10.2.15.197|On
+Dallas 3|10.3.0.0/16|10.3.15.197|On
+Dallas 1|192.168.0.0/16|10.1.15.197|On
+Dallas 2|192.168.0.0/16|10.2.15.197|On
+Dallas 3|192.168.0.0/16|10.3.15.197|On
 
-The next_hop identifies the firewall-router. In the table above 10.1.0.196 zone Dallas 1 and 10.2.0.196 zone Dallas 2, etc. You can observe this using the {{site.data.keyword.cloud_notm}} console.
+The next_hop identifies the firewall-router. In the table above 10.1.15.196 zone Dallas 1 and 10.2.15.196 zone Dallas 2, etc. You can observe this using the {{site.data.keyword.cloud_notm}} console.
 
 1. Open [Virtual server instances for VPC](/vpc-ext/compute/vs) to find the **fw** instances and associated **Reserved IP** (click the **Name** column header to sort).
 1. Match them up with the table above to verify the next hop relationship.
-
-### VPC Address Prefixes
-{: #vpc-transit-vpc-address-prefixes}
-
-{{site.data.keyword.tg_short}} learn routes in the attached VPCs through the [VPC Address Prefixes](/docs/vpc?topic=vpc-vpc-addressing-plan-design). But how does a spoke learn the route to the enterprise (192.168.0.0/16)? And how does the enterprise learn the route to a spoke? By adding phantom VPC address prefixes to the transit VPC.
-
-The transit VPC zone in the diagram has the additional address prefixes:
-- 192.168.0.0/24 Dallas 1.
-- 192.168.1.0/24 Dallas 2.
-- 192.168.2.0/24 Dallas 3.
-
-To observe this:
-1. Open the [VPCs](/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
-1. Select the **transit VPC** and notice the Address prefixes displayed.
-1. Find the additional address prefixes for the enterprise CIDR blocks and note the associated zones.
-
-Also notice that the Address prefix for that transit VPC itself:
-- 10.1.0.0/16 Dallas 1.
-- 10.2.0.0/16 Dallas 2.
-- 10.3.0.0/16 Dallas 3.
-
-The transit VPC will only use a subset of each zone:
-- 10.1.0.0/24 Dallas 1.
-- 10.2.0.0/24 Dallas 2.
-- 10.3.0.0/24 Dallas 3.
- 
-The address prefixes for the transit itself is expanded to include all of the spokes to allow the routes to flow to the enterprise.
-
-With these additional address prefixes:
-- Spoke VPCs learn that traffic spoke -> (192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24) should pass through the {{site.data.keyword.tg_short}} tgw-link. 
-- Enterprise will learn that traffic enterprise -> (10.1.0.0/16, 10.2.0.0/16 10.3.0.0/16) should pass through the {{site.data.keyword.BluDirectLink}}
 
 ## Removing the firewall for Transit destination traffic
 {: #vpc-transit-stateful-routing}
@@ -440,9 +416,9 @@ This routing can be achieved by adding these routes to the transit ingress route
 
 Zone|Destination|Next hop
 --|--|--
-Dallas 1|10.1.0.0/24|Delegate
-Dallas 2|10.2.0.0/24|Delegate
-Dallas 3|10.3.0.0/24|Delegate
+Dallas 1|10.1.15.0/24|Delegate
+Dallas 2|10.2.15.0/24|Delegate
+Dallas 3|10.3.15.0/24|Delegate
 
 1. To observe the current value of the ingress route table visit the [Routing tables for VPC](/vpc-ext/network/routingTables) in the {{site.data.keyword.cloud_notm}} console. Select the **transit** VPC from the drop down and then select the **tgw-ingress** routing table.
 
@@ -455,125 +431,16 @@ Dallas 3|10.3.0.0/24|Delegate
 1. Refresh the browser display of the routing table to observe the new routes.
 1. Run the test suite.
 
-   **Your expected results are:** All tests will result in **PASSED** with the exception of enterprise <-> spoke(s) that are cross zones.
+   **Your expected results are:** All tests will result in **PASSED**.
 
    ```sh
    pytest -m "curl and lz1 and (rz1 or rz2)"
    ```
    {: codeblock}
 
+It is interesting to not how cross zone traffic flows between the enterprise and spokes in the configuration. Enterprise sends traffic to the correct zone and through the firewall-router via ingress routing in the transit VPC. The {{site.data.keyword.tg_short}} has learned that 192.168.0.0/16 is available in all zones and will route to the transit VPC using the advertised enterprise routes in the same zone as the spoke as shown in the diagram below:
 
-## Add Spoke Egress routes to fix Asymmetric Routing
-{: #vpc-transit-asymmetric}
-{: step}
-
-This step will identify and fix a cross zone asymmetric routing issue. The diagram below shows the successful routes in green. Notice the arrow in both directions. One of the unsuccessful routes has an initial route in blue and an unsuccessful return route in red:
-
-![Asymmetric traffic needs to be fixed](images/vpc-transit/vpc-transit-asymmetric.svg){: caption="Asymmetric traffic needs to be fixed" caption-side="bottom"}
-{: style="text-align: center;"}
-
-### Asymmetric Routing Limitation
-{: #vpc-transit-asymmetric-routing-limitation}
-
-The remaining failures are cross zone failures enterprise <-> spoke(s).
-
-Example failure:
-   ```sh
-   FAILED py/test_transit.py::test_curl[l-enterprise-z1 -> r-spoke0-z2] - assert False
-   ```
-
-The blue line represents a TCP connection request from enterprise through the {{site.data.keyword.tg_short}}: 192.168.0.4 <--TCP--> 10.2.1.4. The {{site.data.keyword.tg_short}} will choose a transit VPC zone based on the matching address prefix. The matching address prefix for 10.2.1.4 is 10.2.1.0/24 in the lower zone.
-
-The red line represents the TCP connection response to 192.168.0.4. The {{site.data.keyword.tg_short}} delivers to the transit VPC using the matching address prefix 192.168.0.0/24 in the upper zone. The {{site.data.keyword.vpc_short}} uses the industry standard state based routing for secure TCP connection tracking. This requires that the TCP connection pass through the same firewall-router in both directions. The VPC does not support tcp "Asymmetric Routing".
-
-It is interesting to note that an attempt to ping using the ICMP protocol would not suffer from this limitation. ICMP does not require a stateful connection. Connectivity from 192.168.0.4 <--ICMP--> 10.2.1.4 via ICMP is possible. You can run the ping marked tests to verify via copy paste of the failed output. The **l-** is for left and **r-** is for right:
-
-**Expect success:**
-   ```sh
-   pytest -m ping -k 'l-enterprise-z1 and r-spoke0-z2'
-   ```
-   {: codeblock}
-
-**Expect failure:**
-   ```sh
-   pytest -m curl -k 'l-enterprise-z1 and r-spoke0-z2'
-   ```
-   {: codeblock}
-
-If the goal is to create an architecture that is resilient across {{site.data.keyword.cloud_notm}} zonal failures then cross zone traffic should generally be avoided. Routing on the enterprise could insure that all traffic destined to the cloud be organized and routed to avoid the cross zone traffic in the cloud. The enterprise concept of zones will need to be understood. In this tutorial the phantom VPC address prefixes will identify the zone associated with an enterprise device.
-
-### Spoke Egress routing
-{: #vpc-transit-spoke-egress-routing}
-
-To resolve this problem transit <-> spoke(s) traffic will be routed to stay in the same zone. The spoke -> transit traffic can be routed using an egress routing table in the spokes.
-
-![Routing traffic from spoke to transit with an egress routing table](images/vpc-transit/vpc-transit-spoke-egress.svg){: caption="Routing traffic from spoke to transit with an egress routing table" caption-side="bottom"}
-{: style="text-align: center;"}
-
-In the diagram below this is represented by the egress dashed line.
-
-![Egress traffic from spoke](images/vpc-transit/vpc-transit-spoke-egress-hi-fix.svg){: caption="Egress traffic from spoke" caption-side="bottom"}
-{: style="text-align: center;"}
-
-1. Apply the spoke_egress_tf layer:
-   ```sh
-   ./apply.sh spokes_egress_tf
-   ```
-   {: codeblock}
-
-1. Run the test suite.
-   **Your expected results are:** All tests pass.
-
-   ```sh
-   pytest -m "curl and lz1 and (rz1 or rz2)"
-   ```
-   {: codeblock}
-
-1. Visit the [VPCs](/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}} console. Select one of the spoke VPCs and then click on **Manage routing tables** click on the **Egress** routing table. With this change spoke traffic originating in a spoke in Dallas 2 remains in Dallas 2 as it flows through the firewall-router in the transit VPC.
-
-1. Notice these routes in the spoke's egress routing table:
-
-   Zone|Destination|Next hop
-   --|--|--
-   Dallas 1|192.168.0.0/16|10.1.0.196
-   Dallas 2|192.168.0.0/16|10.2.0.196
-   Dallas 3|192.168.0.0/16|10.3.0.196
-
-1. Run all of the tests. The `-n` option enabled by the `pytest-xdist` plugin runs tests in parallel. Tests will be run 10 at a time. They should all pass.
-
-   ```sh
-   pytest -n 10
-   ```
-   {: codeblock}
-
-## Remove Enterprise phantom Address Prefixes in Transit
-{: #vpc-transit-remove-enterprise-phantom-address-prefixes-in-transit}
-{: step}
-
-Earlier phantom Address Prefixes for the enterprise were created in the transit VPC to allow the spokes to learn the routes of the enterprise. In the previous step egress routes were added to the spokes so these address prefixes can be deleted in this step.
-
-The phantom VPC address prefixes have been removed in the final diagram for part one:
-
-![Final diagram for part one](images/vpc-transit/vpc-transit-part1.svg){: caption="Final diagram for part one" caption-side="bottom"}
-{: style="text-align: center;"}
-
-
-1. Edit **config_tf/terraform.tfvars**.
-   - Change the value `enterprise_phantom_address_prefixes_in_transit = false`.
-
-1. Configuration changes require all current layers to be re-applied
-
-   ```sh
-   ./apply.sh : spokes_egress_tf
-   ```
-   {: codeblock}
-
-1. Run all of the tests. They should all pass.
-
-   ```sh
-   pytest -n 10
-   ```
-   {: codeblock}
+![Routing traffic from enterprise <-> spoke using advertised routes](images/vpc-transit/vpc-transit-spoke-egress.svg){: caption="Routing traffic from spoke to transit with an egress routing table" caption-side="bottom"}
 
 ## Routing Summary
 {: #vpc-transit-routing-summary}
@@ -583,7 +450,9 @@ Basic routing is complete:
 - transit <-> spoke(s)
 - enterprise <--(transit firewall-router)--> spoke
 
-All connectivity tests now pass.
+![Final diagram for part one](images/vpc-transit/vpc-transit-part1.svg){: caption="Final diagram for part one" caption-side="bottom"}
+{: style="text-align: center;"}
+
 
 ## Production Notes and Conclusions
 {: #vpc-transit-production-notes}
@@ -591,7 +460,7 @@ All connectivity tests now pass.
 The [VPC reference architecture for IBM Cloud for Financial Services](/docs/framework-financial-services?topic=framework-financial-services-vpc-architecture-about) has much more detail on securing workloads in the {{site.data.keyword.cloud_notm}}.
 
 Some obvious changes to make:
-- CIDR blocks were chosen for clarity and ease of explanation. The Availability Zones in the Multi zone Region could be 10.0.0.0/10, 10.64.0.0/10, 10.128.0.0/10 to conserve address space. Similarly the address space for Worker nodes could be expanded at the expense of firewall, DNS and VPE space.
+- CIDR blocks were chosen for clarity and ease of explanation. The Availability Zones in the Multi zone Region could be 10.0.0.0/10, 10.64.0.0/10, 10.128.0.0/10 to conserve address space. The address space for Worker nodes could be expanded at the expense of firewall, DNS and VPE space.
 - Security Groups for each of the network interfaces for worker VSIs, Virtual Private Endpoint Gateways, DNS Locations and firewalls should all be carefully considered.
 - Network Access Control Lists for each subnet should be carefully considered.
 
@@ -599,12 +468,12 @@ Floating IPs were attached to all test instances to support connectivity tests v
 
 [Implement context-based restrictions](/docs/account?topic=account-context-restrictions-create&interface=ui) rules to further control access to all resources.
 
-In this tutorial you created a hub VPC and a set of spoke VPCs. You identified the required Availability Zones for the architecture and created a set of subnets in the VPCs. You created a transit VPC firewall-router in each zone for centralized monitoring. Test instances were used to verify connectivity and identify potential problems. Routing table routes were used to identify the traffic paths required.
+In this tutorial you created a hub VPC and a set of spoke VPCs. You identified the required Availability Zones for the architecture and created a set of subnets in the VPCs. You created a transit VPC firewall-router in each zone to forwards traffic. Test instances were used to verify connectivity and identify potential problems. Routing table routes were used to identify the traffic paths required.
 
 ## Remove resources
 {: #vpc-transit-remove-resources}
 
-It is not required to remove the resources if you plan to continue with the the second part of this tutorial.
+It is not required to remove the resources if you plan to continue with the second part of this tutorial.
 
 Execute `terraform destroy` in all directories in reverse order using the `./apply.sh` command:
 
@@ -631,7 +500,6 @@ Your architecture will likely be different than the one presented but will likel
 {: #vpc-transit-related}
 
 * [IBM Cloud for Financial Services](/docs/framework-financial-services)
-* Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [How to deploy isolated workloads across multiple locations and regions](/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
 * [Public front end and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 * [Network Function Virtualization](/docs/vpc?topic=vpc-about-vnf)

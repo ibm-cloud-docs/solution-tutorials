@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-05-05"
+  years: 2024
+lastupdated: "2024-01-04"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -24,7 +24,7 @@ This tutorial describes the use of **Classic Infrastructure**.  Most workloads c
 {: note}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -329,7 +329,7 @@ This completes setup of the VPN from the secure private network enclosure. Addit
 
 Steps to take to remove the resources created in this tutorial.
 
-The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](/classic/network/gatewayappliances) page.
+The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](/netsec/gateway-appliances) page.
 {: tip}
 
 1. Cancel any virtual servers or bare-metal servers

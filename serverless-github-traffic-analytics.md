@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-06-16"
-lasttested: "2023-06-16"
+  years: 2024
+lastupdated: "2024-01-02"
+lasttested: "2023-10-10"
 
 content-type: tutorial
 services: codeengine, Db2onCloud, appid
@@ -20,7 +20,7 @@ use-case: Analytics, Cybersecurity, AIAndML
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->

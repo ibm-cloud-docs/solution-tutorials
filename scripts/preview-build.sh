@@ -28,9 +28,6 @@ git clone --depth=1 --branch=$BRANCH_FOR_PAGES git@github.ibm.com:cloud-docs-sol
 # generate conref helpers
 (cd scripts/conref && npm install && node tomd.js ../../builddocs/input)
 
-# generate a list of all solutions, suitable to use in github issues
-(cd scripts/solution-table && npm install && node totable.js ../../builddocs/input/)
-
 # check that all section IDs are unique
 (cd scripts/add-section-titles && npm install && node add-section-titles.js)
 

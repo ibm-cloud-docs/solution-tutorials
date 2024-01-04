@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2023-01-03"
+  years: 2024
+lastupdated: "2024-01-02"
+lasttested: "2023-10-04"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -21,7 +21,7 @@ use-case: ApplicationModernization, Cybersecurity, VirtualPrivateCloud
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -65,9 +65,9 @@ In this section, you will create the following cloud services required for the a
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](/schematics/workspaces), click on **Create workspace**.
    1. Under the **Specify Template** section, provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. 
-   2. Select **terraform_v1.2** as the Terraform version and click **Next**.
+   2. Select **terraform_v1.5** as the Terraform version and click **Next**.
 2. Under **Workspace details**,
-   1. Provide a workspace name : **vpc-scaling-workspace**.
+   1. Provide a workspace name : `vpc-scaling-workspace`.
    2. Choose a `Resource Group` and a `Location`.
    3. Click on **Next**.
 3. Verify the details and then click on **Create**.
@@ -82,15 +82,15 @@ Navigate to the [resource list](/resources). Here, you can filter by the `basena
 ### Enable logging and monitoring
 {: #vpc-scaling-dedicated-compute-metrics}
 
-You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a location. However, only one instance in a location (region) can be configured to receive platform logs from [enabled cloud services](/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} location. Similarly, you should configure one instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics in that location.
+You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a region. However, only one instance can be configured to receive platform logs from [enabled cloud services](/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} region. Similarly, you should configure one instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics.
 {: important}
 
-1. Navigate to the [Observability](/observe) page and under Logging/Monitoring, look for any existing log analysis/monitoring services with `platform metrics` enabled.
-2. To create a new {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step1_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with `step1_create_monitoring` variable if you want to enable monitoring.
-3. To configure platform logs, navigate to the [Observability](/observe) page and click **Logging** on the left pane.
+1. Navigate to the [Observability](/observe) page and under Logging/Monitoring, look for any existing {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} services with `Platform logs` and/or `Platform metrics` enabled. If you do not have one, you can use the steps below to create and/or enable one.
+2. To create a new {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step1_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with the `step1_create_monitoring` variable.
+3. To configure platform logs, navigate to the [Observability](/observe) page and click on **Logging** in the navigation pane.
    1. Click on **Options > Edit platform** and **select** a region in which you plan to provision the VPC resources.
    2. Select the log analysis service instance from the dropdown menu and click **Select**.
-4. To configure platform metrics, repeat the above step by clicking **Monitoring** on the left pane.
+4. To configure platform metrics, repeat the above step by clicking **Monitoring** in the navigation pane.
 
    For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platform logs](/docs/log-analysis?topic=log-analysis-config_svc_logs) and [Enabling platform metrics](/docs/monitoring?topic=monitoring-platform_metrics_enabling)
    {: tip}
@@ -140,7 +140,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
     - an instance template and an instance group for provisioning and scaling the instances
     - Initially, two VSIs (one frontend instance and one backend instance) with respective security groups attached
 
-      The frontend instance runs an Nginx server to serve a PHP web application that talks to the backend to store and retrieve data. The backend instance runs a NodeJS and GraphQL API wrapper for {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
+      The frontend instance runs an Nginx server to serve a PHP web application that talks to the backend to store and retrieve data. The backend instance runs a Node.js application with GraphQL API wrapper for {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
       {: tip}
 
 4. **Copy** the public load balancer hostname from the log output and paste the hostname in a browser by prefixing `http://` to see the frontend application. As shown in the diagram below, enter the balance, e.g.,10 and click **Submit** to see the details of the VSIs serving the request.
@@ -162,10 +162,11 @@ In this section, you will start scaling the instances with the scaling method in
 {: #vpc-scaling-dedicated-compute-manual-scale}
 
 1. To check **static** scaling method, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace to see that the `step3_is_dynamic` variable is set to `false`.
-2. Update the `step3_instance_count` variable to **2** and **Save** the setting.
+2. Update the `step3_instance_count` variable to `2` and **Save** the setting.
 3. Apply the plan to see the additional two instances (one frontend VSI and one backend VSI) provisioned.
 4. Under **Memberships** tab of your frontend [instance group](/vpc-ext/autoscale/groups), you should now see `2` instances.
 5. Navigate to the browser showing the frontend app and either click on the **Refresh** button or **submit**  a new balance multiple times to see the details of the frontend VSI and backend VSI serving the request. You should see two of the four VSIs serving your request.
+6. Before moving to the next step, update the `step3_instance_count` variable from `2` to `1` and **Save** the setting.
 
 You can check the logs and monitor your load balancers later in the tutorial.
 
@@ -192,10 +193,10 @@ You can check the logs and monitor your load balancers later in the tutorial.
 
 5. Wait for the instances to scale to `1` before moving to the next step.
 
-### Scheduled actions
+### Scheduled actions (Optional)
 {: #vpc-scaling-dedicated-compute-scheduled-scale}
 
-In this section, you will use scheduled scaling for VPC to schedule actions that automatically add or remove instance group capacity, based on daily, intermittent, or seasonal demand. You can create multiple scheduled actions that scale capacity monthly, weekly, daily, hourly, or even every set number of minutes.
+In this section, you will use scheduled scaling for VPC to schedule actions that automatically add or remove instance group capacity, based on daily, intermittent, or seasonal demand. You can create multiple scheduled actions that scale capacity monthly, weekly, daily, hourly, or even every set number of minutes. This section is optional and not required to complete the remainder of this tutorial.
 
 1. To create a one-time scheduled action, set the `step3_is_scheduled` variable to **true**, **Save** the setting and **Apply** the plan.
 2. Check the status of your scheduled action under the **scheduled actions** tab of the instance group. The Terraform template will schedule the actions for 5 minutes from the time you apply the plan. When the status of the action is changed to `completed`, the instance group size will be set to a minimum of `2` and a maximum of `5` instances. You should see `2` instances under the **Memberships** tab of the instance group.
@@ -237,7 +238,7 @@ For checking the logs of other VPC resources, refer to [VPC logging](/docs/vpc?t
 {: step}
 
 <!--##istutorial#-->
-Provisioning dedicated hosts will incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+Provisioning dedicated hosts will incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -324,7 +325,7 @@ In this section, you will also expand the block storage volume attached to the V
 {: #vpc-scaling-dedicated-compute-dedicated-next}
 {: step}
 
-Extend the scenario by configuring SSL termination, sticky sessions, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/cloud/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones){: external}.
+Extend the scenario by configuring SSL termination, sticky sessions, and end-to-end encryption. For more information, refer to this [blog post](https://www.ibm.com/blog/deploy-and-auto-scale-isolated-workloads-across-multiple-zones){: external}.
 
 ## Remove resources
 {: #vpc-scaling-dedicated-compute-removeresources}

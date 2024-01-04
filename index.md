@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-06-14"
-lasttested: "2022-12-21"
+lastupdated: "2023-10-10"
+lasttested: "2023-10-10"
 
 ---
 {{site.data.keyword.attribute-definition-list}}
@@ -64,7 +64,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### Docker
 {: #getting-started-windows_docker}
 
-1. Docker Desktop on Windows is one option to run container images on Windows. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/#docker-desktop-license-agreement){: external} before proceeding with the installation.
+1. Docker Desktop on Windows is one option to run container images on Windows. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/desktop-license/){: external} before proceeding with the installation.
 1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Download and install Docker Desktop on Windows from https://docs.docker.com/docker-for-windows/install/.
 1. Verify the installation with:
@@ -81,7 +81,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### kubectl
 {: #getting-started-windows_kubectl}
 
-1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows.
+1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/#install-kubectl-on-windows.
 1. Move `kubectl.exe` binary to your PATH.
 1. Verify the installation with:
    ```sh
@@ -115,7 +115,7 @@ The following sections assume you are running Microsoft Windows 10 64-bit under 
 ### Terraform
 {: #getting-started-windows_terraform}
 
-1. Download `terraform` from https://www.terraform.io/downloads.html.
+1. Download `terraform` from https://developer.hashicorp.com/terraform/downloads.
 1. Uncompress the downloaded archive.
 1. Move the `terraform.exe` binary to your PATH.
 1. Verify the installation with:
@@ -129,7 +129,7 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
 ### jq
 {: #getting-started-windows_jq}
 
-1. Download jq from https://stedolan.github.io/jq/.
+1. Download jq from https://jqlang.github.io/jq/.
 1. Rename `jq-win64.exe` to `jq.exe`.
 1. Move `jq.exe` binary to your PATH.
 1. Verify the installation with:
@@ -168,7 +168,7 @@ The following sections assume you are running macOS High Sierra or later under a
 ### Docker
 {: #getting-started-macos_docker}
 
-1. Docker Desktop on Mac is one option to run container images on macOS. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/#docker-desktop-license-agreement){: external} before proceeding with the installation. Other options include [Podman](https://podman.io/get-started){: external}.
+1. Docker Desktop on Mac is one option to run container images on macOS. Make sure to review the terms of the [license agreement](https://docs.docker.com/subscription/desktop-license/){: external} before proceeding with the installation. Other options include [Podman](https://podman.io/get-started){: external}.
 1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
 1. Download and install Docker Desktop on Mac from https://docs.docker.com/docker-for-mac/install/.
 1. Verify the installation with:
@@ -181,8 +181,8 @@ The following sections assume you are running macOS High Sierra or later under a
 ### kubectl
 {: #getting-started-macos_kubectl}
 
-1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-macos.
-1. Make the kubectl binary executable.
+1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/#install-kubectl-on-macos.
+1. Make the `kubectl` binary executable.
    ```sh
    chmod +x ./kubectl
    ```
@@ -204,9 +204,9 @@ The following sections assume you are running macOS High Sierra or later under a
 {: #getting-started-macos_oc}
 
 1. Download the latest 4.x OpenShift CLI (`oc`) from https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/.
-2. Extract `openshift-client-mac.tar.gz`:
+2. Extract `openshift-client-mac.tar.gz` (Intel) or `openshift-install-mac-arm64.tar.gz` (Apple Silicon):
    ```sh
-   tar zxvf openshift-client-mac.tar.gz oc
+   tar zxvf openshift-client-mac*.tar.gz oc
    ```
    {: pre}
 
@@ -222,7 +222,7 @@ The following sections assume you are running macOS High Sierra or later under a
    ```
    {: pre}
 
-   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `oc` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/oc`.
+   macOS Catalina and later may prompt you with a message saying the developer cannot be verified. To allow `oc` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/oc`.
    {: tip}
 
 ### Helm 3
@@ -242,13 +242,13 @@ The following sections assume you are running macOS High Sierra or later under a
    ```
    {: pre}
 
-   macOS Catalina may prompt you with a message saying the developer cannot be verified. To allow `helm` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/helm`.
+   macOS Catalina and later may prompt you with a message saying the developer cannot be verified. To allow `helm` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/helm`.
    {: tip}
 
 ### Terraform
 {: #getting-started-macos_terraform}
 
-1. Download `terraform` from https://www.terraform.io/downloads.html.
+1. Download `terraform` from https://developer.hashicorp.com/terraform/downloads.
 1. Uncompress the downloaded archive.
 1. Move the `terraform` binary to your PATH.
    ```sh
@@ -267,8 +267,14 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
 ### jq
 {: #getting-started-macos_jq}
 
-1. Download `jq` from https://stedolan.github.io/jq/.
+1. Download `jq` from https://jqlang.github.io/jq/.
 1. Rename the downloaded file to `jq`.
+1. Make the `jq` binary executable.
+   ```sh
+   chmod +x ./jq
+   ```
+   {: pre}
+
 1. Move the `jq` binary to your PATH.
    ```sh
    sudo mv ./jq /usr/local/bin/jq
@@ -280,6 +286,9 @@ To manage {{site.data.keyword.cloud_notm}} resources with Terraform, you also ne
    jq --version
    ```
    {: pre}
+
+   macOS Catalina and later may prompt you with a message saying the developer cannot be verified. To allow `jq` to be executed anyway, run `sudo xattr -r -d com.apple.quarantine /usr/local/bin/jq`.
+   {: tip}
 
 ### Git
 {: #getting-started-macos_git}
@@ -314,7 +323,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 {: #getting-started-ubuntu_docker}
 
 1. If you don't have one, sign up for a free account at https://hub.docker.com/signup.
-1. Install Docker Engine - Community for Ubuntu following the instructions from https://docs.docker.com/install/linux/docker-ce/ubuntu/.
+1. Install Docker Engine on Ubuntu following the instructions from https://docs.docker.com/engine/install/ubuntu/.
 1. Verify the installation with:
    ```sh
    docker --version
@@ -322,14 +331,14 @@ The following sections assume you are running Ubuntu Linux as non-root user with
    ```
    {: pre}
 
-   To run Docker under your own user instead of root, perfom the [post install](https://docs.docker.com/install/linux/linux-postinstall/){: external} steps.
+   To run Docker under your own user instead of root, perfom the [post install](https://docs.docker.com/engine/install/linux-postinstall/){: external} steps.
    {: tip}
 
 ### kubectl
 {: #getting-started-ubuntu_kubectl}
 
-1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux.
-1. Make the kubectl binary executable.
+1. Download `kubectl` from https://kubernetes.io/docs/tasks/tools/#install-kubectl-on-linux.
+1. Make the `kubectl` binary executable.
    ```sh
    chmod +x ./kubectl
    ```
@@ -389,7 +398,7 @@ The following sections assume you are running Ubuntu Linux as non-root user with
 ### Terraform
 {: #getting-started-ubuntu_terraform}
 
-1. Download `terraform` from https://www.terraform.io/downloads.html.
+1. Download `terraform` from https://developer.hashicorp.com/terraform/downloads.
 1. Uncompress the downloaded archive.
 1. Move the `terraform` binary to your PATH.
    ```sh

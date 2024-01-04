@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-09-04"
-lasttested: "2023-09-04"
+  years: 2024
+lastupdated: "2024-01-04"
+lasttested: "2023-12-18"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
@@ -22,7 +22,7 @@ use-case: ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator/review) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -32,7 +32,7 @@ This tutorial walks you through different options on how to share cloud-based re
 
 An uncountable number of services are offered on the internet. You probably own accounts at many service providers. To use these services, you typically access them with a combination of user identity (ID) and password or by providing some form of API key or access token, often combined with additional levels (factors) of authentication. When building cloud native applications with a microservices-based architecture, the individual components can use the same techniques to access each other for collaboration. Ideally, the setup can be automated, and the access scoped to a required minimum for increased security.
 
-With a focus on cloud services, it might be called a **connector**, **service binding**, or **service-to-service authorization**. Such automated service binding provides tighter integration and usually combines authentication and authorization into a single, automated setup. Typically, the service binding requires the services to be in the same cloud account. That grouping is logical and simplifies development and operation. But sometimes, organizational, and especially security- and compliance-related requirements could mean separating some services and maintaining them in central accounts. Thus, applications have to share resources across accounts. Sharing can be between accounts in an [{{site.data.keyword.cloud_notm}} Enterprise environment](/docs/account?topic=account-what-is-enterprise) or without a formal enterprise organization.
+With a focus on cloud services, it might be called a **connector**, **service binding**, or **service-to-service authorization**. Such automated service binding provides tighter integration and usually combines authentication and authorization into a single, automated setup. Typically, the service binding requires the services to be in the same cloud account. That grouping is logical and simplifies development and operation. But sometimes, organizational, and especially security- and compliance-related requirements could mean separating some services and maintaining them in central accounts. Thus, applications have to share resources across accounts. Sharing can be between accounts in an [{{site.data.keyword.cloud_notm}} Enterprise environment](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) or without a formal enterprise organization.
 
 This tutorial walks you through typical use cases and benefits of sharing cloud resources across accounts. You will learn how to implement those common sharing scenarios, either manually or fully automated with Terraform.
 
@@ -198,7 +198,7 @@ You can find more examples in the GitHub repository [cross-account-resource-shar
 A dependency on a key management service (KMS) like [{{site.data.keyword.keymanagementserviceshort}}](/docs/key-protect?topic=key-protect-getting-started-tutorial) and [{{site.data.keyword.hscrypto}}](/docs/hs-crypto?topic=hs-crypto-get-started) is typical for cloud-based solutions. A KMS instance holds the root keys for customer-managed encryption. Most services support customer-controlled encryption keys. Instead of **cloud-object-storage** ({{site.data.keyword.cos_short}}) in the example above, many other services can use a KMS instance shared across accounts.
 
 Other typical (target) services for service-to-service authorization and candidates for resource sharing include:
-- [{{site.data.keyword.cos_short}}](/docs/cloud-object-storage?topic=cloud-object-storage-getting-started-cloud-object-storage): Several services require or are able to store data and log files in a storage bucket. This includes the archiving of access logs and monitoring data. Other services like {{site.data.keyword.sqlquery_short}} need to access buckets to perform data analysis. And yet another category of services need access to subscribe to change notifications to trigger the execution of actions.
+- [{{site.data.keyword.cos_short}}](/docs/cloud-object-storage?topic=cloud-object-storage-getting-started-cloud-object-storage): Several services require or are able to store data and log files in a storage bucket. This includes the archiving of access logs and monitoring data. Other services need to access buckets to perform data analysis. And yet another category of services need access to subscribe to change notifications to trigger the execution of actions.
 - [{{site.data.keyword.en_short}}](/docs/event-notifications?topic=event-notifications-getting-started): To push out information about events to subscribers, service instances need to access an {{site.data.keyword.en_short}} instance.
 - [{{site.data.keyword.secrets-manager_short}}](/docs/secrets-manager?topic=secrets-manager-getting-started): This service stores and provides to other services IAM API keys, SSL/TLS certificates, and other secrets. Hence, the dependent (source) services need to access {{site.data.keyword.secrets-manager_short}}.
 - [{{site.data.keyword.cis_short}}](/docs/cis?topic=cis-getting-started): It manages domain names and other network data and, therefore, can be used for, e.g., certificate validation.
