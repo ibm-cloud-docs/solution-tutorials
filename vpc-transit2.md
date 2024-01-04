@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-03"
-lasttested: "2023-10-05"
+lastupdated: "2024-01-04"
+lasttested: "2024-01-04"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-postgresql
@@ -449,14 +449,18 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    {: codeblock}
 
    Notice the failing vpedns tests like this one:
+   
+   ```
+   FAILED py/test_transit.py::test_vpe_dns_resolution[postgresql spoke0-z1-worker -> transit 720ef5d6-f22d-42ac-a4c9-54b0a71ad5e1.c5kmhkid0ujpmrucb800.private.databases.appdomain.cloud] - AssertionError: 166.9.90.7 not in ['10.1.15.128/26', '10.2.15.128/26'] from 720ef5d6-f22d-42ac-a4c9-54b0a71ad5e1.c5kmhkid0ujpmrucb800.private.databases.appdomain.cloud
+   ```
 
-   These are failing due to DNS resolution. A Redis name, &lt;id&gt;.private.databases.appdomain.cloud, should resolve to a VPE. The DNS names can not be resolved by the private DNS resolvers. Adding additional DNS forwarding rules will resolve this issue.
+   These are failing due to DNS resolution. A Postgresql name, &lt;id&gt;.private.databases.appdomain.cloud, should resolve to a VPE. The DNS names can not be resolved by the private DNS resolvers. Adding additional DNS forwarding rules will resolve this issue.
 
    To make the DNS names for the VPE available outside the DNS owning service it is required to update the DNS forwarding rules.
    - For enterprise `appdomain.com` will forward to the transit.
    - For transit the fully qualified DNS name of the {{site.data.keyword.databases-for-postgresql}} instance will be forwarded to the spoke instance that owns the {{site.data.keyword.databases-for-postgresql}} instance.
-   - For spoke_from -> spoke_to access to Redis the spoke_from needs the DNS name for the {{site.data.keyword.databases-for-postgresql}} instance. The fully qualified Redis name in spoke_from DNS instance will be forwarded to the transit.
-   - The transit forward fully qualified Redis names to the corresponding spoke.
+   - For spoke_from -> spoke_to access to Postgresql the spoke_from needs the DNS name for the {{site.data.keyword.databases-for-postgresql}} instance. The fully qualified Postgresql name in spoke_from DNS instance will be forwarded to the transit.
+   - The transit forward fully qualified Postgresql names to the corresponding spoke.
 
    ![Enabling DNS for virtual private endpoints](images/vpc-transit/vpc-transit-dns-vpe.svg){: caption="Enabling DNS for virtual private endpoints" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -471,7 +475,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 
 1. Verify that all VPEs can be accessed from all test instances.
 
-   **Your expected results are:** enterprise -> spoke vpe tests will be **FAILED**:
+   **Your expected results are:** all **PASSED**
 
    ```sh
    pytest -m 'vpe or vpedns'
@@ -480,35 +484,12 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 
 It can take a few tries for the DNS names to be resolved accurately. So try the test at least three times. All tests should pass except the enterprise to spoke VPE tests:
 
-## Enterprise to Spoke Virtual Private Endpoint Gateways
-{: #vpc-transit2-enterprise-to-spoke-virtual-private-endpoint-gateways}
-{: step}
+All tests in this tutorial should now pass.  There are quite a few. Run them in parallel:
 
-The current configuration does not support enterprise -> spoke VPE traffic. The VPE return traffic does not use spoke egress route table.
-
-It is possible to improve the results by adding the enterprise address prefixes to the transit VPC.  This will allow the spoke VPE return traffic to learn the enterprise routes and forward traffic through the through the {{site.data.keyword.tg_short}} to the transit VPC.  However, it will be delivered to the transit VPC zone of the matching address prefix. Enterprise -> spoke cross zone will not work.
-
-The enterprise DNS resolution must resolve the fully qualified name to the IP address of the VPE to the zone it has been assigned in the transit VPC.  Configuring this is beyond the scope of this tutorial.
-
-1. Edit **config_tf/terraform.tfvars**.
-   - Change the value `enterprise_phantom_address_prefixes_in_transit = true`.
-
-1. Configuration changes require all current layers to be re-applied
-
-   ```sh
-   ./apply.sh : :
-   ```
-   {: codeblock}
-
-1. Verify that all VPEs can be accessed from all test instances.
-
-   **Your expected results are:** enterprise -> spoke vpe cross zone will be **FAILED**:
-
-   ```sh
-   pytest -m 'vpe or vpedns'
-   ```
-   {: codeblock}
-
+```sh
+pytest -n 10 -m curl
+```
+{: codeblock}
 
 ## Production Notes and Conclusions
 {: #vpc-transit2-production-notes}
