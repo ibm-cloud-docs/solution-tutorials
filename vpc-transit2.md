@@ -3,7 +3,7 @@ subcollection: solution-tutorials
 copyright:
   years: 2024
 lastupdated: "2024-01-04"
-lasttested: "2024-01-04"
+lasttested: "2023-10-05"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-postgresql
@@ -531,7 +531,6 @@ Your architecture may not be the same as the one presented, but will likely be c
 {: #vpc-transit2-related}
 
 * [IBM Cloud for Financial Services](/docs/framework-financial-services)
-* Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * [How to deploy isolated workloads across multiple locations and regions](/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
 * [Public front end and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 * [Network Function Virtualization](/docs/vpc?topic=vpc-about-vnf)

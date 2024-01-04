@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-12-20"
+  years: 2024
+lastupdated: "2024-01-04"
 lasttested: "2023-12-18"
 
 # services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
@@ -32,7 +32,7 @@ This tutorial walks you through different options on how to share cloud-based re
 
 An uncountable number of services are offered on the internet. You probably own accounts at many service providers. To use these services, you typically access them with a combination of user identity (ID) and password or by providing some form of API key or access token, often combined with additional levels (factors) of authentication. When building cloud native applications with a microservices-based architecture, the individual components can use the same techniques to access each other for collaboration. Ideally, the setup can be automated, and the access scoped to a required minimum for increased security.
 
-With a focus on cloud services, it might be called a **connector**, **service binding**, or **service-to-service authorization**. Such automated service binding provides tighter integration and usually combines authentication and authorization into a single, automated setup. Typically, the service binding requires the services to be in the same cloud account. That grouping is logical and simplifies development and operation. But sometimes, organizational, and especially security- and compliance-related requirements could mean separating some services and maintaining them in central accounts. Thus, applications have to share resources across accounts. Sharing can be between accounts in an [{{site.data.keyword.cloud_notm}} Enterprise environment](docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) or without a formal enterprise organization.
+With a focus on cloud services, it might be called a **connector**, **service binding**, or **service-to-service authorization**. Such automated service binding provides tighter integration and usually combines authentication and authorization into a single, automated setup. Typically, the service binding requires the services to be in the same cloud account. That grouping is logical and simplifies development and operation. But sometimes, organizational, and especially security- and compliance-related requirements could mean separating some services and maintaining them in central accounts. Thus, applications have to share resources across accounts. Sharing can be between accounts in an [{{site.data.keyword.cloud_notm}} Enterprise environment](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) or without a formal enterprise organization.
 
 This tutorial walks you through typical use cases and benefits of sharing cloud resources across accounts. You will learn how to implement those common sharing scenarios, either manually or fully automated with Terraform.
 

@@ -88,7 +88,6 @@ toc:
                 - byoip.md
                 - configuring-IPSEC-VPN.md
                 - linking-secure-network-enclosures.md
-                - web-app-private-network.md
 
             - topicgroup:
                 label: VMware on VPC Bare metal servers
@@ -164,4 +163,3 @@ toc:
                 - nat-config-private.md
                 - configuring-IPSEC-VPN.md
                 - linking-secure-network-enclosures.md
-                - web-app-private-network.md

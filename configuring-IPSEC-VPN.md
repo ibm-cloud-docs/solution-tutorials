@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-04"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -329,7 +329,7 @@ This completes setup of the VPN from the secure private network enclosure. Addit
 
 Steps to take to remove the resources created in this tutorial.
 
-The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](/classic/network/gatewayappliances) page.
+The VRA is on a monthly paid plan. Cancellation does not result in a refund. It is suggested to only cancel if this VRA will not be required again in the next month. If a dual VRA High-Availability cluster is required, this single VRA can be upgraded on the [Gateway Details](/netsec/gateway-appliances) page.
 {: tip}
 
 1. Cancel any virtual servers or bare-metal servers
