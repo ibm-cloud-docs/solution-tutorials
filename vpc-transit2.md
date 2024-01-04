@@ -450,7 +450,7 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
 
    Notice the failing vpedns tests like this one:
    
-   ```
+   ```sh
    FAILED py/test_transit.py::test_vpe_dns_resolution[postgresql spoke0-z1-worker -> transit 720ef5d6-f22d-42ac-a4c9-54b0a71ad5e1.c5kmhkid0ujpmrucb800.private.databases.appdomain.cloud] - AssertionError: 166.9.90.7 not in ['10.1.15.128/26', '10.2.15.128/26'] from 720ef5d6-f22d-42ac-a4c9-54b0a71ad5e1.c5kmhkid0ujpmrucb800.private.databases.appdomain.cloud
    ```
 
