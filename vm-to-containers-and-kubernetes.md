@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2023
-lastupdated: "2023-12-21"
+  years: 2024
+lastupdated: "2024-01-04"
 lasttested: "2023-09-05"
 
 content-type: tutorial
@@ -91,7 +91,7 @@ The following diagram shows an example of a modern container architecture that r
 
 **Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, runtime, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
-In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers in the [Linux on IBM Systems documentation](https://www.ibm.com/docs/en/linux-on-systems?topic=linuxonibm/com.ibm.linux.z.ldvd/ldvd_r_plan_container_vm.htm){: external}.
+In addition, containers allow you to share the host OS. This reduces duplication while still providing the isolation. Containers also allow you to drop unneeded files such as system libraries and binaries to save space and reduce your attack surface. Read more on virtual machines and containers in [What are containers?](https://www.ibm.com/topics/containers){: external}.
 
 #### Kubernetes orchestration
 {: #vm-to-containers-and-kubernetes-6}
