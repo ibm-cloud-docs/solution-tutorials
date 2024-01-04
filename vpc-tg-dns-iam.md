@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-04"
 lasttested: "2023-10-11"
 
 content-type: tutorial
@@ -967,6 +967,5 @@ The architecture of a system is influenced by the containment and ownership of c
 ## Related content
 {: #vpc-tg-dns-iam-related}
 
-* Tutorial: [Best practices for organizing users, teams, applications](/docs/solution-tutorials?topic=solution-tutorials-users-teams-applications#users-teams-applications)
 * Tutorial: [Public frontend and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 * Tutorial: [Deploy a LAMP stack using Terraform](/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
