@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-04"
 lasttested: "2023-01-24"
 
 content-type: tutorial
@@ -85,7 +85,7 @@ You will find instructions to download and install these tools for your operatin
 
 
 ## Clone examples repo
-{: #vmware-as-a-service-vdc-clonerepo}
+{: #vmware-as-a-service-tf-clonerepo}
 {: step}
 
 The example Terraform templates for {{site.data.keyword.vmware-service_full}} are located in [GitHub](https://github.com/IBM/vmwaas-Terraform-examples){: external}.
@@ -108,7 +108,7 @@ https://github.com/IBM/vmwaas-terraform-examples.git
 
 
 ## Obtain the required information about your virtual data center
-{: #vmware-as-a-service-vdc-vdcinfo}
+{: #vmware-as-a-service-tf-vdcinfo}
 {: step}
 
 As a prerequisite, use the [IBM Cloud Console](/vmware) to [create your {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [one or more virtual data centers](/docs/vmware-service?topic=vmware-service-vdc-adding) on it.
@@ -189,7 +189,7 @@ export TF_VAR_vmwaas_vdc_name="vdc-demo"
 You can export these to your shell, or you can get the terraform.tfvars lines to be added to `terraform.tfvars` files as an output of the script using the `tfvars` option.
 
 ## Configure Terraform template variables
-{: #vmware-as-a-service-vdc-tfvars}
+{: #vmware-as-a-service-tf-tfvars}
 {: step}
 
 This example infrastructure Terraform template is located in folder [`vcd-demo-infra`](https://github.com/IBM/vmwaas-terraform-examples/tree/main/vcd-demo-infra/){: external}.
@@ -656,7 +656,7 @@ You can use it as such, add more networks, more virtual machines and customize N
 
 
 ## Init, plan and apply
-{: #vmware-as-a-service-vdc-apply}
+{: #vmware-as-a-service-tf-apply}
 {: step}
 
 1. To initialize your Terraform project, run `terraform init` command in the example directory and observe the output.
