@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2023-05-05"
-lasttested: "2023-01-24"
+  years: 2024
+lastupdated: "2024-01-04"
+lasttested: "2024-01-04"
 
 content-type: tutorial
 services: vmware-service
