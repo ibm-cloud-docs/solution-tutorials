@@ -263,7 +263,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 ### Provision {{site.data.keyword.cos_short}} and {{site.data.keyword.nlushort}} services
 {: #text-analysis-code-engine-create_services}
 
-1. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage){: external}
+1. Create an instance of [{{site.data.keyword.cos_short}}](/objectstorage/create){: external}
    1. Select the **Lite** plan or the **Standard** plan if you already have an {{site.data.keyword.cos_short}} service instance in your account.
    2. Set **Service name** to **your-initials-code-engine-cos**.
    3. Select the resource group where you created the {{site.data.keyword.codeengineshort}} project.

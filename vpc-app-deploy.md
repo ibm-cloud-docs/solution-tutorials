@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-10-09"
 
 content-type: tutorial
@@ -168,7 +168,7 @@ Consider both *updating* the version lists available to the provisioned instance
 
 When provisioning a virtual server instance, you can specify a [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html){: external} script to be executed during the server initialization. Cloud-init is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances.
 
-In {{site.data.keyword.cloud_notm}}, the cloud-init file contents are provided in the `user-data` parameter at the time the server is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/topics/format.html#user-data-formats){: external} for acceptable user-data content. If you need to debug script execution, cloud-init logs the output of the initialization script in `/var/log/cloud-init-output.log` on virtual server instances.
+In {{site.data.keyword.cloud_notm}}, the cloud-init file contents are provided in the `user-data` parameter at the time the server is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/explanation/format.html#user-data-formats){: external} for acceptable user-data content. If you need to debug script execution, cloud-init logs the output of the initialization script in `/var/log/cloud-init-output.log` on virtual server instances.
 
 This tutorial uses a shell script named [install.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh){: external} as initialization script:
 
@@ -337,7 +337,7 @@ In this definition:
 - **backend_pgw** controls whether the backend server has access to the public Internet. A public gateway can be connected to the backend subnet. The frontend has a floating IP assigned which provides both a public IP and gateway to the internet. This is going to allow open Internet access for software installation.  The backend will not have access to the Internet.
 - **frontend_user_data**, **backend_user_data** point to the cloud-init initialization scripts.
 
-With Terraform, all resources can have associated provisioners. The `null_resource` provisioner does not provision a cloud resource but can be used to copy files to server instances. This construct is used in the script to copy the [uploaded.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh){: external} file and then execute it as shown below. To connect to the servers, Terraform supports [using the bastion host](https://www.terraform.io/docs/provisioners/connection.html#connecting-through-a-bastion-host-with-ssh){: external} as provisioned in the tutorial:
+With Terraform, all resources can have associated provisioners. The `null_resource` provisioner does not provision a cloud resource but can be used to copy files to server instances. This construct is used in the script to copy the [uploaded.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh){: external} file and then execute it as shown below. To connect to the servers, Terraform supports [using the bastion host](https://developer.hashicorp.com/terraform/language/resources/provisioners/connection#connecting-through-a-bastion-host-with-ssh){: external} as provisioned in the tutorial:
 
 ```terraform
    resource "null_resource" "copy_from_on_prem" {

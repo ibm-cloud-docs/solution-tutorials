@@ -68,7 +68,7 @@ You will find instructions to download and install these tools for your operatin
 {: #sql-database-2}
 {: step}
 
-Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](/catalog/services/db2-warehouse){: external}** service.
+Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](/db2-wh){: external}** service.
 
 1. Visit the [{{site.data.keyword.Bluemix_short}} console](/). Click on **Catalog** in the top navigation bar.
 2. Click on **Databases** on the left pane and select **Db2 Warehouse**.

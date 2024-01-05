@@ -80,7 +80,7 @@ This section uses the command line to create service instances. Alternatively, y
    Use `ibmcloud target -g default` to switch to the default resource group.
    {: tip}
 
-3. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage). If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
+3. Create an instance of [{{site.data.keyword.cos_short}}](/objectstorage/create). If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
     ```sh
     ibmcloud resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```
@@ -237,7 +237,7 @@ Once the notebook is available, follow these steps.
     ```
     {: codeblock}
 
-    The [function **get_connection**](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/project-lib-python.html?audience=wdp){: external} retrieves the previously configured connection properties.
+    The [function **get_connection**](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/project-lib-python.html?audience=wdp&context=cpdaas){: external} retrieves the previously configured connection properties.
 
 ## Visualize data using folium
 {: #smart-data-lake-6}

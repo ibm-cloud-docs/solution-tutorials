@@ -137,7 +137,7 @@ The {{site.data.keyword.containerlong_notm}} is a managed offering to create you
 {: #scalable-webapp-kubernetes-clone_application}
 {: step}
 
-In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](https://nodejs.dev){: external} sample application with a landing page and two endpoints to get started. You can always extend the sample application based on your requirements.
+In this section, you will clone a GitHub repo with a simple Helm-based [NodeJS](https://nodejs.org/){: external} sample application with a landing page and two endpoints to get started. You can always extend the sample application based on your requirements.
 
 1. On a terminal, run the below command to clone the [GitHub repository](https://github.com/IBM-Cloud/kubernetes-node-app/){: external}:
    ```sh

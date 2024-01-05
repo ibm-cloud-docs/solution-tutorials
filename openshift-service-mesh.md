@@ -232,7 +232,7 @@ You successfully installed Istio into your cluster.
 {: #openshift-service-mesh-deploy_bookinfo_app}
 {: step}
 
-The [BookInfo application](https://istio.io/docs/examples/bookinfo/){: external} displays information about a book, similar to a single catalog entry of an online book store. Displayed on the page is a description of the book, book details (ISBN, number of pages, and so on), and a few book reviews.
+The [BookInfo application](https://istio.io/latest/docs/examples/bookinfo/){: external} displays information about a book, similar to a single catalog entry of an online book store. Displayed on the page is a description of the book, book details (ISBN, number of pages, and so on), and a few book reviews.
 
 The Bookinfo application is broken into four separate microservices:
 
@@ -543,4 +543,4 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 - [Understanding {{site.data.keyword.redhat_openshift_notm}} Service Mesh](https://docs.openshift.com/container-platform/4.13/service_mesh/v2x/ossm-architecture.html){: external}
 - [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift)
 - [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.13/service_mesh/v2x/ossm-architecture.html){: external} - [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
-- [Istio Observability](https://istio.io/docs/concepts/observability/){: external}
+- [Istio Observability](https://istio.io/latest/docs/concepts/observability/){: external}

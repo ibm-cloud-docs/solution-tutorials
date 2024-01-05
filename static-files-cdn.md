@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-09-06"
 
 content-type: tutorial
@@ -90,7 +90,7 @@ To start, retrieve the application code:
 
 {{site.data.keyword.cos_full_notm}} provides flexible, cost-effective, and scalable cloud storage for unstructured data.
 
-1. Go to the [catalog](/catalog/){: external} in the console, and select [**Object Storage**](/catalog/services/cloud-object-storage){: external} from the Storage section.
+1. Go to the [catalog](/catalog/){: external} in the console, and select [**Object Storage**](/objectstorage/create){: external} from the Storage section.
 2. Provide a **Service Name**.
 3. Select the desired **resource group**
 4. Click **Create** to create a new instance of {{site.data.keyword.cos_full_notm}}
