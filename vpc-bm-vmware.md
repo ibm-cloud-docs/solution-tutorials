@@ -28,7 +28,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 IBM Cloud™ has a number of [offerings for VMware deployments in Classic](/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings). These can be classified and described as:
 
 - Automated vSphere Hypervisor Image deployment ([{{site.data.keyword.bm_is_full_notm}} with VMware vSphere](/docs/vmware?topic=vmware-vmware-getting-started))
-- Automated vSphere Hypervisor Image deployment, installation and configuration ([VMware Solutions Dedicated - VMware vSphere®](/docs/vmwaresolutions?topic=vmwaresolutions-vs_vsphereclusteroverview))
+- Automated vSphere Hypervisor Image deployment, installation and configuration ([VMware Solutions Dedicated - VMware vSphere®](/docs/vmwaresolutions?topic=vmwaresolutions-vs_vsphereoverview))
 - Automated vCenter and vSphere clusters deployment, installation and configuration ([VMware Solutions Dedicated - vCenter Server](/docs/vmwaresolutions?topic=vmwaresolutions-vc_vcenterserveroverview))
 
 [{{site.data.keyword.bm_is_full_notm}}](/docs/vpc?topic=vpc-about-bare-metal-servers) environment provide a new option to deploy VMware on IBM Cloud. Currently the {{site.data.keyword.vpc_short}} environment provides only the automated vSphere Hypervisor (ESXi) Operating System image deployment to Intel Bare Metals on VPC. Therefore, you need to manually install and configure the required VMware components, such as ESXi hosts, vCenter, vSAN or NSX-T components.

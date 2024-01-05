@@ -69,7 +69,7 @@ The above diagram shows the following scenarios:
 2. {{site.data.keyword.compliance_short}} in the **Main Account** governs resources in all three accounts (see black lines above).
 3. Instances of {{site.data.keyword.at_short}} in **Account A** and **Account B** direct security logs with {{site.data.keyword.atracker_short}} to {{site.data.keyword.cos_short}} buckets in the **Main Account** (see blue lines above).
 
-Sharing can be between accounts in an [IBM Cloud Enterprise environment](/docs/account?topic=account-what-is-enterprise) or without a formal enterprise organization.
+Sharing can be between accounts in an [IBM Cloud Enterprise environment](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) or without a formal enterprise organization.
 
 ### Encryption key management
 {: #resource-sharing-security-kms}

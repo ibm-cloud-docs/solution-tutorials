@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-09-27"
 
 content-type: tutorial
@@ -48,7 +48,7 @@ The platform is designed to address the needs of developers who just want their 
 4. User uploads a text file(s) via the frontend app that is stored in {{site.data.keyword.cos_short}} through the backend application.
 5. User runs a {{site.data.keyword.codeengineshort}} job via the backend to analyze text by pushing the text to {{site.data.keyword.nlushort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
 
-You can use the [{{site.data.keyword.codeengineshort}} console](/codeengine){: external} to view your progress while working through this tutorial.
+You can use the [{{site.data.keyword.codeengineshort}} console](/codeengine/overview){: external} to view your progress while working through this tutorial.
 {: tip}
 
 <!--##istutorial#-->

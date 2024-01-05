@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-09-07"
 
 content-type: tutorial
@@ -26,7 +26,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/cloud/learn/vpc){: external}. This combination of software - more commonly called a [LAMP stack](https://en.wikipedia.org/wiki/LAMP_(software_bundle)){: external} - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
+This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/topics/vpc){: external}. This combination of software - more commonly called a [LAMP stack](https://www.ibm.com/topics/lamp-stack){: external} - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
 {: shortdesc}
 
 ## Objectives
@@ -103,7 +103,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 ### Create VPC, Subnet(s) and Security Group(s)
 {: #lamp-stack-on-vpc-4}
 
-1. Create a VPC. For more information, see the docs for creating a VPC in the [console](/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console) or [CLI](/docs/vpc?topic=vpc-creating-a-vpc-using-cli#create-a-vpc-cli).
+1. Create a VPC. For more information, see the docs for creating a VPC in the [console](/docs/vpc?topic=vpc-creating-a-vpc-using-the-ibm-cloud-console) or [CLI](/docs/vpc?topic=vpc-creating-vpc-resources-with-cli-and-api&interface=cli).
    ```sh
    VPC_ID=$(ibmcloud is vpc-create vpc-lamp-tutorial --json | jq -r '.id')
    ```
@@ -373,7 +373,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```
    {: pre}
 
-   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/cloud/key-protect){: external}.  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/cloud/hyper-protect-services){: external}, see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation. While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
+   In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/products/key-protect){: external}.  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/products/hyper-protect-crypto){: external}, see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation. While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
    {: tip}
    
 1. Capture the ID of the VSI created earlier by listing all instances and filtering based on the instance name:

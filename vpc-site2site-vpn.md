@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-10-10"
 
 content-type: tutorial
@@ -247,6 +247,6 @@ Want to add to or extend this tutorial? Here are some ideas:
 ## Related content
 {: #vpc-site2site-vpn-related}
 
-- [IBM Cloud CLI plugin for VPC Reference](/docs/vpc?topic=vpc-infrastructure-cli-plugin-vpc-reference)
+- [IBM Cloud CLI plugin for VPC Reference](/docs/vpc?topic=vpc-vpc-reference)
 - [VPC using the REST APIs](/apidocs/vpc/latest)
 - Solution tutorial: [Securely access remote instances with a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)

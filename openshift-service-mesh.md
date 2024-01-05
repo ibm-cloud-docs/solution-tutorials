@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-10-11"
 
 content-type: tutorial
@@ -30,7 +30,7 @@ This tutorial walks you through how to install {{site.data.keyword.redhat_opensh
 
 Based on the open source Istio project, {{site.data.keyword.redhat_openshift_notm}} Service Mesh adds a transparent layer on existing distributed applications. {{site.data.keyword.redhat_openshift_notm}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With {{site.data.keyword.redhat_openshift_notm}}, you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftlong_notm}} cluster.
 
-[Istio](https://www.ibm.com/cloud/info/istio){: external} is an open platform to connect, secure, control and observe microservices, also known as a service mesh, on cloud platforms such as Kubernetes in {{site.data.keyword.openshiftshort}}.
+[Istio](https://www.ibm.com/topics/istio){: external} is an open platform to connect, secure, control and observe microservices, also known as a service mesh, on cloud platforms such as Kubernetes in {{site.data.keyword.openshiftshort}}.
 
 ## Objectives
 {: #openshift-service-mesh-objectives}

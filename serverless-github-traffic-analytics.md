@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-10-10"
 
 content-type: tutorial
@@ -164,7 +164,7 @@ Once the build is ready, you can use the container image to deploy the app, ther
    ```
    {: pre}
 
-   Instead of binding the services to the app, you could also [use secrets and configmaps](/docs/codeengine?topic=codeengine-configmap-secret). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats){: external}.
+   Instead of binding the services to the app, you could also [use secrets](/docs/codeengine?topic=codeengine-secret) or [configmaps](/docs/codeengine?topic=codeengine-configmap). They can be populated from values stored in files or passed in as literal. A sample file for secrets and related instruction are in the [GitHub repository for this tutorial](https://github.com/IBM-Cloud/github-traffic-stats){: external}.
    {: tip}
 
 ## App ID and GitHub configuration (browser)

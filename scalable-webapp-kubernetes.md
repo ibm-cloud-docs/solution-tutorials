@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-09-14"
 
 content-type: tutorial
@@ -26,7 +26,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 
 <!--#/istutorial#-->
 
-This tutorial walks you through how to run a web application locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](/kubernetes/catalog/cluster). As an optional step you can build a container image and push the image to a private registry. Additionally, you will learn how to <!--##istutorial#-->bind a custom subdomain,<!--#/istutorial#--> monitor the health of the environment, and scale the application.
+This tutorial walks you through how to run a web application locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](/kubernetes/catalog/about). As an optional step you can build a container image and push the image to a private registry. Additionally, you will learn how to <!--##istutorial#-->bind a custom subdomain,<!--#/istutorial#--> monitor the health of the environment, and scale the application.
 {: shortdesc}
 
 Containers are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
@@ -193,7 +193,7 @@ Note: If you want to build and push the application to your own container regist
    ```
    {: pre}
    
-   Make sure the CLI is configured for the region and resource group where your created your cluster using `ibmcloud target -r <region> -g <resource_group>`. For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
+   Make sure the CLI is configured for the region and resource group where your created your cluster using `ibmcloud target -r <region> -g <resource_group>`. For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cli-install#cs_cli_configure) section
    {: tip}
 
 1. You can either use the `default` Kubernetes namespace or create a new namespace for this application. 

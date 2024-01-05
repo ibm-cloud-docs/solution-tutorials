@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-09-17"
 
 content-type: tutorial
@@ -157,7 +157,7 @@ In a terminal window:
 
 1. Gain access to your cluster as described under the **Access** section of your cluster.
 
-   For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
+   For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cli-install#cs_cli_configure) section
    {: tip}
 
 2. Define an environment variable named `MYCLUSTER` with your cluster name:

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-09-11"
 
 content-type: tutorial
@@ -188,7 +188,7 @@ Change back to the terminal. Now you are going to deploy the application code, u
    ```
    {: pre}
    
-   In the output, look for the line starting with **URL**. The shown URL should have a pattern like `https://worldcities.unique-subdomain.region.codeengine.appdomain.cloud`. Click on the link to access the app. Another option to retrieve app details is to visit the [{{site.data.keyword.codeengineshort}} console](/codeengine){: external}.
+   In the output, look for the line starting with **URL**. The shown URL should have a pattern like `https://worldcities.unique-subdomain.region.codeengine.appdomain.cloud`. Click on the link to access the app. Another option to retrieve app details is to visit the [{{site.data.keyword.codeengineshort}} console](/codeengine/overview){: external}.
 
 ## Security, Backup & Recovery, Monitoring
 {: #sql-database-7}

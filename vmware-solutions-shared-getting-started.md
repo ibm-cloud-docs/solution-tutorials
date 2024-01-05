@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-09-29"
 content-type: tutorial
 services: vmwaresolutions, schematics
@@ -270,7 +270,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 ![SSH from the Internet](images/solution58-vmware-solutions-getting-started/internet-ssh.svg){: caption="SSH from the Internet" caption-side="bottom"}
 
-This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos/Network/SecuringSSH){: external} documentation.
+This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos(2f)Network(2f)SecuringSSH.html){: external} documentation.
 {: tip}
 
 In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
@@ -381,7 +381,7 @@ Want to add to or change this tutorial? Here are some ideas:
 
 * [{{site.data.keyword.vmwaresolutions_short}} docs](/docs/vmwaresolutions?topic=vmwaresolutions-shared_overview)
 * [{{site.data.keyword.bpshort}} docs](/docs/schematics?topic=schematics-getting-started)
-* [{{site.data.keyword.vmwaresolutions_short}}](https://www.ibm.com/cloud/vmware){: external}
+* [{{site.data.keyword.vmwaresolutions_short}}](https://www.ibm.com/products/vmware){: external}
 * [VMware Cloud Director Documentation](https://docs.vmware.com/en/VMware-Cloud-Director/index.html){: external}
 
 Veeam and Zerto services are ready-to-use in all virtual data centers. For more details, see the following topics in the documentation:
