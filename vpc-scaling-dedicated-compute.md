@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
+lastupdated: "2024-01-08"
 lasttested: "2023-10-04"
 
 content-type: tutorial
@@ -146,7 +146,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
 
     ![View application](images/solution62-vpc-scaling-dedicated/application.png){: caption="View application" caption-side="bottom"}
 
-    To check the provisioned VPC resources, you can either use the [VPC UI](/vpc-ext/network/vpcs) or [{{site.data.keyword.cloud-shell_short}}](/shell) with [ibmcloud is](/docs/cli?topic=vpc-infrastructure-cli-plugin-vpc-reference) commands.
+    To check the provisioned VPC resources, you can either use the [VPC UI](/vpc-ext/network/vpcs) or [{{site.data.keyword.cloud-shell_short}}](/shell) with [ibmcloud is](/docs/vpc?topic=vpc-vpc-reference&interface=cli) commands.
     {: tip}
 
 In the next section, you will choose a scaling method (static or dynamic) and create scaling policies.
