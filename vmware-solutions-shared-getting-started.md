@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
+lastupdated: "2024-01-08"
 lasttested: "2023-09-29"
 content-type: tutorial
 services: vmwaresolutions, schematics
@@ -270,7 +270,7 @@ You can create rules to allow or deny traffic, this section creates a rule to al
 
 ![SSH from the Internet](images/solution58-vmware-solutions-getting-started/internet-ssh.svg){: caption="SSH from the Internet" caption-side="bottom"}
 
-This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos(2f)Network(2f)SecuringSSH.html){: external} documentation.
+This tutorial does not get into securing SSH, it is recommended that you configure the VM to use Public/Private keys for SSH authentication. The VM deployed in this tutorial is CentOS and you can read their [Securing SSH](https://wiki.centos.org/HowTos%282f%29Network%282f%29SecuringSSH.html){: external} documentation.
 {: tip}
 
 In vCloud Director you can `Launch Web Console` or `Launch VM Remote Console` from the card of the VM.  If you prefer to use that facility to access the VM and do not want to configure SSH directly into the VM, set the `allow_ssh` variable in Terraform to false. You can also toggle it as needed and re-apply the plan in Schematics.
