@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
+lastupdated: "2024-01-08"
 lasttested: "2023-09-14"
 
 content-type: tutorial
@@ -193,7 +193,7 @@ Note: If you want to build and push the application to your own container regist
    ```
    {: pre}
    
-   Make sure the CLI is configured for the region and resource group where your created your cluster using `ibmcloud target -r <region> -g <resource_group>`. For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cli-install#cs_cli_configure) section
+   Make sure the CLI is configured for the region and resource group where your created your cluster using `ibmcloud target -r <region> -g <resource_group>`. For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-access_cluster) section
    {: tip}
 
 1. You can either use the `default` Kubernetes namespace or create a new namespace for this application. 
