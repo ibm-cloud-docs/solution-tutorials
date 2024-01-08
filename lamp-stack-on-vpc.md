@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
+lastupdated: "2024-01-08"
 lasttested: "2023-09-07"
 
 content-type: tutorial
@@ -532,6 +532,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Related Content
 {: #lamp-stack-on-vpc-related}
 
-- [LAMP stack](https://en.wikipedia.org/wiki/LAMP_(software_bundle)){: external}
+- [LAMP stack](https://en.wikipedia.org/wiki/LAMP_%28software_bundle%29){: external}
 - [Install software on virtual server instances in VPC](/docs/solution-tutorials?topic=solution-tutorials-vpc-app-deploy)
 - [Securely access remote instances with a bastion host](/docs/solution-tutorials?topic=solution-tutorials-vpc-secure-management-bastion-server)
