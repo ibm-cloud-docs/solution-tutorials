@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2023-12-20"
+lastupdated: "2024-01-09"
 lasttested: "2023-10-16"
 
 content-type: tutorial
@@ -79,7 +79,7 @@ In addition, make sure you [set up a registry namespace](/docs/Registry?topic=Re
 {: #scalable-webapp-openshift-prereqs-workshop}
 
 This tutorial requires:
-* {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/ssh/README)
+* {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/user/ssh.md)
 
 ## Start a new {{site.data.keyword.cloud-shell_notm}}
 {: #scalable-webapp-openshift-2}
