@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-11"
 lasttested: "2023-09-26"
 
 content-type: tutorial
@@ -87,7 +87,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 2. Set the **Orchestration service** to **4.12.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
-   - For {{site.data.keyword.redhat_openshift_notm}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+   - For {{site.data.keyword.redhat_openshift_notm}} on VPC infrastructure, you are required to have a VPC and one subnet prior to creating the {{site.data.keyword.openshiftshort}} cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](/docs/openshift?topic=openshift-cluster-create-vpc-gen2&interface=ui)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
    - Select an existing **Cloud Object Storage** service or create one if required
@@ -96,7 +96,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
       - Select a **Resource group**
       - Uncheck the inapplicable zones
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-   - For {{site.data.keyword.redhat_openshift_notm}} on Classic infrastructure follow the [Creating a standard classic cluster](/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+   - For {{site.data.keyword.redhat_openshift_notm}} on Classic infrastructure follow the [Creating a standard classic cluster](/docs/openshift?topic=openshift-cluster-create-classic&interface=ui) instructions.
       - Select a **Resource group**
       - Select a **Geography**
       - Select **Single zone** as **Availability**
@@ -143,7 +143,7 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    ```
    {: pre}
    
-   > The version needs to be at minimum 4.12.x, otherwise install the latest version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-common_shell).
+   > The version needs to be at minimum 4.12.x, otherwise install the latest version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell_oc).
 
 1. Validate your cluster is shown when listing all clusters:
    ```sh

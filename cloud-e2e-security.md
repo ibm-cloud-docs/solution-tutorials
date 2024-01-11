@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
+lastupdated: "2024-01-11"
 lasttested: "2023-12-13"
 
 content-type: tutorial
@@ -155,7 +155,7 @@ While the cluster is being provisioned, you will create the other services requi
 ### Use your own encryption keys
 {: #cloud-e2e-security-7}
 
-{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to protect your data at rest](/docs/key-protect/integrations?topic=key-protect-integrate-cos). In this section, you will create one root key for the storage bucket.
+{{site.data.keyword.keymanagementserviceshort}} helps you provision encrypted keys for apps across {{site.data.keyword.Bluemix_notm}} services. {{site.data.keyword.keymanagementserviceshort}} and {{site.data.keyword.cos_full_notm}} [work together to protect your data at rest](/docs/key-protect?topic=key-protect-integrate-cos). In this section, you will create one root key for the storage bucket.
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](/catalog/services/kms){: external}.
    1. Select a **location**.
