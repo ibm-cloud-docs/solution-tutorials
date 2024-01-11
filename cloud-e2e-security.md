@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
-lasttested: "2023-12-13"
+lastupdated: "2024-01-11"
+lasttested: "2024-01-09"
 
 content-type: tutorial
 services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis
@@ -331,7 +331,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
       You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
 
-   4. Set the environment variables required for `secure-file-storage.template.yaml` file to generate `secure-file-storage.yaml` in the next step. 
+   4. Set the environment variables required for generating configuration files in the next step. 
       1. Start by setting the cluster name by replacing `<YOUR_CLUSTER_NAME>`:
          ```sh
          export MYCLUSTER=<YOUR_CLUSTER_NAME>
@@ -370,7 +370,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
       7. Optionally set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](/docs/containers?topic=containers-registry#other)).
 
-   5. Run the below command to generate `secure-file-storage.yaml`. It will use the environment variables you just configured together with the template file `secure-file-storage.template.yaml`.
+   5. Run the below command to generate `secure-file-storage.yaml`, `secure-file-storage-ingress.yaml`, and `secure-file-storage-route.yaml`. It will use the environment variables you just configured together with the template files `secure-file-storage.template.yaml`, `secure-file-storage-ingress.template.yaml`, and `secure-file-storage-route.template.yaml`. 
       ```sh
       ./generate_yaml.sh
       ```
@@ -406,7 +406,7 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
 
 2. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
    ```sh
-   ibmcloud ks cluster config --cluster $MYCLUSTER
+   ibmcloud ks cluster config --cluster $MYCLUSTER --admin
    ```
    {: codeblock}
 
@@ -422,13 +422,25 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
    ```
    {: codeblock}
 
+5. Deploy the network routing for your app to make it accessible from the public internet. If your cluster is {{site.data.keyword.containershort_notm}}, then run:
+   ```sh
+   kubectl apply -f secure-file-storage-ingress.yaml
+   ```
+   {: codeblock}
+
+   If your cluster uses {{site.data.keyword.openshiftshort}}, then run:
+   ```sh
+   kubectl apply -f secure-file-storage-route.yaml
+   ```
+   {: codeblock}
+
 <!--#/istutorial#-->
 
 <!--##isworkshop#-->
 <!--
 1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
    ```sh
-   ibmcloud ks cluster config --cluster $MYCLUSTER
+   ibmcloud ks cluster config --cluster $MYCLUSTER --admin
    ```
    {: codeblock}
 
@@ -441,6 +453,18 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
 3. Deploy the app.
    ```sh
    kubectl apply -f secure-file-storage.yaml
+   ```
+   {: codeblock}
+
+4. Deploy the network routing for your app to make it accessible from the public internet. If your cluster is {{site.data.keyword.containershort_notm}}, then run:
+   ```sh
+   kubectl apply -f secure-file-storage-ingress.yaml
+   ```
+   {: codeblock}
+
+   If your cluster uses {{site.data.keyword.openshiftshort}}, then run:
+   ```sh
+   kubectl apply -f secure-file-storage-route.yaml
    ```
    {: codeblock}
 
@@ -704,13 +728,26 @@ To remove the resource, delete the deployed container and then the provisioned s
 If you share an account with other users, always make sure to delete only your own resources.
 {: tip}
 
-1. Delete the deployed container:
+1. Delete the deployed network configuration and the container:
+   ```sh
+   kubectl delete -f secure-file-storage-ingress.yaml
+   ```
+   {: codeblock}
+
+   or
+
+   ```sh
+   kubectl delete -f secure-file-storage-route.yaml
+   ```
+   {: codeblock}
+
+   Thereafter, run the following command:
    ```sh
    kubectl delete -f secure-file-storage.yaml
    ```
    {: codeblock}
 
-2. Delete the secrets for the deployment:
+3. Delete the secrets for the deployment:
    ```sh
    kubectl delete secret <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-credentials
    ```
