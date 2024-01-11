@@ -6,7 +6,7 @@ lastupdated: "2024-01-11"
 lasttested: "2024-01-09"
 
 content-type: tutorial
-services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis
+services: containers, openshift, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis
 account-plan: paid
 completion-time: 2h
 use-case: Cybersecurity
@@ -17,7 +17,7 @@ use-case: Cybersecurity
 # Apply end to end security to a cloud application
 {: #cloud-e2e-security}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis"}
+{: toc-services="containers, openshift, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis"}
 {: toc-completion-time="2h"}
 
 <!--##istutorial#-->
@@ -41,10 +41,10 @@ Authenticating and authorizing users' access to specific resources is another co
 * Monitor and audit security-related API calls and other actions across cloud services.
 
 
-The tutorial features a sample application that enables groups of users to upload files to a common storage pool and to provides access to those files via shareable links. The application is written in Node.js and deployed as a container to the {{site.data.keyword.containershort_notm}}. It leverages several security-related services and features to improve the application's security posture.
+The tutorial features a sample application that enables groups of users to upload files to a common storage pool and to provides access to those files via shareable links. The application is written in Node.js and deployed as a container to either {{site.data.keyword.containerfull_notm}} or {{site.data.keyword.openshiftlong_notm}}. It leverages several security-related services and features to improve the application's security posture.
 
 <!--##istutorial#-->
-This tutorial will work with a Kubernetes cluster running in Classic Infrastructure or VPC Infrastructure.
+This tutorial will work with a cluster running in Classic Infrastructure or VPC Infrastructure.
 <!--#/istutorial#-->
 
 ![Architecture](images/solution34-cloud-e2e-security/architecture-e2e-security.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
@@ -116,7 +116,7 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 ### Create a cluster for the application
 {: #cloud-e2e-security-6}
 
-The {{site.data.keyword.containerfull_notm}} provides an environment to deploy highly available apps in containers that run in Kubernetes clusters.
+{{site.data.keyword.containerfull_notm}} and {{site.data.keyword.openshiftlong_notm}} provide environments to deploy highly available apps in containers that run in Kubernetes clusters.
 
 Skip this section if you have an existing `Standard` cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **secure-file-storage-cluster**, simply substitute with the name of your cluster. **Note the minimum required Kubernetes version of 1.19.**
 {: tip}
@@ -707,7 +707,8 @@ Security is never done. Try the below suggestions to enhance the security of you
 If you want to work with others on resources of this solution tutorial, you can share all or only some of the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](/docs/account?topic=account-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign [predefined access roles](/docs/account?topic=account-userroles) to either a user, a service ID, or to an [access group](/docs/account?topic=account-groups). An access group can be created to organize a set of users and service IDs into a single entity. It makes it easy for you to assign access. You can assign a single policy to the group instead of assigning the same access multiple times per individual user or service ID. Thus, you can organize groups for roles on your development project and align security and project management.
 
 You can find information on the individual services and their available IAM access roles here:
-* [{{site.data.keyword.containershort_notm}}](/docs/containers?topic=containers-access_reference). Note that this service also provides examples for [mapping service roles to typical project roles](/docs/containers?topic=containers-users). 
+* [{{site.data.keyword.containershort_notm}}](/docs/containers?topic=containers-access_reference). Note that this service also provides examples for [mapping service roles to typical project roles](/docs/containers?topic=containers-users). Or the same for [{{site.data.keyword.openshiftshort}}](/docs/openshift?topic=openshift-access_reference) with [details on user access and roles](/docs/openshift?topic=openshift-users).
+* https://cloud.ibm.com/docs/openshift?topic=openshift-access_reference&interface=ui
 * [{{site.data.keyword.registryshort_notm}}](/docs/Registry?topic=Registry-iam#iam)
 * [{{site.data.keyword.appid_short}}](/docs/appid?topic=appid-service-access-management)
 * [{{site.data.keyword.cloudant_short_notm}}](/docs/Cloudant?topic=Cloudant-managing-access-for-cloudant)
