@@ -376,7 +376,7 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
    ```
    {: codeblock}   
 
-2. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
+2. Gain access to your cluster as described in the instructions **Connect via CLI** accessible from the **Actions...** menu in your console overview page.
    ```sh
    ibmcloud ks cluster config --cluster $MYCLUSTER --admin
    ```
@@ -394,7 +394,9 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
    ```
    {: codeblock}
 
-5. Deploy the network routing for your app to make it accessible from the public internet. If your cluster is {{site.data.keyword.containershort_notm}}, then run:
+5. Deploy the network routing for your app to make it accessible from the public internet. 
+   
+   If your cluster is {{site.data.keyword.containershort_notm}}, then run:
    ```sh
    kubectl apply -f secure-file-storage-ingress.yaml
    ```
@@ -428,7 +430,9 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
    ```
    {: codeblock}
 
-4. Deploy the network routing for your app to make it accessible from the public internet. If your cluster is {{site.data.keyword.containershort_notm}}, then run:
+4. Deploy the network routing for your app to make it accessible from the public internet.
+   
+   If your cluster is {{site.data.keyword.containershort_notm}}, then run:
    ```sh
    kubectl apply -f secure-file-storage-ingress.yaml
    ```
@@ -625,9 +629,11 @@ This tutorial leverages the [External Secrets Operator](https://external-secrets
    ```
    {: codeblock}
 
-5. Run the below command to generate a new copy of `secure-file-storage.yaml`. It will use all of the environment variables you configured together with the template file `secure-file-storage.template.yaml`.  You may want to first save the current version:
+5. Run the below command to generate new copies of the configuration files. It will use all the environment variables you configured together with the template files `secure-file-storage.template.yaml`, `secure-file-storage.template-ingress.yaml`, and `secure-file-storage-route.template.yaml`. You may want to first save the current version:
    ```sh
    cp secure-file-storage.yaml /tmp
+   cp secure-file-storage-ingress.yaml /tmp
+   cp secure-file-storage-route.yaml /tmp
    ```
    {: pre}
 
