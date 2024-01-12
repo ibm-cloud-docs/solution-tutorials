@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-11"
+lastupdated: "2024-01-12"
 lasttested: "2024-01-09"
 
 content-type: tutorial
@@ -118,38 +118,10 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 
 {{site.data.keyword.containerfull_notm}} and {{site.data.keyword.openshiftlong_notm}} provide environments to deploy highly available apps in containers that run in Kubernetes clusters.
 
-Skip this section if you have an existing `Standard` cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **secure-file-storage-cluster**, simply substitute with the name of your cluster. **Note the minimum required Kubernetes version of 1.19.**
+Skip this section if you have an existing Kubernetes cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **secure-file-storage-cluster**, simply substitute with the name of your cluster.
 {: tip}
 
-A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
-
-1. Open the [Kubernetes clusters](/kubernetes/clusters){: external} and click **Create cluster**. 
-
-2. Create a cluster on your choice of **Infrastructure**. 
-   - The following steps are if you select **VPC** for Kubernetes on VPC infrastructure. You are required to create a VPC and subnet(s) before creating the Kubernetes cluster. Reference the [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui) documentation for more details.
-      1. Click **Create VPC**.
-      2. Under the **Location** section, select a **Geography** and **Region**, for example `Europe` and `London`.
-      3. Enter a **Name** of your VPC, select a **Resource group** and optionally, add **Tags** to organize your resources.
-      4. Uncheck **Allow SSH** and **Allow ping** from the **Default security group**.
-      5. Uncheck **Create subnet in every zone**.
-      5. Click on **Create**.
-      6. Under **Worker zones and subnets**, uncheck the two zones for which the subnet wasn't created.
-      7. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
-      8. Enter a **Cluster name** and select the same **Resource group** that you used for the VPC.
-      9. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
-      10. While you waiting for the cluster to become active, attach a public gateway to the VPC. Navigate to the [Virtual private clouds](/vpc-ext/network/vpcs){: external}.
-      11. Click on the name for the VPC used by the cluster and scroll down to subnets section.
-      13. Click on the name of the subnet created earlier and in the **Public Gateway** section, click on **Detached** to change the state to **Attached**.
-
-   - The following steps are if you select **Classic** for Kubernetes on Classic infrastructure. Reference the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) documentation for more details.
-      1. Under the **Location** section, select a **Geography**, multizone **Availability**, and **Metro** for example `Europe` and `London`.
-      2. Under **Worker zones and VLANs**, uncheck all zones except for one.
-      3. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
-      4. Under **Master service endpoint**, select **Both private & public endpoints**.
-      5. Enter a **Cluster name** and select the **Resource group** to create these resources under.
-      6. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
-
-While the cluster is being provisioned, you will create the other services required by the tutorial.
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. To create a {{site.data.keyword.containerfull_notm}} cluster, follow the steps for either [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen) or [Creating classic clusters](/docs/containers?topic=containers-cluster-create-classic). To create a {{site.data.keyword.openshiftlong_notm}} cluster, follow the steps for either [Creating VPC clusters](/docs/openshift?topic=openshift-cluster-create-vpc-gen) or [Creating classic clusters](/docs/openshift?topic=openshift-cluster-create-classic).
 <!--#/istutorial#-->
 
 ### Use your own encryption keys
