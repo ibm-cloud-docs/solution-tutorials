@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-12"
-lasttested: "2024-01-09"
+lastupdated: "2024-01-16"
+lasttested: "2024-01-16"
 
 content-type: tutorial
 services: containers, openshift, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis
@@ -277,88 +277,89 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-### Fill in credentials and configuration settings
+### Fill in configuration settings and credentials
 {: #cloud-e2e-security-15}
 
-   1. Copy `credentials.template.env` to `credentials.env`:
+1. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target your {{site.data.keyword.cloud_notm}} region and resource group.
+
+   ```sh
+   ibmcloud target -r <region> -g <resource_group>
+   ```
+   {: codeblock}
+
+   You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
+
+2. Set the environment variables required for generating configuration files in the next step. 
+   1. Start by setting the cluster name by replacing `<YOUR_CLUSTER_NAME>`:
       ```sh
-      cp credentials.template.env credentials.env
+      export MYCLUSTER=<YOUR_CLUSTER_NAME>
       ```
-      {: codeblock}
+      {: pre}
 
-   2. Edit `credentials.env` and fill in the blanks with these values:
-      * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
-      * the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**,
-      * and the credentials for {{site.data.keyword.appid_short}}.
-
-      When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
-      {: tip}
-
-   3. If you are not logged in, use `ibmcloud login` or `ibmcloud login --sso` to log in interactively. Target your {{site.data.keyword.cloud_notm}} region and resource group.
-
+   2. Set the ingress subdomain using `ibmcloud ks` commands:
       ```sh
-      ibmcloud target -r <region> -g <resource_group>
+      export INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressHostname) // .ingress.hostname')
       ```
-      {: codeblock}
+      {: pre}
 
-      You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
+   3. Set the ingress secret using `ibmcloud ks` commands:
+      ```sh
+      export INGRESS_SECRET=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressSecretName) // .ingress.secretName')
+      ```
+      {: pre}
 
-   4. Set the environment variables required for generating configuration files in the next step. 
-      1. Start by setting the cluster name by replacing `<YOUR_CLUSTER_NAME>`:
-         ```sh
-         export MYCLUSTER=<YOUR_CLUSTER_NAME>
-         ```
-         {: pre}
+   4. Set the image repository name to the pre-built image `icr.io/solution-tutorials/tutorial-cloud-e2e-security`:
+      ```sh
+      export IMAGE_REPOSITORY=icr.io/solution-tutorials/tutorial-cloud-e2e-security
+      ```
+      {: pre}
 
-      2. Set the ingress subdomain using `ibmcloud ks` commands:
-         ```sh
-         export INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressHostname) // .ingress.hostname')
-         ```
-         {: pre}
+   5. Set additional environment variables by replacing the default values:
+      ```sh
+      export BASENAME=<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage
+      ```
+      {: pre}
 
-      3. Set the ingress secret using `ibmcloud ks` commands:
-         ```sh
-         export INGRESS_SECRET=$(ibmcloud ks cluster get --cluster $MYCLUSTER --output json | jq -r 'try(.ingressSecretName) // .ingress.secretName')
-         ```
-         {: pre}
+   6. Set the namespace to use:
+      ```sh
+      export TARGET_NAMESPACE=default
+      ```
+      {: pre}
 
-      4. Set the image repository name to the pre-built image `icr.io/solution-tutorials/tutorial-cloud-e2e-security`:
-         ```sh
-         export IMAGE_REPOSITORY=icr.io/solution-tutorials/tutorial-cloud-e2e-security
-         ```
-         {: pre}
+   7. Optionally set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](/docs/containers?topic=containers-registry#other)).
 
-      5. Set additional environment variables by replacing the default values:
-         ```sh
-         export BASENAME=<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage
-         ```
-         {: pre}
-
-      6. Set the namespace to use:
-         ```sh
-         export TARGET_NAMESPACE=default
-         ```
-         {: pre}
-
-      7. Optionally set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](/docs/containers?topic=containers-registry#other)).
-
-   5. Run the below command to generate `secure-file-storage.yaml`, `secure-file-storage-ingress.yaml`, and `secure-file-storage-route.yaml`. It will use the environment variables you just configured together with the template files `secure-file-storage.template.yaml`, `secure-file-storage-ingress.template.yaml`, and `secure-file-storage-route.template.yaml`. 
+3. Run the below command to generate `secure-file-storage.yaml` and `secure-file-storage-ingress.yaml`. It will use the environment variables you just configured together with the template files `secure-file-storage.template.yaml` and `secure-file-storage-ingress.template.yaml`. 
       ```sh
       ./generate_yaml.sh
       ```
       {: pre}
 
-As example, assuming the application is deployed to the *default* Kubernetes namespace:
+   As example, assuming the application is deployed to the *default* Kubernetes namespace:
+   
+   | Variable | Value | Description |
+   | -------- | ----- | ----------- |
+   | `$IMAGE_PULL_SECRET` | Do not define when using provided image| A secret to access the registry.  |
+   | `$IMAGE_REPOSITORY` | *icr.io/solution-tutorials/tutorial-cloud-e2e-security* or *icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
+   | `$TARGET_NAMESPACE` | *default* |   the Kubernetes namespace where the app will be pushed. |
+   | `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+   | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
+   | `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
+   {: caption="Environment variables used by the script" caption-side="bottom"}
 
-| Variable | Value | Description |
-| -------- | ----- | ----------- |
-| `$IMAGE_PULL_SECRET` | Do not define when using provided image| A secret to access the registry.  |
-| `$IMAGE_REPOSITORY` | *icr.io/solution-tutorials/tutorial-cloud-e2e-security* or *icr.io/namespace/image-name* | The URL-like identifier for the built image based on the registry URL, namespace and image name from the previous section. |
-| `$TARGET_NAMESPACE` | *default* |   the Kubernetes namespace where the app will be pushed. |
-| `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-| `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-| `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
-{: caption="Environment variables used by the script" caption-side="bottom"}
+4. Copy `credentials.template.env` to `credentials.env`:
+   ```sh
+   cp credentials.template.env credentials.env
+   ```
+   {: codeblock}
+
+5. Edit `credentials.env` and fill in the blanks with these values:
+   * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
+   * the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**,
+   * and the credentials for {{site.data.keyword.appid_short}}. The variable `appid_redirect_uris` is a comma-separated list of redirect URIs as discussed above.
+
+   When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
+   {: tip}
+
 
 ### Deploy to the cluster
 {: #cloud-e2e-security-16}
@@ -394,19 +395,12 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
    ```
    {: codeblock}
 
-5. Deploy the network routing for your app to make it accessible from the public internet. 
-   
-   If your cluster is {{site.data.keyword.containershort_notm}}, then run:
+5. Deploy the network routing (a ClusterIP service and Ingress) for your app to make it accessible from the public internet. 
    ```sh
    kubectl apply -f secure-file-storage-ingress.yaml
    ```
    {: codeblock}
 
-   If your cluster uses {{site.data.keyword.openshiftshort}}, then run:
-   ```sh
-   kubectl apply -f secure-file-storage-route.yaml
-   ```
-   {: codeblock}
 
 <!--#/istutorial#-->
 
@@ -430,17 +424,9 @@ As example, assuming the application is deployed to the *default* Kubernetes nam
    ```
    {: codeblock}
 
-4. Deploy the network routing for your app to make it accessible from the public internet.
-   
-   If your cluster is {{site.data.keyword.containershort_notm}}, then run:
+4. Deploy the network routing (a ClusterIP service and Ingress) for your app to make it accessible from the public internet.
    ```sh
    kubectl apply -f secure-file-storage-ingress.yaml
-   ```
-   {: codeblock}
-
-   If your cluster uses {{site.data.keyword.openshiftshort}}, then run:
-   ```sh
-   kubectl apply -f secure-file-storage-route.yaml
    ```
    {: codeblock}
 
@@ -535,7 +521,7 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
       secure-file-storage.example.com-account-info.json secure-file-storage.example.com-private-key.pem
       ```
 2. Connect the Let's Encrypt ACME account to the {{site.data.keyword.secrets-manager_short}} instance. See [Adding a certificate authority configuration in the UI](/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui#add-certificate-authority-ui) for more details:
-   1. Open the {{site.data.keyword.secrets-manager_short}} service instance, you can find it in the [Resource List](/resources).
+   1. Open the {{site.data.keyword.secrets-manager_short}} service instance, you can find it in the [Resource List](/resources){: external}.
    2. Open **Secrets engines** on the left and click **Public certificates**.
    3. Under **Certificate authorities** click **Add**.
    4. **Name**: LetsEncrypt and **Certificate authority**: Let's Encrypt.
@@ -578,44 +564,15 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
    ```
    {: codeblock}
 
-This tutorial leverages the [External Secrets Operator](https://external-secrets.io/){: external} to access the {{site.data.keyword.secrets-manager_short}} service instance and the secret created from your cluster. A service ID and API key are required to provide access:
+This tutorial leverages service to service authorization to give the cluster access to the {{site.data.keyword.secrets-manager_short}} service instance and its managed secrets.
 
-1. Create a service ID and set it as an environment variable.
-   ```sh
-   export SERVICE_ID=`ibmcloud iam service-id-create secure-file-storage-tutorial --description "A service ID for e2e security tutorial." --output json | jq -r ".id"`; echo $SERVICE_ID
-   ```
-   {: codeblock}
+1. Go to the [IAM Authorizations page](/iam/authorizations){: external} and click **Create** to add a new authorization.
+2. Under **Source** select **Kubernetes Service**, then click to pick **Specific resources**. Then, for **Source service instance**, choose your cluster.
+3. Under **Target** select **Secrets Manager**, then, going with **Specific resources** and **Instance ID**, select your {{site.data.keyword.secrets-manager_short}} service instance.
+4. Finally, under **Roles** select **Manager** and grant the authorization by clicking **Authorize**.
 
-2. Assign the service ID permissions to read secrets from {{site.data.keyword.secrets-manager_short}}.
-   ```sh
-   ibmcloud iam service-policy-create $SERVICE_ID --roles "SecretsReader" --service-name secrets-manager
-   ```
-   {: codeblock}
 
-3. Create an API key for your service ID.
-   ```sh
-   export IBM_CLOUD_API_KEY=`ibmcloud iam service-api-key-create secure-file-storage-tutorial $SERVICE_ID --description "An API key for e2e security tutorial." --output json | jq -r ".apikey"`
-   ```
-   {: codeblock}
-
-4. Create a secret in your cluster for that API key.
-   ```sh
-   kubectl -n default create secret generic secure-file-storage-api-key --from-literal=apikey=$IBM_CLOUD_API_KEY
-   ```
-   {: codeblock}
-   
-5. Run the following commands to install the External Secrets Operator.
-   ```sh
-   helm repo add external-secrets https://charts.external-secrets.io
-   ```
-   {: codeblock}
-
-   ```sh   
-   helm install external-secrets external-secrets/external-secrets
-   ```
-   {: codeblock}
-
-5. Verify the values for MYDOMAIN, SECRETS_MANAGER_API_URL and PUBLIC_CERT_ID have been exported into the environment:
+5. REWORK Verify the values for MYDOMAIN, SECRETS_MANAGER_API_URL and PUBLIC_CERT_ID have been exported into the environment:
    ```sh   
    echo MYDOMAIN $(printenv MYDOMAIN)
    echo SECRETS_MANAGER_API_URL $(printenv SECRETS_MANAGER_API_URL)
@@ -623,13 +580,13 @@ This tutorial leverages the [External Secrets Operator](https://external-secrets
    ```
    {: codeblock}
 
-   You can test the secrets manager variables with this command:
+   You can test the Secrets Manager variables with this command:
    ```sh
    ibmcloud sm secret --service-url $SECRETS_MANAGER_API_URL --id $PUBLIC_CERT_ID
    ```
    {: codeblock}
 
-5. Run the below command to generate new copies of the configuration files. It will use all the environment variables you configured together with the template files `secure-file-storage.template.yaml`, `secure-file-storage.template-ingress.yaml`, and `secure-file-storage-route.template.yaml`. You may want to first save the current version:
+6. Run the below command to generate new copies of the configuration files. It will use all the environment variables you configured together with the template files `secure-file-storage.template.yaml`, `secure-file-storage.template-ingress.yaml`, and `secure-file-storage-route.template.yaml`. You may want to first save the current version:
    ```sh
    cp secure-file-storage.yaml /tmp
    cp secure-file-storage-ingress.yaml /tmp
@@ -643,16 +600,16 @@ This tutorial leverages the [External Secrets Operator](https://external-secrets
    {: pre}
 
    
-6. Apply the configuration changes to your cluster:
+7. Apply the configuration changes to your cluster:
    ```sh
    kubectl apply -f secure-file-storage.yaml
    ```
    {: codeblock}
 
-7. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
+8. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
    * Click **Manage Authentication** on the left and the **Authentication Settings** tab on the top.
    * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/redirect_uri` as another URL.
-8. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
+9. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
 
 <!--#/istutorial#-->
 
