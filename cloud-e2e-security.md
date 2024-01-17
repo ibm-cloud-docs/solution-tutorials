@@ -571,7 +571,7 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
    3. Under **Target** select **Secrets Manager**, then, going with **Specific resources** and **Instance ID**, select your {{site.data.keyword.secrets-manager_short}} service instance.
    4. Finally, under **Roles** select **Manager** and grant the authorization by clicking **Authorize**.
 
-6. Verify the values for MYDOMAIN, SECRETS_MANAGER_API_URL and PUBLIC_CERT_ID have been exported into the environment:
+6. Verify the values for MYDOMAIN and PUBLIC_CERT_CRN have been exported into the environment:
    ```sh   
    echo MYDOMAIN $(printenv MYDOMAIN)
    echo PUBLIC_CERT_CRN $(printenv PUBLIC_CERT_CRN)
