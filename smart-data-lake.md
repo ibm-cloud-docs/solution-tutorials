@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2022-12-27"
 
 content-type: tutorial
@@ -80,7 +80,7 @@ This section uses the command line to create service instances. Alternatively, y
    Use `ibmcloud target -g default` to switch to the default resource group.
    {: tip}
 
-3. Create an instance of [{{site.data.keyword.cos_short}}](/catalog/services/cloud-object-storage). If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
+3. Create an instance of [{{site.data.keyword.cos_short}}](/objectstorage/create). If you already have {{site.data.keyword.cos_short}} instance with a **lite** plan, use **standard** instead of **lite**.
     ```sh
     ibmcloud resource service-instance-create data-lake-cos cloud-object-storage lite global
     ```
@@ -108,7 +108,7 @@ This section uses the command line to create service instances. Alternatively, y
 {: #smart-data-lake-3}
 {: step}
 
-In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket. You can do this using regular http upload or by utilising the built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/cloud/blog/announcements/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud){: external}.
+In this section, you will upload data to an {{site.data.keyword.cos_short}} bucket. You can do this using regular http upload or by utilising the built-in {{site.data.keyword.CHSTSshort}}. {{site.data.keyword.CHSTSshort}} protects data as it is uploaded to the bucket and [can greatly reduce transfer time](https://www.ibm.com/blog/announcement/ibm-cloud-object-storage-simplifies-accelerates-data-to-the-cloud/){: external}.
 
 1. Download the [City of Los Angeles / Traffic Collision Data from 2010](https://data.lacity.org/api/views/d5tf-ez2w/rows.csv?accessType=DOWNLOAD){: external} CSV file. The file is 81MB and may take a few minutes to download.
 2. In your browser, access the **data-lake-cos** service instance from the [Resource List](/resources) under the **Storage** section.
@@ -237,7 +237,7 @@ Once the notebook is available, follow these steps.
     ```
     {: codeblock}
 
-    The [function **get_connection**](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/project-lib-python.html?audience=wdp){: external} retrieves the previously configured connection properties.
+    The [function **get_connection**](https://dataplatform.cloud.ibm.com/docs/content/wsj/analyze-data/project-lib-python.html?audience=wdp&context=cpdaas){: external} retrieves the previously configured connection properties.
 
 ## Visualize data using folium
 {: #smart-data-lake-6}

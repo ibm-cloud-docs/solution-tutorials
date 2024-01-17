@@ -2,14 +2,13 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023, 2024
-lastupdated: "2024-01-05"
+lastupdated: "2024-01-11"
 lasttested: "2023-09-26"
 
 content-type: tutorial
 services: vpc, openshift, secrets-manager, dl, schematics
 account-plan: paid
 completion-time: 2h
-# use-case is a comma-separated list or yaml bullet format. Select one or more use cases that represent your architecture from the Digital Taxonomy [use case](https://github.ibm.com/digital/taxonomy/blob/main/subsets/use_cases/use_cases_flat_list.csv) list. Use the value in the code column. The list available under [Topics](https://github.ibm.com/digital/taxonomy/blob/main/topics/topics_flat_list.csv) can also be used, but don't go too crazy.
 use-case: usecase1, usecase2
 ---
 
@@ -226,9 +225,11 @@ Make sure you have your development environment configured:
     ```tf
     ibmcloud_api_key              = "<IBM Cloud API key>"
 
+    prefix                        = "<prefix for the new resources>"
+
     /*
     ID, not VPC name.  You can find the information in the Optional inputs
-    section of the console or fom the "ibmcloud is vpcs" CLI command
+    section of the console or from the "ibmcloud is vpcs" CLI command
     */
     vpc_id                         = "<ID>"
 
@@ -295,8 +296,6 @@ Make sure you have your development environment configured:
     The last few lines of the output of the script should look something like the following example:
 
     ```text
-    Apply complete! Resources: 5 added, 2 changed, 0 destroyed.
-
     Outputs:
 
     resource_group_id = "737bb1c6828346a5a961638973cafd31"

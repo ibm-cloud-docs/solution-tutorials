@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-04"
+lastupdated: "2024-01-05"
 lasttested: "2023-12-28"
 
 content-type: tutorial
@@ -44,8 +44,8 @@ There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transi
  During the journey the following are explored:
 - [VPC Network planning](/docs/vpc?topic=vpc-vpc-addressing-plan-design).
 - [VPC egress and ingress routing](/docs/vpc?topic=vpc-about-custom-routes).
-- Connectivity via [{{site.data.keyword.BluDirectLink}}](https://www.ibm.com/cloud/direct-link){: external}.
-- Connectivity via [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/cloud/transit-gateway){: external}.
+- Connectivity via [{{site.data.keyword.BluDirectLink}}](https://www.ibm.com/products/direct-link){: external}.
+- Connectivity via [{{site.data.keyword.tg_full_notm}}](https://www.ibm.com/products/transit-gateway){: external}.
 - [Virtual Network Functions](/docs/vpc?topic=vpc-about-vnf-ha).
 
 A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. A layer may introduce small problems and demonstrate solutions in the context of a larger architecture. The layers are implemented using Infrastructure as Code in the form of Terraform configuration files. It will be possible to change parameters, like number of zones, by changing a Terraform variable.
@@ -109,7 +109,7 @@ Above the enterprise is on the left and the {{site.data.keyword.cloud_notm}} on 
 - The subnet CIDRs further divide the /24 into /26.
 
 The subnets in the transit and spoke are for the different resource types:
-- worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/cloud/openshift){: external}, etc. VPC instances are demonstrated in this tutorial.
+- worker - network accessible compute resources VPC instances, load balancers, [{{site.data.keyword.redhat_openshift_notm}}](https://www.ibm.com/products/openshift){: external}, etc. VPC instances are demonstrated in this tutorial.
 - dns - {{site.data.keyword.dns_short}} location appliances used in part two.
 - vpe - [{{site.data.keyword.vpe_short}}](/docs/vpc?topic=vpc-about-vpe) used in part two.
 - fw - firewall-router VPC instances (only in transit).
@@ -491,10 +491,10 @@ Your architecture will likely be different than the one presented but will likel
 
 - Integrate incoming public Internet access using [{{site.data.keyword.cis_full}}](/docs/cis?topic=cis-getting-started).
 - Add [flow log capture](/docs/vpc?topic=vpc-flow-logs) in the transit.
-- Put each of the spokes in a separate account in an [enterprise](/docs/account?topic=account-enterprise-tutorial#account_groups_tutorial).
+- Put each of the spokes in a separate account in an [enterprise](/docs/secure-enterprise?topic=secure-enterprise-enterprise-tutorial#account_groups_tutorial).
 - Force some of the spoke to spoke traffic through the firewall and some not through the firewall.
 - Replace the worker VSIs with [{{site.data.keyword.openshiftlong_notm}} and VPC load balancer](/docs/openshift?topic=openshift-vpc-lbaas).
-- Force all out bound traffic through the firewall in the transit VPC and through [Public gateways](/docs/vpc?topic=vpc-public-gateways) .
+- Force all out bound traffic through the firewall in the transit VPC and through [Public gateways](/docs/vpc?topic=vpc-about-public-gateways) .
 
 ## Related content
 {: #vpc-transit-related}

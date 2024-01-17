@@ -2,10 +2,9 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: ""
 
-# services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
 services: vmwaresolutions, vpc
 account-plan: paid
@@ -183,7 +182,7 @@ If you have not already done so, create a SSH key for the {{site.data.keyword.vp
 
 To ease up VMware configuration tasks, provision a Windows server on the management subnet in your {{site.data.keyword.vpc_short}}. In this tutorial, the Jump server will be used to access ESXi hosts and vCenter after they have been provisioned over the {{site.data.keyword.vpc_short}} network. The Jump server will be provisioned in to the Instance management subnet ($VMWARE_SUBNET_MGMT) and it will have network access to the {{site.data.keyword.bm_is_short}} and the vCenter after. In addition, inbound and outbound Internet access is provided for easy remote access as well as downloading required VMware or other software.
 
-For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [creating Virtual Servers using UI](/docs/vpc?topic=vpc-creating-virtual-servers) or [creating Virtual Servers using CLI](/docs/vpc?topic=vpc-creating-virtual-servers-cli). In this example the CLI method is used.
+For more information on creating {{site.data.keyword.vsi_is_short}}, refer to [creating Virtual Servers using UI](/docs/vpc?topic=vpc-creating-virtual-servers) or [creating Virtual Servers using CLI](/docs/vpc?topic=vpc-creating-virtual-servers&interface=cli). In this example the CLI method is used.
 
 1. List available images and select your preferred image. You can use the following CLI command to list all available images:
 

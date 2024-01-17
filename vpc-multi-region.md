@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-11"
 lasttested: "2022-09-11"
 
 content-type: tutorial
@@ -342,7 +342,7 @@ HTTPS encryption requires signed certificates to be accessible from both the {{s
    - Assign the **Manager** service access role.
    - Click on **Authorize**.
 
-   If your {{site.data.keyword.cis_short_notm}} instance supports multiple domains, you can also assign **Reader** role to the {{site.data.keyword.cis_short_notm}} instance and **Manager** to the specific domain that is you are using for your solution. See [granting service access to specific domains](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#authorize-specific-domains) topic.
+   If your {{site.data.keyword.cis_short_notm}} instance supports multiple domains, you can also assign **Reader** role to the {{site.data.keyword.cis_short_notm}} instance and **Manager** to the specific domain that is you are using for your solution. See [granting service access to specific domains](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#authorize-cis) topic.
    {: tip}
 
 IBM {{site.data.keyword.cis_short_notm}} supports proxying for global load balancers. When a load balancer is proxied, it means that its traffic runs directly through {{site.data.keyword.cis_short_notm}}. Load balancers support both DNS-only and HTTP proxy modes, consider which of the two alternatives below best match your use case before proceeding as the traffic routing behavior differs as follows:

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-08"
 lasttested: "2023-09-17"
 
 content-type: tutorial
@@ -63,7 +63,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: tip}
 
 In addition if you are not the Admin of your account you will require IAM privileges to create the resources, and an Admin will need to:
-- [grant permissions to a user to view logs](/docs/log-analysis?topic=log-analysis-work_iam#user_logdna)
+- [grant permissions to a user to view logs](/docs/log-analysis?topic=log-analysis-work_iam#user_log_analysis)
 * and [grant permissions to a user to view monitoring metrics](/docs/monitoring?topic=monitoring-iam#iam_users)
 
 <!--#/istutorial#-->
@@ -157,7 +157,7 @@ In a terminal window:
 
 1. Gain access to your cluster as described under the **Access** section of your cluster.
 
-   For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-cs_cli_install#cs_cli_configure) section
+   For more information on gaining access to your cluster and to configure the CLI to run kubectl commands, check the [CLI configure](/docs/containers?topic=containers-access_cluster) section
    {: tip}
 
 2. Define an environment variable named `MYCLUSTER` with your cluster name:

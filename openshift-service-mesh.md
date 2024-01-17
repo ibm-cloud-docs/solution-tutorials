@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-11"
 lasttested: "2023-10-11"
 
 content-type: tutorial
@@ -30,7 +30,7 @@ This tutorial walks you through how to install {{site.data.keyword.redhat_opensh
 
 Based on the open source Istio project, {{site.data.keyword.redhat_openshift_notm}} Service Mesh adds a transparent layer on existing distributed applications. {{site.data.keyword.redhat_openshift_notm}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With {{site.data.keyword.redhat_openshift_notm}}, you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftlong_notm}} cluster.
 
-[Istio](https://www.ibm.com/cloud/info/istio){: external} is an open platform to connect, secure, control and observe microservices, also known as a service mesh, on cloud platforms such as Kubernetes in {{site.data.keyword.openshiftshort}}.
+[Istio](https://www.ibm.com/topics/istio){: external} is an open platform to connect, secure, control and observe microservices, also known as a service mesh, on cloud platforms such as Kubernetes in {{site.data.keyword.openshiftshort}}.
 
 ## Objectives
 {: #openshift-service-mesh-objectives}
@@ -82,7 +82,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 2. Set the **Orchestration service** to **4.13.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC
-   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](/docs/openshift?topic=openshift-clusters#clusters_vpcg2)):
+   - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the Kubernetes cluster.  Create or inspect a desired VPC keeping in mind the following (see instructions provided under the [Creating a standard VPC cluster](/docs/openshift?topic=openshift-cluster-create-vpc-gen2&interface=ui)):
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name
       - Public gateway is attached to the subnet
    - Select the desired VPC
@@ -92,7 +92,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
       - Select a **Resource group**
       - Uncheck the inapplicable zones
       - In the desired zone verify the desired subnet name and if not present click the edit pencil to select the desired subnet name
-   - For {{site.data.keyword.openshiftshort}} on Classic infrastructure follow the [Creating a standard classic cluster](/docs/openshift?topic=openshift-clusters#clusters_standard) instructions.
+   - For {{site.data.keyword.openshiftshort}} on Classic infrastructure follow the [Creating a standard classic cluster](/docs/openshift?topic=openshift-cluster-create-classic&interface=ui) instructions.
       - Select a **Resource group**
       - Select a **Geography**
       - Select **Single zone** as **Availability**
@@ -232,7 +232,7 @@ You successfully installed Istio into your cluster.
 {: #openshift-service-mesh-deploy_bookinfo_app}
 {: step}
 
-The [BookInfo application](https://istio.io/docs/examples/bookinfo/){: external} displays information about a book, similar to a single catalog entry of an online book store. Displayed on the page is a description of the book, book details (ISBN, number of pages, and so on), and a few book reviews.
+The [BookInfo application](https://istio.io/latest/docs/examples/bookinfo/){: external} displays information about a book, similar to a single catalog entry of an online book store. Displayed on the page is a description of the book, book details (ISBN, number of pages, and so on), and a few book reviews.
 
 The Bookinfo application is broken into four separate microservices:
 
@@ -543,4 +543,4 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 - [Understanding {{site.data.keyword.redhat_openshift_notm}} Service Mesh](https://docs.openshift.com/container-platform/4.13/service_mesh/v2x/ossm-architecture.html){: external}
 - [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift)
 - [Comparing Service Mesh and Istio](https://docs.openshift.com/container-platform/4.13/service_mesh/v2x/ossm-architecture.html){: external} - [Exposing apps with routes](/docs/openshift?topic=openshift-openshift_routes)
-- [Istio Observability](https://istio.io/docs/concepts/observability/){: external}
+- [Istio Observability](https://istio.io/latest/docs/concepts/observability/){: external}

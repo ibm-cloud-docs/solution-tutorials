@@ -2,10 +2,9 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-11"
 lasttested: ""
 
-# services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
 services: vmwaresolutions, vpc
 account-plan: paid
@@ -36,7 +35,7 @@ You need to plan and decide your VMware deployments storage solution before you 
 
 In {{site.data.keyword.vpc_full}}, you can create two types of network interfaces on a {{site.data.keyword.bm_is_short}}: PCI (peripheral component interconnect) and VLAN (virtual LAN) interface. Before provisioning {{site.data.keyword.bm_is_short}}, it is important to understand how these two interface types work.
 
-The PCI interface is a physical network interface. By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a {{site.data.keyword.bm_is_short}}. In this example, the single PCI interface is used as a vSphere Standard and/or Distributed Switch uplink. Note, that all network interfaces on the {{site.data.keyword.bm_is_short}} are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for {{site.data.keyword.vpc_short}} with VMware vSphere](/docs/vpc?topic=vpc-bare-metal-servers-network#bm-vmware-nic-mapping).
+The PCI interface is a physical network interface. By default, each {{site.data.keyword.bm_is_short}} is attached with one PCI network interface as the server's primary network interface. You can create up to 8 PCI interfaces on a {{site.data.keyword.bm_is_short}}. In this example, the single PCI interface is used as a vSphere Standard and/or Distributed Switch uplink. Note, that all network interfaces on the {{site.data.keyword.bm_is_short}} are backed by 2 physical ports that are connected redundantly to the TORs (top-of-rack) switch. IBM manages the aggregation, so you do not need to create multiple PCI interfaces for redundancy reasons. Read more about [network interfaces of Bare Metal Servers for {{site.data.keyword.vpc_short}} with VMware vSphere](/docs/vpc?topic=vpc-bare-metal-servers-network#mapping-network-concepts).
 
 The VLAN interface is a virtual network interface that is associated with a PCI interface via the VLAN ID. The VLAN interface automatically tags traffic that is routed through it with the VLAN ID. Inbound traffic tagged with a VLAN ID is directed to the appropriate VLAN interface, which is always associated with a {{site.data.keyword.vpc_short}} subnet. Note that VLAN interfaces have only local significance inside the {{site.data.keyword.bm_is_short}}, VLAN ID is not visible in the {{site.data.keyword.vpc_short}} subnet, but to be able to communicate with a {{site.data.keyword.vpc_short}} subnet you must use the correct VLAN ID and the IP address of the provisioned VLAN interface. In addition, PCI interface needs to have an allowed VLAN list of [e.g. 100, 200, 300] to allow network interfaces attached to vSphere Switches with the listed VLAN ID tags to communicate with {{site.data.keyword.vpc_short}}.
 

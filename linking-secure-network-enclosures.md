@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-04"
+lastupdated: "2024-01-10"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -64,15 +64,15 @@ The tutorial [Isolate workloads with a secure private network](/docs/solution-tu
 
 The [Isolate workloads with a secure private network](/docs/solution-tutorials?topic=solution-tutorials-secure-network-enclosure) tutorial can be followed without change for each selected data center, recording the following information for later steps.
 
-| Item  | Datacenter1 | Datacenter2 |
-|:------ |:--- | :--- |
-| Data center |  |  |
-| VRA public IP address | &lt;DC1 VRA Public IP Address&gt; | &lt;DC2 VRA Public IP Address&gt; |
-| VRA private IP address | &lt;DC1 VRA Private IP Address&gt; | &lt;DC2 VRA Private IP Address&gt; |
+| Item | Datacenter1 | Datacenter2 |
+| :--- | :---------- | :---------- |
+| Data center | | |
+| VRA public IP address | *DC1 VRA Public IP Address* | *DC2 VRA Public IP Address* |
+| VRA private IP address | *DC1 VRA Private IP Address* | *DC2 VRA Private IP Address* |
 | VRA private subnet & CIDR |  |  |
-| Private VLAN ID | &lt;DC1 Private VLAN ID&gt;  | &lt;DC2 Private VLAN ID&gt; |
-| VSI private IP address | &lt;DC1 VSI Private IP Address&gt; | &lt;DC2 VSI Private IP Address&gt; |
-| APP zone subnet & CIDR | &lt;DC1 APP zone subnet/CIDR&gt; | &lt;DC2 APP zone subnet/CIDR&gt; |
+| Private VLAN ID | *DC1 Private VLAN ID* | *DC2 Private VLAN ID* |
+| VSI private IP address | *DC1 VSI Private IP Address* | *DC2 VSI Private IP Address* |
+| APP zone subnet & CIDR | *DC1 APP zone subnet/CIDR* | *DC2 APP zone subnet/CIDR* |
 {: caption="Network details to write down for next steps" caption-side="bottom"}
 
 1. Proceed to the Gateway Details page for each VRA via the [Gateway Appliances](/netsec/gateway-appliances) page.

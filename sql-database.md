@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-09-11"
 
 content-type: tutorial
@@ -68,7 +68,7 @@ You will find instructions to download and install these tools for your operatin
 {: #sql-database-2}
 {: step}
 
-Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](/catalog/services/db2-warehouse){: external}** service.
+Start by creating an instance of the **[{{site.data.keyword.dashdbshort_notm}}](/db2-wh){: external}** service.
 
 1. Visit the [{{site.data.keyword.Bluemix_short}} console](/). Click on **Catalog** in the top navigation bar.
 2. Click on **Databases** on the left pane and select **Db2 Warehouse**.
@@ -188,7 +188,7 @@ Change back to the terminal. Now you are going to deploy the application code, u
    ```
    {: pre}
    
-   In the output, look for the line starting with **URL**. The shown URL should have a pattern like `https://worldcities.unique-subdomain.region.codeengine.appdomain.cloud`. Click on the link to access the app. Another option to retrieve app details is to visit the [{{site.data.keyword.codeengineshort}} console](/codeengine){: external}.
+   In the output, look for the line starting with **URL**. The shown URL should have a pattern like `https://worldcities.unique-subdomain.region.codeengine.appdomain.cloud`. Click on the link to access the app. Another option to retrieve app details is to visit the [{{site.data.keyword.codeengineshort}} console](/codeengine/overview){: external}.
 
 ## Security, Backup & Recovery, Monitoring
 {: #sql-database-7}

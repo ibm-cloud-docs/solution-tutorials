@@ -7438,15 +7438,15 @@
 	"netezza_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"Netezza Performance Server",
-			"ibm.Netezza Performance Server",
-			"site.Netezza Performance Server",
+			"NPSaaS",
+			"ibm.NPSaaS",
+			"site.NPSaaS",
       "{{site.data.keyword.netezza_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.netezza_short}}"
 		],
-    "description": "Netezza Performance Server"
+    "description": "NPSaaS"
 	},
 	"nlb_full": {
 	  "scope": "markdown",
@@ -8149,6 +8149,71 @@
 			"{{site.data.keyword.icpfull_notm}}"
 		],
     "description": "IBM Cloud Private"
+	},
+	"pp_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Private Path service",
+			"ibm.IBM Cloud&reg; Private Path service",
+			"site.IBM Cloud&reg; Private Path service",
+      "{{site.data.keyword.pp_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.pp_full}}"
+		],
+    "description": "IBM Cloud&reg; Private Path service"
+	},
+	"pp_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Private Path service",
+			"ibm.Private Path service",
+			"site.Private Path service",
+      "{{site.data.keyword.pp_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.pp_short}}"
+		],
+    "description": "Private Path service"
+	},
+	"pp": {
+	  "scope": "markdown",
+		"prefix": [
+			"Private Path",
+			"ibm.Private Path",
+			"site.Private Path",
+      "{{site.data.keyword.pp}}"
+		],
+		"body": [
+			"{{site.data.keyword.pp}}"
+		],
+    "description": "Private Path"
+	},
+	"ppnlb_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"Private Path network load balancer",
+			"ibm.Private Path network load balancer",
+			"site.Private Path network load balancer",
+      "{{site.data.keyword.ppnlb_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.ppnlb_full}}"
+		],
+    "description": "Private Path network load balancer"
+	},
+	"ppnlb_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Private Path NLB",
+			"ibm.Private Path NLB",
+			"site.Private Path NLB",
+      "{{site.data.keyword.ppnlb_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.ppnlb_short}}"
+		],
+    "description": "Private Path NLB"
 	},
 	"probmatchshort": {
 	  "scope": "markdown",
@@ -10359,6 +10424,45 @@
 			"{{site.data.keyword.fl_full}}"
 		],
     "description": "Flow Logs for VPC"
+	},
+	"vfsa_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud&reg; Virtual FortiGate Security Appliance",
+			"ibm.IBM Cloud&reg; Virtual FortiGate Security Appliance",
+			"site.IBM Cloud&reg; Virtual FortiGate Security Appliance",
+      "{{site.data.keyword.vfsa_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.vfsa_full}}"
+		],
+    "description": "IBM Cloud&reg; Virtual FortiGate Security Appliance"
+	},
+	"vfsa_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Cloud Virtual FortiGate Security Appliance",
+			"ibm.IBM Cloud Virtual FortiGate Security Appliance",
+			"site.IBM Cloud Virtual FortiGate Security Appliance",
+      "{{site.data.keyword.vfsa_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.vfsa_full_notm}}"
+		],
+    "description": "IBM Cloud Virtual FortiGate Security Appliance"
+	},
+	"vfsa_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"FortiGate Security Appliance",
+			"ibm.FortiGate Security Appliance",
+			"site.FortiGate Security Appliance",
+      "{{site.data.keyword.vfsa_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.vfsa_short}}"
+		],
+    "description": "FortiGate Security Appliance"
 	},
 	"ibmwatson": {
 	  "scope": "markdown",

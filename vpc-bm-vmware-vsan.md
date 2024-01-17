@@ -2,10 +2,9 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: ""
 
-# services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
 services: vmwaresolutions, vpc
 account-plan: paid
@@ -70,7 +69,7 @@ When advised to use Web browser, use the Jump machine provisioned in the [{{site
 
 1. If you have not already done so, provision VLAN interfaces for your {{site.data.keyword.bm_is_short}} for vSAN VMKs.
 
-See instructions in [provisioning {{site.data.keyword.bm_is_short}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms#vpc-bm-vmware-bms-vlannic).
+See instructions in [provisioning {{site.data.keyword.bm_is_short}} for VMware deployment](/docs/solution-tutorials?topic=solution-tutorials-vpc-bm-vmware-bms#vpc-bm-vmware-bms-vlannic).
 
 If you provisioned the vSAN VLAN NICs following the guidance above, you can recall the vSAN IPs with the following commands:
 {: tip}

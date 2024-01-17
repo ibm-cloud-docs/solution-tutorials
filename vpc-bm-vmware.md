@@ -2,10 +2,9 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-11"
 lasttested: ""
 
-# services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
 services: vmwaresolutions, vpc
 account-plan: paid
@@ -29,7 +28,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 IBM Cloud™ has a number of [offerings for VMware deployments in Classic](/docs/vmwaresolutions?topic=vmwaresolutions-getting-started#getting-started-depl-offerings). These can be classified and described as:
 
 - Automated vSphere Hypervisor Image deployment ([{{site.data.keyword.bm_is_full_notm}} with VMware vSphere](/docs/vmware?topic=vmware-vmware-getting-started))
-- Automated vSphere Hypervisor Image deployment, installation and configuration ([VMware Solutions Dedicated - VMware vSphere®](/docs/vmwaresolutions?topic=vmwaresolutions-vs_vsphereclusteroverview))
+- Automated vSphere Hypervisor Image deployment, installation and configuration ([VMware Solutions Dedicated - VMware vSphere®](/docs/vmwaresolutions?topic=vmwaresolutions-vs_vsphereoverview))
 - Automated vCenter and vSphere clusters deployment, installation and configuration ([VMware Solutions Dedicated - vCenter Server](/docs/vmwaresolutions?topic=vmwaresolutions-vc_vcenterserveroverview))
 
 [{{site.data.keyword.bm_is_full_notm}}](/docs/vpc?topic=vpc-about-bare-metal-servers) environment provide a new option to deploy VMware on IBM Cloud. Currently the {{site.data.keyword.vpc_short}} environment provides only the automated vSphere Hypervisor (ESXi) Operating System image deployment to Intel Bare Metals on VPC. Therefore, you need to manually install and configure the required VMware components, such as ESXi hosts, vCenter, vSAN or NSX-T components.
@@ -96,7 +95,7 @@ Make sure you understand the [{{site.data.keyword.vpc_short}} concepts](/vpc-ext
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
    * Setup up an IBM Cloud account, see [Getting Started](/docs/account?topic=account-account-getting-started).
-   * Check for user permissions. Be sure that your user account has sufficient permissions to create and manage {{site.data.keyword.vpc_short}} resources and managing {{site.data.keyword.bm_is_short}}. See the list of [required permissions  for VPC](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and [prerequisites for creating {{site.data.keyword.bm_is_short}}](/docs/vpc?topic=vpc-creating-bare-metal-servers#prereq).
+   * Check for user permissions. Be sure that your user account has sufficient permissions to create and manage {{site.data.keyword.vpc_short}} resources and managing {{site.data.keyword.bm_is_short}}. See the list of [required permissions  for VPC](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and [prerequisites for creating {{site.data.keyword.bm_is_short}}](/docs/vpc?topic=vpc-planning-for-bare-metal-servers&interface=ui).
    * [Setup](/docs/account?topic=account-userapikey&interface=ui)  an API key.
 * {{site.data.keyword.cloud_notm}} CLI,
    * Install {{site.data.keyword.cloud_notm}} command line (CLI) tooling. See [Getting started with the IBM Cloud CLI](/docs/cli).
@@ -105,7 +104,7 @@ This tutorial requires:
 * Install `jq` i.e. [json query](https://stedolan.github.io/jq/){: external} on your workstation used to query JSON files.
 * SSH key
    * Create an SSH key on your workstation and [import](/docs/vpc?topic=vpc-ssh-keys) it to the {{site.data.keyword.vpc_short}}. 
-   * If you don't already have an SSH key, see the [instructions](/docs/vpc?topic=vpc-ssh-keys#locating-ssh-keys) for creating a key for {{site.data.keyword.vpc_short}}.
+   * If you don't already have an SSH key, see the [instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for {{site.data.keyword.vpc_short}}.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-09-01"
 
 content-type: tutorial
@@ -164,7 +164,7 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-2. Create a secret in the project that contains the keys/values from the `.env` file you used earlier to run the application locally, this secret will be consumed by the application running in the cloud. For more about secrets, see [Setting up and using secrets and configmaps](/docs/codeengine?topic=codeengine-configmap-secret).
+2. Create a secret in the project that contains the keys/values from the `.env` file you used earlier to run the application locally, this secret will be consumed by the application running in the cloud. For more about secrets, see [Working with secrets](/docs/codeengine?topic=codeengine-secret).
    
    ```sh
    ibmcloud code-engine secret create --name mean-stack-secrets --from-env-file .env

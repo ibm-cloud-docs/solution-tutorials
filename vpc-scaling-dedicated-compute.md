@@ -2,10 +2,9 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-08"
 lasttested: "2023-10-04"
 
-# services is a comma-separated list of doc repo names as taken from https://github.ibm.com/cloud-docs/
 content-type: tutorial
 services: vpc, databases-for-postgresql, schematics, cloud-object-storage
 account-plan: paid
@@ -147,7 +146,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
 
     ![View application](images/solution62-vpc-scaling-dedicated/application.png){: caption="View application" caption-side="bottom"}
 
-    To check the provisioned VPC resources, you can either use the [VPC UI](/vpc-ext/network/vpcs) or [{{site.data.keyword.cloud-shell_short}}](/shell) with [ibmcloud is](/docs/cli?topic=vpc-infrastructure-cli-plugin-vpc-reference) commands.
+    To check the provisioned VPC resources, you can either use the [VPC UI](/vpc-ext/network/vpcs) or [{{site.data.keyword.cloud-shell_short}}](/shell) with [ibmcloud is](/docs/vpc?topic=vpc-vpc-reference&interface=cli) commands.
     {: tip}
 
 In the next section, you will choose a scaling method (static or dynamic) and create scaling policies.

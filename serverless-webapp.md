@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-05"
 lasttested: "2023-09-05"
 
 content-type: tutorial
@@ -181,6 +181,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Related content
 {: #serverless-webapp-8}
 
-* [Serverless Computing](https://www.ibm.com/cloud/learn/serverless){: external}
+* [Serverless Computing](https://www.ibm.com/topics/serverless){: external}
 * [Serverless: Code patterns](https://developer.ibm.com/depmodels/serverless/patterns/){: external}
 * [Getting started with {{site.data.keyword.codeenginefull_notm}}](/docs/codeengine?topic=codeengine-getting-started)
