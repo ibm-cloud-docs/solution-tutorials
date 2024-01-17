@@ -674,11 +674,13 @@ If you share an account with other users, always make sure to delete only your o
    ```
    {: codeblock}
 
-3. Delete the secrets for the deployment:
+2. Delete the secrets for the deployment:
    ```sh
    kubectl delete secret <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-credentials
    ```
    {: codeblock}
+
+3. If you utilized {{site.data.keyword.secrets-manager_short}}, [remove the related service to service authorization](/iam/authorizations){: external}.
 
 4. In the [{{site.data.keyword.Bluemix_notm}} Resource List](/resources) locate the resources that were created for this tutorial. Use the search box and **secure-file-storage** as pattern. Delete each of the services by clicking on the context menu next to each service and choosing **Delete Service**. Note that the {{site.data.keyword.keymanagementserviceshort}} service can only be removed after the key has been deleted. Click on the service instance to get to the related dashboard and to delete the key.
 
