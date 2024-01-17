@@ -641,7 +641,6 @@ If you want to work with others on resources of this solution tutorial, you can 
 
 You can find information on the individual services and their available IAM access roles here:
 * [{{site.data.keyword.containershort_notm}}](/docs/containers?topic=containers-access_reference). Note that this service also provides examples for [mapping service roles to typical project roles](/docs/containers?topic=containers-users). Or the same for [{{site.data.keyword.openshiftshort}}](/docs/openshift?topic=openshift-access_reference) with [details on user access and roles](/docs/openshift?topic=openshift-users).
-* https://cloud.ibm.com/docs/openshift?topic=openshift-access_reference&interface=ui
 * [{{site.data.keyword.registryshort_notm}}](/docs/Registry?topic=Registry-iam#iam)
 * [{{site.data.keyword.appid_short}}](/docs/appid?topic=appid-service-access-management)
 * [{{site.data.keyword.cloudant_short_notm}}](/docs/Cloudant?topic=Cloudant-managing-access-for-cloudant)
