@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-04"
+lastupdated: "2024-01-17"
 lasttested: "2024-10-04"
 
 content-type: tutorial
@@ -94,7 +94,7 @@ This was achieved with {{site.data.keyword.dl_short}}, {{site.data.keyword.tg_sh
 ![VPC Layout](images/vpc-transit/vpc-transit-part1.svg){: caption="VPC Layout" caption-side="bottom"}
 {: style="text-align: center;"}
 
-The phantom address prefixes in the transit are used to advertise routes. The CIDR 10.1.0.0/16 covers transit and the spokes and is passed through {{site.data.keyword.dl_short}} to the enterprise as an advertised route. Similarly the CIDR 192.168.0.0/24 covers the enterprise and is passed through the {{site.data.keyword.tg_short}} to the spokes as an advertised route.
+The CIDR 10.1.0.0/16 covers transit and the spokes and is passed through {{site.data.keyword.dl_short}} to the enterprise as an advertised route. Similarly the CIDR 192.168.0.0/24 covers the enterprise and is passed through the {{site.data.keyword.tg_short}} to the spokes as an advertised route.
 
 Egress routes in the spokes route traffic to the firewall-router. Ingress routes in the transit route enterprise <-> spoke traffic through the firewall-router.
 
