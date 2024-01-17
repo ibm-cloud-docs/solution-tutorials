@@ -668,13 +668,6 @@ If you share an account with other users, always make sure to delete only your o
    ```
    {: codeblock}
 
-   or
-
-   ```sh
-   kubectl delete -f secure-file-storage-route.yaml
-   ```
-   {: codeblock}
-
    Thereafter, run the following command:
    ```sh
    kubectl delete -f secure-file-storage.yaml
