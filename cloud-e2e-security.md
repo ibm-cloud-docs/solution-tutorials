@@ -371,13 +371,13 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-2. Only if deploying to a non-default namespace, ensure that the Ingress secret is available in that namespace. First, get the CRN of the Ingress secret for your custom domain or default Ingress subdomain. It should be named similar to your cluster.
+2. Check that an Ingress secret is available in your target namespace. If not, you need to create it. 
    ```sh
    ibmcloud ks ingress secret ls -c $MYCLUSTER
    ```
    {: codeblock}   
 
-   If it has a CRN, use its name and CRN to create a secret in the namespace:
+   If the Ingress secret has a CRN, use its name and CRN to create a secret in your target namespace:
    ```sh
    ibmcloud ks ingress secret create -c $MYCLUSTER -n $TARGET_NAMESPACE --cert-crn <crn-shown-in-the-output-above> --name <secret-name-shown-above>
    ```
