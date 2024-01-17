@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
+lastupdated: "2024-01-11"
 lasttested: ""
 
 content-type: tutorial
@@ -95,7 +95,7 @@ Make sure you understand the [{{site.data.keyword.vpc_short}} concepts](/vpc-ext
 This tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
    * Setup up an IBM Cloud account, see [Getting Started](/docs/account?topic=account-account-getting-started).
-   * Check for user permissions. Be sure that your user account has sufficient permissions to create and manage {{site.data.keyword.vpc_short}} resources and managing {{site.data.keyword.bm_is_short}}. See the list of [required permissions  for VPC](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and [prerequisites for creating {{site.data.keyword.bm_is_short}}](/docs/vpc?topic=vpc-creating-bare-metal-servers#prereq).
+   * Check for user permissions. Be sure that your user account has sufficient permissions to create and manage {{site.data.keyword.vpc_short}} resources and managing {{site.data.keyword.bm_is_short}}. See the list of [required permissions  for VPC](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) and [prerequisites for creating {{site.data.keyword.bm_is_short}}](/docs/vpc?topic=vpc-planning-for-bare-metal-servers&interface=ui).
    * [Setup](/docs/account?topic=account-userapikey&interface=ui)  an API key.
 * {{site.data.keyword.cloud_notm}} CLI,
    * Install {{site.data.keyword.cloud_notm}} command line (CLI) tooling. See [Getting started with the IBM Cloud CLI](/docs/cli).
@@ -104,7 +104,7 @@ This tutorial requires:
 * Install `jq` i.e. [json query](https://stedolan.github.io/jq/){: external} on your workstation used to query JSON files.
 * SSH key
    * Create an SSH key on your workstation and [import](/docs/vpc?topic=vpc-ssh-keys) it to the {{site.data.keyword.vpc_short}}. 
-   * If you don't already have an SSH key, see the [instructions](/docs/vpc?topic=vpc-ssh-keys#locating-ssh-keys) for creating a key for {{site.data.keyword.vpc_short}}.
+   * If you don't already have an SSH key, see the [instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for {{site.data.keyword.vpc_short}}.
 
 <!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
