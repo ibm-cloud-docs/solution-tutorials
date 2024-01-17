@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-16"
-lasttested: "2024-01-16"
+lastupdated: "2024-01-17"
+lasttested: "2024-01-17"
 
 content-type: tutorial
 services: containers, openshift, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis
@@ -365,23 +365,29 @@ All services have been configured. In this section you will deploy the tutorial 
 {: #cloud-e2e-security-16}
 
 <!--##istutorial#-->
-1. Only if deploying to a non-default namespace, ensure that the Ingress secret is available in that namespace. First, get the CRN of the Ingress secret for your custom domain or default Ingress subdomain. It should be named similar to your cluster.
+1. Gain access to your cluster as described in the instructions **Connect via CLI** accessible from the **Actions...** menu in your console overview page.
+   ```sh
+   ibmcloud ks cluster config --cluster $MYCLUSTER --admin
+   ```
+   {: codeblock}
+
+2. Only if deploying to a non-default namespace, ensure that the Ingress secret is available in that namespace. First, get the CRN of the Ingress secret for your custom domain or default Ingress subdomain. It should be named similar to your cluster.
    ```sh
    ibmcloud ks ingress secret ls -c $MYCLUSTER
    ```
    {: codeblock}   
 
-   Now use its name and CRN to create a secret in the namespace:
+   If it has a CRN, use its name and CRN to create a secret in the namespace:
    ```sh
    ibmcloud ks ingress secret create -c $MYCLUSTER -n $TARGET_NAMESPACE --cert-crn <crn-shown-in-the-output-above> --name <secret-name-shown-above>
    ```
    {: codeblock}   
 
-2. Gain access to your cluster as described in the instructions **Connect via CLI** accessible from the **Actions...** menu in your console overview page.
+   If the Ingress secret does not have a CRN, use the following command to recreate it in the target namespace:
    ```sh
-   ibmcloud ks cluster config --cluster $MYCLUSTER --admin
+   kubectl get secret $INGRESS_SECRET --namespace=ibm-cert-store -oyaml | grep -v '^\s*namespace:\s'| kubectl apply  --namespace=$TARGET_NAMESPACE -f -
    ```
-   {: codeblock}
+   {: codeblock}   
 
 3. Create the secret used by the application to obtain service credentials:
    ```sh
@@ -470,6 +476,9 @@ By default, the application is accessible on a generic subdomain of `containers.
 - {{site.data.keyword.secrets-manager_full_notm}} to integrate with Let's Encrypt to generate the TLS certificate for **secure-file-storage.example.com** and securely store it.
 - Kubernetes [External Secrets Operator](https://external-secrets.io/v0.7.0/){: external} to pull the secret TLS certificate directly from {{site.data.keyword.secrets-manager_short}}
 
+Instead of the following steps, you could also create a CNAME pointing to the app URI at your DNS provider, generate a TLS certificate and import its components into {{site.data.keyword.secrets-manager_short}}.
+{: tip}
+
 ### Provision a {{site.data.keyword.cis_short_notm}} and {{site.data.keyword.secrets-manager_short}} instance
 {: #cloud-e2e-security-cis-instance}
 
@@ -497,8 +506,8 @@ Create a DNS entry in the {{site.data.keyword.cis_short_notm}} instance using yo
    4. Click **Add** to add the new record.
 
 Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
-1. A Let's Encrypt ACME account and associated **.pem** file is required. Use an existing one or [create one](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account):
-   1. Install the **acme-account-creation-tool**.  [Creating a Let's Encrypt ACME account](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates&interface=ui#create-acme-account) contains instructions and a link to the creation tool.
+1. A Let's Encrypt ACME account and associated **.pem** file is required. Use an existing one or [create one](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#create-acme-account):
+   1. Install the **acme-account-creation-tool**.  [Creating a Let's Encrypt ACME account](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#create-acme-account) contains instructions and a link to the creation tool.
    2. Run **acme-account-creation-tool** to create an account specifically for this secure-file-storage example. Below is an example:
       ```sh
       $ ./acme-account-creation-tool-darwin-amd64 -e YOUREMAIL -o secure-file-storage.example.com -d letsencrypt-prod
@@ -549,48 +558,37 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
          - Click on **Select domains** check the **Select with wildcard** and leave the domain itself unchecked and click on **Done**.
    5. Click **Next**.
    6. Review your selections and click on **Add**.
-   7. Click the three vertical dots menu for the active secret and choose **Details** and copy the **ID** from the dialog. Export the value in the shell. It will look something like this:
+   7. Click the three vertical dots menu for the active secret and choose **Details** and copy the **CRN** from the dialog. Export the value in the shell. It will look something like this:
       ```sh   
-      export PUBLIC_CERT_ID=01234567-abcd-abcd-abcd-01234567abcd
+      export PUBLIC_CERT_CRN=crn:v1:bluemix:public:secrets-manager:eu-de:a/abc123abc123abc123abc123:99999999-9999-9999-9999-999999999999:secret:aaaaaaaa-9999-9999-aaaa-123456781234
       ```
       {: codeblock}
 
-5. Click on **Endpoints** in the sidebar.
-6. Locate the **Public** endpoint for the **Service API**.
-   * Create an environment variable pointing to the endpoint:
+5. This tutorial leverages service to service authorization to give the cluster access to the {{site.data.keyword.secrets-manager_short}} service instance and its managed secrets.
 
-   ```sh
-   export SECRETS_MANAGER_API_URL=<public endpoint>
-   ```
-   {: codeblock}
+   1. Go to the [IAM Authorizations page](/iam/authorizations){: external} and click **Create** to add a new authorization.
+   2. Under **Source** select **Kubernetes Service**, then click to pick **Specific resources**. Then, for **Source service instance**, choose your cluster.
+   3. Under **Target** select **Secrets Manager**, then, going with **Specific resources** and **Instance ID**, select your {{site.data.keyword.secrets-manager_short}} service instance.
+   4. Finally, under **Roles** select **Manager** and grant the authorization by clicking **Authorize**.
 
-This tutorial leverages service to service authorization to give the cluster access to the {{site.data.keyword.secrets-manager_short}} service instance and its managed secrets.
-
-1. Go to the [IAM Authorizations page](/iam/authorizations){: external} and click **Create** to add a new authorization.
-2. Under **Source** select **Kubernetes Service**, then click to pick **Specific resources**. Then, for **Source service instance**, choose your cluster.
-3. Under **Target** select **Secrets Manager**, then, going with **Specific resources** and **Instance ID**, select your {{site.data.keyword.secrets-manager_short}} service instance.
-4. Finally, under **Roles** select **Manager** and grant the authorization by clicking **Authorize**.
-
-
-5. REWORK Verify the values for MYDOMAIN, SECRETS_MANAGER_API_URL and PUBLIC_CERT_ID have been exported into the environment:
+6. Verify the values for MYDOMAIN, SECRETS_MANAGER_API_URL and PUBLIC_CERT_ID have been exported into the environment:
    ```sh   
    echo MYDOMAIN $(printenv MYDOMAIN)
-   echo SECRETS_MANAGER_API_URL $(printenv SECRETS_MANAGER_API_URL)
-   echo PUBLIC_CERT_ID $(printenv PUBLIC_CERT_ID)
+   echo PUBLIC_CERT_CRN $(printenv PUBLIC_CERT_CRN)
    ```
    {: codeblock}
 
-   You can test the Secrets Manager variables with this command:
+
+7. Create an Ingress secret from the new TLS certificate.
    ```sh
-   ibmcloud sm secret --service-url $SECRETS_MANAGER_API_URL --id $PUBLIC_CERT_ID
+   ibmcloud ks ingress secret create --name secure-file-storage-certificate --cluster $MYCLUSTER --cert-crn $PUBLIC_CERT_CRN --namespace $TARGET_NAMESPACE
    ```
    {: codeblock}
 
-6. Run the below command to generate new copies of the configuration files. It will use all the environment variables you configured together with the template files `secure-file-storage.template.yaml`, `secure-file-storage.template-ingress.yaml`, and `secure-file-storage-route.template.yaml`. You may want to first save the current version:
+8. Run the below command to generate new copies of the configuration files. It will use all the environment variables you configured together with the template files `secure-file-storage.template.yaml` and `secure-file-storage.template-ingress.yaml`. You may want to first save the current version:
    ```sh
    cp secure-file-storage.yaml /tmp
    cp secure-file-storage-ingress.yaml /tmp
-   cp secure-file-storage-route.yaml /tmp
    ```
    {: pre}
 
@@ -600,16 +598,16 @@ This tutorial leverages service to service authorization to give the cluster acc
    {: pre}
 
    
-7. Apply the configuration changes to your cluster:
+9. Apply the configuration changes to your cluster:
    ```sh
-   kubectl apply -f secure-file-storage.yaml
+   kubectl apply -f secure-file-storage-ingress.yaml
    ```
    {: codeblock}
 
-8. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
+10. Switch back to the browser. In the [{{site.data.keyword.Bluemix_notm}} Resource List](/resources) locate the previously created and configured {{site.data.keyword.appid_short}} service and launch its management dashboard.
    * Click **Manage Authentication** on the left and the **Authentication Settings** tab on the top.
    * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/redirect_uri` as another URL.
-9. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
+11. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
 
 <!--#/istutorial#-->
 
