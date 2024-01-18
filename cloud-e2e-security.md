@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-17"
+lastupdated: "2024-01-18"
 lasttested: "2024-01-17"
 
 content-type: tutorial
@@ -121,7 +121,7 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 Skip this section if you have an existing Kubernetes cluster you want to reuse with this tutorial, throughout the remainder of this tutorial the cluster name is referenced as **secure-file-storage-cluster**, simply substitute with the name of your cluster.
 {: tip}
 
-A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. To create a {{site.data.keyword.containerfull_notm}} cluster, follow the steps for either [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen) or [Creating classic clusters](/docs/containers?topic=containers-cluster-create-classic). To create a {{site.data.keyword.openshiftlong_notm}} cluster, follow the steps for either [Creating VPC clusters](/docs/openshift?topic=openshift-cluster-create-vpc-gen) or [Creating classic clusters](/docs/openshift?topic=openshift-cluster-create-classic).
+A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. To create a {{site.data.keyword.containerfull_notm}} cluster, follow the steps for either [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2) or [Creating classic clusters](/docs/containers?topic=containers-cluster-create-classic). To create a {{site.data.keyword.openshiftlong_notm}} cluster, follow the steps for either [Creating VPC clusters](/docs/openshift?topic=openshift-cluster-create-vpc-gen2) or [Creating classic clusters](/docs/openshift?topic=openshift-cluster-create-classic).
 <!--#/istutorial#-->
 
 ### Use your own encryption keys
