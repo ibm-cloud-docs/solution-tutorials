@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-04"
-lasttested: "2023-12-18"
+lastupdated: "2024-01-17"
+lasttested: "2024-01-17"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, power-iaas
@@ -24,8 +24,6 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 
 The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getting-started) can host {{site.data.keyword.powerSys_notm}} instances. The {{site.data.keyword.cloud_notm}} also supports Virtual Private Cloud (VPC). {{site.data.keyword.powerSys_notm}} can connect to VPCs via a {{site.data.keyword.tg_full}} and access VPC resources. This tutorial will walk through an example implementation and explore the architecture depicted in this high-level view:
 {: shortdesc}
-
-TODO UPDATE DIAGRAM
 
 ![vpc-transit-overview-power](images/transit-power-hidden/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -56,6 +54,7 @@ This tutorial requires {{site.data.keyword.powerSys_notm}} data centers that sup
 This tutorial requires:
 * `terraform` to use Infrastructure as Code to provision resources,
 * `python` to optionally run the pytest commands,
+* Check the prerequisites in the companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit){: external}
 
 See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites){: external} for a few options including a Dockerfile to build the prerequisite environment.
 
@@ -121,7 +120,6 @@ The address layout is shown below:
 Notice:
 - An availability zone address space 10.1.0.0/16 is used for VPC availability zone 1 and {{site.data.keyword.powerSys_notm}} workspaces in dal10.
 - The address space for enterprise, transit and spoke0 not overlap.
-- There is an phantom address prefix in the transit. It matches the enterprise.  No subnets will be added to this address prefix. This is required to advertise the routes through the transit gateway.
 
 Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
 
@@ -241,7 +239,7 @@ pwd; # .../vpc-transit
 Test network connectivity using pytest:
 
 ```sh
-pytest -m curl
+pytest
 ```
 {: codeblock}
 
@@ -309,15 +307,15 @@ This diagram has a green line showing the traffic path from the Power instance t
 {: style="text-align: center;"}
 
 Inspect the transit {{site.data.keyword.tg_short}}:
-- Open [Transit gateway](/interconnectivity/transit) and select the **initials-tgw**. Ignore the **initials-tgw-link** if visible, it is used to simulate the direct link connection from the enterprise to the transit VPC.  
-- Notice the three connections: transit, spoke0 and spoke1.
+- Open [Transit gateway](/interconnectivity/transit) and select the **initials-tgw**.
+- Notice the two connections: transit vpc and the spoke0 Power Systems Virtual Server.
 - Click on **BGP** and **Generate report**. It is interesting to note that enterprise CIDR, 192.168.0.0/24, was advertised by the transit VPC.
 
 ## Power to enterprise via transit VPC
 {: #vpc-transit-power-power-to-enterpreise-via-transit-vpc}
 {: step}
 
-The previous step demonstrated how the {{site.data.keyword.tg_short}} learned the enterprise routes needed for the Power instance to reach the transit VPC. VPC ingress routing in the transit VPC will route traffic directly to the VPN instance.  Visit the [Virtual private cloud](/vpc-ext/network/vpcs)
+The previous step demonstrated how the {{site.data.keyword.tg_short}} learned the enterprise routes needed for the Power instance to reach the transit VPC when sending to an enterprise IP address like 192.168.0.4. VPC ingress routing in the transit VPC will route traffic directly to the VPN instance.  Visit the [Virtual private cloud](/vpc-ext/network/vpcs)
 
 1. Click **VPCs** on the left.
 1. Click the transit VPC
@@ -329,7 +327,7 @@ In the **Traffic** box the **Accepts routes from** indicates **VPN gateway**.  T
 The current status of this route can be found in the **Routes** table.  It indicates that traffic destine to 192.168.0.0/24 will be forwarded to a **Next hop** address in the VPC. Note the next hop IP address. You can find it in the VPC VPN service.
 
 1. Navigate to [VPN](/vpc-ext/network/vpngateways) and select the transit VPN gateway.
-1. Inspect the **Gateway member** section.  The **Private IP** should match.
+1. Inspect the **Gateway members** section.  The **Private IP** of the active IP should match the **Next hop** noted earlier.
 
 ## Power DNS resolution
 {: #vpc-transit-power-dns-resolution}
@@ -340,47 +338,40 @@ This diagram has blue line showing the DNS resolution forward chain used by the 
 ![vpc-transit-overview-power](images/transit-power-hidden/vpc-transit-overview-power-dns.svg){: caption="Figure 4. DNS resolution forward path" caption-side="bottom"}
 {: style="text-align: center;"}
 
-
-In the {{site.data.keyword.powerSysShort}} instance shell:
+The initials shown below are `per`, substitute in your own initials. In the {{site.data.keyword.powerSysShort}} instance shell:
 ```sh
-dig per-enterprise-z1-s0.per-enterprise.com
-```
-{: codeblock}
+per-spoke0:~ # dig  per-enterprise-z1-worker.per-enterprise.com
 
-Notice the ANSWER SECTION.  It will have the IP address in the enterprise (abbreviated):
-```
-per-spoke0:~ # dig per-enterprise-z1-s0.per-enterprise.com
-
-; <<>> DiG 9.16.38 <<>> per-enterprise-z1-s0.per-enterprise.com
+; <<>> DiG 9.16.44 <<>> per-enterprise-z1-worker.per-enterprise.com
 ;; global options: +cmd
 ;; Got answer:
 ...
 ;; ANSWER SECTION:
-per-enterprise-z1-s0.per-enterprise.com. 3359 IN A 192.168.0.4
+per-enterprise-z1-worker.per-enterprise.com. 2454 IN A 192.168.0.4
 ...
 ```
 
 A curl command will return data from the enterprise
 
 ```sh
-curl per-enterprise-z1-s0.per-enterprise.com/name
+curl per-enterprise-z1-worker.per-enterprise.com/name
 ```
 {: codeblock}
 
 Example:
 ```
-per-spoke0:~ # curl per-enterprise-z1-s0.per-enterprise.com/name
-per-enterprise-z1-s0
+per-spoke0:~ # curl per-enterprise-z1-worker.per-enterprise.com/name
+per-enterprise-z1-worker
 ```
 
 It is possible to verify the DNS forwarding path shown on the blue line.  First find the DNS server that is resolving the address:
 1. Navigate to [Power Systems Virtual Server](/power) and select your workspace.
 1. Click on the private subnet.
-1. One of the **DNS Servers** will be 10.1.0.xy.  Note the exact IP.
+1. One of the **DNS Servers** will be 10.1.15.xy.  Note the exact IP.
 
-This is the address of a [{{site.data.keyword.dns_short}} custom resolver](/docs/dns-svcs?topic=dns-svcs-custom-resolver). The initial bits of the address, `10.1.0` indicates it is in the transit VPC. Locate the DNS instance and the custom resolver:
+This is the address of a [{{site.data.keyword.dns_short}} custom resolver](/docs/dns-svcs?topic=dns-svcs-custom-resolver). The initial bits of the address, `10.1.15` indicates it is in the transit VPC. Locate the DNS instance and the custom resolver:
 1. Navigate to the [Resource list](/resources).
-1. Open the **Networking** section and click the transit instance of the {{site.data.keyword.dns_notm}} service.
+1. Open the **Networking** section and click the transit instance of the DNS service.
 1. In the transit DNS instance, click **Custom resolver** on the left.
 1. Click on the custom resolver to open the details page.
 
@@ -397,11 +388,9 @@ The diagram shows an arrow from this DNS resolver to the enterprise network.  Ve
 
 First find the DNS name of the postgresql database VPC Virtual private endpoint gateway in the spoke:
 1. Navigate to the [VPC virtual private endpoint gateways](/vpc-ext/network/endpointGateways).
-1. Click on the transit instance.
-1. Select the **Region**
 1. Select the initials-transit-postgresql VPC virtual private endpoint gateway.
 
-- Note the attached resource IP address.  It is 10.1.0.x in the transit VPC zone 1.
+- Note the attached resource IP address.  It is 10.1.15.x in the transit VPC zone 1.
 - Note **Service endpoint**. It will be something like: **transit 8443e306-55bb-4373-a7c2-3fee089034c0.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud**
 
 This DNS for the postgres instance is, **GUID.private.databases.appdomain.cloud** 
@@ -409,15 +398,15 @@ This DNS for the postgres instance is, **GUID.private.databases.appdomain.cloud*
 In the {{site.data.keyword.powerSysShort}} instance shell use the dig command with the DNS name to find the IP address.  Here is an example (abbreviated):
 
 ```
-per-spoke1:~ # dig bb4815e2-b280-4add-9778-5ed374c65e8f.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud
+per-spoke0:~ # dig 1bad854c-09a3-4afb-942e-89bff2590a43.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud
 
-; <<>> DiG 9.16.38 <<>> bb4815e2-b280-4add-9778-5ed374c65e8f.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud
+; <<>> DiG 9.16.44 <<>> 1bad854c-09a3-4afb-942e-89bff2590a43.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud
 ...
 ;; ANSWER SECTION:
-bb4815e2-b280-4add-9778-5ed374c65e8f.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud. 660 IN A 10.1.0.132
+1bad854c-09a3-4afb-942e-89bff2590a43.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud. 900 IN A 10.1.15.132
 ...
 ```
-In this case **10.1.0.132** is the IP address of the database through the virtual private endpoint gateway.
+In this case **10.1.15.132** is the IP address of the database through the virtual private endpoint gateway.
 
 
 ## VPC Security
@@ -431,7 +420,7 @@ In the {{site.data.keyword.powerSysShort}} instance shell use the curl command t
 
 ```sh
 INITIALS=abc
-curl $INITIALS-transit-z1-s0.$INITIALS-transit.com/name
+curl $INITIALS-transit-z1-worker.$INITIALS-transit.com/name
 ```
 {: codeblock}
 
@@ -462,10 +451,10 @@ Example:
 
 ```
 per-spoke0:~ # hostname -I
-10.1.1.54 192.168.232.6
+10.1.0.37 192.168.230.234
 ```
 
-The first 10.1.1.x number is the private IP address.  Back in the VPC security group tab of the browser edit the security group rule and change it to the address/32.  Something like 10.1.1.54/32.
+The first 10.1.0.x number is the private IP address.  Back in the VPC security group tab of the browser edit the security group rule and change it to the address/32.  Something like 10.1.0.37/32.
 
 Try the curl again and it should work
 ```sh
