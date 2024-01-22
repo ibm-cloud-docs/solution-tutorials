@@ -28,10 +28,10 @@ The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getti
 ![vpc-transit-overview-power](images/transit-power-hidden/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
-1. A transit VPC and component resources are created.
-1. VPC virtual private endpoint gateways are used to access cloud service instances.
-1. A {{site.data.keyword.tg_short}} is provisioned and connected to the transit VPC.
-1. {{site.data.keyword.vpn_short}} VPN connectivity is added between the VPC and enterprise network.
+1. Transit VPC and children resources like Virtual server instances.
+1. VPC virtual private endpoint gateways (VPEs) are used to access cloud service instances like {{site.data.keyword.databases-for-postgresql}}.
+1. A {{site.data.keyword.tg_short}} connected to the transit VPC and the spokes.
+1. {{site.data.keyword.vpn_short}} connectivity between the transit VPC and enterprise network.
 1. {{site.data.keyword.powerSys_notm}} can access everything through the attached {{site.data.keyword.tg_short}}
 
 This tutorial is stand alone but conceptually layers on a two part tutorial on Centralize communication through a VPC Transit Hub and Spoke architecture. Dive even deeper into VPC in the foundation tutorials: [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1) and [part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit-power).
@@ -119,7 +119,7 @@ The address layout is shown below:
 
 Notice:
 - An availability zone address space 10.1.0.0/16 is used for VPC availability zone 1 and {{site.data.keyword.powerSys_notm}} workspaces in dal10.
-- The address space for enterprise, transit and spoke0 not overlap.
+- The address space for enterprise, transit and spoke0 do not overlap.
 - A phantom address prefix is in the transit VPC is used to advertise the enterprise routes through the the {{site.data.keyword.tg_short}}.  This will be discussed in the Transit gateway section below.
 
 Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
