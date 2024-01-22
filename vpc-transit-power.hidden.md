@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-17"
-lasttested: "2024-01-17"
+lastupdated: "2024-01-22"
+lasttested: "2024-01-22"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, power-iaas
@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Power Systems communication through a VPC Transit Hub
+# Power Systems communication through a VPC Transit Hub - VPN, DNS, ...
 {: #vpc-transit-power}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis, power-iaas"}
@@ -41,8 +41,8 @@ This tutorial is stand alone but conceptually layers on a two part tutorial on C
 
 * Understand the concepts behind a {{site.data.keyword.powerSys_notm}} networking.
 * Utilize the {{site.data.keyword.tg_full_notm}} for connecting {{site.data.keyword.powerSys_notm}} to VPC.
-* Route {{site.data.keyword.powerSys_notm}} traffic to on premises through a VPC site to site VPN, TGW or DL.
-* Connect {{site.data.keyword.powerSys_notm}} instances through virtual private endpoint gateways to services.
+* Route {{site.data.keyword.powerSys_notm}} traffic to on premises through a VPC site to site VPN.
+* Connect {{site.data.keyword.powerSys_notm}} instances through VPC Virtual private endpoint gateways to services.
 * Utilize the DNS service routing and forwarding rules to build an architecturally sound name resolution system.
 
 ## Before you begin
@@ -76,7 +76,7 @@ In addition:
    ```
    {: codeblock}
 
-1. The config_tf directory contains configuration variables that you are required to configure.
+1. The config_tf directory requires a file **terraform.tfvars**.  The file template.power.terraform.tfvars is the starting point for this tutorial.
 
    ```sh
    cp config_tf/template.power.terraform.tfvars config_tf/terraform.tfvars
@@ -120,15 +120,17 @@ The address layout is shown below:
 Notice:
 - An availability zone address space 10.1.0.0/16 is used for VPC availability zone 1 and {{site.data.keyword.powerSys_notm}} workspaces in dal10.
 - The address space for enterprise, transit and spoke0 not overlap.
+- A phantom address prefix is in the transit VPC is used to advertise the enterprise routes through the the {{site.data.keyword.tg_short}}.  This will be discussed in the Transit gateway section below.
 
 Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
 
 1. Navigate to [Virtual private clouds](/vpc-ext/network/vpcs).
-1. Select the enterprise VPC and notice the two address prefixes that together define 192.168.0.0/24
+1. Select your region from the drop down.
+1. Select the enterprise VPC and notice the address prefix: 192.168.0.0/24
 1. Navigate to [Virtual private clouds](/vpc-ext/network/vpcs).
 1. Select the transit VPC and notice:
    - The address prefix 10.1.0.0/16 is defined to advertise the routes for entire zone over VPN to the enterprise.
-   - The address prefix 192.168.0.0/24 is used to advertise the routes for the enterprise over {{site.data.keyword.tg_short}} to the {{site.data.keyword.powerSysShort}} workspace.
+   - The `phantom address prefix`` 192.168.0.0/24 representing the enterprise.  No subnets in the transit VPC will be created from this CIDR.
 
 ## SSH keys
 {: #vpc-transit-power-server-ssh-keys}
@@ -145,11 +147,12 @@ The public key was used to create two SSH keys in the cloud:
 
 Locate VPC SSH key:
 - Navigate to [SSH keys for VPC](/vpc-ext/compute/sshKeys)
-- On the left side navigation panel select the workspace with your initials.
+- Notice the SSH key with your initials.
 
 Locate the Power SSH key:
 - Navigate to [Power SSH keys](/power/ssh-keys).
 - On the left side navigation panel select the workspace with your initials.
+- Notice the SSH key with your initials.
 
 Optionally verify that the contents of the cloud ssh key matches the content of the public key file.
 
@@ -159,11 +162,8 @@ Optionally verify that the contents of the cloud ssh key matches the content of 
 
 Along with the ssh keys, the provision created a {{site.data.keyword.powerSysShort}} workspace, subnets and instance.
 
-TODO check words/spelling below
-
-- Navigate to [{{site.data.keyword.powerSysShort}}](/power) and select the workspace with your initials.
-- Click on the **Network and Subnets** on the left and notice the public and private subnets that have been created.
-- Click on the **Instances** on the left and notice the instance that was provisioned along with the public and private IP addresses.
+- Click on the **Subnets** in the **Networking** drop down on the left and notice the public and private subnets that have been created.
+- Click on the **Virtual server instances** on the left and notice the instance that was provisioned along with the public and private IP addresses.
 
 ## Virtual server instance configuration
 {: #vpc-transit-power-server-instance-configuration}
@@ -183,7 +183,7 @@ This experience will look something like this:
 % terraform output fixpower
 [
   {
-    "per-spoke1" = <<-EOT
+    "abc-spoke1" = <<-EOT
     # ssh -J root@52.116.131.48 root@10.1.2.31
     ssh -oProxyCommand="ssh -W %h:%p -i ../config_tf/id_rsa root@52.116.131.48" -i ../config_tf/id_rsa root@10.1.2.31
     ip route add 10.0.0.0/8 via 10.1.2.1 dev eth0
@@ -196,7 +196,7 @@ This experience will look something like this:
     # execute the rest of these commands to install nginx for testing
     zypper install -y nginx postgresql
     systemctl start nginx
-    echo per-spoke1 > /srv/www/htdocs/name
+    echo abc-spoke1 > /srv/www/htdocs/name
     sleep 10
     curl localhost/name
 
@@ -206,15 +206,15 @@ This experience will look something like this:
 ]
 ```
 
-Copy/paste the commands a line at a time.  Here is what is happening:
+In a new terminal window copy/paste the commands a line at a time.  Here is what is happening:
 - The ssh command will log in to the virtual server instance using the private ssh key created earlier.  It is required to **jump** through an intermediate transit VPC virtual server.  The -oProxyCommand configures the jump server.
 - The **ip route** commands executed on the Power Linux server will route all [Private network](https://en.wikipedia.org/wiki/Private_network) CIDR blocks through the private subnet (eth0).  Notice these include both the 10.0.0.0 cloud CIDR block and the 192.168.0.0 enterprise CIDR block.
-- The default route captures will route the rest of the addresses including the IP address of your workstation through the public subnet (eth1). This will allow the test automation to ssh directly to the public IP address of the virtual server instance in the future and avoid the jump server
+- The default will route the rest of the addresses including the IP address of your workstation through the public subnet (eth1). This will allow the test automation to ssh directly to the public IP address of the virtual server instance in the future and avoid the jump server
 - Quit the ssh session.
 - Use ssh to directly login to the instance using the public IP address.  This verifies that the iptable configuration is correct.
 - The final step is to install nginx and postgresql.  Nginx is a http server that will host a web page that is verified using a curl command. The test suite will access the web page to verify connectivity.  The postgreql command line tool is used by the test suite to test connectivity to the {{site.data.keyword.postgresql}} instances.
 
-Keep this shell available for use in future steps.
+You can keep this shell available for use in future steps.
 
 ## Test network connectivity
 {: #vpc-transit-power-test-network-connectivity}
@@ -273,12 +273,12 @@ py/test_transit.py::test_curl[l-enterprise-z1 -> r-transit-z1] PASSED           
 py/test_transit.py::test_curl[l-transit-z1    -> r-spoke0] PASSED                                      [ 51%]
 py/test_transit.py::test_curl[l-transit-z1    -> r-enterprise-z1] PASSED                               [ 54%]
 py/test_transit.py::test_curl[l-transit-z1    -> r-transit-z1] PASSED                                  [ 58%]
-py/test_transit.py::test_curl_dns[l-spoke0        -> r-per-enterprise-z1-s0.per-enterprise.com] PASSED [ 61%]
-py/test_transit.py::test_curl_dns[l-spoke0        -> r-per-transit-z1-s0.per-transit.com] PASSED       [ 64%]
-py/test_transit.py::test_curl_dns[l-enterprise-z1 -> r-per-enterprise-z1-s0.per-enterprise.com] PASSED [ 67%]
-py/test_transit.py::test_curl_dns[l-enterprise-z1 -> r-per-transit-z1-s0.per-transit.com] PASSED       [ 70%]
-py/test_transit.py::test_curl_dns[l-transit-z1    -> r-per-enterprise-z1-s0.per-enterprise.com] PASSED [ 74%]
-py/test_transit.py::test_curl_dns[l-transit-z1    -> r-per-transit-z1-s0.per-transit.com] PASSED       [ 77%]
+py/test_transit.py::test_curl_dns[l-spoke0        -> r-abc-enterprise-z1-s0.abc-enterprise.com] PASSED [ 61%]
+py/test_transit.py::test_curl_dns[l-spoke0        -> r-abc-transit-z1-s0.abc-transit.com] PASSED       [ 64%]
+py/test_transit.py::test_curl_dns[l-enterprise-z1 -> r-abc-enterprise-z1-s0.abc-enterprise.com] PASSED [ 67%]
+py/test_transit.py::test_curl_dns[l-enterprise-z1 -> r-abc-transit-z1-s0.abc-transit.com] PASSED       [ 70%]
+py/test_transit.py::test_curl_dns[l-transit-z1    -> r-abc-enterprise-z1-s0.abc-enterprise.com] PASSED [ 74%]
+py/test_transit.py::test_curl_dns[l-transit-z1    -> r-abc-transit-z1-s0.abc-transit.com] PASSED       [ 77%]
 py/test_transit.py::test_vpe_dns_resolution[postgresql spoke0 -> transit 94d98d68-4a3b-462b-9e6e-8266181e6ce6.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] PASSED [ 80%]
 py/test_transit.py::test_vpe_dns_resolution[postgresql enterprise-z1 -> transit 94d98d68-4a3b-462b-9e6e-8266181e6ce6.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] PASSED [ 83%]
 py/test_transit.py::test_vpe_dns_resolution[postgresql transit-z1 -> transit 94d98d68-4a3b-462b-9e6e-8266181e6ce6.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] PASSED [ 87%]
@@ -311,6 +311,10 @@ Inspect the transit {{site.data.keyword.tg_short}}:
 - Notice the two connections: transit vpc and the spoke0 Power Systems Virtual Server.
 - Click on **BGP** and **Generate report**. It is interesting to note that enterprise CIDR, 192.168.0.0/24, was advertised by the transit VPC.
 
+### Note on the Phantom address prefix
+
+VPC Address prefix routes are advertised through the {{site.data.keyword.tg_short}}. The transit VPC address prefix, 10.1.15.0/24, is advertised and allows the {{site.data.keyword.powerSysShort}} to route traffic to the resources in the transit VPC.  But how does the {{site.data.keyword.powerSysShort}} route to an enterprese address like 192.168.0.4? The phantom address prefix, 192.168.0.0/24, in the transit VPC will do the trick.
+
 ## Power to enterprise via transit VPC
 {: #vpc-transit-power-power-to-enterpreise-via-transit-vpc}
 {: step}
@@ -329,6 +333,8 @@ The current status of this route can be found in the **Routes** table.  It indic
 1. Navigate to [VPN](/vpc-ext/network/vpngateways) and select the transit VPN gateway.
 1. Inspect the **Gateway members** section.  The **Private IP** of the active IP should match the **Next hop** noted earlier.
 
+To insure high availability the VPN service will keep the **Next hop** IP address consistent with the active IP address of the available VPN resources!
+
 ## Power DNS resolution
 {: #vpc-transit-power-dns-resolution}
 {: step}
@@ -338,34 +344,35 @@ This diagram has blue line showing the DNS resolution forward chain used by the 
 ![vpc-transit-overview-power](images/transit-power-hidden/vpc-transit-overview-power-dns.svg){: caption="Figure 4. DNS resolution forward path" caption-side="bottom"}
 {: style="text-align: center;"}
 
-The initials shown below are `per`, substitute in your own initials. In the {{site.data.keyword.powerSysShort}} instance shell:
+The initials shown below are `abc`, substitute in your own initials. In the {{site.data.keyword.powerSysShort}} instance shell:
 ```sh
-per-spoke0:~ # dig  per-enterprise-z1-worker.per-enterprise.com
+abc-spoke0:~ # dig  abc-enterprise-z1-worker.abc-enterprise.com
 
-; <<>> DiG 9.16.44 <<>> per-enterprise-z1-worker.per-enterprise.com
+; <<>> DiG 9.16.44 <<>> abc-enterprise-z1-worker.abc-enterprise.com
 ;; global options: +cmd
 ;; Got answer:
 ...
 ;; ANSWER SECTION:
-per-enterprise-z1-worker.per-enterprise.com. 2454 IN A 192.168.0.4
+abc-enterprise-z1-worker.abc-enterprise.com. 2454 IN A 192.168.0.4
 ...
 ```
 
 A curl command will return data from the enterprise
 
 ```sh
-curl per-enterprise-z1-worker.per-enterprise.com/name
+curl abc-enterprise-z1-worker.abc-enterprise.com/name
 ```
 {: codeblock}
 
 Example:
 ```
-per-spoke0:~ # curl per-enterprise-z1-worker.per-enterprise.com/name
-per-enterprise-z1-worker
+abc-spoke0:~ # curl abc-enterprise-z1-worker.abc-enterprise.com/name
+abc-enterprise-z1-worker
 ```
 
 It is possible to verify the DNS forwarding path shown on the blue line.  First find the DNS server that is resolving the address:
 1. Navigate to [Power Systems Virtual Server](/power) and select your workspace.
+1. Click **Subnets** on the left.
 1. Click on the private subnet.
 1. One of the **DNS Servers** will be 10.1.15.xy.  Note the exact IP.
 
@@ -375,18 +382,18 @@ This is the address of a [{{site.data.keyword.dns_short}} custom resolver](/docs
 1. In the transit DNS instance, click **Custom resolver** on the left.
 1. Click on the custom resolver to open the details page.
 
-Match the DNS server noted earlier (found in the Power private subnet) to the **Resolver locations** IP addresses.
+Match the DNS Server IP address noted earlier (found in the Power private subnet) to the **Resolver locations** IP addresses.
 
 The diagram shows an arrow from this DNS resolver to the enterprise network.  Verify this by following the forwarding rules:
 
 1. Click the **Forwarding rules** tab at the top.
-1. Note the forwarding rules for the per-enterprise.com subdomain is forwarded to the enterprise resolvers having 192.168.0.xy addresses.  These are the IP addresses of DNS resolvers in the enterprise.
+1. Note the forwarding rules for the **abc-enterprise.com** subdomain is forwarded to the enterprise resolvers having 192.168.0.xy addresses.  These are the IP addresses of DNS resolvers in the enterprise.  You can verify these if you wish by locating the DNS service for the enterprise in the Resource list.
 
-## VPC private endpoint gateway
+## VPC virtual private endpoint gateway
 {: #vpc-transit-power-vpc-private-endpoint-gateway}
 {: step}
+{{site.data.keyword.cloud_notm}} {{site.data.keyword.vpe_short}} enables you to connect to supported IBM Cloud services from your VPC network by using the IP addresses of your choosing, allocated from a subnet within your VPC. A {{site.data.keyword.databases-for-postgresql_full_notm}} has been provisioned.  When a {{site.data.keyword.vpe_short}} for the database was provisioned a DNS record was created in the DNS service. Find the DNS name of the database in the transit VPC:
 
-First find the DNS name of the postgresql database VPC Virtual private endpoint gateway in the spoke:
 1. Navigate to the [VPC virtual private endpoint gateways](/vpc-ext/network/endpointGateways).
 1. Select the initials-transit-postgresql VPC virtual private endpoint gateway.
 
@@ -398,7 +405,7 @@ This DNS for the postgres instance is, **GUID.private.databases.appdomain.cloud*
 In the {{site.data.keyword.powerSysShort}} instance shell use the dig command with the DNS name to find the IP address.  Here is an example (abbreviated):
 
 ```
-per-spoke0:~ # dig 1bad854c-09a3-4afb-942e-89bff2590a43.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud
+abc-spoke0:~ # dig 1bad854c-09a3-4afb-942e-89bff2590a43.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud
 
 ; <<>> DiG 9.16.44 <<>> 1bad854c-09a3-4afb-942e-89bff2590a43.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud
 ...
@@ -450,7 +457,7 @@ hostname -I
 Example:
 
 ```
-per-spoke0:~ # hostname -I
+abc-spoke0:~ # hostname -I
 10.1.0.37 192.168.230.234
 ```
 
