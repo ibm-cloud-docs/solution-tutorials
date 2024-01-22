@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-17"
 lasttested: "2023-12-06"
 
 content-type: tutorial
@@ -19,7 +19,7 @@ use-case: VirtualPrivateCloud, CloudNetworkSecurity, NetworkSecurity
 {: toc-services="vpc"}
 {: toc-completion-time="1h"}
 
-The beta release of IBM Cloud Private Path services is only available to allowlisted users. Contact Gilberto Tellez, Product Manager (`ghtellez@us.ibm.com`) if you are interested in getting early access to this beta offering.
+The beta release of IBM Cloud {{site.data.keyword.pp_short}} is only available to allowlisted users. Contact Gilberto Tellez, Product Manager (`ghtellez@us.ibm.com`) if you are interested in getting early access to this beta offering.
 {: beta}
 
 <!--##istutorial#-->
@@ -28,23 +28,23 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the steps to set up a [Private Path service](/docs/vpc?topic=vpc-using-private-path-services) between a provider and a set of consumers. With Private Path service, consumers access the application or service implemented by the provider through the IBM backbone without traversing the internet.
+This tutorial walks you through the steps to set up a [{{site.data.keyword.pp_short}}](/docs/vpc?topic=vpc-using-private-path-services) between a provider and a set of consumers. With {{site.data.keyword.pp_short}}, consumers access the application or service implemented by the provider through the IBM backbone without traversing the internet.
 {: shortdesc}
 
 ## Objectives
 {: #vpc-pps-basics-objectives}
 
-* Understand the basics of Private Path Service.
+* Understand the basics of {{site.data.keyword.pp_short}}.
 * Deploy an application in one account without exposing any public endpoints.
-* Expose the application with Private Path service.
+* Expose the application with {{site.data.keyword.pp_short}}.
 * Access the application from a consumer client through private connectivity only.
 
-![Architecture](images/vpc-pps-basics-hidden/architecture.png){: caption="Figure 1. Architecture showing Private Path service" caption-side="bottom"}
+![Architecture](images/vpc-pps-basics-hidden/architecture.png){: caption="Figure 1. Architecture showing {{site.data.keyword.pp_short}}" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. A provider implements a resilient application supported by multiple virtual servers spread across multiple zones.
-1. The provider creates a Private Path Network Load Balancer (NLB) configured with backend pools pointing to the virtual servers, distributing the load among the servers with the round-robin algorithm.
-1. A Private Path service references the Private Path NLB and specifies the service endpoint used by consumers.
+1. The provider creates a {{site.data.keyword.ppnlb_full}} (NLB) configured with backend pools pointing to the virtual servers, distributing the load among the servers with the round-robin algorithm.
+1. A {{site.data.keyword.pp_short}} references the {{site.data.keyword.ppnlb_short}} and specifies the service endpoint used by consumers.
 1. Consumers access the provider application by going through virtual private endpoint gateways. All traffic remains private to {{site.data.keyword.cloud_notm}}.
 
 ## Before you begin
@@ -104,27 +104,27 @@ Running {{site.data.keyword.bpshort}} for the provider creates the following res
 * one virtual private cloud (VPC),
 * three subnets, one for each zone,
 * a minimum of one virtual server instance in each subnet,
-* a Private Path NLB configured with a backend pool including all the virtual server instances,
-* and a Private Path service.
+* a {{site.data.keyword.ppnlb_short}} configured with a backend pool including all the virtual server instances,
+* and a {{site.data.keyword.pp_short}}.
 
 ![Architecture](images/vpc-pps-basics-hidden/provider.png){: caption="Figure 2. Architecture of the provider resources" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Navigate to [Virtual Private Clouds](/vpc-ext/network/vpcs), [Subnets](/vpc-ext/network/subnets) and [Virtual server instances](/vpc-ext/compute/vs) to review the provisioned resources.
-1. Find the Private Path NLB under [Load balancers](/vpc-ext/network/loadBalancers).
-1. In [Private Path services](/vpc-ext/network/privatePathServices), select the created Private Path service.
-1. In the Private Path Service details, notice the **Service endpoint** set to `vpc-pps.example.com`. Note that it might be different if you specified a custom `basename` during the workspace configuration. This is the endpoint used by consumers to interact with your application.
+1. Find the {{site.data.keyword.ppnlb_short}} under [Load balancers](/vpc-ext/network/loadBalancers).
+1. In [{{site.data.keyword.pp}} services](/vpc-ext/network/privatePathServices), select the created {{site.data.keyword.pp_short}}.
+1. In the {{site.data.keyword.pp_short}} details, notice the **Service endpoint** set to `vpc-pps.example.com`. Note that it might be different if you specified a custom `basename` during the workspace configuration. This is the endpoint used by consumers to interact with your application.
 1. Make note of the **CRN** as you need to pass this information to consumers. Consumers use the CRN to identify your application when creating virtual private endpoint gateways.
 
-Your Private Path service is almost ready to be shared with consumers. But before [publishing the Private Path service](/docs/vpc?topic=vpc-pps-activating&interface=ui), it is recommended to test that it is working as expected.
+Your {{site.data.keyword.pp_short}} is almost ready to be shared with consumers. But before [publishing the {{site.data.keyword.pp_short}}](/docs/vpc?topic=vpc-pps-activating&interface=ui), it is recommended to test that it is working as expected.
 
 ## Create the consumer resources
 {: #vpc-pps-basics-consumer-deploy}
 {: step}
 
-To verify that the Private Path service is correctly set up, you are going to deploy virtual servers to access the application, just like any consumer of a Private Path service would do.
+To verify that the {{site.data.keyword.pp_short}} is correctly set up, you are going to deploy virtual servers to access the application, just like any consumer of a {{site.data.keyword.pp_short}} would do.
 
-Until a Private Path service [gets published](/docs/vpc?topic=vpc-pps-activating), it can only be accessed within the same account where it is created. It offers a good opportunity to test the service before sharing it with others. This is the reason why, at this stage, the consumer side of this tutorial is provisioned in the same account as the provider application.
+Until a {{site.data.keyword.pp_short}} [gets published](/docs/vpc?topic=vpc-pps-activating), it can only be accessed within the same account where it is created. It offers a good opportunity to test the service before sharing it with others. This is the reason why, at this stage, the consumer side of this tutorial is provisioned in the same account as the provider application.
 
 1. Go to [{{site.data.keyword.bpshort}}](/schematics/workspaces/create) to create a new workspace.
 1. In the **Specify template** step:
@@ -150,7 +150,7 @@ In the workspace **Settings**, in the **Variables** section:
    1. **Save**.
 1. Locate the `provider_crn` variable
    1. **Edit** its value.
-   1. Set the value to the Private Path service CRN obtained earlier.
+   1. Set the value to the {{site.data.keyword.pp_short}} CRN obtained earlier.
    1. **Save**.
 1. Optionally, you can also adjust the values of other variables like `region`, `basename`. `region` should match the value set in the `pps-provider` workspace.
 
@@ -166,7 +166,7 @@ Running {{site.data.keyword.bpshort}} for the consumer creates the following res
 * one virtual private cloud (VPC),
 * two subnets,
 * one virtual server instance in each subnet,
-* one virtual private endpoint gateway configured with the Private Path service CRN and with one IP address in each subnet.
+* one virtual private endpoint gateway configured with the {{site.data.keyword.pp_short}} CRN and with one IP address in each subnet.
 
 ![Architecture](images/vpc-pps-basics-hidden/consumer.png){: caption="Figure 3. Architecture of the consumer resources" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -174,16 +174,16 @@ Running {{site.data.keyword.bpshort}} for the consumer creates the following res
 1. Navigate to [Virtual server instances](/vpc-ext/compute/vs) to review the provisioned instances.
 1. Go to [Virtual private endpoint gateways](/vpc-ext/network/endpointGateways) and notice that the endpoint gateway is marked as **Pending**.
 
-At this stage, the consumer is not yet able to access the provider application. It's waiting on the connection request to the Private Path service to be reviewed and permitted.
+At this stage, the consumer is not yet able to access the provider application. It's waiting on the connection request to the {{site.data.keyword.pp_short}} to be reviewed and permitted.
 
 ## Approve the consumer request
 {: #vpc-pps-basics-provider-approve}
 {: step}
 
 Acting as the provider of the application,
-1. Go to the [Private Path services list](/vpc-ext/network/privatePathServices).
-1. Notice the Private Path service you created has pending connection requests to be reviewed.
-1. Select the Private Path service.
+1. Go to the [{{site.data.keyword.pp}} services list](/vpc-ext/network/privatePathServices).
+1. Notice the {{site.data.keyword.pp_short}} you created has pending connection requests to be reviewed.
+1. Select the {{site.data.keyword.pp_short}}.
 1. In the **Connection requests** table, locate the request from the consumer.
 1. Use the menu (︙) to **Permit** the connection.
 
@@ -218,17 +218,17 @@ Acting as the consumer again,
    ```
    {: screen}
 
-1. Repeat the `curl` command several times. Notice how it shows a different output as it goes through all the virtual server instances attached to the backend pool of the Private Path Service NLB.
+1. Repeat the `curl` command several times. Notice how it shows a different output as it goes through all the virtual server instances attached to the backend pool of the {{site.data.keyword.ppnlb_short}}.
 
-Congratulations, your Private Path service is working as expected and is ready to be published for others to consume.
+Congratulations, your {{site.data.keyword.pp_short}} is working as expected and is ready to be published for others to consume.
 
 ## Expand the tutorial
 {: #vpc-pps-basics-next}
 {: step}
 
-This tutorial focuses on the basics of Private Path service with a provider application in one VPC and a consumer in another VPC, all within the same account:
+This tutorial focuses on the basics of {{site.data.keyword.pp_short}} with a provider application in one VPC and a consumer in another VPC, all within the same account:
 
-- The next step is to [publish](/docs/vpc?topic=vpc-pps-activating&interface=ui) the Private Path service. Once published, clients in other {{site.data.keyword.cloud_notm}} accounts can make a connection request to access the application.
+- The next step is to [publish](/docs/vpc?topic=vpc-pps-activating&interface=ui) the {{site.data.keyword.pp_short}}. Once published, clients in other {{site.data.keyword.cloud_notm}} accounts can make a connection request to access the application.
 -  [Communicating connection information to consumers](/docs/vpc?topic=vpc-pps-ui-communicate&interface=ui), [reviewing connection requests](/docs/vpc?topic=vpc-pps-ui-reviewing&interface=ui) and streamlining the process with [account policies](/docs/vpc?topic=vpc-pps-about-account-policies&interface=ui) are also part of the successful onboarding of consumers.
 
 ## Remove resources
