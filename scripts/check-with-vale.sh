@@ -1,13 +1,13 @@
 #!/bin/bash
 (mkdir -p builddocs && \
-  git clone git@github.ibm.com:ibmcloud/ibm-vale.git builddocs/ibm-vale && \
-  # stick with this version until fix https://github.ibm.com/ibmcloud/ibm-vale/commit/e2d1fbd40bfbaeaaa5351f183101789579422acf
-  cd builddocs/ibm-vale && git checkout 976b9da8bc5222f0e1ed9e1f3581fcc64d4c30a6)
+  git clone git@github.ibm.com:ibmcloud/ibm-vale.git builddocs/ibm-vale)
 
 (cd builddocs &&
   wget https://github.com/errata-ai/vale/releases/download/v2.28.0/vale_2.28.0_Linux_64-bit.tar.gz &&
 #   wget "https://github.com/errata-ai/vale/releases/download/v2.28.0/vale_2.28.0_macOS_arm64.tar.gz" &&
   tar xvf vale*.tar.gz vale)
+
+./builddocs/vale -v
 
 for source in *.md; do
 
