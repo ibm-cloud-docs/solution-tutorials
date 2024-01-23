@@ -63,7 +63,7 @@ In addition:
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage all the resources in this tutorial. See the list of:
    - [required permissions for VPC](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
    - [required permissions for creating {{site.data.keyword.tg_short}}](/docs/transit-gateway?topic=transit-gateway-iam).
-   - [required permissions for {{site.data.keyword.powerSys_notm}}](/docs/power-iaas?topic=power-iaas-managing-resources-and-users)
+   - [required permissions for {{site.data.keyword.powerSys_notm}}](/docs/power-iaas?topic=power-iaas-managing-resources-and-users).
 
 ## Provision resources
 {: #vpc-transit-power-provision-resources}
@@ -120,7 +120,7 @@ The address layout is shown below:
 Notice:
 - An availability zone address space 10.1.0.0/16 is used for VPC availability zone 1 and {{site.data.keyword.powerSys_notm}} workspaces in dal10.
 - The address space for enterprise, transit and spoke0 do not overlap.
-- A phantom address prefix is in the transit VPC is used to advertise the enterprise routes through the the {{site.data.keyword.tg_short}}.  This will be discussed in the Transit gateway section below.
+- A phantom address prefix in the transit VPC is used to advertise the enterprise routes through the {{site.data.keyword.tg_short}}. No subnets will be created in the transit VPC from the phantom prefix. This will be discussed in the Transit gateway section below.
 
 Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
 
@@ -129,8 +129,8 @@ Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
 1. Select the enterprise VPC and notice the address prefix: 192.168.0.0/24
 1. Navigate to [Virtual private clouds](/vpc-ext/network/vpcs).
 1. Select the transit VPC and notice:
-   - The address prefix 10.1.0.0/16 is defined to advertise the routes for entire zone over VPN to the enterprise.
-   - The `phantom address prefix`` 192.168.0.0/24 representing the enterprise.  No subnets in the transit VPC will be created from this CIDR.
+   - The address prefix 10.1.15.0/24 defines the transit VPC zone 1.
+   - The `phantom address prefix`,192.168.0.0/24.
 
 ## SSH keys
 {: #vpc-transit-power-server-ssh-keys}
@@ -142,11 +142,11 @@ The provision created two files one for each member of the key pair required to 
 
 
 The public key was used to create two SSH keys in the cloud:
-- Power SSH key
-- SSH key for VPC
+- Power SSH key.
+- SSH key for VPC.
 
 Locate VPC SSH key:
-- Navigate to [SSH keys for VPC](/vpc-ext/compute/sshKeys)
+- Navigate to [SSH keys for VPC](/vpc-ext/compute/sshKeys).
 - Notice the SSH key with your initials.
 
 Locate the Power SSH key:
@@ -162,7 +162,8 @@ Optionally verify that the contents of the cloud ssh key matches the content of 
 
 Along with the ssh keys, the provision created a {{site.data.keyword.powerSysShort}} workspace, subnets and instance.
 
-- Click on the **Subnets** in the **Networking** drop down on the left and notice the public and private subnets that have been created.
+- Open the [Power Virtual Server subnets](/power/subnets) page.
+- Click on the **Subnets** in the **Networking** drop down on the left (if required) and notice the public and private subnets that have been created.
 - Click on the **Virtual server instances** on the left and notice the instance that was provisioned along with the public and private IP addresses.
 
 ## Virtual server instance configuration
@@ -209,7 +210,7 @@ This experience will look something like this:
 In a new terminal window copy/paste the commands a line at a time.  Here is what is happening:
 - The ssh command will log in to the virtual server instance using the private ssh key created earlier.  It is required to **jump** through an intermediate transit VPC virtual server.  The -oProxyCommand configures the jump server.
 - The **ip route** commands executed on the Power Linux server will route all [Private network](https://en.wikipedia.org/wiki/Private_network) CIDR blocks through the private subnet (eth0).  Notice these include both the 10.0.0.0 cloud CIDR block and the 192.168.0.0 enterprise CIDR block.
-- The default will route the rest of the addresses including the IP address of your workstation through the public subnet (eth1). This will allow the test automation to ssh directly to the public IP address of the virtual server instance in the future and avoid the jump server
+- The default will route the rest of the addresses including the IP address of your workstation through the public subnet (eth1). This will allow the test automation to ssh directly to the public IP address of the virtual server instance in the future and avoid the jump server.
 - Quit the ssh session.
 - Use ssh to directly login to the instance using the public IP address.  This verifies that the iptable configuration is correct.
 - The final step is to install nginx and postgresql.  Nginx is a http server that will host a web page that is verified using a curl command. The test suite will access the web page to verify connectivity.  The postgreql command line tool is used by the test suite to test connectivity to the {{site.data.keyword.postgresql}} instances.
@@ -290,11 +291,11 @@ py/test_transit.py::test_lb[lb0] SKIPPED (got empty parameter set ['lb'], functi
 ======================================= 30 passed, 1 skipped in 38.71s =======================================
 ```
 Each test will ssh to the instance on the left side of the arrow '->' and access the right side of the arrow in the following way:
-- test_ping - ping ip address
-- test_curl - curl ip address
-- test_curl_dns - curl the DNS name
+- test_ping - ping ip address.
+- test_curl - curl ip address.
+- test_curl_dns - curl the DNS name.
 - test_vpe_dns_resolution - verify the VPC virtual private endpoint (VPE) name DNS name resolves to an IP address in the CIDR block of the cloud (this test does not actually access the right side.)
-- test_vpe - exercise the resource using the DNS name and the resource specific tool (psql for postgresql)
+- test_vpe - exercise the resource using the DNS name and the resource specific tool (psql for postgresql).
 
 
 ## Transit gateway
@@ -398,7 +399,7 @@ The diagram shows an arrow from this DNS resolver to the enterprise network.  Ve
 1. Select the initials-transit-postgresql VPC virtual private endpoint gateway.
 
 - Note the attached resource IP address.  It is 10.1.15.x in the transit VPC zone 1.
-- Note **Service endpoint**. It will be something like: **transit 8443e306-55bb-4373-a7c2-3fee089034c0.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud**
+- Note **Service endpoint**. It will be something like: **transit 8443e306-55bb-4373-a7c2-3fee089034c0.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud**.
 
 This DNS for the postgres instance is, **GUID.private.databases.appdomain.cloud** 
 
@@ -433,12 +434,12 @@ curl $INITIALS-transit-z1-worker.$INITIALS-transit.com/name
 
 Locate the security group and tighten up the rules.
 
-- Navigate to [Virtrual server instances for VPC](/vpc-ext/compute/vs)
-- Click the transit instance
-- Scroll down to **Network interfaces** and click the entry in **Security groups**
-- Click the **Rules** tab in the **Security group** property page
-- Locate the 10.0.0.0/8 **Source** and click the hamburger menu on the right, click **Edit**
-- Temporarily change the CIDR to 10.0.0.0/32
+- Navigate to [Virtrual server instances for VPC](/vpc-ext/compute/vs).
+- Click the transit instance.
+- Scroll down to **Network interfaces** and click the entry in **Security groups**.
+- Click the **Rules** tab in the **Security group** property page.
+- Locate the 10.0.0.0/8 **Source** and click the hamburger menu on the right, click **Edit**.
+- Temporarily change the CIDR to 10.0.0.0/32.
 
 Back in the {{site.data.keyword.powerSysShort}} instance shell repeat the curl command. The command will not complete:
 
@@ -472,11 +473,30 @@ curl $INITIALS-transit-z1-s0.$INITIALS-transit.com/name
 
 Back in the security group rule change the CIDR block back to the original value 10.0.0.0/8.
 
+## Remove resources
+{: #vpc-transit-power-remove-resources}
+
+Execute `terraform destroy` in all directories in reverse order using the `./apply.sh` command:
+
+   ```sh
+   ./apply.sh -d : :
+   ```
+   {: codeblock}
+
+## Expand the tutorial
+{: #vpc-transit-power-expand-tutorial}
+
+Your architecture may not be the same as the one presented, but will likely be constructed from the fundamental components discussed here. Ideas to expand this tutorial:
+
+- Use a VPC load balancer](/docs/openshift?topic=openshift-vpc-lbaas) to balance traffic between multiple {{site.data.keyword.powerSys_notm}} instances.
+- Integrate incoming public Internet access using [{{site.data.keyword.cis_full}}](/docs/cis?topic=cis-getting-started).
+- Add [{{site.data.keyword.fl_full}} capture](/docs/vpc?topic=vpc-flow-logs) in the transit.
+- Put each of the spokes in a separate account in an [enterprise](/docs/secure-enterprise?topic=secure-enterprise-enterprise-tutorial#account_groups_tutorial).
+
 ## Related content
 {: #vpc-transit-power-related}
 
 * [IBM Cloud for Financial Services](/docs/framework-financial-services)
 * [How to deploy isolated workloads across multiple locations and regions](/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
 * [Public front end and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
-* [Network Function Virtualization](/docs/vpc?topic=vpc-about-vnf)
 * [Private hub and spoke with transparent VNF and spoke-to-spoke traffic](/docs/vpc?topic=vpc-about-vnf-ha)
