@@ -313,6 +313,7 @@ Inspect the transit {{site.data.keyword.tg_short}}:
 - Click on **BGP** and **Generate report**. It is interesting to note that enterprise CIDR, 192.168.0.0/24, was advertised by the transit VPC.
 
 ### Note on the Phantom address prefix
+{: #vpc-transit-power-note-on-the-phantom-address-prefix}
 
 VPC Address prefix routes are advertised through the {{site.data.keyword.tg_short}}. The transit VPC address prefix, 10.1.15.0/24, is advertised and allows the {{site.data.keyword.powerSysShort}} to route traffic to the resources in the transit VPC.  But how does the {{site.data.keyword.powerSysShort}} route to an enterprese address like 192.168.0.4? The phantom address prefix, 192.168.0.0/24, in the transit VPC will do the trick.
 
