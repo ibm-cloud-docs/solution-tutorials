@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-22"
-lasttested: "2024-01-22"
+lastupdated: "2024-01-25"
+lasttested: "2024-01-25"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, power-iaas
@@ -322,8 +322,9 @@ VPC Address prefix routes are advertised through the {{site.data.keyword.tg_shor
 {: #vpc-transit-power-power-to-enterpreise-via-transit-vpc}
 {: step}
 
-The previous step demonstrated how the {{site.data.keyword.tg_short}} learned the enterprise routes needed for the Power instance to reach the transit VPC when sending to an enterprise IP address like 192.168.0.4. VPC ingress routing in the transit VPC will route traffic directly to the VPN instance.  Visit the [Virtual private cloud](/vpc-ext/network/vpcs)
+The previous step demonstrated how the {{site.data.keyword.tg_short}} learned the enterprise routes needed for the Power instance to reach the transit VPC when sending to an enterprise IP address like 192.168.0.4. VPC ingress routing in the transit VPC will route traffic directly to the VPN instance.
 
+1. Navigate to the [Virtual private cloud](/vpc-ext/network/vpcs)
 1. Click **VPCs** on the left.
 1. Click the transit VPC
 1. Scroll down and click **Manage routing tables**
