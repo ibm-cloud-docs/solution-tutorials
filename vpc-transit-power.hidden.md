@@ -31,10 +31,10 @@ The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getti
 1. Transit VPC and children resources like Virtual server instances.
 1. VPC virtual private endpoint gateways (VPEs) are used to access cloud service instances like {{site.data.keyword.databases-for-postgresql}}.
 1. A {{site.data.keyword.tg_short}} connected to the transit VPC and the spokes.
-1. {{site.data.keyword.vpn_short}} connectivity between the transit VPC and enterprise network.
-1. {{site.data.keyword.powerSys_notm}} can access everything through the attached {{site.data.keyword.tg_short}}
+1. {{site.data.keyword.vpn_vpc_short}} connectivity between the transit VPC and enterprise network.
+1. {{site.data.keyword.powerSys_notm}} in a region with Power Edge Router (PER) can access everything through the attached {{site.data.keyword.tg_short}}
 
-This tutorial is stand alone but conceptually layers on a two part tutorial on Centralize communication through a VPC Transit Hub and Spoke architecture. Dive even deeper into VPC in the foundation tutorials: [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1) and [part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit-power).
+This tutorial is stand alone but conceptually layers on a two part tutorial on Centralize communication through a VPC Transit Hub and Spoke architecture. Dive even deeper into VPC in the foundation tutorials: [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1) and [part two](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit2).
 
 ## Objectives
 {: #vpc-transit-power-objectives}
@@ -44,6 +44,7 @@ This tutorial is stand alone but conceptually layers on a two part tutorial on C
 * Route {{site.data.keyword.powerSys_notm}} traffic to on premises through a VPC site to site VPN.
 * Connect {{site.data.keyword.powerSys_notm}} instances through VPC Virtual private endpoint gateways to services.
 * Utilize the DNS service routing and forwarding rules to build an architecturally sound name resolution system.
+* Use VPC Virtual private endpoint gateways to securely access cloud services.
 
 ## Before you begin
 {: #vpc-transit-power-prereqs}
@@ -83,7 +84,7 @@ In addition:
    ```
    {: codeblock}
 
-1. Edit **config_tf/terraform.tfvars**. Use the comments in that file as your guide. Change the values of **resource_group_name** and **basename**.
+1. Edit **config_tf/terraform.tfvars**. Use the comments in that file as your guide. Change the values of your existing **resource_group_name** and **basename**. The string $BASENAME in the text below will refer to the basename provided here.
 
 1. It is possible to provision the architecture a layer at a time. A shell command **./apply.sh** is provided to install the layers in order. The following will display help:
 
@@ -108,11 +109,11 @@ In addition:
 
 It may take 30 minutes to create the resources in the diagram.  The enterprise is simulated using a VPC.
 
-## IP address layout
+## Check the non overlapping IP address layout
 {: #vpc-transit-power-ip-address-layout}
 {: step}
 
-The address layout is shown below:
+The address layout is shown below. Notice the non overlapping addresses.
 
 ![zones](images/transit-power-hidden/vpc-transit-zones-power.svg){: caption="Figure 2. IP address layout" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -120,7 +121,7 @@ The address layout is shown below:
 Notice:
 - An availability zone address space 10.1.0.0/16 is used for VPC availability zone 1 and {{site.data.keyword.powerSys_notm}} workspaces in dal10.
 - The address space for enterprise, transit and spoke0 do not overlap.
-- A phantom address prefix in the transit VPC is used to advertise the enterprise routes through the {{site.data.keyword.tg_short}}. No subnets will be created in the transit VPC from the phantom prefix. This will be discussed in the Transit gateway section below.
+- A on-prem address prefix in the transit VPC is used to advertise the enterprise routes through the {{site.data.keyword.tg_short}}. No subnets will be created in the transit VPC from the on-prem prefix. This will be discussed in the "investigate the {{site.data.keyword.tg_short}}" step below.
 
 Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
 
@@ -130,33 +131,29 @@ Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
 1. Navigate to [Virtual private clouds](/vpc-ext/network/vpcs).
 1. Select the transit VPC and notice:
    - The address prefix 10.1.15.0/24 defines the transit VPC zone 1.
-   - The `phantom address prefix`,192.168.0.0/24.
+   - The `on-prem address prefix`,192.168.0.0/24.
 
-## SSH keys
+## Vrify the SSH keys
 {: #vpc-transit-power-server-ssh-keys}
 {: step}
 
-The provision created two files one for each member of the key pair required to ssh:
-- config_tf/id_rsa - private key that you should keep safe.
-- config_tf/id_rsa.pub - public key that can be given to third parties.
-
-
-The public key was used to create two SSH keys in the cloud:
-- Power SSH key.
-- SSH key for VPC.
-
-Locate VPC SSH key:
-- Navigate to [SSH keys for VPC](/vpc-ext/compute/sshKeys).
-- Notice the SSH key with your initials.
-
-Locate the Power SSH key:
-- Navigate to [Power SSH keys](/power/ssh-keys).
-- On the left side navigation panel select the workspace with your initials.
-- Notice the SSH key with your initials.
+1. The provision created two files one for each member of the key pair required to ssh:
+   - config_tf/id_rsa - private key that you should keep safe.
+   - config_tf/id_rsa.pub - public key that can be given to third parties.
+1. The public key was used to create two SSH keys in the cloud:
+   - Power SSH key.
+   - SSH key for VPC.
+1. Locate VPC SSH key:
+   - Navigate to [SSH keys for VPC](/vpc-ext/compute/sshKeys).
+   - Notice the SSH key with your $BASENAME.
+1. Locate the Power SSH key:
+   - Navigate to [Power SSH keys](/power/ssh-keys).
+   - On the left side navigation panel select the workspace with your $BASENAME.
+   - Notice the SSH key with your $BASENAME.
 
 Optionally verify that the contents of the cloud ssh key matches the content of the public key file.
 
-## {{site.data.keyword.powerSysShort}} Workspace
+## Open the {{site.data.keyword.powerSysShort}} Workspace
 {: #vpc-transit-power-server-workspace}
 {: step}
 
@@ -166,7 +163,7 @@ Along with the ssh keys, the provision created a {{site.data.keyword.powerSysSho
 - Click on the **Subnets** in the **Networking** drop down on the left (if required) and notice the public and private subnets that have been created.
 - Click on the **Virtual server instances** on the left and notice the instance that was provisioned along with the public and private IP addresses.
 
-## Virtual server instance configuration
+## Configure the Virtual server
 {: #vpc-transit-power-server-instance-configuration}
 {: step}
 
@@ -297,8 +294,10 @@ Each test will ssh to the instance on the left side of the arrow '->' and access
 - test_vpe_dns_resolution - verify the VPC virtual private endpoint (VPE) name DNS name resolves to an IP address in the CIDR block of the cloud (this test does not actually access the right side.)
 - test_vpe - exercise the resource using the DNS name and the resource specific tool (psql for postgresql).
 
+All tests should pass except for the load balancer (lb) test which is skipped in this configuration.
 
-## Transit gateway
+
+## Investigate the {{site.data.keyword.tg_short}}
 {: #vpc-transit-power-transit-gateway}
 {: step}
 
@@ -308,16 +307,18 @@ This diagram has a green line showing the traffic path from the Power instance t
 {: style="text-align: center;"}
 
 Inspect the transit {{site.data.keyword.tg_short}}:
-- Open [Transit gateway](/interconnectivity/transit) and select the **initials-tgw**.
-- Notice the two connections: transit vpc and the spoke0 Power Systems Virtual Server.
-- Click on **BGP** and **Generate report**. It is interesting to note that enterprise CIDR, 192.168.0.0/24, was advertised by the transit VPC.
+- Open [Transit gateway](/interconnectivity/transit) and select the **$BASENAME-tgw**.
+- There are two connections:
+   1. transit VPC.
+   1. Spoke0 (Power Systems Virtual Server).
+- Click on **BGP** and **Generate report**. The enterprise CIDR, 192.168.0.0/24, is advertised by the transit VPC.
 
-### Note on the Phantom address prefix
-{: #vpc-transit-power-note-on-the-phantom-address-prefix}
+### Why an on-prem address prefix in the transit VPC?
+{: #vpc-transit-power-note-on-the-on-prem-address-prefix}
 
-VPC Address prefix routes are advertised through the {{site.data.keyword.tg_short}}. The transit VPC address prefix, 10.1.15.0/24, is advertised and allows the {{site.data.keyword.powerSysShort}} to route traffic to the resources in the transit VPC.  But how does the {{site.data.keyword.powerSysShort}} route to an enterprese address like 192.168.0.4? The phantom address prefix, 192.168.0.0/24, in the transit VPC will do the trick.
+VPC Address prefix routes are advertised through the {{site.data.keyword.tg_short}}. The transit VPC address prefix, 10.1.15.0/24, is advertised and allows the {{site.data.keyword.powerSysShort}} to route traffic to the resources in the transit VPC. The on-prem address prefix in the transit VPC, 192.168.0.0/24, allows the {{site.data.keyword.powerSysShort}} to route traffic to this range to the transit VPC. See [policy-based ingress routing integration](https://cloud.ibm.com/docs/vpc?topic=vpc-vpn-policy-based-ingress-routing-integration-example).
 
-## Power to enterprise via transit VPC
+## Understand the Power to enterprise data path through the transit VPC
 {: #vpc-transit-power-power-to-enterpreise-via-transit-vpc}
 {: step}
 
@@ -337,7 +338,7 @@ The current status of this route can be found in the **Routes** table.  It indic
 
 To insure high availability the VPN service will keep the **Next hop** IP address consistent with the active IP address of the available VPN resources!
 
-## Power DNS resolution
+## Verify Power DNS resolution
 {: #vpc-transit-power-dns-resolution}
 {: step}
 
@@ -346,7 +347,7 @@ This diagram has blue line showing the DNS resolution forward chain used by the 
 ![vpc-transit-overview-power](images/transit-power-hidden/vpc-transit-overview-power-dns.svg){: caption="Figure 4. DNS resolution forward path" caption-side="bottom"}
 {: style="text-align: center;"}
 
-The initials shown below are `abc`, substitute in your own initials. In the {{site.data.keyword.powerSysShort}} instance shell:
+The $BASENAME shown below are `abc`, substitute in your own $BASENAME. In the {{site.data.keyword.powerSysShort}} instance shell:
 ```sh
 abc-spoke0:~ # dig  abc-enterprise-z1-worker.abc-enterprise.com
 
@@ -391,13 +392,13 @@ The diagram shows an arrow from this DNS resolver to the enterprise network.  Ve
 1. Click the **Forwarding rules** tab at the top.
 1. Note the forwarding rules for the **abc-enterprise.com** subdomain is forwarded to the enterprise resolvers having 192.168.0.xy addresses.  These are the IP addresses of DNS resolvers in the enterprise.  You can verify these if you wish by locating the DNS service for the enterprise in the Resource list.
 
-## VPC virtual private endpoint gateway
+## Understand the VPC Virtual private endpoint gateway
 {: #vpc-transit-power-vpc-private-endpoint-gateway}
 {: step}
 {{site.data.keyword.cloud_notm}} {{site.data.keyword.vpe_short}} enables you to connect to supported IBM Cloud services from your VPC network by using the IP addresses of your choosing, allocated from a subnet within your VPC. A {{site.data.keyword.databases-for-postgresql_full_notm}} has been provisioned.  When a {{site.data.keyword.vpe_short}} for the database was provisioned a DNS record was created in the DNS service. Find the DNS name of the database in the transit VPC:
 
 1. Navigate to the [VPC virtual private endpoint gateways](/vpc-ext/network/endpointGateways).
-1. Select the initials-transit-postgresql VPC virtual private endpoint gateway.
+1. Select the $BASENAME-transit-postgresql VPC virtual private endpoint gateway.
 
 - Note the attached resource IP address.  It is 10.1.15.x in the transit VPC zone 1.
 - Note **Service endpoint**. It will be something like: **transit 8443e306-55bb-4373-a7c2-3fee089034c0.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud**.
@@ -418,7 +419,7 @@ abc-spoke0:~ # dig 1bad854c-09a3-4afb-942e-89bff2590a43.c7e0lq3d0hm8lbg600bg.pri
 In this case **10.1.15.132** is the IP address of the database through the virtual private endpoint gateway.
 
 
-## VPC Security
+## Enforce VPC Security
 {: #vpc-transit-power-security}
 {: step}
 VPCs have [network Access Control Lists (ACLs)](/docs/vpc?topic=vpc-using-acls) for subnets and [Security groups](/docs/vpc?topic=vpc-using-security-groups) for network interfaces that can be configured to limit access to network resources.
@@ -428,8 +429,8 @@ Introduce a security group rule to restrict access to the VPC virtual private en
 In the {{site.data.keyword.powerSysShort}} instance shell use the curl command to access a VPC instance in the transit VPC.:
 
 ```sh
-INITIALS=abc
-curl $INITIALS-transit-z1-worker.$INITIALS-transit.com/name
+BASENAME=abc
+curl $BASENAME-transit-z1-worker.$BASENAME-transit.com/name
 ```
 {: codeblock}
 
@@ -445,7 +446,7 @@ Locate the security group and tighten up the rules.
 Back in the {{site.data.keyword.powerSysShort}} instance shell repeat the curl command. The command will not complete:
 
 ```sh
-curl $INITIALS-transit-z1-s0.$INITIALS-transit.com/name
+curl $BASENAME-transit-z1-s0.$BASENAME-transit.com/name
 ```
 {: codeblock}
 
@@ -467,7 +468,7 @@ The first 10.1.0.x number is the private IP address.  Back in the VPC security g
 
 Try the curl again and it should work
 ```sh
-curl $INITIALS-transit-z1-s0.$INITIALS-transit.com/name
+curl $BASENAME-transit-z1-s0.$BASENAME-transit.com/name
 ```
 {: codeblock}
 
@@ -497,6 +498,7 @@ Your architecture may not be the same as the one presented, but will likely be c
 ## Related content
 {: #vpc-transit-power-related}
 
+* Already have a {{site.data.keyword.powerSys_notm}} workspace and just need to install a VPC site to site VPN, see [PowerVPN Site to Site](https://github.com/IBM/power-vpn-gateway){: external}.
 * [IBM Cloud for Financial Services](/docs/framework-financial-services)
 * [How to deploy isolated workloads across multiple locations and regions](/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region)
 * [Public front end and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
