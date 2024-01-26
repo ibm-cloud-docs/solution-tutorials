@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-25"
-lasttested: "2024-01-25"
+lastupdated: "2024-01-26"
+lasttested: "2024-01-26"
 
 content-type: tutorial
 services: power-iaas, vpc, transit-gateway, dns-svcs
@@ -133,7 +133,7 @@ Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
    - The address prefix 10.1.15.0/24 defines the transit VPC zone 1.
    - The `on-prem` address prefix is 192.168.0.0/24.
 
-## Vrify the SSH keys
+## Verify the SSH keys
 {: #vpc-transit-power-server-ssh-keys}
 {: step}
 
