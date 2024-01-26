@@ -6,7 +6,7 @@ lastupdated: "2024-01-25"
 lasttested: "2024-01-25"
 
 content-type: tutorial
-services: vpc, transit-gateway, direct-link, power-iaas
+services: power-iaas, vpc, transit-gateway, dns-svcs
 account-plan: paid
 completion-time: 2h
 use-case: ApplicationModernization, Cybersecurity, DevOps
@@ -16,7 +16,7 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 # Power Systems communication through a VPC Transit Hub - VPN, DNS, ...
 {: #vpc-transit-power}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-redis, power-iaas"}
+{: toc-services="power-iaas, vpc, transit-gateway, dns-svcs, cloud-databases"}
 {: toc-completion-time="2h"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
@@ -131,7 +131,7 @@ Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
 1. Navigate to [Virtual private clouds](/vpc-ext/network/vpcs).
 1. Select the transit VPC and notice:
    - The address prefix 10.1.15.0/24 defines the transit VPC zone 1.
-   - The `on-prem address prefix`,192.168.0.0/24.
+   - The `on-prem` address prefix is 192.168.0.0/24.
 
 ## Vrify the SSH keys
 {: #vpc-transit-power-server-ssh-keys}
