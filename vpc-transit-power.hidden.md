@@ -148,7 +148,7 @@ Explore the architecture in the {{site.data.keyword.cloud_notm}} console:
    - Notice the SSH key with your $BASENAME.
 1. Locate the Power SSH key:
    - Navigate to [Power SSH keys](/power/ssh-keys).
-   - On the left side navigation panel select the workspace with your $BASENAME.
+   - On the left side navigation panel select the workspace from the drop down below the word **Workspaces** with your $BASENAME.
    - Notice the SSH key with your $BASENAME.
 
 Optionally verify that the contents of the cloud ssh key matches the content of the public key file.
@@ -160,8 +160,11 @@ Optionally verify that the contents of the cloud ssh key matches the content of 
 Along with the ssh keys, the provision created a {{site.data.keyword.powerSysShort}} workspace, subnets and instance.
 
 - Open the [Power Virtual Server subnets](/power/subnets) page.
-- Click on the **Subnets** in the **Networking** drop down on the left (if required) and notice the public and private subnets that have been created.
-- Click on the **Virtual server instances** on the left and notice the instance that was provisioned along with the public and private IP addresses.
+- On the left side navigation panel select the workspace from the drop down below the word **Workspaces** with your $BASENAME.
+- Click the **Subnets** in the **Networking** drop down on the left (if required) and notice the public and private subnets that have been created.
+- Click the private subnet name and notice the **Gateway** address that will be referenced later in the ip table configuration of the instance.
+- Click the public subnet name and notice the **Gateway** address that will be referenced later in the ip table configuration of the instance.
+- Click the **Virtual server instances** on the left and notice the instance that was provisioned along with the public and private IP addresses.
 
 ## Configure the Virtual server
 {: #vpc-transit-power-server-instance-configuration}
@@ -332,7 +335,7 @@ The previous step demonstrated how the {{site.data.keyword.tg_short}} learned th
 
 In the **Traffic** box the **Accepts routes from** indicates **VPN gateway**.  This configuration allows the VPN gateway to automatically create a route in this routing table **and** adjust the next hop address of the route as needed.
 
-The current status of this route can be found in the **Routes** table.  It indicates that traffic destine to 192.168.0.0/24 will be forwarded to a **Next hop** address in the VPC. Note the next hop IP address. You can find it in the VPC VPN service.
+The current status of this route can be found in the **Routes** table.  It indicates that traffic addressed to 192.168.0.0/24 will be forwarded to a **Next hop** address in the VPC. Note the next hop IP address. You can find it in the VPC VPN service.
 
 1. Navigate to [VPN](/vpc-ext/network/vpngateways) and select the transit VPN gateway.
 1. Inspect the **Gateway members** section.  The **Private IP** of the active IP should match the **Next hop** noted earlier.
@@ -350,7 +353,8 @@ This diagram has blue line showing the DNS resolution forward chain used by the 
 
 The $BASENAME shown below are `abc`, substitute in your own $BASENAME. In the {{site.data.keyword.powerSysShort}} instance shell:
 ```sh
-abc-spoke0:~ # dig  abc-enterprise-z1-worker.abc-enterprise.com
+abc-spoke0:~ # BASENAME=abc
+abc-spoke0:~ # dig  abc-enterprise-z1-worker.$BASENAME-enterprise.com
 
 ; <<>> DiG 9.16.44 <<>> abc-enterprise-z1-worker.abc-enterprise.com
 ;; global options: +cmd
@@ -364,13 +368,13 @@ abc-enterprise-z1-worker.abc-enterprise.com. 2454 IN A 192.168.0.4
 A curl command will return data from the enterprise
 
 ```sh
-curl abc-enterprise-z1-worker.abc-enterprise.com/name
+curl $BASENAME-enterprise-z1-worker.$BASENAME-enterprise.com/name
 ```
 {: codeblock}
 
 Example:
 ```
-abc-spoke0:~ # curl abc-enterprise-z1-worker.abc-enterprise.com/name
+abc-spoke0:~ # curl $BASENAME-enterprise-z1-worker.$BASENAME-enterprise.com/name
 abc-enterprise-z1-worker
 ```
 
@@ -391,7 +395,7 @@ Match the DNS Server IP address noted earlier (found in the Power private subnet
 The diagram shows an arrow from this DNS resolver to the enterprise network.  Verify this by following the forwarding rules:
 
 1. Click the **Forwarding rules** tab at the top.
-1. Note the forwarding rules for the **abc-enterprise.com** subdomain is forwarded to the enterprise resolvers having 192.168.0.xy addresses.  These are the IP addresses of DNS resolvers in the enterprise.  You can verify these if you wish by locating the DNS service for the enterprise in the Resource list.
+1. Note the forwarding rules for the **$BASENAME-enterprise.com** subdomain is forwarded to the enterprise resolvers having 192.168.0.xy addresses.  These are the IP addresses of DNS resolvers in the enterprise.  You can verify these if you wish by locating the DNS service for the enterprise in the Resource list.
 
 ## Understand the VPC Virtual private endpoint gateway
 {: #vpc-transit-power-vpc-private-endpoint-gateway}
