@@ -4,7 +4,7 @@ errorCode=0
 
 echo "Checking for marked-it 2.0 compatibility issues..."
 
-(mkdir -p builddocs && git clone https://oauth2:$GITHUB_ENTERPRISE_TOKEN@github.ibm.com/cloud-doc-build/docs-build-marked-it-20-updates builddocs/marked-it)
+(mkdir -p builddocs && git clone git@github.ibm.com:cloud-doc-build/docs-build-marked-it-20-updates.git builddocs/marked-it)
 (cd builddocs/marked-it && npm install)
 
 # copy files to another folder otherwise the tool will try

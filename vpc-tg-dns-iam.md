@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-04"
-lasttested: "2023-10-11"
+lastupdated: "2024-01-30"
+lasttested: "2024-01-30"
 
 content-type: tutorial
 services: vpc, account, transit-gateway, dns-svcs
@@ -578,7 +578,7 @@ The Admin team has provided them just the right amount of permissions to create 
    locals {
      shared_app_user_data_centos = <<EOS
    #!/bin/sh
-   curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+   curl -sL https://rpm.nodesource.com/setup_20.x | sudo bash -
    yum install nodejs -y
    cat > /app.js << 'EOF'
    ${file("${path.module}/app.js")}

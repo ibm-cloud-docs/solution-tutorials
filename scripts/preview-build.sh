@@ -20,7 +20,7 @@ rm -rf builddocs/output
 git clone --depth=1 --branch=$BRANCH_FOR_PAGES git@github.ibm.com:cloud-docs-solutions/solution-tutorials.git builddocs/output
 
 # retrieve the cloud-doc-builds/markdown repo
-(cd builddocs && git clone https://oauth2:$GITHUB_ENTERPRISE_TOKEN@github.ibm.com/cloud-doc-build/markdown)
+(cd builddocs && git clone git@github.ibm.com:cloud-doc-build/markdown.git)
 
 # remove all files from gh-pages
 (cd builddocs/output && git rm -rf . >/dev/null)
