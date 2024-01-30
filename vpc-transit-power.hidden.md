@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-29"
-lasttested: "2024-01-29"
+lastupdated: "2024-01-30"
+lasttested: "2024-01-30"
 
 content-type: tutorial
 services: power-iaas, vpc, transit-gateway, dns-svcs
@@ -29,7 +29,7 @@ The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getti
 {: style="text-align: center;"}
 
 1. Transit VPC and children resources like virtual server instances.
-1. VPC virtual private endpoint gateways (VPEs) are used to access cloud service instances like {{site.data.keyword.databases-for-postgresql}}.
+1. VPC virtual private endpoint gateways (VPEs) are used to access cloud service instances like {{site.data.keyword.cos_short}}.
 1. A {{site.data.keyword.tg_short}} connected to the transit VPC and the spokes.
 1. {{site.data.keyword.vpn_vpc_short}} connectivity between the transit VPC and enterprise network.
 1. {{site.data.keyword.powerSys_notm}} in a region with Power Edge Router (PER) can access everything through the attached {{site.data.keyword.tg_short}}.
@@ -195,7 +195,7 @@ This experience looks something like this:
     # it is now possible to ssh directly to the public IP address
     ssh -i ../config_tf/id_rsa root@150.240.147.36
     # execute the rest of these commands to install nginx for testing
-    zypper install -y nginx postgresql
+    zypper install -y nginx
     systemctl start nginx
     echo abc-spoke1 > /srv/www/htdocs/name
     sleep 10
@@ -248,56 +248,56 @@ pytest
 Example output:
 
 ```text
-(vpc-transit) % pytest
+(vpc-transit) IBM-Cloud/vpc-transit % pytest
 ============================================ test session starts =============================================
-platform darwin -- Python 3.11.5, pytest-7.4.2, pluggy-1.3.0 -- /Users/powellquiring/github.com/IBM-Cloud/vpc-transit/venv/bin/python
+platform darwin -- Python 3.11.5, pytest-7.4.4, pluggy-1.3.0 -- /Users/powellquiring/github.com/IBM-Cloud/vpc-transit/venv/bin/python
 cachedir: .pytest_cache
 rootdir: /Users/powellquiring/github.com/IBM-Cloud/vpc-transit
 configfile: pytest.ini
 testpaths: py
-plugins: xdist-3.3.1
+plugins: xdist-3.5.0
 collected 31 items
 
 py/test_transit.py::test_ping[l-spoke0        -> r-spoke0] PASSED                                      [  3%]
-py/test_transit.py::test_ping[l-spoke0        -> r-enterprise-z1] PASSED                               [  6%]
-py/test_transit.py::test_ping[l-spoke0        -> r-transit-z1] PASSED                                  [  9%]
-py/test_transit.py::test_ping[l-enterprise-z1 -> r-spoke0] PASSED                                      [ 12%]
-py/test_transit.py::test_ping[l-enterprise-z1 -> r-enterprise-z1] PASSED                               [ 16%]
-py/test_transit.py::test_ping[l-enterprise-z1 -> r-transit-z1] PASSED                                  [ 19%]
-py/test_transit.py::test_ping[l-transit-z1    -> r-spoke0] PASSED                                      [ 22%]
-py/test_transit.py::test_ping[l-transit-z1    -> r-enterprise-z1] PASSED                               [ 25%]
-py/test_transit.py::test_ping[l-transit-z1    -> r-transit-z1] PASSED                                  [ 29%]
+py/test_transit.py::test_ping[l-spoke0        -> r-enterprise-z1-worker] PASSED                        [  6%]
+py/test_transit.py::test_ping[l-spoke0        -> r-transit-z1-worker] PASSED                           [  9%]
+py/test_transit.py::test_ping[l-enterprise-z1-worker -> r-spoke0] PASSED                               [ 12%]
+py/test_transit.py::test_ping[l-enterprise-z1-worker -> r-enterprise-z1-worker] PASSED                 [ 16%]
+py/test_transit.py::test_ping[l-enterprise-z1-worker -> r-transit-z1-worker] PASSED                    [ 19%]
+py/test_transit.py::test_ping[l-transit-z1-worker -> r-spoke0] PASSED                                  [ 22%]
+py/test_transit.py::test_ping[l-transit-z1-worker -> r-enterprise-z1-worker] PASSED                    [ 25%]
+py/test_transit.py::test_ping[l-transit-z1-worker -> r-transit-z1-worker] PASSED                       [ 29%]
 py/test_transit.py::test_curl[l-spoke0        -> r-spoke0] PASSED                                      [ 32%]
-py/test_transit.py::test_curl[l-spoke0        -> r-enterprise-z1] PASSED                               [ 35%]
-py/test_transit.py::test_curl[l-spoke0        -> r-transit-z1] PASSED                                  [ 38%]
-py/test_transit.py::test_curl[l-enterprise-z1 -> r-spoke0] PASSED                                      [ 41%]
-py/test_transit.py::test_curl[l-enterprise-z1 -> r-enterprise-z1] PASSED                               [ 45%]
-py/test_transit.py::test_curl[l-enterprise-z1 -> r-transit-z1] PASSED                                  [ 48%]
-py/test_transit.py::test_curl[l-transit-z1    -> r-spoke0] PASSED                                      [ 51%]
-py/test_transit.py::test_curl[l-transit-z1    -> r-enterprise-z1] PASSED                               [ 54%]
-py/test_transit.py::test_curl[l-transit-z1    -> r-transit-z1] PASSED                                  [ 58%]
-py/test_transit.py::test_curl_dns[l-spoke0        -> r-abc-enterprise-z1-s0.abc-enterprise.com] PASSED [ 61%]
-py/test_transit.py::test_curl_dns[l-spoke0        -> r-abc-transit-z1-s0.abc-transit.com] PASSED       [ 64%]
-py/test_transit.py::test_curl_dns[l-enterprise-z1 -> r-abc-enterprise-z1-s0.abc-enterprise.com] PASSED [ 67%]
-py/test_transit.py::test_curl_dns[l-enterprise-z1 -> r-abc-transit-z1-s0.abc-transit.com] PASSED       [ 70%]
-py/test_transit.py::test_curl_dns[l-transit-z1    -> r-abc-enterprise-z1-s0.abc-enterprise.com] PASSED [ 74%]
-py/test_transit.py::test_curl_dns[l-transit-z1    -> r-abc-transit-z1-s0.abc-transit.com] PASSED       [ 77%]
-py/test_transit.py::test_vpe_dns_resolution[postgresql spoke0 -> transit 94d98d68-4a3b-462b-9e6e-8266181e6ce6.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] PASSED [ 80%]
-py/test_transit.py::test_vpe_dns_resolution[postgresql enterprise-z1 -> transit 94d98d68-4a3b-462b-9e6e-8266181e6ce6.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] PASSED [ 83%]
-py/test_transit.py::test_vpe_dns_resolution[postgresql transit-z1 -> transit 94d98d68-4a3b-462b-9e6e-8266181e6ce6.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] PASSED [ 87%]
-py/test_transit.py::test_vpe[postgresql spoke0 -> transit 94d98d68-4a3b-462b-9e6e-8266181e6ce6.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] PASSED [ 90%]
-py/test_transit.py::test_vpe[postgresql enterprise-z1 -> transit 94d98d68-4a3b-462b-9e6e-8266181e6ce6.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] PASSED [ 93%]
-py/test_transit.py::test_vpe[postgresql transit-z1 -> transit 94d98d68-4a3b-462b-9e6e-8266181e6ce6.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud] PASSED [ 96%]
+py/test_transit.py::test_curl[l-spoke0        -> r-enterprise-z1-worker] PASSED                        [ 35%]
+py/test_transit.py::test_curl[l-spoke0        -> r-transit-z1-worker] PASSED                           [ 38%]
+py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke0] PASSED                               [ 41%]
+py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-enterprise-z1-worker] PASSED                 [ 45%]
+py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-transit-z1-worker] PASSED                    [ 48%]
+py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke0] PASSED                                  [ 51%]
+py/test_transit.py::test_curl[l-transit-z1-worker -> r-enterprise-z1-worker] PASSED                    [ 54%]
+py/test_transit.py::test_curl[l-transit-z1-worker -> r-transit-z1-worker] PASSED                       [ 58%]
+py/test_transit.py::test_curl_dns[l-spoke0        -> r-abc-enterprise-z1-worker.abc-enterprise.example.com] PASSED [ 61%]
+py/test_transit.py::test_curl_dns[l-spoke0        -> r-abc-transit-z1-worker.abc-transit.example.com] PASSED [ 64%]
+py/test_transit.py::test_curl_dns[l-enterprise-z1-worker -> r-abc-enterprise-z1-worker.abc-enterprise.example.com] PASSED [ 67%]
+py/test_transit.py::test_curl_dns[l-enterprise-z1-worker -> r-abc-transit-z1-worker.abc-transit.example.com] PASSED [ 70%]
+py/test_transit.py::test_curl_dns[l-transit-z1-worker -> r-abc-enterprise-z1-worker.abc-enterprise.example.com] PASSED [ 74%]
+py/test_transit.py::test_curl_dns[l-transit-z1-worker -> r-abc-transit-z1-worker.abc-transit.example.com] PASSED [ 77%]
+py/test_transit.py::test_vpe_dns_resolution[cos spoke0 -> transit s3.direct.us-south.cloud-object-storage.appdomain.cloud] PASSED [ 80%]
+py/test_transit.py::test_vpe_dns_resolution[cos enterprise-z1-worker -> transit s3.direct.us-south.cloud-object-storage.appdomain.cloud] PASSED [ 83%]
+py/test_transit.py::test_vpe_dns_resolution[cos transit-z1-worker -> transit s3.direct.us-south.cloud-object-storage.appdomain.cloud] PASSED [ 87%]
+py/test_transit.py::test_vpe[cos spoke0 -> transit s3.direct.us-south.cloud-object-storage.appdomain.cloud] PASSED [ 90%]
+py/test_transit.py::test_vpe[cos enterprise-z1-worker -> transit s3.direct.us-south.cloud-object-storage.appdomain.cloud] PASSED [ 93%]
+py/test_transit.py::test_vpe[cos transit-z1-worker -> transit s3.direct.us-south.cloud-object-storage.appdomain.cloud] PASSED [ 96%]
 py/test_transit.py::test_lb[lb0] SKIPPED (got empty parameter set ['lb'], function test_lb at /Use...) [100%]
 
-======================================= 30 passed, 1 skipped in 38.71s =======================================
+======================================= 30 passed, 1 skipped in 42.36s =======================================
 ```
 Each test SSHs to the instance on the left side of the arrow '->' and accesses the right side of the arrow in the following way:
 - `test_ping` - Ping IP address.
 - `test_curl` - Curl IP address.
 - `test_curl_dns` - Curl the DNS name.
 - `test_vpe_dns_resolution` - Verify the VPC virtual private endpoint (VPE) name DNS name resolves to an IP address in the CIDR block of the cloud (this test does not actually access the right side.)
-- `test_vpe` - Exercise the resource using the DNS name and the resource-specific tool (`psql` for PostgreSQL).
+- `test_vpe` - Exercise the resource using the DNS name and the resource-specific tool as required.
 
 All tests should pass except for the load balancer (lb) test, which is skipped in this configuration.
 
