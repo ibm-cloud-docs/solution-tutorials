@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-01-30"
 lasttested: "2023-09-29"
 
 content-type: tutorial
@@ -156,7 +156,7 @@ In this section, you are going to set up the needed services and deploy the back
    ```
    {: pre}
 
-   Instead of deploying a pre-built container image you could also build and deploy your own image from the provided code. You can modify the create command to build from source: `ibmcloud ce app create --name slackbot-backend --build-source . --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="$DB2_URI"` using the `Dockerfile` found in the repository. See the {{site.data.keyword.codeengineshort}} documentation on [deploying your app from local source code](/docs/codeengine?topic=codeengine-app-local-source-code) for additional details.
+   Instead of deploying a pre-built container image you could also build and deploy your own image from the provided code. You can modify the create command to build from source: `ibmcloud ce app create --name slackbot-backend --build-source . --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="$DB2_URI"` using the `Dockerfile` found in the repository. See the {{site.data.keyword.codeengineshort}} documentation on [deploying your app from local source code](/docs/codeengine?topic=codeengine-app-local-source-code) for additional details. Because you are not using the public container image, but your own, you also need to set up a [registry secret](/docs/codeengine?topic=codeengine-add-registry#types-registryaccesssecrets).
    {: tip}
 
 7. Test the deployment by calling a REST API provided by the app to (re-)create the database schema and insert few sample records.
