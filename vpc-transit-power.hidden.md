@@ -213,7 +213,7 @@ In a new terminal window, copy and paste the commands a line at a time. Here is 
 - The default routes the rest of the addresses, including the IP address of your workstation through the public subnet (eth1). This allows the test automation to SSH directly to the public IP address of the virtual server instance in the future and avoid the jump server.
 - Quit the SSH session.
 - Use SSH to directly log in to the instance using the public IP address. This verifies that the iptable configuration is correct.
-- The final step is to install NGINX and PostgreSQL. NGINX is an HTTP server that hosts a web page that is verified using a `curl` command. The test suite accesses the web page to verify connectivity. The PostgreSQL command line tool is used by the test suite to test connectivity to the {{site.data.keyword.postgresql}} instances.
+- The final step is to install NGINX. NGINX is an HTTP server that hosts a web page that is verified using a `curl` command.
 
 You can keep this shell available for use in future steps.
 
@@ -404,28 +404,26 @@ The diagram shows an arrow from this DNS resolver to the enterprise network. Ver
 ## Understand the VPC Virtual private endpoint gateway
 {: #vpc-transit-power-vpc-private-endpoint-gateway}
 {: step}
-{{site.data.keyword.cloud_notm}} {{site.data.keyword.vpe_short}} enables you to connect to supported IBM Cloud services from your VPC network by using the IP addresses of your choosing, which are allocated from a subnet within your VPC. A {{site.data.keyword.databases-for-postgresql_full_notm}} has been provisioned. When a {{site.data.keyword.vpe_short}} for the database was provisioned a DNS record was created in the DNS service. Find the DNS name of the database in the transit VPC:
+{{site.data.keyword.cloud_notm}} {{site.data.keyword.vpe_short}} enables you to connect to supported IBM Cloud services from your VPC network by using the IP addresses of your choosing, which are allocated from a subnet within your VPC. A {{site.data.keyword.cos_short}} has been provisioned. When a {{site.data.keyword.vpe_short}} for the {{site.data.keyword.cos_short}} was provisioned a DNS record was created in the DNS service. Find the DNS name for {{site.data.keyword.cos_short}} in the transit VPC:
 
 1. Navigate to the [VPC virtual private endpoint gateways](/vpc-ext/network/endpointGateways).
-1. Select the $BASENAME-transit-postgresql VPC virtual private endpoint gateway.
+1. Select the $BASENAME-transit-cos VPC virtual private endpoint gateway.
 
 - Note the attached resource IP address. It is `10.1.15.x` in the transit VPC zone 1.
-- Note **Service endpoint**. It is something like: **transit 8443e306-55bb-4373-a7c2-3fee089034c0.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud**.
-
-This DNS for the postgres instance is, **GUID.private.databases.appdomain.cloud**.
+- Note **Service endpoint**. It is region specific: **s3.direct.us-south.cloud-object-storage.appdomain.cloud**.
 
 In the {{site.data.keyword.powerSysShort}} instance shell use the `dig` command with the DNS name to find the IP address. Here is an example (abbreviated):
 
 ```sh
-abc-spoke0:~ # dig 1bad854c-09a3-4afb-942e-89bff2590a43.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud
+abc-spoke0:~ # dig s3.direct.us-south.cloud-object-storage.appdomain.cloud
 
-; <<>> DiG 9.16.44 <<>> 1bad854c-09a3-4afb-942e-89bff2590a43.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud
+; <<>> DiG 9.16.44 <<>> s3.direct.us-south.cloud-object-storage.appdomain.cloud
 ...
 ;; ANSWER SECTION:
-1bad854c-09a3-4afb-942e-89bff2590a43.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud. 900 IN A 10.1.15.132
+s3.direct.us-south.cloud-object-storage.appdomain.cloud. 900 IN	A 10.1.15.132
 ...
 ```
-In this case **10.1.15.132** is the IP address of the database through the virtual private endpoint gateway.
+In this case **10.1.15.132** is the IP address of {{site.data.keyword.cos_short}} through the virtual private endpoint gateway.
 
 ## Enforce VPC security
 {: #vpc-transit-power-security}
