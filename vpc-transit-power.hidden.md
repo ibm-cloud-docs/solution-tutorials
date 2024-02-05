@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-30"
-lasttested: "2024-01-30"
+lastupdated: "2024-02-05"
+lasttested: "2024-02-05"
 
 content-type: tutorial
 services: power-iaas, vpc, transit-gateway, dns-svcs
