@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-17"
-lasttested: "2024-10-04"
+lastupdated: "2024-02-05"
+lasttested: "2024-02-05"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-postgresql
@@ -75,6 +75,7 @@ In addition:
    - [required permissions for VPC](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources).
    - [required permissions for creating {{site.data.keyword.tg_short}}](/docs/transit-gateway?topic=transit-gateway-iam).
    - [required permissions for IP spoofing checks](/docs/vpc?topic=vpc-ip-spoofing-about).
+   - [required permissions to manage authorizations](/account?topic=account-serviceauth).
 
 ## Summary of Part one
 {: #vpc-transit2-summary-of-part-one}
@@ -378,6 +379,12 @@ Zone|Destination|Next hop
 Dallas 1|10.0.0.0/8|10.1.15.196
 Dallas 2|10.0.0.0/8|10.2.15.196
 Dallas 3|10.0.0.0/8|10.3.15.197
+
+The NLB requires that a IAM authorization be created that allows the NLB to write to the VPC. This authorization was created by the `apply.sh` script. See [creating a network load balancer with routing mode](/docs/vpc?topic=vpc-deploy-nlb) for more details on the configuration that was performed by the script.
+{: note}
+
+The route mode NLB pool must be configured with **Session persistence type** set to null.
+{: note}
 
 
 ## DNS

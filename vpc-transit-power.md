@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Power Systems communication through a VPC Transit Hub - VPN, DNS, ...
+# Power Systems communication through a VPC - VPN, DNS, VPE, ...
 {: #vpc-transit-power}
 {: toc-content-type="tutorial"}
 {: toc-services="power-iaas, vpc, transit-gateway, dns-svcs, cloud-databases"}
