@@ -168,6 +168,7 @@ toc:
                 - vpc-scaling-dedicated-compute.md
                 - vpc-transit1.md
                 - vpc-transit2.md
+                - vpc-transit-power.md
                 - secure-network-enclosure.md
                 - nat-config-private.md
                 - configuring-IPSEC-VPN.md
