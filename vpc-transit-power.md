@@ -25,7 +25,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getting-started) can host {{site.data.keyword.powerSys_notm}} instances. The {{site.data.keyword.cloud_notm}} also supports Virtual Private Cloud (VPC). {{site.data.keyword.powerSys_notm}} can connect to VPCs via a {{site.data.keyword.tg_full}} and access VPC resources. This tutorial walks you through an example implementation and explores the architecture depicted in this high-level view:
 {: shortdesc}
 
-![vpc-transit-overview-power](images/transit-power-hidden/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![vpc-transit-overview-power](images/transit-power/vpc-transit-overview-power.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Transit VPC and children resources like virtual server instances.
@@ -115,7 +115,7 @@ It can take up to 30 minutes to create the resources in the diagram. The enterpr
 
 The address layout is shown below. Notice the non-overlapping addresses.
 
-![zones](images/transit-power-hidden/vpc-transit-zones-power.svg){: caption="Figure 2. IP address layout" caption-side="bottom"}
+![zones](images/transit-power/vpc-transit-zones-power.svg){: caption="Figure 2. IP address layout" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Notice:
@@ -307,7 +307,7 @@ All tests should pass except for the load balancer (lb) test, which is skipped i
 
 This diagram has a green line showing the traffic path from the Power instance to the enterprise instance:
 
-![zones](images/transit-power-hidden/vpc-transit-overview-power-to_enterprise.svg){: caption="Figure 3. Power to enterprise data path" caption-side="bottom"}
+![zones](images/transit-power/vpc-transit-overview-power-to_enterprise.svg){: caption="Figure 3. Power to enterprise data path" caption-side="bottom"}
 {: style="text-align: center;"}
 
 Inspect the transit {{site.data.keyword.tg_short}}:
@@ -349,7 +349,7 @@ To ensure high availability, the VPN service keeps the **Next hop** IP address c
 
 This diagram has blue line showing the DNS resolution forward chain used by the {{site.data.keyword.powerSysShort}} instance.
 
-![vpc-transit-overview-power](images/transit-power-hidden/vpc-transit-overview-power-dns.svg){: caption="Figure 4. DNS resolution forward path" caption-side="bottom"}
+![vpc-transit-overview-power](images/transit-power/vpc-transit-overview-power-dns.svg){: caption="Figure 4. DNS resolution forward path" caption-side="bottom"}
 {: style="text-align: center;"}
 
 The $BASENAME shown below are `abc`; substitute in your own $BASENAME. In the {{site.data.keyword.powerSysShort}} instance shell:
