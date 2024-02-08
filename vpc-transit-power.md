@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-02-05"
+lastupdated: "2024-02-08"
 lasttested: "2024-02-05"
 
 content-type: tutorial
@@ -16,7 +16,7 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 # Power Systems communication through a VPC - VPN, DNS, VPE, ...
 {: #vpc-transit-power}
 {: toc-content-type="tutorial"}
-{: toc-services="power-iaas, vpc, transit-gateway, dns-svcs, cloud-databases"}
+{: toc-services="power-iaas, vpc, transit-gateway, dns-svcs"}
 {: toc-completion-time="2h"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
