@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023, 2024
-lastupdated: "2024-01-11"
-lasttested: "2023-09-26"
+lastupdated: "2024-02-12"
+lasttested: "2024-02-12"
 
 content-type: tutorial
 services: vpc, openshift, secrets-manager, dl, schematics
@@ -32,7 +32,7 @@ This tutorial dives into the fastest option to get up and running with a [client
 ### Problem
 {: #solution-connect-client-vpn-problem}
 
-Let's say that you deployed the [Red Hat OpenShift Container Platform on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} deployable architecture. In the {{site.data.keyword.cloud_notm}} console, you can see that the cluster is created and healthy. When you try to access the Red Hat OpenShift web console on the management cluster, you see this error:
+Let's say that you deployed the [Red Hat OpenShift Container Platform on VPC landing zone](https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global?catalog_query=aHR0cHM6Ly9jbG91ZC5pYm0uY29tL2NhdGFsb2cjcmVmZXJlbmNlX2FyY2hpdGVjdHVyZQ%3D%3D){: external} deployable architecture. In the {{site.data.keyword.cloud_notm}} console, you can see that the cluster is created and working correctly. When you try to access the Red Hat OpenShift web console on the management cluster, you see this error:
 
 > It is not possible to access the Red Hat OpenShift console because the cluster is accessible only on the management VPC’s private network, which is locked down and not accessible from the internet.
 
@@ -71,7 +71,7 @@ Several methods exist to establish secure connections to a private VPC network:
 
 The VPC landing zone deployable architectures don't enable these connectivity options by default because the solution varies with the deployable architecture configuration.
 
-In this tutorial, you enable the simplest method: a client-to-site VPN connection. But configuring even this option manually takes quite a few steps. You need a client-to-site VPC VPN server, {{site.data.keyword.security-groups_full}}, {{site.data.keyword.secrets-manager_full_notm}}, and certificates. Fortunately, {{site.data.keyword.IBM_notm}} provides these offerings in open source modules that are packaged as a deployable architecture to make the setup and configuration as easy as possible.
+In this tutorial, you enable the simplest method: a client-to-site VPN connection. But even configuring this option manually takes quite a few steps. You need a client-to-site VPC VPN server, {{site.data.keyword.security-groups_full}}, {{site.data.keyword.secrets-manager_full_notm}}, and certificates. Fortunately, {{site.data.keyword.IBM_notm}} provides these offerings in open source modules that are packaged as a deployable architecture to make the setup and configuration as easy as possible.
 
 The Terraform module that you use in this tutorial creates a single zone client-to-site VPN in an existing landing zone management VPC. The default values in this module are designed to work with the default values used in all three variations of the landing zone deployable architectures: VPC, Red Hat OpenShift, and VSI.
 
@@ -81,10 +81,10 @@ The module creates and configures the following infrastructure:
     - Configures a private certificate engine in the {{site.data.keyword.secrets-manager_short}} instance
     - Creates a secret group
     - Creates a private certificate (the "secret") from the private certificate engine in the secret group
-- Creates a subnet named `client-to-site-subnet-1` in the landing zone management VPC.
+- Creates a subnet that is named `client-to-site-subnet-1` in the landing zone management VPC.
 
    The network ACL on this subnet grants all access from any source.
-- Creates a security group named `client-to-site-sg` that allows all incoming requests from any source.
+- Creates a security group that is named `client-to-site-sg` that allows all incoming requests from any source.
 - Creates an IAM access group that allows users to authenticate and connect to the client-to-site VPN gateway.
 - Creates a client-to-site VPN gateway:
     - Uses the private certificate that is generated and stored in the {{site.data.keyword.secrets-manager_short}} instance
@@ -109,22 +109,28 @@ This tutorial requires the following setup:
 - The list of users who will connect over the VPN connection to your {{site.data.keyword.cloud_notm}} account.
 
     The module takes a list of email addresses of the users in your {{site.data.keyword.cloud_notm}} account. For more information about how to add users, see [Inviting users to an account](/docs/account?topic=account-iamuserinv&interface=ui).
-- If you have a {{site.data.keyword.secrets-manager_short}} instance, find the `GUID` and `region` of your {{site.data.keyword.secrets-manager_short}} instance by using the {{site.data.keyword.cloud_notm}} console.
+- If you have a {{site.data.keyword.secrets-manager_short}} instance, you need the following information:
 
-    The Terraform module creates a {{site.data.keyword.secrets-manager_short}} instance if you don’t already have one.
+    The Terraform module creates a {{site.data.keyword.secrets-manager_short}} instance if you don't already have one.
+    {: reminder}
 
-    You can locate the {{site.data.keyword.secrets-manager_short}} GUID in your account from the resource explorer in the {{site.data.keyword.cloud_notm}} console:
-    1.  Enter "secret" in the product filter. A list of {{site.data.keyword.secrets-manager_short}} instances ID displayed.
-    1.  Click the item to show the sidebar details for the {{site.data.keyword.secrets-manager_short}} instance that you want to use.
-    1.  Press the copy action to the right of the GUID field as shown in this screenshot:
+    - Copy the `region` of your {{site.data.keyword.secrets-manager_short}} instance by using the {{site.data.keyword.cloud_notm}} console.
+    - Copy the `GUID` of the instance. You can locate the {{site.data.keyword.secrets-manager_short}} GUID in your account from the resource list in the {{site.data.keyword.cloud_notm}} console as shown in the following screenshot.
+        1.  Enter `secret` in the product filter. A list of {{site.data.keyword.secrets-manager_short}} instances are displayed.
+        1.  Click the row to display the details in the sidebar for the {{site.data.keyword.secrets-manager_short}} instance that you want to use.
+        1.  Copy the GUID.
 
-    ![Example of resource list](images/connect-landingzone-client-vpn/secrets-manager-resource-list.png){: caption="Figure 1. Example view of the resource list in {{site.data.keyword.cloud_notm}} console" caption-side="bottom"}
+            ![Example of resource list](images/connect-landingzone-client-vpn/secrets-manager-resource-list.png){: caption="Figure 1. Example view of the resource list in {{site.data.keyword.cloud_notm}} console" caption-side="bottom"}
+    - If you used a certificate template to create a private certificate that is applied to your {{site.data.keyword.secrets-manager_short}} instance, copy the name of the certificate template.
+        1.  In the resource list, click the name of the {{site.data.keyword.secrets-manager_short}} instance that you selected earlier.
+        1.  Click **Secrets engines** > **Private certificates**.
+        1.  In the Certificate authority table, expand the certificate authority and copy the name of the template.
 
 ## Set up the deployable architecture
 {: #client-vpn-setup}
 {: step}
 
-A deployable architecture is IAC that's designed for easy deployment, scalability, and modularity. In this case, the deployable architecture represents a repeatable way to create client-to-site VPN connections for more than one landing zone in your org. It also simplifies how others in your company can set up more VPN connections for their landing zones.
+A deployable architecture is infrastructure as code (IaC) that's designed for easy deployment, scalability, and modularity. In this case, the deployable architecture represents a repeatable way to create client-to-site VPN connections for more than one landing zone in your org. It also simplifies how others in your company can set up more VPN connections for their landing zones.
 
 A deployable architecture is a simple and repeatable way to create VPN connections for more than one landing zone in your org. However, you can set up the infrastructure by running Terraform on your computer. Skip to [Set up by using Terraform](#solution-connect-client-vpn-local-setup).
 {: note}
@@ -274,11 +280,18 @@ Make sure you have your development environment configured:
 
     - Replace the values with the ones that you looked up in [Before you begin](#solution-connect-client-vpn-prereqs).
     - If you don’t already have a {{site.data.keyword.secrets-manager_short}} instance, remove the lines that start with `existing_sm`. The Terraform module creates a {{site.data.keyword.secrets-manager_short}} instance if you don’t already have one.
+    - If you do have a {{site.data.keyword.secrets-manager_short}} instance that you specified in the variables that start with `existing_sm`, and the value for the certificate_template_name input variable that you looked up in [Before you begin](#solution-connect-client-vpn-prereqs) is different than the default name `my-template`, add an entry to the `terraform.tfvars` file with the name that matches the input variable, as in the following example.
+
+        ```hcl
+        existing_sm_instance_guid      = "<secretmgr_guid>"
+        existing_sm_instance_region    = "<secretmgr_region>"
+        certificate_template_name      = "<template_name>"
+        ```
 
     Don't check in this file to version control because it contains the API key secret. If you don't want to save the information in the file, you can pass the variable to Terraform through command-line arguments.
     {: important}
 
-    In order to support HA (high availability), you need to set the value for `vpn_subnet_cidr_zone_2` variable.
+    To support HA (high availability), you need to set the value for `vpn_subnet_cidr_zone_2` variable.
     {: tip}
 
 1.  Save the `terraform.tfvars` file, and then run the following commands. Enter **yes** to apply the plan when prompted:
@@ -313,7 +326,7 @@ Make sure you have your development environment configured:
 {: #client-vpn-validate-da}
 {: step}
 
-The deployable architecture isn't visible to others until you validate it and make sure that users can provision it with your default input variables. To validate a deployable architecture in a private catalog, you specify input values that are passed to {{site.data.keyword.bpshort}}, which then runs the Terraform plan and apply steps in {{site.data.keyword.cloud_notm}} to make sure that the deployable architecture runs successfully.
+The deployable architecture isn't visible to others until you validate it and make sure that users can provision it with your default input variables. To validate a deployable architecture in a private catalog, you specify input values that are passed to {{site.data.keyword.bpshort}}, which then runs the Terraform `plan` and `apply` commands in {{site.data.keyword.cloud_notm}} to make sure that the deployable architecture runs successfully.
 
 Validate the latest version of the deployable architecture in your private catalog.
 
@@ -324,11 +337,9 @@ Validate the latest version of the deployable architecture in your private catal
 
     - API key: Select an API key from your {{site.data.keyword.secrets-manager_short}} instance.
     - vpc_id = "\<VPC ID>"
-
-        Not VPC name. You can find the information in the Optional inputs section of the console.
     - region = "\<Where the existing VPC is located>"
 
-        Set this field to the region referred to by the `vpc_id` input variable, where the VPC is located.
+        Replace the ID and region values with the ones that you looked up in [Before you begin](#solution-connect-client-vpn-prereqs).
     - resource_group = "<landingzone_prefix>-management-rg"
     - existing_sm_instance_guid = "<secretmgr_guid>"
     - existing_sm_instance_region = "<secretmgr_region>"
@@ -379,7 +390,7 @@ After the VPN server cloud resources are deployed, set up the OpenVPN client on 
     1.  Download and install the OpenVPN client application from https://openvpn.net.
     1.  Open the OpenVPN client application, and import the `client2site-vpn.ovpn` file.
     1.  Enter one of the {{site.data.keyword.cloud_notm}} email addresses that was configured to access the VPN as the user ID.
-1.  Go to [https://iam.{DomainName}/identity/passcode](https://iam.{DomainName}/identity/passcode) in your browser to generate a passcode. Copy the passcode.
+1.  Go to [https://iam.cloud.ibm.com/identity/passcode](https://iam.cloud.iam.com/identity/passcode) in your browser to generate a passcode. Copy the passcode.
 1.  Return to the OpenVPN client application and paste the one-time passcode. Then, import the `client2site-vpn.ovpn` certificate file.
 
 ### Using client certificates rather than one-time passcodes
