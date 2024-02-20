@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-02-08"
+lastupdated: "2024-02-19"
 lasttested: "2024-02-05"
 
 content-type: tutorial
@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Power Systems communication through a VPC - VPN, DNS, VPE, ...
+# Power Systems communication through a transit VPC
 {: #vpc-transit-power}
 {: toc-content-type="tutorial"}
 {: toc-services="power-iaas, vpc, transit-gateway, dns-svcs"}
