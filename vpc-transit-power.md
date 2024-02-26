@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-02-19"
+lastupdated: "2024-02-26"
 lasttested: "2024-02-05"
 
 content-type: tutorial
@@ -179,7 +179,7 @@ terraform output fixpower
 {: codeblock}
 
 This experience looks something like this:
-```
+```sh
 % cd power_tf
 % terraform output fixpower
 [
@@ -375,7 +375,7 @@ curl $BASENAME-enterprise-z1-worker.$BASENAME-enterprise.com/name
 {: codeblock}
 
 Example:
-```
+```sh
 abc-spoke0:~ # curl $BASENAME-enterprise-z1-worker.$BASENAME-enterprise.com/name
 abc-enterprise-z1-worker
 ```
@@ -404,6 +404,7 @@ The diagram shows an arrow from this DNS resolver to the enterprise network. Ver
 ## Understand the VPC Virtual private endpoint gateway
 {: #vpc-transit-power-vpc-private-endpoint-gateway}
 {: step}
+
 {{site.data.keyword.cloud_notm}} {{site.data.keyword.vpe_short}} enables you to connect to supported IBM Cloud services from your VPC network by using the IP addresses of your choosing, which are allocated from a subnet within your VPC. A {{site.data.keyword.cos_short}} has been provisioned. When a {{site.data.keyword.vpe_short}} for the {{site.data.keyword.cos_short}} was provisioned a DNS record was created in the DNS service. Find the DNS name for {{site.data.keyword.cos_short}} in the transit VPC:
 
 1. Navigate to the [VPC virtual private endpoint gateways](/vpc-ext/network/endpointGateways).
