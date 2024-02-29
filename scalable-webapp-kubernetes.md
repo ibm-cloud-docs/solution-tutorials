@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-08"
+lastupdated: "2024-02-29"
 lasttested: "2023-09-14"
 
 content-type: tutorial
@@ -539,6 +539,6 @@ Once the autoscaler is successfully created, you should see
 {: #scalable-webapp-kubernetes-20}
 
 * [{{site.data.keyword.containerlong_notm}}](/docs/containers)
-* [Continuous Deployment to Kubernetes](/docs/solution-tutorials?topic=solution-tutorials-continuous-deployment-to-kubernetes#continuous-deployment-to-kubernetes)
+* [Continuous Deployment to Kubernetes](/docs/ContinuousDelivery?topic=ContinuousDelivery-tutorial-cd-kubernetes#continuous-deployment-to-kubernetes)
 * [Scaling a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#scaling-a-deployment){: external}
 * [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/){: external}
