@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2024
-lastupdated: "2024-02-26"
+lastupdated: "2024-02-27"
 lasttested: "2023-09-05"
 
 content-type: tutorial
@@ -229,7 +229,7 @@ The [twelve-factor app](https://12factor.net/){: external} is a methodology for 
 The following key principles are required:
 
 - **Codebase** - All source code and configuration files are tracked inside a version control system (for example a GIT repository), this is required if using DevOps pipeline for deployment.
-- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the app before deploying it to the cluster. Check out the [Deploy an app on Kubernetes tutorial](/docs/ContinuousDelivery?topic=ContinuousDelivery-tutorial-cd-kubernetes#continuous-deployment-to-kubernetes) to learn how to set up a continuous integration and delivery pipeline. It covers the setup of source control, build, test and deploy stages and shows you how to add integrations such as security scanners, notifications, and analytics.
+- **Build, release, run** - The 12-factor app uses strict separation between the build, release, and run stages. This can be automated with an integrated DevOps delivery pipeline to build and test the app before deploying it to the cluster. Check out the [Deploy an app on Kubernetes tutorial](/docs/ContinuousDelivery?topic=ContinuousDelivery-tutorial-cd-kubernetes) to learn how to set up a continuous integration and delivery pipeline. It covers the setup of source control, build, test and deploy stages and shows you how to add integrations such as security scanners, notifications, and analytics.
 - **Config** - All configuration information is stored in environment variables. No service credentials are hard-coded within the app code. To store credentials, you can use Kubernetes secrets. More on credentials later.
 
 ### Store credentials in Kubernetes secrets
@@ -354,6 +354,6 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 - [Persistent storage](/docs/containers?topic=containers-storage-plan) in {{site.data.keyword.containershort_notm}}.
 - [Best practices solution guide](/docs/account?topic=account-account_setup) for organizing resources and assigning access.
 - [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
-- Set up [continuous integration and delivery pipeline](/docs/ContinuousDelivery?topic=ContinuousDelivery-tutorial-cd-kubernetes#continuous-deployment-to-kubernetes) for containerized apps that run in Kubernetes.
+- Set up [continuous integration and delivery pipeline](/docs/ContinuousDelivery?topic=ContinuousDelivery-tutorial-cd-kubernetes) for containerized apps that run in Kubernetes.
 - Use [multiple clusters across multiple locations](/docs/containers?topic=containers-regions-and-zones) for high availability.
 - Re-platform applications to Kubernetes using [Konveyor Move2Kube](https://move2kube.konveyor.io/){: external}.
