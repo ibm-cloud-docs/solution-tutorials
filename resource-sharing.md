@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
+lastupdated: "2024-03-04"
 lasttested: "2023-12-18"
 
 content-type: tutorial
@@ -215,7 +215,7 @@ Accessing resources in different accounts, even sharing resources is common prac
 | ------- | ---------- |
 | **Security and Observability** | |
 | {{site.data.keyword.compliance_short}} | [Scan multiple accounts or account groups in an enterprise](/docs/security-compliance?topic=security-compliance-best-practices#bp-enterprise) |
-| {{site.data.keyword.at_short}} | [Route your {{site.data.keyword.at_short}} events to another account and consolidate event data](/docs/atracker?topic=atracker-scenarios#scenarioss-3)|
+| {{site.data.keyword.at_short}} | [Route your {{site.data.keyword.at_short}} events to another account and consolidate event data](/docs/atracker?topic=atracker-scenarios#scenarios-3)|
 | {{site.data.keyword.la_short}} | Stream logs from one {{site.data.keyword.la_short}} instance to either [{{site.data.keyword.messagehub}}](/docs/log-analysis?topic=log-analysis-streaming-configure) or [to another {{site.data.keyword.la_short}} instance](/docs/log-analysis?topic=log-analysis-streaming-configure-l2l)|
 | {{site.data.keyword.keymanagementserviceshort}} | Use [service-to-service authorizations](/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](/docs/key-protect?topic=key-protect-grouping-keys) for simpler management and enhanced security.|
 | {{site.data.keyword.hscrypto}} | Use [service-to-service authorizations](/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](/docs/hs-crypto?topic=hs-crypto-managing-key-rings) for simpler management and enhanced security.|
