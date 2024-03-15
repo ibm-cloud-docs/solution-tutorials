@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
+lastupdated: "2024-03-15"
 lasttested: "2023-09-27"
 
 content-type: tutorial
@@ -188,9 +188,23 @@ When you created the application with the `application create` command, you only
 
 Most of these values have a default set if nothing is provided as an option when creating the application. Because we did not provide a value, {{site.data.keyword.codeengineshort}} deployed our application with a default max scale of 10, meaning that it will only scale our application up to 10 instances. The default minimum scale is zero, so that when our application is no longer in use, it will scale itself back down to zero.
 
-1. To check the autoscaling capabilities of {{site.data.keyword.codeengineshort}}, we can use a load generator to generate a load against our service. This load generator will simulate about 300 clients requesting the URL for 30 seconds. Navigate to the [load generator URL](https://load.fun.cloud.ibm.com/){: external} and paste the frontend application URL from the step above.
-2. Click on **Generate load** to generate traffic.
-3. Run the below command to see the instance(pod) count incrementing as part of the autoscaling.
+1. To check the autoscaling capabilities of {{site.data.keyword.codeengineshort}}, we can use a load generator to perform requests against our service. The following shell script simulates a basic load of 3000 requests.
+   1. Open a new [{{site.data.keyword.cloud-shell_short}}](/shell){: external} tab ("load generator"). 
+   2. Create a shell variable for the frontend application URL from the step above.
+
+      ```sh
+      export APPURL=<frontend-application-url>
+      ```
+      {: pre}
+
+   3. Run the following script to generate some load. You can repeat it to create more traffic.
+
+      ```sh
+      seq 1 3000 | xargs -n1 -P0  curl -s  $APPURL -o /dev/null
+      ```
+      {: pre}
+
+2. In another shell, run the below command to see the instance(pod) count incrementing as part of the autoscaling.
    ```sh
    ibmcloud code-engine application get -n frontend
    ```
@@ -199,14 +213,14 @@ Most of these values have a default set if nothing is provided as an option when
    By default, the maximum number of requests that can be processed concurrently per instance is `10` leading to autoscaling and this value can be changed using `--concurrency or -cn` flag with `application update` command.
    {: tip}
 
-4. If you didn't want to allow as many as 10 instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
+3. If you didn't want to allow as many as 10 instances to be created, you can adjust the max scale to be a lower number. While your serverless application can easily scale up, you may depend on a downstream service such as a SQL DB that can only handle a limited number of connections or another rate limited API. Let's try limiting the number of instances for this frontend application.
     ```sh
     ibmcloud code-engine application update --name frontend --max-scale 5
     ```
     {: pre}
     
-5. Once load generation is stopped, wait for a few minutes to see the instances terminating, eventually scaling down to zero instances.
-6. Again, navigate to the [load generator URL](https://load.fun.cloud.ibm.com/){: external} and paste the frontend application URL from the step above. Run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
+4. Once load generation is stopped, wait for a few minutes to see the instances terminating, eventually scaling down to zero instances.
+5. In the "load generator" shell, run the script again to create requests against the app. In the other shell, run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
 
     Expected Output:
     ```sh

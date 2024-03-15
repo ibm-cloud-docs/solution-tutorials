@@ -179,16 +179,17 @@ You can check the logs and monitor your load balancers later in the tutorial.
    1. Open [{{site.data.keyword.cloud-shell_short}}](/shell){: external}. 
    2. Create a shell variable for the public load balancer URL from the above step with `/v1/controller/balance.php` appended.
 
-   ```sh
-   export APPURL=http://<load-balancer>/v1/controller/balance.php
-   ```
-   {: pre}
+      ```sh
+      export APPURL=http://<load-balancer>/v1/controller/balance.php
+      ```
+      {: pre}
 
    3. Run the following script to generate some load. You can repeat it to create more traffic.
-   ```sh
-   seq 1 3000 | xargs -n1 -P0  curl -s  $APPURL -o /dev/null
-   ```
-   {: pre}
+
+      ```sh
+      seq 1 3000 | xargs -n1 -P0  curl -s  $APPURL -o /dev/null
+      ```
+      {: pre}
 
 3. Under **Memberships** tab of your [instance group](/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
 
