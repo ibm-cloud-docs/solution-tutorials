@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-03-15"
-lasttested: "2023-10-04"
+lastupdated: "2024-03-18"
+lasttested: "2024-03-18"
 
 content-type: tutorial
 services: vpc, databases-for-postgresql, schematics, cloud-object-storage
@@ -55,6 +55,7 @@ You will provision all of these services and VPC resources using {{site.data.key
 
 The tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts).
+* A local shell with `curl`.
 
 ## Provision required cloud services
 {: #vpc-scaling-dedicated-compute-services}
@@ -175,8 +176,8 @@ You can check the logs and monitor your load balancers later in the tutorial.
 1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
    
    ![Scale instances](images/solution62-vpc-scaling-dedicated/autoscale.svg){: caption="Scale instances" caption-side="bottom"}
-2. To check the autoscaling capabilities, you can use a load generator against your application. The following shell script simulates a basic load of 3000 requests.
-   1. Open [{{site.data.keyword.cloud-shell_short}}](/shell){: external}. 
+2. To check the autoscaling capabilities, you can use a load generator against your application. The following shell script simulates a basic load of 90000 requests with up to 300 in parallel.
+   1. Open a local terminal.
    2. Create a shell variable for the public load balancer URL from the above step with `/v1/controller/balance.php` appended.
 
       ```sh
@@ -187,7 +188,7 @@ You can check the logs and monitor your load balancers later in the tutorial.
    3. Run the following script to generate some load. You can repeat it to create more traffic.
 
       ```sh
-      seq 1 3000 | xargs -n1 -P0  curl -s  $APPURL -o /dev/null
+      seq 1 90000 | xargs -n1 -P300  curl -s  $APPURL -o /dev/null
       ```
       {: pre}
 
