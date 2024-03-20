@@ -63,7 +63,7 @@ An [alternative tutorial](/docs/solution-tutorials?topic=solution-tutorials-vmwa
 This tutorial requires:
 
 * An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
-* Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage VMware as a Service resources](/docs/vmware-service?topic=vmware-service-getting-started).
+* Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage {{site.data.keyword.vmware-service_short}} resources](/docs/vmware-service?topic=vmware-service-getting-started).
 * [A pre-provisioned {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering), and
 * [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-vdc-adding).
 
@@ -76,7 +76,7 @@ The first step is to log in to your {{site.data.keyword.vmware-service_full}} â€
 
 Log in to the {{site.data.keyword.vmware-service_full}} â€“ single tenant instance's VMware Cloud Director Console:
 
-1. In the **VMware as a Service** table, click a VMware as a Service instance name.
+1. In the **{{site.data.keyword.vmware-service_short}}** table, click a {{site.data.keyword.vmware-service_short}} instance name.
 2. On the **Summary** tab, review the information.
 3. If this is the first time that you access the VMware Cloud Director console for the VDC region, you must set the admin credentials to generate an initial, complex, and random password.
 4. On the VDC details page, click **VMware Cloud Director Console** to access the console.
