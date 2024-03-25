@@ -208,6 +208,9 @@ Acting as the consumer again,
    ```
    {: screen}
 
+   It may takes a few minutes for the domain name to resolve correctly to the virtual server instances.
+   {: tip}
+
 1. Repeat the `curl` command several times. Notice how it shows a different output as it goes through all the virtual server instances attached to the backend pool of the {{site.data.keyword.ppnlb_short}}.
 
 Congratulations, your {{site.data.keyword.pp_short}} is working as expected and is ready to be published for others to consume.
