@@ -238,5 +238,8 @@ To remove the resources created for this tutorial:
    1. Type `pps-consumer` and click **Delete**.
 1. Repeat the same steps with the `pps-provider` workspace.
 
+   You may need to retry the **Destroy resources** after a few minutes if the workspace deletion failed because the resource group could not be deleted.
+   {: tip}
+
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
