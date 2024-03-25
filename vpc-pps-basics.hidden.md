@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-17"
+lastupdated: "2024-03-25"
 lasttested: "2023-12-06"
 
 content-type: tutorial
@@ -19,7 +19,7 @@ use-case: VirtualPrivateCloud, CloudNetworkSecurity, NetworkSecurity
 {: toc-services="vpc"}
 {: toc-completion-time="1h"}
 
-The beta release of IBM Cloud {{site.data.keyword.pp_short}} is only available to allowlisted users. Contact Gilberto Tellez, Product Manager (`ghtellez@us.ibm.com`) if you are interested in getting early access to this beta offering.
+The beta release of IBM Cloud Private Path services is only available to allowlisted users. Contact your IBM Support representative if you are interested in getting early access to this beta offering.
 {: beta}
 
 <!--##istutorial#-->
@@ -39,7 +39,7 @@ This tutorial walks you through the steps to set up a [{{site.data.keyword.pp_sh
 * Expose the application with {{site.data.keyword.pp_short}}.
 * Access the application from a consumer client through private connectivity only.
 
-![Architecture](images/vpc-pps-basics-hidden/architecture.png){: caption="Figure 1. Architecture showing {{site.data.keyword.pp_short}}" caption-side="bottom"}
+![Architecture](images/vpc-pps-basics/architecture.png){: caption="Figure 1. Architecture showing {{site.data.keyword.pp_short}}" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. A provider implements a resilient application supported by multiple virtual servers spread across multiple zones.
@@ -68,15 +68,10 @@ When provisioning virtual server instances, an SSH key is injected into the inst
 
 In this tutorial, you first act as a provider and implement an application. In a second phase, you take the role of the consumer and call the application. The application is a simple `nginx` web server.
 
-1. Go to [{{site.data.keyword.bpshort}}](/schematics/workspaces/create) to create a new workspace.
+1. Go to [{{site.data.keyword.bpshort}}](/schematics/workspaces/create?repository=https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-pps-basics/provider&terraform_version=terraform_v1.5) to create a new workspace.
 1. In the **Specify template** step:
-   1. Set the **repository URL** to `https://github.ibm.com/portfolio-solutions/vpc-pps-basics/tree/main/provider`.
+   1. Set the **repository URL** to `https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-pps-basics/provider`.
    1. Make sure to check **Use full repository**.
-   1. Set **Personal access token** to a token with `repo:public_repo` created from https://github.ibm.com/settings/tokens
-
-      This will no longer be needed when the tutorial is made public
-      {: beta}
-
    1. Set the **Terraform version** to `terraform_v1.5`.
    1. Click **Next**.
 1. In the **Workspace details** step:
@@ -107,7 +102,7 @@ Running {{site.data.keyword.bpshort}} for the provider creates the following res
 * a {{site.data.keyword.ppnlb_short}} configured with a backend pool including all the virtual server instances,
 * and a {{site.data.keyword.pp_short}}.
 
-![Architecture](images/vpc-pps-basics-hidden/provider.png){: caption="Figure 2. Architecture of the provider resources" caption-side="bottom"}
+![Architecture](images/vpc-pps-basics/provider.png){: caption="Figure 2. Architecture of the provider resources" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Navigate to [Virtual Private Clouds](/vpc-ext/network/vpcs), [Subnets](/vpc-ext/network/subnets) and [Virtual server instances](/vpc-ext/compute/vs) to review the provisioned resources.
@@ -126,15 +121,10 @@ To verify that the {{site.data.keyword.pp_short}} is correctly set up, you are g
 
 Until a {{site.data.keyword.pp_short}} [gets published](/docs/vpc?topic=vpc-pps-activating), it can only be accessed within the same account where it is created. It offers a good opportunity to test the service before sharing it with others. This is the reason why, at this stage, the consumer side of this tutorial is provisioned in the same account as the provider application.
 
-1. Go to [{{site.data.keyword.bpshort}}](/schematics/workspaces/create) to create a new workspace.
+1. Go to [{{site.data.keyword.bpshort}}](/schematics/workspaces/create?repository=https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-pps-basics/consumer&terraform_version=terraform_v1.5) to create a new workspace.
 1. In the **Specify template** step:
-   1. Set the **repository URL** to `https://github.ibm.com/portfolio-solutions/vpc-pps-basics/tree/main/consumer`.
+   1. Set the **repository URL** to `https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-pps-basics/consumer`.
    1. Make sure to check **Use full repository**.
-   1. Set **Personal access token** to a token with `repo:public_repo` created from https://github.ibm.com/settings/tokens
-
-      This will no longer be needed when the tutorial is made public
-      {: beta}
-
    1. Set the **Terraform version** to `terraform_v1.5`.
    1. Click **Next**.
 1. In the **Workspace details** step:
@@ -168,7 +158,7 @@ Running {{site.data.keyword.bpshort}} for the consumer creates the following res
 * one virtual server instance in each subnet,
 * one virtual private endpoint gateway configured with the {{site.data.keyword.pp_short}} CRN and with one IP address in each subnet.
 
-![Architecture](images/vpc-pps-basics-hidden/consumer.png){: caption="Figure 3. Architecture of the consumer resources" caption-side="bottom"}
+![Architecture](images/vpc-pps-basics/consumer.png){: caption="Figure 3. Architecture of the consumer resources" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Navigate to [Virtual server instances](/vpc-ext/compute/vs) to review the provisioned instances.
