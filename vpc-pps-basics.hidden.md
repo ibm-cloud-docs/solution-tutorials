@@ -28,7 +28,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 
 <!--#/istutorial#-->
 
-This tutorial walks you through the steps to set up a [{{site.data.keyword.pp_short}}](/docs/vpc?topic=vpc-using-private-path-services) between a provider and a set of consumers. With {{site.data.keyword.pp_short}}, consumers access the application or service implemented by the provider through the IBM backbone without traversing the internet.
+This tutorial walks you through the steps to set up a [{{site.data.keyword.pp_short}}](/docs/vpc?topic=vpc-private-path-service-intro) between a provider and a set of consumers. With {{site.data.keyword.pp_short}}, consumers access the application or service implemented by the provider through the IBM backbone without traversing the internet.
 {: shortdesc}
 
 ## Objectives
