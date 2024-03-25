@@ -72,6 +72,7 @@ toc:
                 - vpc-site2site-vpn.md
                 - vpc-app-deploy.md
                 - vpc-secure-management-bastion-server.md
+                - vpc-pps-basics.md
                 - lamp-stack-on-vpc.md
                 - vpc-tg-dns-iam.md
                 - vpc-scaling-dedicated-compute.md
