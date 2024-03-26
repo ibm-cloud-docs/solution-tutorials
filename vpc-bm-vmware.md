@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Tutorial deprecated
+# (Deprecated) Deploying Roll Your Own VMware on {{site.data.keyword.bm_is_full_notm}}
 {: #vpc-bm-vmware}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}

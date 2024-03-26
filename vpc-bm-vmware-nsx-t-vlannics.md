@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Tutorial deprecated
+# (Deprecated) Provision {{site.data.keyword.bm_is_short}} network interfaces for NSX-T 
 {: #vpc-bm-vmware-nsx-t-vlannics}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, vmwaresolutions"}

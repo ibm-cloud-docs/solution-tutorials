@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Tutorial deprecated
+# (Deprecated) Provision vSAN storage cluster
 {: #vpc-bm-vmware-vsan}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}

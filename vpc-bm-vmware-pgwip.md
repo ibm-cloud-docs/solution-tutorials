@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Tutorial deprecated
+# (Deprecated) Provision a Public Gateway and Floating IPs for VMware Virtual Machines
 {: #vpc-bm-vmware-pgwip}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}

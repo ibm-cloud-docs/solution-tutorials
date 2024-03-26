@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Tutorial deprecated
+# (Deprecated) Provision NFS storage and attach to cluster
 {: #vpc-bm-vmware-nfs}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, vmwaresolutions, vpc-file-storage"}

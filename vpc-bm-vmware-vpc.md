@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Tutorial deprecated
+# (Deprecated) Provision {{site.data.keyword.vpc_short}} for a VMware Deployment
 {: #vpc-bm-vmware-vpc}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}

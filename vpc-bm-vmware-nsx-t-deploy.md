@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Tutorial deprecated
+# (Deprecated) Deploy NSX-T Managers
 {: #vpc-bm-vmware-nsx-t-deploy}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, vmwaresolutions"}

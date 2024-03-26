@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Tutorial deprecated
+# (Deprecated) Provision {{site.data.keyword.vpc_short}} Subnets and configure Distributed Virtual Switch Portgroups for VMs
 {: #vpc-bm-vmware-newvm}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}

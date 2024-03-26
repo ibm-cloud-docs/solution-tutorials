@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Tutorial deprecated
+# (Deprecated) Provision vCenter Appliance
 {: #vpc-bm-vmware-vcenter}
 {: toc-content-type="tutorial"}
 {: toc-services="vmwaresolutions, vpc"}

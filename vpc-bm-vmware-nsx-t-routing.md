@@ -13,7 +13,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Tutorial deprecated
+# (Deprecated) Configure routing for {{site.data.keyword.vpc_short}} and NSX-T Logical Routers
 {: #vpc-bm-vmware-nsx-t-routing}
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, vmwaresolutions"}
