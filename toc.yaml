@@ -96,22 +96,6 @@ toc:
                 - linking-secure-network-enclosures.md
 
             - topicgroup:
-                label: VMware on VPC Bare metal servers
-                topics:
-                - vpc-bm-vmware.md
-                - vpc-bm-vmware-vpc.md
-                - vpc-bm-vmware-dns.md
-                - vpc-bm-vmware-bms.md
-                - vpc-bm-vmware-vcenter.md
-                - vpc-bm-vmware-vsan.md
-                - vpc-bm-vmware-nfs.md
-                - vpc-bm-vmware-newvm.md
-                - vpc-bm-vmware-pgwip.md
-                - vpc-bm-vmware-nsx-t-vlannics.md
-                - vpc-bm-vmware-nsx-t-deploy.md
-                - vpc-bm-vmware-nsx-t-routing.md
-
-            - topicgroup:
                 label: VMware Solutions
                 topics:
                 - vmware-as-a-service-tf.md
