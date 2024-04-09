@@ -18,6 +18,6 @@ use-case: ApplicationModernization, Vmware
 {: toc-services="vmwaresolutions, schematics"}
 {: toc-completion-time="2h"}
 
-This tutorial is deprecated and will be redirected soon. For users looking to deploy a VMware as a managed service visit the documentation on [VMware as a Service](/docs/vmwaresolutions?topic=vmwaresolutions-vmware-aas-overview). You can also visit the VMware as a Service order page: https://cloud.ibm.com/vmware/vmware_as_a_service/provision/vdc_mt.
+This tutorial is deprecated and will be redirected soon. For users looking to deploy a VMware as a managed service visit the documentation on [VMware as a Service](/docs/vmwaresolutions?topic=vmwaresolutions-vmware-aas-overview). You can also visit the VMware as a Service order page: https://{DomainName}/vmware/vmware_as_a_service/provision/vdc_mt.
 {: note}
 
