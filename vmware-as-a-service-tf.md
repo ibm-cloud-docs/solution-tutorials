@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-03-20"
+lastupdated: "2024-04-11"
 lasttested: "2024-01-04"
 
 
@@ -15,7 +15,7 @@ use-case: ApplicationModernization, Vmware
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-# Configuring a virtual data center in a {{site.data.keyword.vmware-service_short}} with Terraform
+# Configuring a virtual data center in {{site.data.keyword.vmware-service_short}} with Terraform
 {: #vmware-as-a-service-tf}
 {: toc-content-type="tutorial"}
 {: toc-services="vmware-service"}
@@ -27,7 +27,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 
 <!--#/istutorial#-->
 
-This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} – single or multi-tenant virtual data center after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [{{site.data.keyword.vmware-service_full}} instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a virtual data center (VDC)](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
+This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} single-tenant or multitenant virtual data center (VDC) after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [a {{site.data.keyword.vmware-service_short}} instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a VDC](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
 {: shortdesc}
 
 ## Objectives
@@ -35,19 +35,19 @@ This tutorial is to demonstrate the basic steps to operationalize an {{site.data
 
 In this tutorial, you will learn:
 
-* How to create virtual data center (VDC) networks with Terraform,
-* How to create virtual machines on your virtual data center networks with Terraform, and
-* How to configure network address translation (NAT) and firewall (FW) rules on your virtual data center edge gateway with Terraform.
+* How to create VDC networks with Terraform.
+* How to create virtual machines (VMs) on your VDC networks with Terraform.
+* How to configure network address translation (NAT) and firewall (FW) rules on your VDC edge gateway with Terraform.
 
 The following diagram presents an overview of the solution to be deployed.
 
 ![Architecture](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
-1. Use IBM Cloud Console to create a virtual data center in your single tenant instance. Your instance may have one or more virtual data centers, so you can have a dedicated virtual data center for testing purposes. This example virtual data center uses only a `2 IOPS/GB` storage pool.
-2. When a virtual data center is created, an edge gateway and external networks are created automatically. External network provides you Internet access and an IP address block of `/29` with 6 usable public IP addresses is provided.
-3. Terraform templates are used to create virtual data center networks, virtual machines as well as firewall and network address translation rules. The creation is fully controlled though variables. Terraform authenticates to the VMware Cloud Director API with a user name and password. Access tokens will be supported in the near future.
-4. Three virtual data center networks are created: two routed (`application-network-1` and `db-network-1`) and one isolated (`isolated-network-1`). Routed virtual data center networks are attached to the edge gateway while isolated virtual data center network is a standalone network. You can create more networks based on your needs.
+1. Use IBM Cloud Console to create a VDC in your single tenant instance. Your instance may have one or more VDCs, so you can have a dedicated VDC for testing purposes. This example VDC uses only a `2 IOPS/GB` storage pool.
+2. When a VDC is created, an edge gateway and external networks are created automatically. External network provides you Internet access and an IP address block of `/29` with 6 usable public IP addresses is provided.
+3. Terraform templates are used to create VDC networks, VMs as well as firewall and network address translation rules. The creation is fully controlled though variables. Terraform authenticates to the VMware Cloud Director API with a user name and password. Access tokens will be supported in the near future.
+4. Three VDC networks are created: two routed (`application-network-1` and `db-network-1`) and one isolated (`isolated-network-1`). Routed VDC networks are attached to the edge gateway while isolated VDC network is a standalone network. You can create more networks based on your needs.
 5. A jump server (`jump-server-1`) is created with the Windows 2022 Operating System. The server is attached to the `application-network-1`. You can access the virtual machine though the VM console, or using RDP though the DNAT rule created on the Edge Gateway.
 6. One example virtual machine (`application-server-1`) is created on the `application-network-1`. The `application-server-1` has an additional disk e.g. for logging. You can create more VMs or disks based on your needs.
 7. One example virtual machine (`db-server-1`) is created on the `db-network-1` and `isolated-network-1` with two separate vnics. The `db-server-1` has two additional disks e.g. for data and logging. You can create more VMs or disks based on your needs.
@@ -57,11 +57,11 @@ The following diagram presents an overview of the solution to be deployed.
 This tutorial is divided into the following steps:
 
 1. [Clone examples repo](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-clonerepo) 
-2. [Obtain the required information about your virtual data center](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-vdcinfo)
+2. [Obtain the required information about your VDC](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-vdcinfo)
 3. [Configure Terraform template variables](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-tfvars)
 4. [Init, plan and apply](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-apply)
 5. [Connect to the VMware Cloud Director Console](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-console)
-6. [Connect to the virtual machines through the Internet and validate connectivity](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vm)
+6. [Connect to the VMs through the Internet and validate connectivity](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf#vmware-as-a-service-tf-connect-to-vm)
 
 An [alternative tutorial](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-tf) using VMware Cloud Director Console is also available.
 {: note}
@@ -73,8 +73,8 @@ This tutorial requires:
 
 * An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts),
 * Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage {{site.data.keyword.vmware-service_short}} resources](/docs/vmware-service?topic=vmware-service-getting-started).
-* [A pre-provisioned {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering),
-* [A pre-provisioned virtual data center on the {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-vdc-adding),
+* [A pre-provisioned {{site.data.keyword.vmware-service_short}} single-tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering),
+* [A pre-provisioned VDC on the {{site.data.keyword.vmware-service_short}} single-tenant instance](/docs/vmware-service?topic=vmware-service-vdc-adding),
 * [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cli-getting-started),
 * [{{site.data.keyword.cloud_notm}} API KEY](/docs/account?topic=account-userapikey&interface=ui),
 * [`jq` to query JSON files](https://stedolan.github.io/jq/){: external}, and
@@ -89,7 +89,7 @@ You will find instructions to download and install these tools for your operatin
 {: #vmware-as-a-service-tf-clonerepo}
 {: step}
 
-The example Terraform templates for {{site.data.keyword.vmware-service_full}} are located in [GitHub](https://github.com/IBM/vmwaas-Terraform-examples){: external}.
+The example Terraform templates for {{site.data.keyword.vmware-service_short}} are located in [GitHub](https://github.com/IBM/vmwaas-Terraform-examples){: external}.
 
 Clone the examples repo into your local machine, for example laptop or a virtual server with Internet access.
 
@@ -108,15 +108,15 @@ https://github.com/IBM/vmwaas-terraform-examples.git
 {: codeblock}
 
 
-## Obtain the required information about your virtual data center
+## Obtain the required information about your VDC
 {: #vmware-as-a-service-tf-vdcinfo}
 {: step}
 
-As a prerequisite, use the [IBM Cloud Console](/vmware) to [create your {{site.data.keyword.vmware-service_full}} - single tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [one or more virtual data centers](/docs/vmware-service?topic=vmware-service-vdc-adding) on it.
+As a prerequisite, use the [IBM Cloud Console](/vmware) to [create your {{site.data.keyword.vmware-service_short}} single-tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [one or more VDCs](/docs/vmware-service?topic=vmware-service-vdc-adding) on it.
 
-Once the instance and virtual data center has been deployed, you can collect the required details and virtual data center IDs from the Console.
+Once the instance and VDC has been deployed, you can collect the required details and VDC IDs from the Console.
 
-Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instance's VMware Cloud Director Console:
+Log in to the {{site.data.keyword.vmware-service_short}} single-tenant instance's VMware Cloud Director Console:
 
 1. In the **{{site.data.keyword.vmware-service_short}}** table, click a {{site.data.keyword.vmware-service_short}} instance name.
 2. On the **Summary** tab, review the information.
@@ -125,7 +125,7 @@ Log in to the {{site.data.keyword.vmware-service_full}} – single tenant instan
 5. Use the admin username and password to log in to the VMware Cloud Director Console for the first time. 
 6. After the admin is logged in to the VMware Cloud Director Console, you can create extra users who have roles that allow them to access the VMware Cloud Director Console.
 
-You can login to the VMware Cloud Director Console to collect the required information for your Terraform deployment. You can alternatively use the provided `vmwaas.sh` shell script on the examples repo. The script will collect these values using {{site.data.keyword.vmware-service_full}} API.
+You can login to the VMware Cloud Director Console to collect the required information for your Terraform deployment. You can alternatively use the provided `vmwaas.sh` shell script on the examples repo. The script will collect these values using {{site.data.keyword.vmware-service_short}} API.
 
 To use the script, configure your region and API key with:
 
@@ -160,7 +160,7 @@ demo          b75efs1c-35df-40b3-b569-1124be37687d  us-south-1  ReadyToUse
 ```
 
 
-To list your virtual data centers:
+To list your VDCs:
 
 ```bash
 % ./vmwaas.sh vdcs           
@@ -195,7 +195,7 @@ You can export these to your shell, or you can get the terraform.tfvars lines to
 
 This example infrastructure Terraform template is located in folder [`vcd-demo-infra`](https://github.com/IBM/vmwaas-terraform-examples/tree/main/vcd-demo-infra/){: external}.
 
-This demo Terraform template deploys the following example infrastructure, which consists of two routed and one isolated virtual data center networks, three virtual machines as well as example SNAT, DNAT and firewall rules.
+This demo Terraform template deploys the following example infrastructure, which consists of two routed and one isolated VDC networks, three VMs as well as example SNAT, DNAT and firewall rules.
 
 ![Basic infrastructure](images/solution66-vmware-as-a-service/vmwaas-example-diagrams-tf-vmwaas-basic-no-steps.svg){: caption="Figure 2. Basic infrastructure" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -210,7 +210,7 @@ The Terraform uses [VMware Cloud Director Provider](https://registry.terraform.i
 * [vcd_nsxt_nat_rule](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_nat_rule){: external}
 * [vcd_nsxt_firewall](https://registry.terraform.io/providers/vmware/vcd/latest/docs/resources/nsxt_firewall){: external}
 
-In this example template, the creation is fully controlled though Terraform variables - you do not need to change the actual Terraform template, for example if you need more networks or virtual machines. An example `terraform.tfvars-example` file is provided and example values are provided with explanations.
+In this example template, the creation is fully controlled though Terraform variables - you do not need to change the actual Terraform template, for example if you need more networks or VMs. An example `terraform.tfvars-example` file is provided and example values are provided with explanations.
 
 Before you begin, copy the example `terraform.tfvars-example` to `terraform.tfvars`, for example:
 
@@ -219,9 +219,9 @@ cp terraform.tfvars-example terraform.tfvars
 ```
 {: codeblock}
 
-You can use it as such, add more networks, more virtual machines and customize NAT or firewall rules and so on based on your needs.
+You can use it as such, add more networks, more VMs and customize NAT or firewall rules and so on based on your needs.
 
-1. Set the following common variable to access your instance and virtual data center.
+1. Set the following common variable to access your instance and VDC.
 
    ```terraform
    # Note. Variable values to access your Director instance. Use the Director portal
@@ -245,7 +245,7 @@ You can use it as such, add more networks, more virtual machines and customize N
    If you change the authentication method, the provider block in the code needs to changed to use a different authentication method.
    {: tip}
 
-2. Set a common name prefix to identify and separate your virtual data center networks, virtual machines and so on.
+2. Set a common name prefix to identify and separate your VDC networks, VMs and so on.
 
    ```terraform
    # Note. Use a common name prefix for each item. 
@@ -253,9 +253,9 @@ You can use it as such, add more networks, more virtual machines and customize N
    item_name_prefix = "demo"
    ```
 
-3. Define DNS servers for the virtual machines.
+3. Define DNS servers for the VMs.
 
-   You can use IBM Cloud Public DNS server in your virtual machines, or you can use your own. 
+   You can use IBM Cloud Public DNS server in your VMs, or you can use your own. 
 
    ```terraform
    # Note. IBM Cloud DNS servers listed here. 
@@ -267,12 +267,12 @@ You can use it as such, add more networks, more virtual machines and customize N
    When using your own DNS servers here, make sure you have network connectivity to reach these.
    {: important}
 
-4. Define virtual data center networks.
+4. Define VDC networks.
 
-   When creating virtual data center networks, use the map variable `vdc_networks` to define these and their IP pools.
+   When creating VDC networks, use the map variable `vdc_networks` to define these and their IP pools.
 
    ```terraform
-   # Note. Create virtual data center networks of type `routed` or
+   # Note. Create VDC networks of type `routed` or
    # `isolated`. You can define one `static_ip_pool`and one
    # `dhcp_ip_pool` for each.
    
@@ -330,10 +330,10 @@ You can use it as such, add more networks, more virtual machines and customize N
 
 5. Define virtual machine configurations.
 
-   When creating virtual machines, use the map variable `virtual_machines` to define these.
+   When creating VMs, use the map variable `virtual_machines` to define these.
 
    ```terraform
-   # Note. Create virtual machines inside your virtual data center.
+   # Note. Create VMs inside your VDC.
    # You can define each one individually and attach multiple networks
    # and disks. Individual disks are created for each additional disk.
    
@@ -438,7 +438,7 @@ You can use it as such, add more networks, more virtual machines and customize N
 
 6. Define public IP address map.
    
-   Each virtual data center gets 6 public IP addresses for each virtual data center and its edge gateway. This Terraform template treats the provided consecutive list of IP addresses as a map. The following variable `public_ips` describes the public IP addresses provided for your virtual data center. You can use the keys (e.g. `public-ip-1`) to define and use as reference to an IP address in the template without actually specifying the real IP address (e.g. `xx.yy.zz.56`) in the other variables.
+   Each VDC gets 6 public IP addresses for each VDC and its edge gateway. This Terraform template treats the provided consecutive list of IP addresses as a map. The following variable `public_ips` describes the public IP addresses provided for your VDC. You can use the keys (e.g. `public-ip-1`) to define and use as reference to an IP address in the template without actually specifying the real IP address (e.g. `xx.yy.zz.56`) in the other variables.
 
    ```terraform
    # Note. Map of available 6 public IPs. You can use these names
@@ -592,7 +592,7 @@ You can use it as such, add more networks, more virtual machines and customize N
    }
    ```
    
-   You can also use Static Groups in firewall rules as sources and targets. This example creates three Static Groups, one for each routed virtual data center network and one which includes all routed virtual data center networks. 
+   You can also use Static Groups in firewall rules as sources and targets. This example creates three Static Groups, one for each routed VDC network and one which includes all routed VDC networks. 
    
    ```terraform
    # Note. You need to create Static Groups to be used in firewall rules.
@@ -738,9 +738,9 @@ It is generally not advised to use RDP over public Internet. The rule listed abo
    Apply complete! Resources: 29 added, 0 changed, 0 destroyed.
    ```
 
-4. In addition to the examples above, terraform provides a few variables as `outputs`. Check these`output` values to get, for example, IP addressing and other access information to access your virtual machines. 
+4. In addition to the examples above, terraform provides a few variables as `outputs`. Check these`output` values to get, for example, IP addressing and other access information to access your VMs. 
 
-   For example, you can run `terraform output created_virtual_machines` to get access access information to your virtual machines:
+   For example, you can run `terraform output created_virtual_machines` to get access access information to your VMs:
 
    ```bash
    % terraform output created_virtual_machines
@@ -833,7 +833,7 @@ It is generally not advised to use RDP over public Internet. The rule listed abo
    ```
    {: codeblock}
 
-After provisioning, please make sure you adjust the example firewall rules according to your standards and needs. They will expose public access to your virtual machines, like `ssh` and `RDP`, which is configured here for demonstration purposes only.
+After provisioning, please make sure you adjust the example firewall rules according to your standards and needs. They will expose public access to your VMs, like `ssh` and `RDP`, which is configured here for demonstration purposes only.
 {: important}
 
 
@@ -843,7 +843,7 @@ After provisioning, please make sure you adjust the example firewall rules accor
 
 Refer to the [alternative tutorial](/docs/solution-tutorials?topic=solution-tutorials-vmware-as-a-service-vdc) how to use and access VMware Cloud Director Console. Check the deployed assets and how the Edge Gateway has been configured (FW and NAT rules).
 
-Get the virtual machines' usernames and passwords from the terraform `output`, for example:
+Get the VMs usernames and passwords from the terraform `output`, for example:
 
 ```bash
 terraform output created_virtual_machines
@@ -851,12 +851,12 @@ terraform output created_virtual_machines
 {: codeblock}
 
 To connect to the virtual machine with console in VMware Cloud Director Console:
-1. Click on **Launch Web Console** to open a local console to the virtual machine.
+1. Click **Launch Web Console** to open a local console to the virtual machine.
 2. Using the web console, log in to the virtual machine using root as the user ID and the password you captured from the previous step.
 3. You should then be able to ping Internet resources such as `www.ibm.com`, showing that the networking is complete and working.
 
 
-## Connect to the virtual machines though Internet and validate connectivity
+## Connect to the VMs though Internet and validate connectivity
 {: #vmware-as-a-service-tf-connect-to-vm}
 {: step}
 
@@ -872,7 +872,7 @@ To connect to the virtual machine through the Internet:
 ## Reference material
 {: #vmware-as-a-service-tf-reference}
 
-Check the following VMware Cloud Director™ Tenant Portal Guides for more detailed information about managing virtual data centers:
+Check the following VMware Cloud Director™ Tenant Portal Guides for more detailed information about managing VDCs:
 
 * [Managing Organization Virtual Data Center Networks](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-B208CDD2-5D46-4841-8F3C-BED9E4F27F07.html){: external}
 * [Managing NSX Edge Gateways](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-45C0FEDF-84F2-4487-8DB8-3BC281EB25CD.html){: external}
