@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
-lasttested: "2023-09-05"
+lastupdated: "2024-04-15"
+lasttested: "2024-04-15"
 
 content-type: tutorial
 services: codeengine, Cloudant, cloud-object-storage
@@ -20,7 +20,7 @@ use-case: ApplicationModernization
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -55,7 +55,7 @@ The application shown in this tutorial is a simple guestbook website where users
 
 Let's start by creating a [{{site.data.keyword.cloudant_short_notm}}](/docs/Cloudant?topic=Cloudant-getting-started-with-cloudant) service instance. {{site.data.keyword.cloudant_short_notm}} is a fully managed JSON document database. It is built upon and compatible with Apache CouchDB.
 
-1. In the [Catalog](/catalog?category=databases#services), under **Services**, go to the **Databases** category. Click on the **{{site.data.keyword.cloudant}}** tile. In the new dialog:
+1. In the [Catalog](/catalog?category=databases#services){: external}, under **Services**, go to the **Databases** category. Click on the **{{site.data.keyword.cloudant}}** tile. In the new dialog:
    1. Under **Multitenant** select a region.
    1. Under **Configure Cloudant instance** pick a **unique** name for the service, such as `<yourinitials>-guestbook-db`.<!-- markdownlint-disable-line -->
    <!--##istutorial#-->
@@ -65,9 +65,9 @@ Let's start by creating a [{{site.data.keyword.cloudant_short_notm}}](/docs/Clou
    1. Select **IAM** as authentication method.
    1. Select the <!--##istutorial#-->**Lite**<!--#/istutorial#--><!--##isworkshop#--><!--**Standard**--><!--#/isworkshop#--> plan. <!--##istutorial#-->If you already have a Lite plan in your account, select another service plan.<!--#/istutorial#-->
    1. Click **Create**.
-2. Back in the [{{site.data.keyword.cloud_notm}} Resource List](/resources/), under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
+2. Back in the [{{site.data.keyword.cloud_notm}} Resource List](/resources/){: external}, under **Services**, click on the {{site.data.keyword.cloudant}} instance you created to open the instance full details page. Note: You may be required to wait until the status of the service changes to `Active`.
 3. Click on **Launch Dashboard** to open the dashboard in a new browser tab.
-4. In the upper right, click on **Create Database**. Enter ***guestbook*** as name and select **Non-Partioned** under **Partitioning**. Click **Create** to create the database.
+4. In the upper right, click on **Create Database**. Enter `guestbook` as name and select **Non-Partioned** under **Partitioning**. Click **Create** to create the database.
 
 ## Create serverless backend
 {: #serverless-webapp-3}
@@ -79,7 +79,7 @@ In this section, you will create the serverless backend app with {{site.data.key
 ### Create a {{site.data.keyword.codeengineshort}} project
 {: #serverless-webapp-4}
 
-1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/codeengine/overview) page.
+1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/codeengine/overview){: external} page.
 2. On the left pane, click on **Projects** and then click **Create**,
    - Select a location.
    - Use `<yourinitials>-guestbook` as project name<!--##istutorial#--> and select the same resource group as before<!--#/istutorial#-->.
@@ -95,14 +95,15 @@ In this section, you will create the serverless backend app with {{site.data.key
 1. Within the project dashboard, click on **Applications**, then **Create**.
 2. In the new dialog, enter `guestbook-backend` as name.
 3. Leave **Container image** selected and use `icr.io/solution-tutorials/tutorial-serverless-api-webapp:latest` as **Image reference**. It uses an already existing container image.
-4. Go to and expand the section **Runtime settings**. Increase the **Min number of instances** to 1 and reduce **Max number of instances** to 2. The minimum of one makes the app more responsive during the initial tests. You could reduce it later to zero again.
-5. Under **Instance resources**, select `0.25 vCPU / 0.5 GB` for **CPU and memory**. Not much of resources is needed for this type of app.
-6. Click **Create** to deploy the new backend app for the guestbook.
+4. Under **Instance resources**, select `0.25 vCPU / 0.5 GB` for **CPU and memory**. Not much of resources is needed for this type of app.
+5. Increase the **Min number of instances** to 1 and reduce **Max number of instances** to 2. The minimum of one makes the app more responsive during the initial tests. You could reduce it later to zero again.
+6. Click **Create** to deploy the new backend app for the guestbook. **Note that without the next step of creating a service binding the deployment will fail with a code error.**
 7. Create a service binding to the database.
    1. Click **Service bindings** tab.
    2. Click **Create**.
-   3. Click **IBM Cloud service instance** and choose your database from the drop down.
-   4. Click **Add**.
+   3. Click **IBM Cloud service instance** and choose your database from the dropdown.
+   4. Leave **Role** as **Writer**.
+   5. Click **Add**.
 8. Wait for the provisioning to report as green and ready. Click on **Test application**, then on **Application URL**. The backend app should load and return a page saying `healthy`. Remember or copy the application URL because it is needed for the next part.
 
 Instead of using the pre-built container image, you could build the image on your own. This can be done either outside of or [with the help of {{site.data.keyword.codeengineshort}}](/docs/codeengine?topic=codeengine-plan-build). If not using the pre-built container image and if [using a private container registry additional steps might be needed](/docs/codeengine?topic=codeengine-deploy-app-private). You can find the source at https://github.com/IBM-Cloud/serverless-guestbook/tree/ce
@@ -115,7 +116,7 @@ Instead of using the pre-built container image, you could build the image on you
 Create a {{site.data.keyword.cos_short}} bucket configured with static website hosting containing the files for the guestbook JavaScript application that uses the {{site.data.keyword.cloudant_short_notm}} database.
 
 Create a {{site.data.keyword.cos_short}} instance:
-1. Select [Object Storage](/objectstorage/create) from the catalog.
+1. Select [Object Storage](/objectstorage/create){: external} from the catalog.
 1. Select **IBM Cloud** for the Infrastructure and **Standard** for the plan. 
 1. Enter a **unique** service name for the instance, such as `<yourinitials>-guestbook-cos`.<!-- markdownlint-disable-line -->
 <!--##istutorial#-->
@@ -142,7 +143,7 @@ Copy the files in the `docs` directory of https://github.com/IBM-Cloud/serverles
 1. Unzip the file and navigate to the `docs` directory of the unzipped file.
 1. Edit **guestbook.js** - replace the value of **apiUrl** with the application URL from the previous section. 
    
-   Make sure that the URI does not end on a slash (`/`).
+   Make sure that the URI does not end on a slash (`/`). Else the app will not work.
    {: note}
 
 1. Open the bucket **Objects** view and drag and drop the **guestbook.js** and **index.html** files to the COS bucket.
@@ -166,7 +167,7 @@ To delete the created bucket and {{site.data.keyword.cos_short}} service:
 1. In the upper right of the {{site.data.keyword.cos_short}} instance **Actions** menu select **Delete Instance**
 
 To delete the created {{site.data.keyword.cloudant_short_notm}} service,
-1. Navigate to the [resource list](/resources)
+1. Navigate to the [resource list](/resources){: external}
 2. Under **Databases**, click on the action menu next to `<yourinitials>-guestbook-db` service
 3. Click **Delete**
 
@@ -182,5 +183,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #serverless-webapp-8}
 
 * [Serverless Computing](https://www.ibm.com/topics/serverless){: external}
-* [Serverless: Code patterns](https://developer.ibm.com/depmodels/serverless/patterns/){: external}
+* [Serverless Deployment Model](https://developer.ibm.com/depmodels/serverless/){: external}
 * [Getting started with {{site.data.keyword.codeenginefull_notm}}](/docs/codeengine?topic=codeengine-getting-started)
