@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-11"
-lasttested: "2022-09-11"
+lastupdated: "2024-04-16"
+lasttested: "2024-04-16"
 
 content-type: tutorial
 services: vpc, cis, secrets-manager
@@ -101,18 +101,19 @@ Enable inbound rules for HTTP (80) and HTTPS (443) ports to the application by d
 {: #vpc-multi-region-5}
 
 1. Navigate to the [Subnets](/vpc-ext/network/subnets) page.
-1. Verify the status is for all subnets is **Available**. 
+1. Verify the status for all subnets is **Available**. 
 1. Click on **vpc-region1-zone1-subnet** followed by **Attached resources**, then under **Attached instances** click on **Create**.
    1. Enter `vpc-region1-zone1-vsi` as your virtual server's unique name.
    2. Verify or set the **Virtual private cloud**, **Resource group**, **Location** and **Zone** fields.
 1. Under the **Image and profile** section, click on **Change image**.
-1. In the **Search items** field, type `Ubuntu` and pick any version of the image and click on **Select**.
+1. In the **Search items** field, type `Ubuntu` and pick any version of the image and click on **Save**.
 1. Under the **Profile** section, click on **Change profile**.
 1. Pick **Compute** with `2 vCPUs` and `4 GB RAM` as your profile and click on **Save**.
 1. Set **SSH keys** to the SSH key you created earlier.
-1. Under **Network interfaces**, click on the pencil icon on the row for the **eth0** interface.
-   * Uncheck the default security group and check `vpc-region1-sg`.
-   * Click **Save**.
+1. Under **Network attachments with Virtual network interface**, click on the pencil icon on the row for the **eth0** interface.
+   * Click on **Next**.
+   * Check `vpc-region1-sg` and uncheck the **VPC default** security group.
+   * Click on **Next** a few times and then on **Save**.
 1. Click **Create virtual server**.
 1. Repeat the above steps to provision a **vpc-region1-zone2-vsi** virtual server in the **vpc-region1-zone2-subnet** subnet.
 
@@ -209,6 +210,7 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    - **Interval(sec)**: `15`
    - **Timeout(sec)**: `5`
    - **Max retries**: `2`
+   Click on **Create**.
 5. Click **Attach server** to add server instances to the pool.
    - From the **Subnets** dropdown, select **vpc-region1-zone1-subnet** and **vpc-region1-zone2-subnet**.
    - Select the instances your created and set `80` as the **port**.
@@ -329,7 +331,7 @@ HTTPS encryption requires signed certificates to be accessible from both the {{s
 2. Create an authorization that gives the VPC load balancer service access to the {{site.data.keyword.secrets-manager_short}} instance that contains the SSL certificate.
    - Navigate to [Identity and Access Authorizations](/iam/authorizations).
    - Click **Create** and select **VPC Infrastructure Services** as the source service.
-   - Select **Resources based on selected attributes** and then **Load Balancer for VPC** as the **Resource type**.
+   - Select **Specific resources**, **Resource type** and then **Load Balancer for VPC**.
    - **{{site.data.keyword.secrets-manager_short}}** as the **Target service**.
    - Assign the **Writer** service access role.
    - The target service instance may be **All resources**, or it may be your specific {{site.data.keyword.secrets-manager_short}} instance if desired. Leaver the **All resources** selected for now.
@@ -357,7 +359,7 @@ For more information read through the [Proxying DNS records and global load bala
 ### Alternative 1: Proxy, traffic flows through {{site.data.keyword.cis_short_notm}}
 {: #vpc-multi-region-15}
 
-This first alternative creates a wildcard certificate for custom domain, replace `example.com` with your custom domain name in the steps below, and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities.
+This first alternative creates a wildcard certificate for custom domain, and then proxies it in the {{site.data.keyword.cis_full_notm}} ({{site.data.keyword.cis_short_notm}}) allowing you to take advantage of industry leading security, protection and performance capabilities. Replace `example.com` with your custom domain name in the steps below.
 
    Currently ordering certificates is by using **Let's Encrypt**, you may follow the topic [Supported certificate authorities](/docs/secrets-manager?topic=secrets-manager-prepare-order-certificates#connect-certificate-authority) for updates. Using **Let's Encrypt** requires an ACME account. Follow the steps outlined in the [Connecting third-party certificate authorities](/docs/secrets-manager?topic=secrets-manager-add-certificate-authority&interface=ui) topic to create or register your account. In addition, you are required to add a DNS provider following the steps in the [Connecting DNS providers](/docs/secrets-manager?topic=secrets-manager-add-dns-provider&interface=ui#add-dns-provider-ui) topic. For this tutorial, you must add {{site.data.keyword.cis_short_notm}} as your DNS provider.
    {: tip}
