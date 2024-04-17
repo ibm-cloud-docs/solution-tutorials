@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-02-05"
-lasttested: "2024-02-05"
+lastupdated: "2024-04-17"
+lasttested: "2024-04-17"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-postgresql
@@ -27,7 +27,7 @@ A Virtual Private Cloud (VPC) provides network isolation and security in the {{s
 ![vpc-transit-overview](images/vpc-transit/vpc-transit-overview.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
-This is part two of a two part tutorial. This part will focus on routing all traffic between VPCs through a transit hub firewall-router. A scalable firewall-router using a Network Load Balancer is discussed and implemented. Private DNS is used for both for microservice identification and {{site.data.keyword.cloud_notm}} service instance identification using a virtual private endpoint gateway.
+This is part two of a two part tutorial. This part will focus on routing all traffic between VPCs through a transit hub firewall-router. A scalable firewall-router using a Network Load Balancer is discussed and implemented. Private DNS is used for both for microservice identification and {{site.data.keyword.cloud_notm}} service instance identification using a Virtual Private Endpoint (VPE) gateway.
 
 This tutorial is stand alone so it is not required to execute the steps in [part one](/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1). If you are not familiar with VPC, network IP layout and planning in the {{site.data.keyword.cloud_notm}},
 {{site.data.keyword.tg_short}}, {{site.data.keyword.BluDirectLink}} or asymmetric routing consider reading through part one.
@@ -37,14 +37,14 @@ The hub and spoke model supports a number of different scenarios:
 - The hub can be a central point of traffic firewall-router and routing between enterprise and the cloud.
 - The hub can monitor all or some of the traffic - spoke <-> spoke, spoke <-> transit, or spoke <-> enterprise.
 - The hub can hold the VPN resources that are shared by the spokes.
-- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint gateways](/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes and enterprise
+- The hub can be the repository for shared cloud resources, like databases, accessed through [virtual private endpoint (VPE) gateways](/docs/vpc?topic=vpc-about-vpe) controlled with VPC security groups and subnet access control lists, shared by spokes and enterprise
 
 There is a companion [GitHub repository](https://github.com/IBM-Cloud/vpc-transit){: external} that divides the connectivity into a number of incremental layers. In the tutorial thin layers enable the introduction of bite size challenges and solutions.
 
 The following will be explored:
 - VPC egress and ingress routing.
 - [Virtual Network Functions](/docs/vpc?topic=vpc-about-vnf-ha) in combination with a Network Load Balancers to support a high availability and scalability.
-- Virtual private endpoint gateways.
+- VPE gateways.
 - DNS resolution.
 
 A layered architecture will introduce resources and demonstrate connectivity. Each layer will add additional connectivity and resources. The layers are implemented in Terraform. It will be possible to change parameters, like number of zones, by changing a Terraform variable. A layered approach allows the tutorial to introduce small problems and demonstrate a solution in the context of a complete architecture.
@@ -163,7 +163,7 @@ If continuing from part one make special note of the configuration in the terraf
    ```
    {: codeblock}
 
-4. Apply all of the layers in part one and described above.
+4. Apply all of the layers in part one and described above (even if continuing from part one use this command to re-apply the initial layers with the configuration change `all_firewall = true`).
    ```sh
    ./apply.sh : spokes_egress_tf
    ```
@@ -290,7 +290,7 @@ These routes are also going to correct a similar transit <--> spoke cross zone a
 
 1. Run the test suite.
 
-   **Your expected results are:** all tests **PASSED**, run them in parallel:
+   **Your expected results are:** all tests **PASSED**, run them in parallel (-n 10):
 
    ```sh
    pytest -n 10 -m curl
@@ -391,7 +391,9 @@ The route mode NLB pool must be configured with **Session persistence type** set
 {: #vpc-transit2-dns}
 {: step}
 
-The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP addresses. In this example a separate DNS service is created for the transit and each of the spokes. This approach provides isolation between teams and allows the architecture to spread across different accounts. If a single DNS service in a single account meets your isolation requirements it will be simpler to configure. All zones are configured similarly and below is a diagram for a two zone architecture:
+The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP addresses. In this example a DNS service is created in the cloud. The DNS zone `cloud.example.com` is created and added to the transit VPC. DNS records for the cloud instances are added to cloud.example.com. For example an A record is created for the spoke 0 worker in zone 1 that would have the full name spoke0-z1-worker.cloud.example.com.
+
+Review [about DNS sharing for VPE gateways](/docs/vpc?topic=vpc-hub-spoke-model). The transit VPC is enabled as a DNS hub. Each spoke VPC is configured with DNS resolution binding to the transit VPC hub. Each spoke VPC resolver setting is configured to delegate to the transit VPC custom resolvers. The DNS configuration is available for VPC instances through DHCP.
 
 ![DNS Layout](images/vpc-transit/vpc-transit-dns.svg){: caption="DNS Layout" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -400,24 +402,28 @@ The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP a
 ### DNS Resources
 {: #vpc-transit2-dns-resources}
 
-1. Apply the dns_tf layer to create the DNS services and add a DNS zone for each VPC and an A record for each of the test instances:
+Apply the dns_tf layer to create the DNS services and add a DNS zone for each VPC and an A record for each of the test instances:
    ```sh
    ./apply.sh dns_tf
    ```
    {: codeblock}
 
-2. Open the [Resource list](/resources) in the {{site.data.keyword.cloud_notm}} console. 
-3. Expand the **Networking** section and notice the **DNS Services**. 
-4. Locate and click to open the instance with the suffix **spoke0**. 
-5. Click on the DNS zone with the suffix **spoke0.com**. Notice the A records associated with the test instances that are in the spoke instance. 
-6. Click on the **Custom resolver** tab on the left and click on the resolver with the suffix **spoke0.com**. 
-7. Click on the **Forwarding rules** tab and notice the forwarding rules. 
+Inspect the DNS service created:
+1. Open the [Resource list](/resources) in the {{site.data.keyword.cloud_notm}} console. 
+1. Expand the **Networking** section and notice the **DNS Services**. 
+1. Locate and click to open the instance with the suffix **transit**. 
+1. Click on the DNS zone **cloud.example.com**. Notice the A records associated with each test instance in the transit and spokes.
+1. Click on the **Custom resolver** tab on the left and note that a resolver resides in each of the zones.
+1. Click on the **Forwarding rules** tab and notice the forwarding rules. Notice that `enterprise.example.com` is forwarded to the on premises resolvers.
 
-   Separate DNS instances learn each other's DNS names with forwarding rules. In the diagram there are arrows that indicate a forwarding rule. The associated table are a list of zones that could be resolved by the forwarding rule. Starting on the left notice that the enterprise DNS forwarding rule will look to the transit for the DNS zones: x-transit.com, x-spoke0.com, and x-spoke1.com.
-   The transit DNS instance can resolve x-transit.com and has its own forwarding rules to the enterprise and spokes to resolve the rest. Similarly the spokes rely on the transit DNS instance to resolve the enterprise, transit and the other spokes.
-   {: tip}
-
-7. Optionally explore the other DNS instances and find similarly named DNS zones and A records for the other test instances.
+Inspect the transit and spoke VPCs and notice the DNS configuration:
+1. Open the [VPCs](/vpc-ext/network/vpcs)
+1. Notice the transit VPC has the `DNS-Hub` indicator set.
+1. Notice each spoke VPC has the `DNS-Shared` indicator set.
+1. Click one of the spoke VPCs.
+   1. Scroll down to the **Optional DNS settings**
+   1. Open the **DNS resolver settings** twisty and notice the DNS resolver type is `delegated` and the DNS resolver servers are in the transit VPC 10.1.15.x, 10.2.15.y, 10.2.15.z
+   1. Open the **DNS resolution binding** twisty and notice DNS hub VPC is set to the transit VPC.
 
 ### DNS Testing
 {: #vpc-transit2-dns-testing}
@@ -433,10 +439,12 @@ There is a set of **curl DNS** tests that are available in the pytest script. Th
 {: #vpc-transit2-VPE}
 {: step}
 
-VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe_full}}](/docs/vpc?topic=vpc-about-vpe). The VPEs allow fine grain network access control via standard {{site.data.keyword.vpc_short}} controls:
+VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe_full}}](/docs/vpc?topic=vpc-about-vpe). The VPE gateways allow fine grain network access control via standard {{site.data.keyword.vpc_short}} controls:
 - [{{site.data.keyword.security-groups}}](/docs/vpc?topic=vpc-using-security-groups).
 - [VPC Network Access Control Lists](/docs/vpc?topic=vpc-using-acls).
 - [Routing tables and routes](/docs/vpc?topic=vpc-about-custom-routes).
+
+A DNS zone is created for each VPC VPE gateway. The DNS zone is automatically added to the private DNS service associated with the VPC. Each spoke VPC has a DNS configuration `bound` to the transit VPC. This enables the spoke VPE DNS zone to be shared to the transit VPC.
 
 ![Adding virtual private endpoint gateways](images/vpc-transit/vpc-transit-vpe.svg){: caption="Adding virtual private endpoint gateways" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -448,53 +456,17 @@ VPC allows private access to IBM Cloud Services through [{{site.data.keyword.vpe
    {: codeblock}
 
 1. There is a set of **vpe** and **vpedns** tests that are available in the pytest script. The **vpedns** test will verify that the DNS name of a {{site.data.keyword.databases-for-postgresql}} instance is within the private CIDR block of the enclosing VPC. The **vpe** test will execute a **psql** command to access the {{site.data.keyword.databases-for-postgresql}} instance remotely. Test vpe and vpedns from spoke 0 zone 1:
-   - Expected fail: cross vpc access to the postgresql DNS names.
+   - Expected results all tests pass
 
    ```sh
    pytest -m 'vpe or vpedns' -k spoke0-z1
    ```
    {: codeblock}
 
-   Notice the failing vpedns tests like this one:
-   
-   ```sh
-   FAILED py/test_transit.py::test_vpe_dns_resolution[postgresql spoke0-z1-worker -> transit 720ef5d6-f22d-42ac-a4c9-54b0a71ad5e1.c5kmhkid0ujpmrucb800.private.databases.appdomain.cloud] - AssertionError: 166.9.90.7 not in ['10.1.15.128/26', '10.2.15.128/26'] from 720ef5d6-f22d-42ac-a4c9-54b0a71ad5e1.c5kmhkid0ujpmrucb800.private.databases.appdomain.cloud
-   ```
-
-   These are failing due to DNS resolution. A Postgresql name, &lt;id&gt;.private.databases.appdomain.cloud, should resolve to a VPE. The DNS names can not be resolved by the private DNS resolvers. Adding additional DNS forwarding rules will resolve this issue.
-
-   To make the DNS names for the VPE available outside the DNS owning service it is required to update the DNS forwarding rules.
-   - For enterprise `appdomain.com` will forward to the transit.
-   - For transit the fully qualified DNS name of the {{site.data.keyword.databases-for-postgresql}} instance will be forwarded to the spoke instance that owns the {{site.data.keyword.databases-for-postgresql}} instance.
-   - For spoke_from -> spoke_to access to Postgresql the spoke_from needs the DNS name for the {{site.data.keyword.databases-for-postgresql}} instance. The fully qualified Postgresql name in spoke_from DNS instance will be forwarded to the transit.
-   - The transit forward fully qualified Postgresql names to the corresponding spoke.
-
-   ![Enabling DNS for virtual private endpoints](images/vpc-transit/vpc-transit-dns-vpe.svg){: caption="Enabling DNS for virtual private endpoints" caption-side="bottom"}
-{: style="text-align: center;"}
-
-   The diagram uses **transit-.databases.appdomain.cloud** to identify the database in the transit instead of the fully qualified name like **5c60b3e4-1920-48a3-8e7b-98d5edc6c38a.c7e0lq3d0hm8lbg600bg.private.databases.appdomain.cloud**.
-
-1. Apply the vpe_dns_forwarding_rules_tf layer:
-   ```sh
-   ./apply.sh vpe_dns_forwarding_rules_tf
-   ```
-   {: codeblock}
-
-1. Verify that all VPEs can be accessed from all test instances.
-
-   **Your expected results are:** all **PASSED**
-
-   ```sh
-   pytest -m 'vpe or vpedns'
-   ```
-   {: codeblock}
-
-It can take a few tries for the DNS names to be resolved accurately. So try the test at least three times. All tests should pass except the enterprise to spoke VPE tests:
-
 All tests in this tutorial should now pass.  There are quite a few. Run them in parallel:
 
 ```sh
-pytest -n 10 -m curl
+pytest -n 10
 ```
 {: codeblock}
 
@@ -510,7 +482,7 @@ Some obvious changes to make:
 - Floating IPs were attached to all test instances to support connectivity tests via SSH. This is not required or desirable in production.
 - [Implement context-based restrictions](/docs/account?topic=account-context-restrictions-create&interface=ui) rules to further control access to all resources.
 
-In this tutorial you created a hub VPC and a set of spoke VPCs. You routed all cross VPC traffic through a transit VPC firewall-router. DNS services were created for each VPC. DNS forwarding rules were created between the services for workloads and a virtual private endpoint gateways.
+In this tutorial you created a hub VPC and a set of spoke VPCs. You routed all cross VPC traffic through a transit VPC firewall-router. A DNS service was created for the transit VPC hub and each spoke VPC was DNS bound to the transit VPC.
 
 ## Remove resources
 {: #vpc-transit2-remove-resources}

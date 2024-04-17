@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
-lasttested: "2023-12-28"
+lastupdated: "2024-04-17"
+lasttested: "2024-04-17"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link
@@ -150,7 +150,7 @@ The subnets in the transit and spoke are for the different resource types:
 
    It will look something like:
    ```sh
-   directories: config_tf enterprise_tf transit_tf spokes_tf test_instances_tf transit_spoke_tgw_tf enterprise_link_tf firewall_tf all_firewall_tf spokes_egress_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf vpe_dns_forwarding_rules_tf power_tf
+   directories: config_tf enterprise_tf transit_tf spokes_tf transit_spoke_tgw_tf test_instances_tf test_lbs_tf enterprise_link_tf firewall_tf transit_ingress_tf spokes_egress_tf all_firewall_tf all_firewall_asym_tf dns_tf vpe_transit_tf vpe_spokes_tf power_tf
    ```
 
 1. If you don't already have one, obtain a [Platform API key](/iam/apikeys) and export the API key for use by Terraform:
@@ -160,14 +160,14 @@ The subnets in the transit and spoke are for the different resource types:
    ```
    {: codeblock}
 
-1. In this first step apply in config_tf, enterprise_tf, transit_tf and spokes_tf:
+1. In this first step apply in config_tf, enterprise_tf, transit_tf, spokes_tf and transit_spoke_tgw_tf:
 
    ```sh
-   ./apply.sh : spokes_tf
+   ./apply.sh : transit_spoke_tgw_tf
    ```
    {: codeblock}
 
-The VPCs and subnets have been created.  Open the [Virtual Private Clouds](/vpc-ext/network/vpcs) in the browser. Open the tvpc-transit VPC and note the CIDR blocks for address prefixes and subnets.
+The VPCs and subnets have been created. The transit VPC and spoke VPCs have been connected through a provisioned {{site.data.keyword.tg_short}}.  Open the [Virtual Private Clouds](/vpc-ext/network/vpcs) in the browser. Open the transit VPC and note the CIDR blocks for address prefixes and subnets. Examine the enterprise and spoke VPCs as well. Open [{{site.data.keyword.tg_short}}](/interconnectivity/transit) and click the transit gateway to see the connection between the transit and spoke VPCs.
 
 ## Create test instances
 {: #vpc-transit-create-test-instances}
@@ -200,7 +200,7 @@ Each **pytest** test will SSH to one of the instances and perform a type of conn
 
 1. Run the zone 1 `curl` tests in the suite by using the **-m** (markers) flag. Choose the tests marked with **curl**, **lz1** (left zone 1) and **rz1** (right zone 1).
 
-   **Your expected results are:** Connectivity within a VPC, like transit <-> transit will be **PASSED**. Cross VPC, like transit -> spoke will be **FAILED**.
+   **Your expected results are:** Connectivity within a VPC, like enterprise <-> enterprise will be **PASSED**. Connectivity between transit and spokes will be **Passed**.  Cross VPC from enterprise -> transit or spokes will be **FAILED**.
 
    ```sh
    pytest -m "curl and lz1 and rz1"
@@ -209,48 +209,41 @@ Each **pytest** test will SSH to one of the instances and perform a type of conn
 
    Below is an example output:
    ```sh
-
-   root@ac4518168076:/usr/src/app# pytest -m "curl and lz1 and rz1"
-   ============================================ test session starts =============================================
-   platform linux -- Python 3.12.1, pytest-7.4.3, pluggy-1.3.0 -- /usr/local/bin/python
+   root@ea28970e0897:/usr/src/app# pytest -m "curl and lz1 and rz1"
+   ===================================================== test session starts ======================================================
+   platform linux -- Python 3.12.3, pytest-8.1.1, pluggy-1.4.0 -- /usr/local/bin/python
    cachedir: .pytest_cache
    rootdir: /usr/src/app
    configfile: pytest.ini
    testpaths: py
    plugins: xdist-3.5.0
-   collected 292 items / 276 deselected / 16 selected
+   collected 36 items / 20 deselected / 16 selected
    
-   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-enterprise-z1-worker] PASSED                 [  6%]
-   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-transit-z1-worker] FAILED                    [ 12%]
-   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke0-z1-worker] FAILED                     [ 18%]
-   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke1-z1-worker] FAILED                     [ 25%]
-   py/test_transit.py::test_curl[l-transit-z1-worker -> r-enterprise-z1-worker] FAILED                    [ 31%]
-   py/test_transit.py::test_curl[l-transit-z1-worker -> r-transit-z1-worker] PASSED                       [ 37%]
-   py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke0-z1-worker] FAILED                        [ 43%]
-   py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke1-z1-worker] FAILED                        [ 50%]
-   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-enterprise-z1-worker] FAILED                     [ 56%]
-   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-transit-z1-worker] FAILED                        [ 62%]
-   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-spoke0-z1-worker] PASSED                         [ 68%]
-   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-spoke1-z1-worker] FAILED                         [ 75%]
-   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-enterprise-z1-worker] FAILED                     [ 81%]
-   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-transit-z1-worker] FAILED                        [ 87%]
-   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-spoke0-z1-worker] FAILED                         [ 93%]
-   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-spoke1-z1-worker] PASSED                         [100%]
+   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-enterprise-z1-worker] PASSED                                   [  6%]
+   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-transit-z1-worker] FAILED                                      [ 12%]
+   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke0-z1-worker] FAILED                                       [ 18%]
+   py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke1-z1-worker] FAILED                                       [ 25%]
+   py/test_transit.py::test_curl[l-transit-z1-worker -> r-enterprise-z1-worker] FAILED                                      [ 31%]
+   py/test_transit.py::test_curl[l-transit-z1-worker -> r-transit-z1-worker] PASSED                                         [ 37%]
+   py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke0-z1-worker] PASSED                                          [ 43%]
+   py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke1-z1-worker] PASSED                                          [ 50%]
+   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-enterprise-z1-worker] FAILED                                       [ 56%]
+   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-transit-z1-worker] PASSED                                          [ 62%]
+   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-spoke0-z1-worker] PASSED                                           [ 68%]
+   py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-spoke1-z1-worker] PASSED                                           [ 75%]
+   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-enterprise-z1-worker] FAILED                                       [ 81%]
+   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-transit-z1-worker] PASSED                                          [ 87%]
+   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-spoke0-z1-worker] PASSED                                           [ 93%]
+   py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-spoke1-z1-worker] PASSED                                           [100%]
    
-   ========================================== short test summary info ===========================================
+   =================================================== short test summary info ====================================================
    FAILED py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-transit-z1-worker] - assert False
    FAILED py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke0-z1-worker] - assert False
    FAILED py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke1-z1-worker] - assert False
    FAILED py/test_transit.py::test_curl[l-transit-z1-worker -> r-enterprise-z1-worker] - assert False
-   FAILED py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke0-z1-worker] - assert False
-   FAILED py/test_transit.py::test_curl[l-transit-z1-worker -> r-spoke1-z1-worker] - assert False
    FAILED py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-enterprise-z1-worker] - assert False
-   FAILED py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-transit-z1-worker] - assert False
-   FAILED py/test_transit.py::test_curl[l-spoke0-z1-worker -> r-spoke1-z1-worker] - assert False
    FAILED py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-enterprise-z1-worker] - assert False
-   FAILED py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-transit-z1-worker] - assert False
-   FAILED py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-spoke0-z1-worker] - assert False
-   ========================== 12 failed, 4 passed, 276 deselected in 63.00s (0:01:02) ===========================
+   ========================================= 6 failed, 10 passed, 20 deselected in 38.76s =========================================
    ```
    {: codeblock}
 
@@ -259,38 +252,12 @@ A change to the network configuration can take a couple of test runs for the und
 
 The **r-** and **l-** stand for **r**ight and **l**eft. The middle part of the name identifies enterprise, transit, spoke0, spoke1, ... The z1, z2, ... identify the zone. The test will SSH to the left instance. On the left instance the connectivity to the right instance is attempted. The **test_curl** performs a curl connectivity on the left instance to the right instance.
 
-The test `test_curl[l-enterprise-z1 -> r-transit-z1]`:
+In summary the test `test_curl[l-enterprise-z1 -> r-transit-z1]` will:
 1. SSH to a test instance in enterprise zone 1.
 2. Execute a curl to transit zone 1.
 3. Assert the return string contains the ID of transit zone 1 to mark pass or fail.
 
 The **README.md** in the companion [GitHub Repository](https://github.com/IBM-Cloud/vpc-transit){: external} has more details and the source code.
-
-
-## Connect Transit and Spokes via {{site.data.keyword.tg_short}}
-{: #vpc-transit-transit-to-spokes}
-{: step}
-
-Provision a {{site.data.keyword.tg_full_notm}} to connect the transit <-> spoke(s) and spoke(s) <-> spoke(s).
-
-![Spoke gateway](images/vpc-transit/vpc-transit-spoke-tgw.svg){: caption="Spoke gateway" caption-side="bottom"}
-{: style="text-align: center;"}
-
-1. Apply the layer:
-
-   ```sh
-   ./apply.sh transit_spoke_tgw_tf
-   ```
-   {: codeblock}
-
-1. Run the zone 1 curl tests in the suite my using the **-m** (markers) to select tests marked with **curl**, **lz1** (left zone 1) and **rz1** (right zone 1).
-
-   **Your expected results are:** Connectivity within a VPC, transit <-> spoke(s), and spoke(s) <-> spoke(s) pass. Connectivity to/from enterprise fails.
-
-   ```sh
-   pytest -m "curl and lz1 and rz1"
-   ```
-   {: codeblock}
 
 ## Connect Enterprise to Transit via Direct Link and {{site.data.keyword.tg_short}}
 {: #vpc-transit-enterprise-to-transit}
@@ -438,7 +405,7 @@ Dallas 3|10.3.15.0/24|Delegate
    ```
    {: codeblock}
 
-It is interesting to not how cross zone traffic flows between the enterprise and spokes in the configuration. Enterprise sends traffic to the correct zone and through the firewall-router via ingress routing in the transit VPC. The {{site.data.keyword.tg_short}} has learned that 192.168.0.0/16 is available in all zones and will route to the transit VPC using the advertised enterprise routes in the same zone as the spoke as shown in the diagram below:
+It is interesting to note how cross zone traffic flows between the enterprise and spokes in the configuration. Enterprise sends traffic to the correct zone and through the firewall-router via ingress routing in the transit VPC. The {{site.data.keyword.tg_short}} has learned that 192.168.0.0/16 is available in all zones and will route to the transit VPC using the advertised enterprise routes in the same zone as the spoke as shown in the diagram below:
 
 ![Routing traffic from enterprise <-> spoke using advertised routes](images/vpc-transit/vpc-transit-spoke-egress.svg){: caption="Routing traffic from spoke to transit with an egress routing table" caption-side="bottom"}
 
