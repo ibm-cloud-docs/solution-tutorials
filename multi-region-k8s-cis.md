@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2018, 2023
-lastupdated: "2023-12-21"
-lasttested: "2022-09-14"
+  years: 2018, 2024
+lastupdated: "2024-04-17"
+lasttested: "2024-04-17"
 
 content-type: tutorial
 services: containers, Registry, cis
@@ -26,16 +26,16 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 
 <!--#/istutorial#-->
 
-Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating multiple clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With multiple clusters in different locations, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across multiple zones within a location.
+Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating many clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With many clusters in different locations, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across many zones within a location.
 
-This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications, can be integrated with Kubernetes clusters to support this scenario and to deliver a secure and resilient solution across multiple locations.
+This tutorial highlights how {{site.data.keyword.cis_short}}, a uniform platform to configure and manage the Domain Name System (DNS), Global Load Balancing (GLB), Web Application Firewall (WAF), and protection against Distributed Denial of Service (DDoS) for internet applications, can be integrated with Kubernetes clusters to support this scenario and to deliver a secure and resilient solution across many locations.
 {: shortdesc}
 
 ## Objectives
 {: #multi-region-k8s-cis-objectives}
 
-* Deploy an application on multiple Kubernetes clusters in different locations.
-* Distribute traffic across multiple clusters with a Global Load Balancer.
+* Deploy an application on many Kubernetes clusters in different locations.
+* Distribute traffic across many clusters with a Global Load Balancer.
 * Route users to the closest cluster.
 * Protect your application from security threats.
 * Increase application performance with caching.
@@ -71,7 +71,7 @@ In addition, make sure you:
 {: #multi-region-k8s-cis-2}
 {: step}
 
-This tutorial deploys a Kubernetes application to clusters in multiple locations. You will start with one location, Dallas, and then repeat these steps for London.
+This tutorial deploys a Kubernetes application to clusters in many locations. You will start with one location, Dallas, and then repeat these steps for London.
 
 ### Create a Kubernetes cluster
 {: #multi-region-k8s-cis-3}
@@ -185,7 +185,7 @@ It will be required to have your own DNS domain name and a global load balancer 
    metadata:
     name: <glb-name>
     annotations:
-      kubernetes.io/ingress.class: "public-iks-k8s-nginx"
+      spec.ingressClassName: "public-iks-k8s-nginx"
    spec:
     rules:
     - host: <glb-name>.<your_domain_name>
@@ -308,18 +308,6 @@ A pool is a group of origin servers that traffic is intelligently routed to when
 1. Set **Health Check Region** to `Western Europe`.
 1. Click **Save**.
 
-#### And one pool with both clusters
-{: #multi-region-k8s-cis-16}
-
-1. Select the **Origin pools** tab and click **Create**.
-1. Set **Name** to `All`.
-1. Add two origins:
-   1. one with **Origin Name** set to `us-cluster` and the **Origin Address** set to `<IngressSubdomain>` in Dallas.
-   1. one with **Origin Name** set to `uk-cluster` and the **Origin Address** set to `<IngressSubdomain>` in London.
-1. Set **Health Check Region** to `Eastern North America`.
-1. Set **Health check** to the one created in the previous section.
-1. Click **Save**.
-
 ### Create the Global Load Balancer
 {: #multi-region-k8s-cis-17}
 
@@ -329,14 +317,14 @@ With the origin pools defined, you can complete the configuration of the load ba
 1. Enter a name, `<glb_name>`, under **Name** for the Global Load Balancer. This name will also be part of your universal application URL (`http://<glb_name>.<your_domain_name>`), regardless of the location.
 1. Under **Geo routes**, click **Add route**.
    1. Select **Default** from the **Region** drop down.
-   1. Select the pool **All**.
+   1. Select the pool **US**.
    1. Click **Add**.
 
    Repeat the process to create the following:
 
    | Region               | Origin Pool |
    | :---------------:    | :---------: |
-   |Default               |     All     |
+   |Default               |     US     |
    |Western Europe        |     UK      |
    |Eastern Europe        |     UK      |
    |Northeast Asia        |     UK      |
@@ -345,11 +333,11 @@ With the origin pools defined, you can complete the configuration of the load ba
    |Eastern North America |     US      |
    {: caption="List of Geo routes to create" caption-side="bottom"}
 
-   With this configuration, users in Europe and in Asia will be redirected to the cluster in London, users in US to the Dallas cluster. When a request does not match any of the defined route, it will be redirected to the **All origin pool**.
+   With this configuration, users in Europe and in Asia will be redirected to the cluster in London, users in US to the Dallas cluster. When a request does not match any of the defined route, it will be redirected to the pool(s) in the **Default** region.
 
 1. Click **Create**
 
-At this stage, you have successfully configured a Global Load Balancer with Kubernetes clusters across multiple locations. You can access the GLB URL `http://<glb_name>.<your_domain_name>/hostname` to view your application. Based on your location, you are redirected to the closest cluster or a cluster from the default pool if {{site.data.keyword.cis_short_notm}} was not able to map your IP address to a specific location.
+At this stage, you have successfully configured a Global Load Balancer with Kubernetes clusters across many locations. You can access the GLB URL `http://<glb_name>.<your_domain_name>/hostname` to view your application. Based on your location, you are redirected to the closest cluster or a cluster from the default pool if {{site.data.keyword.cis_short_notm}} was not able to map your IP address to a specific location.
 
 ## Secure the application
 {: #multi-region-k8s-cis-secure_via_CIS}
