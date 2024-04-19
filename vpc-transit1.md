@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-04-17"
-lasttested: "2024-04-17"
+lastupdated: "2024-04-19"
+lasttested: "2024-04-19"
 
 content-type: tutorial
 services: vpc, transit-gateway, direct-link
