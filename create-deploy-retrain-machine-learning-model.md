@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
-lasttested: "2022-12-18"
+lastupdated: "2024-04-19"
+lasttested: "2024-04-19"
 
 content-type: tutorial
 services: cloud-object-storage, ai-openscale
@@ -85,6 +85,11 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
 ![Iris Example](images/solution22-build-machine-learning-model/iris_machinelearning.png){: caption="Iris Example" caption-side="bottom"}
 {: style="text-align: center;"}
 
+A sepal is a part of the flower of angiosperms (flowering plants). Usually green, sepals typically function as protection for the flower in bud, and often as support for the petals when in bloom.
+Petals are modified leaves that surround the reproductive parts of flowers. They are often brightly colored or unusually shaped to attract pollinators.
+https://en.wikipedia.org/wiki/Iris_flower_data_set
+{: note}
+
 **Download** [iris_initial.csv](https://raw.githubusercontent.com/IBM-Cloud/ml-iris-classification/master/data/iris_initial.csv){: external} which consists of 40 instances of each species. Make sure the downloaded file is named `iris_initial.csv`.
 
 1. Select the **Assets** tab if not already selected.
@@ -103,7 +108,7 @@ As mentioned earlier, you will be using the **Iris data set**. The Iris dataset 
    2. Select a **region** same as the {{site.data.keyword.DSX_short}} service and choose a **Lite** plan.
    3. Enter `machine-learning-tutorial` as the **Service name** and select a resource group.
    4. Click **Create** to provision a {{site.data.keyword.pm_short}} service.
-4. Check the checkbox next to the {{site.data.keyword.pm_short}} service and click **Associate service**.
+4. Check the checkbox next to the {{site.data.keyword.pm_short}} service and click **Associate**.
 
 ## Build a machine learning model
 {: #create-deploy-retrain-machine-learning-model-build_model}
@@ -150,8 +155,9 @@ Once the experiment completes running,
 
 In this section, you will deploy the saved model and test the deployed model,
 
+1. Using the breadcrumb navigation, click on **iris_project**.
 1. In the **Assets** tab open **Models** on the left.
-1. In the **Modes** table locate the model and click on the hamburger menu and choose **Promote to space**. _You use deployment spaces to deploy models and manage your deployments._
+1. In the **Models** table locate the model and click on the hamburger menu and choose **Promote to space**. _You use deployment spaces to deploy models and manage your deployments._
    1. Set the **Name** to **iris_deployment_space**.
    2. Select the {{site.data.keyword.cos_short}} storage service used in previous steps in the corresponding drop down.
    3. Select the `machine-learning-tutorial` service in the corresponding drop down.
@@ -198,23 +204,17 @@ Along with the UI, you can also do predictions using the API scoring endpoint by
    ```
    {: pre}
 
-   {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and tons of plug-ins and tools that you can use to manage apps, resources, and infrastructure.
+   {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and many plug-ins and tools that you can use to manage apps, resources, and infrastructure.
    {: tip}
 
-4. To use the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} REST API, you need to obtain an {{site.data.keyword.Bluemix_notm}} Identity and Access Management (IAM) token. Run the below command
-   ```sh
-   ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token
-   ```
-   {: pre}
-
-5. Copy the complete IAM token along with `Bearer` from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
+4. To use the {{site.data.keyword.watson}} {{site.data.keyword.pm_short}} REST API, you need to obtain an {{site.data.keyword.Bluemix_notm}} Identity and Access Management (IAM) token. Run the below command, it will copy the complete IAM token along with `Bearer` from the above response and export it as an `IAM_TOKEN` to be used in the subsequent API requests
    ```sh
    export IAM_TOKEN=$(ibmcloud iam oauth-tokens --output JSON | jq -r .iam_token)
    echo $IAM_TOKEN
    ```
    {: pre}
 
-6. Run the below **cURL** code in the cloud shell to see the prediction results.
+5. Run the below **cURL** code in the cloud shell to see the prediction results.
    ```sh
    curl -X POST \
    --header 'Content-Type: application/json' \
@@ -241,8 +241,8 @@ For ease of understanding, the tutorial concentrates only on improving the quali
 
 In this section, you will create a {{site.data.keyword.aios_short}} service to monitor the health, performance, accuracy and quality metrics of your deployed machine learning model.
 
-1. Create a watsonx.governance [{{site.data.keyword.aios_full_notm}} service](/catalog/services/watsonxgovernance)
-   1. Select a region preferably Dallas. Create the service in the same region where you created the {{site.data.keyword.pm_short}} service.
+1. Create a [{{site.data.keyword.aios_full_notm}} service](/catalog/services/watsonxgovernance) (watsonx.governance)
+   1. Select a region preferably in the same region where you created the {{site.data.keyword.pm_short}} service.
    2. Choose **Lite** plan.
    3. Set the service name to **watson-openscale-tutorial**.
    1. Select a resource group.
