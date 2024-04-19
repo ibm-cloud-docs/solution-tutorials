@@ -169,7 +169,7 @@ If continuing from part one make special note of the configuration in the terraf
    ```
    {: codeblock}
 
-If you were following along in part one some additional ingress routes were added to the transit ingress route table to avoid routing through the firewall-router. In this step these have been removed and the transit ingress route table has just these entries so that all incoming traffic for a zone is routed to the firewall-router in the same zone (your **Next hop** addresses may be different):
+If you were following along in part one some additional ingress routes were added to the transit ingress route table to avoid routing through the firewall-router. In this step these have been removed and the transit ingress route table has just these entries so that all incoming traffic for a zone is routed to the firewall-router in the same zone. Your **Next hop** addresses may be different but will be the IP address of the firewall-router instance:
 
 Zone|Destination|Next hop
 --|--|--
@@ -194,7 +194,7 @@ Dallas 1|10.0.0.0/8|10.1.15.196
 Dallas 2|10.0.0.0/8|10.2.15.196
 Dallas 3|10.0.0.0/8|10.3.15.196
 
-Similarly in the transit VPC route all enterprise and cloud traffic through the firewall-router in the same zone as the originating instance. For example a transit test instance 10.1.15.4 (Dallas 1) attempting to connect with 10.2.0.4 (spoke 0, zone 2) will be sent through the firewall-router in zone 1: 10.1.15.196.
+Similarly in the transit VPC - route all enterprise and cloud traffic through the firewall-router in the same zone as the originating instance. For example a transit test instance 10.1.15.4 (transit zone 1) attempting to connect with 10.2.0.4 (spoke 0, zone 2) will be sent through the firewall-router in zone 1: 10.1.15.196.
 
 Routes in transit's default egress routing table (shown for Dallas/us-south):
 
@@ -393,7 +393,7 @@ The route mode NLB pool must be configured with **Session persistence type** set
 
 The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP addresses. In this example a DNS service is created in the cloud. The DNS zone `cloud.example.com` is created and added to the transit VPC. DNS records for the cloud instances are added to cloud.example.com. For example an A record is created for the spoke 0 worker in zone 1 that would have the full name spoke0-z1-worker.cloud.example.com.
 
-Review [about DNS sharing for VPE gateways](/docs/vpc?topic=vpc-hub-spoke-model). The transit VPC is enabled as a DNS hub. Each spoke VPC is configured with DNS resolution binding to the transit VPC hub. Each spoke VPC resolver setting is configured to delegate to the transit VPC custom resolvers. The DNS configuration is available for VPC instances through DHCP.
+Review [about DNS sharing for VPE gateways](/docs/vpc?topic=vpc-hub-spoke-model). The transit VPC is enabled as a DNS hub. Each spoke VPC is configured with DNS resolution binding to the transit VPC hub. This will configure the spoke VPC DHCP settings for DNS servers to be the transit VPC custom resolvers.
 
 ![DNS Layout](images/vpc-transit/vpc-transit-dns.svg){: caption="DNS Layout" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -402,7 +402,7 @@ Review [about DNS sharing for VPE gateways](/docs/vpc?topic=vpc-hub-spoke-model)
 ### DNS Resources
 {: #vpc-transit2-dns-resources}
 
-Apply the dns_tf layer to create the DNS services and add a DNS zone for each VPC and an A record for each of the test instances:
+Apply the dns_tf layer to create add a cloud DNS zone and an A record for each of the test instances in the transit VPC and spoke VPCs. A DNS instance is also created for the enterprise simulation.
    ```sh
    ./apply.sh dns_tf
    ```
