@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-05"
-lasttested: "2023-09-01"
+lastupdated: "2024-04-22"
+lasttested: "2024-04-22"
 
 content-type: tutorial
 services: codeengine, databases-for-mongodb
@@ -21,7 +21,7 @@ use-case: ApplicationModernization
 {: toc-completion-time="1h"}
 
 <!--##istutorial#-->
-This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
+This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}
 
 <!--#/istutorial#-->
@@ -34,7 +34,7 @@ This tutorial walks you through the creation of a web application using the popu
 
 - Create and run a sample Node.js app locally.
 - Create a managed {{site.data.keyword.databases-for-mongodb}} instance.
-- Deploy the Node.js app to the cloud using {{site.data.keyword.codeengineshort}}.
+- Deploy the Node.js app to the cloud using {{site.data.keyword.codeenginefull}}.
 - Scale runtime CPU and memory resources.
 - Scale database memory and disk resources.
 
@@ -50,17 +50,17 @@ This tutorial walks you through the creation of a web application using the popu
 
 This tutorial requires:
 * {{site.data.keyword.cloud_notm}} CLI - This CLI tool will enable you to interact with {{site.data.keyword.cloud_notm}}.
-   * code-engine/ce plugin (`code-engine/ce`) v 1.29.1 or higher - Plugins extend the capabilities of the {{site.data.keyword.cloud_notm}} CLI with commands specific to a service. The {{site.data.keyword.codeengineshort}} plugin will give you access to {{site.data.keyword.codeengineshort}} commands on {{site.data.keyword.cloud_notm}}.
-   * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`)
+   * code-engine/ce plugin (`code-engine/ce`) for CLI access to {{site.data.keyword.codeengineshort}} resources.
+   * **Optional** {{site.data.keyword.registryshort_notm}} plugin (`container-registry`) for managing container images.
 * `git` to clone source code repository.
-* **Optional**, if you want to test running the app locally you will need to [install Node.js](https://nodejs.org/){: external}.
+* **Optional**, if you want to test running the app locally, you will need to [install Node.js](https://nodejs.org/){: external}.
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
-To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
+To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell){: external} from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-This tutorial demonstrates the use of the command line to create the database, {{site.data.keyword.codeenginefull}} project and application. There are instructions in the companion [GitHub repository](https://github.com/IBM-Cloud/nodejs-MEAN-stack/#provision-with-schematics) to provision with terraform locally on your workstation or even simpler provision with {{site.data.keyword.bpshort}} in just a few clicks.
+This tutorial demonstrates the use of the command line to create the database, {{site.data.keyword.codeenginefull}} project and application. There are instructions in the companion [GitHub repository](https://github.com/IBM-Cloud/nodejs-MEAN-stack/#provision-with-schematics) to provision with Terraform locally on your workstation or even simpler provision with {{site.data.keyword.bpshort}} in just a few clicks.
 
 <!--#/istutorial#-->
 
@@ -115,7 +115,7 @@ In this section, you will clone a MEAN sample code and run the application local
    ```
    {: codeblock}
 
-1. Copy .env.example file to .env.
+1. Copy `.env.example` file to `.env`.
   
    ```sh
    cp .env.example .env
@@ -152,7 +152,7 @@ Using the cloud shell it is possible to open the application by clicking on the 
 {: #mean-stack-4}
 {: step}
 
-{{site.data.keyword.codeenginefull}} is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. In this section, you will create a {{site.data.keyword.codeengineshort}} project and deploy the containerized Node.js app to the project. In the previous section, the source code reads the `.env` that you have locally to obtain the URL and credentials to the MongoDB service. You will create a secret in the project to contain these same keys/values that will be read by the app when it is run.
+[{{site.data.keyword.codeenginefull}}](/docs/codeengine?topic=codeengine-getting-started) is a fully managed, serverless platform that runs your containerized workloads, including web apps, microservices, event-driven functions, or batch jobs. In this section, you will create a {{site.data.keyword.codeengineshort}} project and deploy the containerized Node.js app to the project. In the previous section, the source code reads the `.env` that you have locally to obtain the URL and credentials to the MongoDB service. You will create a secret in the project to contain these same keys/values that will be read by the app when it is run.
 
 We've already built a container image for the application and pushed it to the public {{site.data.keyword.registryfull_notm}}. You will use this pre-built container image to deploy the application.
 {: shortdesc}
@@ -178,7 +178,7 @@ We've already built a container image for the application and pushed it to the p
    ```
    {: codeblock}
 
-4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app){: external} determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this:
+4. Once the code has been pushed, you should be able to view the app in your browser. A host name has been generated that can looks like: `https://mean-stack.<CE_SUBDOMAIN>.ca-tor.codeengine.appdomain.cloud/`. The `CE_SUBDOMAIN` is a variable that is [injected into your project and its value](/docs/codeengine?topic=codeengine-inside-env-vars#inside-env-vars-app) determined during the creation of your project. You can get your application URL from the console dashboard or command line. Once you access the application, it should look like this:
 
    ![Live App](images/solution7/live-app.png){: caption="Live App" caption-side="bottom"}
 
@@ -189,7 +189,7 @@ We've already built a container image for the application and pushed it to the p
 {{site.data.keyword.codeengineshort}} monitors the number of requests in the system and [scales the application](/docs/codeengine?topic=codeengine-app-scale) instances up and down in order to meet the load of incoming requests, including any HTTP connections to your application. If your service needs additional compute resources, or you want to reduce the amount of compute resource allocated you can make these changes in your specific application page.
 {: shortdesc}
 
-1. Navigate to the Code Engine [Projects page](/codeengine/projects).
+1. Navigate to the Code Engine [Projects page](/codeengine/projects){: external}.
 2. Click on the **mean-stack** project created earlier.
 2. Under **Summary**, click on **Applications**. 
 3. Click on the **mean-stack-application** created earlier. 
@@ -207,7 +207,7 @@ We've already built a container image for the application and pushed it to the p
 If your service needs additional storage, or you want to reduce the amount of storage allocated to your service, you can do this by scaling resources.
 {: shortdesc}
 
-1. Access the {{site.data.keyword.databases-for-mongodb}} service instance from the [Resource List](/resources) Under **Databases**.
+1. Access the {{site.data.keyword.databases-for-mongodb}} service instance from the [Resource List](/resources){: external} under **Databases**.
 2. Click on the **Resources** panel.
    ![Scale Resources](images/solution7/MongoDB_ScaleResources.png){: caption="Scale Resources" caption-side="bottom"}
 3. Adjust the **slider** to raise or lower the storage allocated to your {{site.data.keyword.databases-for-mongodb}} database service.
@@ -220,7 +220,7 @@ If your service needs additional storage, or you want to reduce the amount of st
 {: step}
 
 To remove resource, follow these steps:
-1. With the command below, delete the project to delete all it's components (applications, jobs and so on).
+1. With the command below, delete the project to delete all its components (applications, jobs and so on).
    ```sh
    ibmcloud code-engine project delete --name mean-stack
    ```
