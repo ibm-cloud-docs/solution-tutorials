@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-03-25"
+lastupdated: "2024-04-23"
 lasttested: "2024-01-17"
 
 content-type: tutorial
@@ -131,7 +131,7 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](/catalog/services/kms){: external}.
    1. Select a **location**.
-   2. Set the name to `<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-kp`.
+   2. Set the name to `<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-kp`.
    3. Select the **resource group** where to create the service instance and click **Create**.
 2. Under **Keys**, click the **Add** button to create a new root key. It will be used to encrypt the storage bucket and {{site.data.keyword.appid_short}} data.
    1. Set the key type to **Root key**.
@@ -153,7 +153,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 {: #cloud-e2e-security-9}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](/objectstorage/create){: external}.
-   1. Select a **Standard** plan and Set the **name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cos`.
+   1. Select a **Standard** plan and Set the **name** to `<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-cos`.
    2. Use the same **resource group** as for the previous services and click **Create**.
 2. Under **Service credentials**, create a *New credential*.
    1. Set the **name** to `secure-file-storage-cos-acckey`.
@@ -201,7 +201,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](/catalog/services/cloudant){: external} service.
    1. Select **Cloudant** as the offering. 
    2. Select a **Multitenant** environment and a **region** same as the previous services.
-   3. Set the **name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant`.
+   3. Set the **name** to `<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-cloudant`.
    4. Use the same **resource group** as for the previous services.
    5. Set **Authentication method** to **IAM**.
    6. Click **Create**.
@@ -233,7 +233,7 @@ Now, Create an instance of the {{site.data.keyword.appid_short}} service.
 1. Navigate to the [{{site.data.keyword.appid_short}}](/catalog/services/AppID){: external} service creation page.
    1. Use the same **location** used for the previous services.
    2. Select the **Graduated tier** as plan.
-   3. Set the **Service name** to `<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-appid`.
+   3. Set the **Service name** to `<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid`.
    4. Select a **resource group** same as the previous services.
    5. Select the authorized {{site.data.keyword.keymanagementserviceshort}} service **name** and the **root key** from the respective dropdowns.
    6. Click **Create**.
