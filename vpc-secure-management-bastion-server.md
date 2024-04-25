@@ -62,10 +62,10 @@ In this section, you will create and configure a bastion host along with a secur
 {: #vpc-secure-management-bastion-server-create-bastion-subnet}
 
 1. Click **Subnets** under **Network** on the left pane, then click **Create**.
-   - Under **Location**, select a geography, region and zone.
-   - Enter **vpc-secure-bastion-subnet** as name, then select the Virtual Private Cloud you created.
-   - Select the same resource group as for your VPC.
-   - Leave the **Address prefix** as it is and select the **Total IP addresses** as 256.
+   1. Under **Location**, select a geography, region and zone.
+   2. Enter **vpc-secure-bastion-subnet** as name, then select the Virtual Private Cloud you created.
+   3. Select the same resource group as for your VPC.
+   4. Leave the **Address prefix** as it is and select the **Total IP addresses** as 256.
 2. Switch the **Public gateway** to **Attached**.
 
    Attach a public gateway to the subnet to allow all attached resources to communicate with the public internet.
@@ -106,17 +106,17 @@ With the subnet and security group already in place, next, create the bastion vi
 4. Under **Image** click on **Change image**. Use the search field to select **Ubuntu Linux** as your **Operating system**. You can pick any version of the image.
 5. Click **Change profile**, select **Compute** as category and pick **cx2-2x4** (2 vCPUs and 4 GB RAM) as your profile.
 6. Create a new **SSH key**, click **New key**
-   - Enter **vpc-ssh-key** as key name.
-   - Select the same resource group as for your VSI.
-   - Leave the **Region** as is.
-   - Copy the contents of your existing local SSH key and paste it under **Public key**.
-   - Click **Add SSH key**.
+   1. Enter **vpc-ssh-key** as key name.
+   2. Select the same resource group as for your VSI.
+   3. Leave the **Region** as is.
+   4. Copy the contents of your existing local SSH key and paste it under **Public key**.
+   5. Click **Add SSH key**.
 7. Scroll to select the VPC under **Networking**
 8. Make sure that **Virtual network interface** is selected and **vpc-secure-bastion-subnet** is listed as subnet. Click the edit icon for that subnet.
-   - First, under **Network attachment and virtual network interface details**, verify that **vpc-secure-bastion-subnet** is selected. Click **Next**.
-   - For **Network** in the **Security Groups** section, uncheck the default security group and mark **vpc-secure-bastion-sg**. Click **Next**.
-   - In the **IP configuration** dialog leave everything as is and click **Next**.
-   - Last, review everything and finish by clicking **Save**.
+   1. First, under **Network attachment and virtual network interface details**, verify that **vpc-secure-bastion-subnet** is selected. Click **Next**.
+   2. For **Network** in the **Security Groups** section, uncheck the default security group and mark **vpc-secure-bastion-sg**. Click **Next**.
+   3. In the **IP configuration** dialog leave everything as is and click **Next**.
+   4. Last, review everything and finish by clicking **Save**.
 9.  Click **Create virtual server**.
 10.  Once the instance is up and **Running**, click on **vpc-secure-bastion-vsi** and **reserve** a floating IP by clicking on the **Edit** icon under **Network interfaces**, then under **Floating IP address** selecting **Reserve a new floating IP**. Click **Save** to finish.
 
@@ -183,10 +183,10 @@ If you already have virtual server instances in your VPC that you want to connec
 To create a new subnet,
 
 1. Click **Subnets** under **Network** on the left pane, then click **Create**.
-   - Enter **vpc-secure-private-subnet** as name, then select the VPC you created.
-   - Select the same resource group as for your VPC.
-   - Select a **Location**.
-   - Leave the **Address prefix** as it is and select the **Total IP addresses** as 256.
+   1. Enter **vpc-secure-private-subnet** as name, then select the VPC you created.
+   2. Select the same resource group as for your VPC.
+   3. Select a **Location**.
+   4. Leave the **Address prefix** as it is and select the **Total IP addresses** as 256.
 2. Switch the **Public gateway** to **Attached**.
 3. Click **Create subnet** to provision it.
 
@@ -213,10 +213,10 @@ To create a virtual server instance in the newly created subnet:
    5. Click **Change profile**, select **Compute** as category and pick **cx2-2x4** (2 vCPUs and 4 GB RAM) as your profile.
    6. For **SSH keys** pick the SSH key you created earlier for the bastion.
 1. Further down, select the VPC your created. Similar to above, click the edit icon for **vpc-secure-private-subnet** under **Network attachment and virtual network interface details**. 
-   - Next, verify that **vpc-secure-private-subnet** is selected. Click **Next**.
-   - For **Network** in the **Security Groups** section, uncheck the default security group and mark **vpc-secure-private-sg**. Click **Next**.
-   - In the **IP configuration** dialog leave everything as is and click **Next**.
-   - Last, review everything and finish by clicking **Save**.
+   1. Next, verify that **vpc-secure-private-subnet** is selected. Click **Next**.
+   2. For **Network** in the **Security Groups** section, uncheck the default security group and mark **vpc-secure-private-sg**. Click **Next**.
+   3. In the **IP configuration** dialog leave everything as is and click **Next**.
+   4. Last, review everything and finish by clicking **Save**.
 1. Click **Create virtual server**.
 
 ### Add virtual server instance(s) to the maintenance security group
