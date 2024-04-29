@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
-lasttested: "2023-09-12"
+lastupdated: "2024-04-29"
+lasttested: "2024-04-29"
 
 content-type: tutorial
 services: vpc
@@ -138,7 +138,7 @@ To create a virtual server instance in the newly created subnet:
 1. Click on the backend subnet under [**Subnets**](/vpc-ext/network/subnets){: external}.
 1. Click **Attached resources**, under **Attached instances** click **Create**.
 1. To configure the instance:
-   1. Select **Architecture** as **Intel** and the same **Location** as before.
+   1. Pick a **Location** and make sure to later use the same location again.
    2. Set the **name** to **vpc-pubpriv-backend-vsi**.
    3. Select the resource group as earlier.
    4. Under **Image** click on **Change image**. Use the search field to select **Ubuntu Linux** as your **Operating system**. You can pick any version of the image.
@@ -156,10 +156,11 @@ To create a virtual server instance in the newly created subnet:
 
       This will install a simple web server into the instance.
 2. Under **Networking**, select the VPC your created.
-3. Under **Network interfaces**, click on the **Edit** icon
-   1. Select **vpc-pubpriv-backend-subnet** as the subnet.
+3. Make sure that **Virtual network interface** is selected and **vpc-pubpriv-backend-subnet** is listed as subnet. Click the edit icon for that subnet.
+   1. First, under **Network attachment and virtual network interface details**, verify that **vpc-pubpriv-backend-subnet** is selected. Click **Next**.
    2. Uncheck the default security group and check **vpc-pubpriv-backend-sg** and **vpc-secure-maintenance-sg**.
-   3. Click **Save**.
+   3. In the **IP configuration** dialog leave everything as is and click **Next**.
+   4. Last, review everything and finish by clicking **Save**.
 4. Click **Create virtual server instance**.
 
 ## Create a frontend security group and VSI
@@ -185,7 +186,7 @@ To create a virtual server instance in the newly created subnet:
 1. Click on the frontend subnet under [**Subnets**](/vpc-ext/network/subnets){: external}.
 2. Click **Attached resources**, under **Attached instances** click **Create**.
 3. To configure the instance:
-   1. Select **Architecture** as **Intel** and the same **Location** as before.
+   1. Pick a **Location** and make sure to later use the same location again.
    2. Set the **name** to **vpc-pubpriv-frontend-vsi**.
    3. Select the resource group as earlier.
    4. Under **Image** click on **Change image**. Use the search field to select **Ubuntu Linux** as your **Operating system**. You can pick any version of the image.
@@ -203,12 +204,14 @@ To create a virtual server instance in the newly created subnet:
 
       This will install a simple web server into the instance.
 4. Under **Networking**, select the VPC your created.
-5. Under **Network interfaces**, click on the **Edit** icon
-   1. Select **vpc-pubpriv-frontend-subnet** as the subnet.
-   2. Uncheck the default security and group and activate **vpc-pubpriv-frontend-sg** and **vpc-secure-maintenance-sg**.
-   3. Click **Save**.
-   4. Click **Create virtual server instance**.
-6. Once the instance is up and **running**, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network Interfaces** and click on the **Edit** icon. Under **Floating IP address** ,associate a public IP address to your frontend VSI. Save the associated IP Address to a clipboard for future reference.
+5. Make sure that **Virtual network interface** is selected and **vpc-pubpriv-frontend-subnet** is listed as subnet. Click the edit icon for that subnet.
+   1. First, under **Network attachment and virtual network interface details**, verify that **vpc-pubpriv-frontend-subnet** is selected. Click **Next**.
+   2. Uncheck the default security group and check **vpc-pubpriv-frontend-sg** and **vpc-secure-maintenance-sg**.
+   3. In the **IP configuration** dialog leave everything as is and click **Next**.
+   4. Last, review everything and finish by clicking **Save**.
+6. Click **Create virtual server instance**.
+
+Once the instance is up and **running**, select the frontend VSI **vpc-pubpriv-frontend-vsi**, scroll to **Network attachments with Virtual network interface** and select **Edit floating IPs** from the three dot menu for **eth0**. Click **Attach**, then **Reserve new floating IP** and use **vpc-pubpriv-frontend-vsi-ip** as name. After finishing with **Reserve**, you may have to refresh the page to see the newly attached IP.
 
 ## Set up connectivity between frontend and backend
 {: #vpc-public-app-private-backend-setup-connectivity-frontend-backend}
