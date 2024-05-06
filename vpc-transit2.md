@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-04-23"
+lastupdated: "2024-05-06"
 lasttested: "2024-04-23"
 
 content-type: tutorial
@@ -393,7 +393,7 @@ The route mode NLB pool must be configured with **Session persistence type** set
 
 The {{site.data.keyword.dns_full_notm}} service is used to convert names to IP addresses. In this example a DNS service is created in the cloud. The DNS zone `cloud.example.com` is created and the transit VPC is added as a permitted network. DNS records for the cloud instances are added to cloud.example.com. For example an A record is created for the spoke 0 worker in zone 1 that would have the full name spoke0-z1-worker.cloud.example.com.
 
-Review [about DNS sharing for VPE gateways](/docs/vpc?topic=vpc-hub-spoke-model). The transit VPC is enabled as a DNS hub. Each spoke VPC is configured with DNS resolution binding to the transit VPC hub. This will configure the spoke VPC DHCP settings for DNS servers to be the transit VPC custom resolvers.
+Review [about DNS sharing for VPE gateways](/docs/vpc?topic=vpc-vpe-dns-sharing). The transit VPC is enabled as a DNS hub. Each spoke VPC is configured with DNS resolution binding to the transit VPC hub. This will configure the spoke VPC DHCP settings for DNS servers to be the transit VPC custom resolvers.
 
 ![DNS Layout](images/vpc-transit/vpc-transit-dns.svg){: caption="DNS Layout" caption-side="bottom"}
 {: style="text-align: center;"}
