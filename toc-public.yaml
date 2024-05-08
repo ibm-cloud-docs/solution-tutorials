@@ -26,7 +26,6 @@ toc:
                 topics:
                 - scalable-webapp-kubernetes.md
                 - vm-to-containers-and-kubernetes.md
-                - continuous-deployment-to-kubernetes.md
                 - scalable-webapp-openshift.md
                 - openshift-service-mesh.md
                 - openshift-microservices.md
@@ -54,8 +53,6 @@ toc:
             - topicgroup:
                 label: Machine Learning and Analytics
                 topics:
-                - big-data-log-analytics.md
-                - smart-data-lake.md
                 - serverless-github-traffic-analytics.md
                 - create-deploy-retrain-machine-learning-model.md
 
@@ -94,7 +91,6 @@ toc:
                 topics:
                 - vmware-as-a-service-tf.md
                 - vmware-as-a-service-vdc.md
-                - vmware-solutions-shared-getting-started.md
 
         - topicgroup:
             label: By Compute Options
@@ -105,7 +101,6 @@ toc:
                 topics:
                 - scalable-webapp-kubernetes.md
                 - vm-to-containers-and-kubernetes.md
-                - continuous-deployment-to-kubernetes.md
                 - dynamic-content-cdn.md
                 - application-log-analysis.md
                 - multi-region-k8s-cis.md
