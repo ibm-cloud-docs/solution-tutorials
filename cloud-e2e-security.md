@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-04-23"
+lastupdated: "2024-05-08"
 lasttested: "2024-01-17"
 
 content-type: tutorial
@@ -640,7 +640,7 @@ Security is never done. Try the below suggestions to enhance the security of you
 If you want to work with others on resources of this solution tutorial, you can share all or only some of the components. [{{site.data.keyword.cloud_notm}} Identity and Access Management (IAM)](/docs/account?topic=account-iamoverview) enables the authentication of users and service IDs and the access control to cloud resources. For granting access to a resource, you can assign [predefined access roles](/docs/account?topic=account-userroles) to either a user, a service ID, or to an [access group](/docs/account?topic=account-groups). An access group can be created to organize a set of users and service IDs into a single entity. It makes it easy for you to assign access. You can assign a single policy to the group instead of assigning the same access multiple times per individual user or service ID. Thus, you can organize groups for roles on your development project and align security and project management.
 
 You can find information on the individual services and their available IAM access roles here:
-* [{{site.data.keyword.containershort_notm}}](/docs/containers?topic=containers-access-overview). Note that this service also provides examples for [mapping service roles to typical project roles](/docs/containers?topic=containers-users). Or the same for [{{site.data.keyword.openshiftshort}}](/docs/openshift?topic=openshift-access-overview) with [details on user access and roles](/docs/openshift?topic=openshift-users).
+* [{{site.data.keyword.containershort_notm}}](/docs/containers?topic=containers-access-overview) or the same for [{{site.data.keyword.openshiftshort}}](/docs/openshift?topic=openshift-access-overview).
 * [{{site.data.keyword.registryshort_notm}}](/docs/Registry?topic=Registry-iam#iam)
 * [{{site.data.keyword.appid_short}}](/docs/appid?topic=appid-service-access-management)
 * [{{site.data.keyword.cloudant_short_notm}}](/docs/Cloudant?topic=Cloudant-managing-access-for-cloudant)

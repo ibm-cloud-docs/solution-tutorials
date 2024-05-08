@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-02-26"
+lastupdated: "2024-05-08"
 lasttested: "2024-02-05"
 
 content-type: tutorial
@@ -320,7 +320,7 @@ Inspect the transit {{site.data.keyword.tg_short}}:
 ### Why an on-prem address prefix in the transit VPC?
 {: #vpc-transit-power-note-on-the-on-prem-address-prefix}
 
-VPC address prefix routes are advertised through the {{site.data.keyword.tg_short}}. The transit VPC address prefix, `10.1.15.0/24`, is advertised and allows the {{site.data.keyword.powerSysShort}} to route traffic to the resources in the transit VPC. The on-prem address prefix in the transit VPC, `192.168.0.0/24`, allows the {{site.data.keyword.powerSysShort}} to route traffic to this range to the transit VPC. See [policy-based ingress routing integration](/docs/vpc?topic=vpc-vpn-policy-based-ingress-routing-integration-example).
+VPC address prefix routes are advertised through the {{site.data.keyword.tg_short}}. The transit VPC address prefix, `10.1.15.0/24`, is advertised and allows the {{site.data.keyword.powerSysShort}} to route traffic to the resources in the transit VPC. The on-prem address prefix in the transit VPC, `192.168.0.0/24`, allows the {{site.data.keyword.powerSysShort}} to route traffic to this range to the transit VPC. See [policy-based ingress routing integration](/docs/vpc?topic=vpc-advertise-routes-s2s).
 
 ## Understand the Power to enterprise data path through the transit VPC
 {: #vpc-transit-power-power-to-enterpreise-via-transit-vpc}
