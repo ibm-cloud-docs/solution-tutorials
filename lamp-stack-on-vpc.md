@@ -339,6 +339,10 @@ Experience your LAMP stack by installing an application. The following steps ins
 7. Move the WordPress installation to the web server document root.
    ```sh
    ln -s /usr/share/wordpress /var/www/html/wordpress
+   ```
+   {: pre}
+
+   ```sh
    mv /etc/wordpress/config-localhost.php /etc/wordpress/config-default.php
    ```
    {: pre}
