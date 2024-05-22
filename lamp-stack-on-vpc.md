@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-08"
-lasttested: "2023-09-07"
+lastupdated: "2024-05-22"
+lasttested: "2024-05-22"
 
 content-type: tutorial
 services: vpc
@@ -154,7 +154,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {: pre}
 
-1.  Create virtual server instance
+1. Create virtual server instance
    ```sh
    NIC_ID=$(ibmcloud is instance-create vsi-lamp-1 $VPC_ID $(ibmcloud target --output json | jq -r '.region.name')-1 cx2-2x4 $SUBNET_ID --image-id $IMAGE_ID --key-ids $SSHKEY_ID --security-group-ids $SG_ID --json | jq -r '.primary_network_interface.id')
    ```
@@ -172,7 +172,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {: pre}
 
-   You will need to know the Floating IP for accessing the virtual server via your browser. Since it was captured in a shell variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1` in the result. You can also find the server's floating IP address from the web console: https://{DomainName}/vpc-ext/compute/vs.
+   You will need to know the Floating IP for accessing the virtual server via your browser. Since it was captured in a shell variable earlier, you can run the following command to obtain the Floating IP address `echo $FLOATING_IP` or by running `ibmcloud is floating-ips --json` and searching for the name used to create the Floating IP `fip-lamp-1` in the result. You can also find the server's floating IP address from the [web console](https://{DomainName}/vpc-ext/compute/vs).
    {: tip}
 
 ## Install Apache, MySQL, and PHP
@@ -312,8 +312,20 @@ Experience your LAMP stack by installing an application. The following steps ins
 5. Run the following commands substituting your database password for *yourPassword* and leaving the other values unchanged.
    ```sql
    CREATE DATABASE wordpress;
+   ```
+   {: pre}
+
+   ```sql
    CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'yourPassword';
+   ```
+   {: pre}
+
+   ```sql
    GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO 'wordpress'@'localhost';
+   ```
+   {: pre}
+
+   ```sql
    FLUSH PRIVILEGES;
    ```
    {: pre}
@@ -448,6 +460,10 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
 1. Move the MySQL directory from /var to /data
    ```sh
    mkdir /data/lib
+   ```
+   {: pre}
+
+   ```sh
    mv /var/lib/mysql /data/lib/
    ```
    {: pre}
