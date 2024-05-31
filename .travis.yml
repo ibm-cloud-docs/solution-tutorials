@@ -28,7 +28,7 @@ script:
     ./scripts/sync.sh;
     fi
   - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "$BRANCH_WHERE_WE_WORK" ]; then
-    ./scripts/check-all.sh && ./scripts/preview-build.sh && ./scripts/preview-push.sh;
+    ./scripts/check-all.sh;
     fi
 
 notifications:
