@@ -30,9 +30,7 @@ tutorials.forEach((file) => {
   const lines = fs.readFileSync(filename).toString('utf-8').split('\n');
 
   let sectionPrefix = file.replace('.md', '')
-  // log(`Using ${sectionPrefix} as prefix`);
 
-  let foundIssues = false;
   let sectionTitleIndex = 0;
   let sectionIndex = 0;
   while ((sectionTitleIndex = readUntil(lines, sectionTitleIndex,
@@ -43,7 +41,6 @@ tutorials.forEach((file) => {
       log(`No anchor found for section ${section}`);
       lines.splice(sectionTitleIndex + 1, 0, `{: #${sectionPrefix}-${sectionIndex}}`);
       exitCode = 1
-      foundIssues = true
     } else {
       sectionId = anchor.trim()
         .replace('{:', '')
@@ -57,7 +54,6 @@ tutorials.forEach((file) => {
         log(`Duplicate ID ${sectionId}`);
         lines[sectionTitleIndex + 1] = `{: #${sectionPrefix}-${sectionIndex}}`
         exitCode = 1
-        foundIssues = true
       }
       allSectionIds.add(sectionId)
     }

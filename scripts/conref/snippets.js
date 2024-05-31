@@ -3,7 +3,7 @@ const Handlebars = require('handlebars');
 
 const conref = require('./conref.js');
 
-const destinationFolder = process.argv[2] || '.'
+const destinationFile = process.argv[2] || '.'
 
 Handlebars.registerHelper('value', function( aKey, options) {
   return conref.getValue(aKey)
@@ -25,5 +25,4 @@ function writeFile(templateFile, destinationFile) {
   }));
 }
 
-writeFile('./tomd.md.tmpl', `${destinationFolder}/conref-table.md`);
-writeFile('./tovscodesnippets.json.tmpl', `${destinationFolder}/vscodesnippets.json`);
+writeFile('./tovscodesnippets.json.tmpl', destinationFile);
