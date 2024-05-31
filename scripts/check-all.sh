@@ -9,6 +9,7 @@ TESTS=(
   $SCRIPT_DIR/check-a11y.sh
   $SCRIPT_DIR/check-lastmodified.sh
   $SCRIPT_DIR/check-unused-images.sh
+  $SCRIPT_DIR/check-unique-section-ids.sh
   $SCRIPT_DIR/check-conref.sh
   $SCRIPT_DIR/check-wordsmatter.sh
   $SCRIPT_DIR/check-images-with-no-caption.sh

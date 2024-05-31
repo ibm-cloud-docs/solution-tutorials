@@ -1,11 +1,6 @@
 const fs = require('fs');
 const { exit } = require('process');
 
-const rewrite = process.argv[2] == "true"
-if (rewrite) {
-  console.log('Will rewrite');
-}
-
 let directory = '../..'
 let tutorials = fs.readdirSync(directory);
 tutorials = tutorials.filter(file => file.endsWith('.md') && file !== 'README.md' && file !== 'index.md');
@@ -69,15 +64,6 @@ tutorials.forEach((file) => {
 
     sectionTitleIndex = sectionTitleIndex + 1;
     sectionIndex = sectionIndex + 1;
-  }
-
-  // bring back everything together
-  if (foundIssues && rewrite) {
-    log('Rewriting...');
-    fs.writeFileSync(filename, lines.join('\n'));
-  }
-  if (!foundIssues) {
-    // log('File is OK');
   }
 });
 
