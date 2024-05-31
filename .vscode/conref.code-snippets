@@ -1325,6 +1325,19 @@
 		],
     "description": "IBM Cloud&reg; Availability Monitoring"
 	},
+	"arch_framework": {
+	  "scope": "markdown",
+		"prefix": [
+			"Architecture Design Framework",
+			"ibm.Architecture Design Framework",
+			"site.Architecture Design Framework",
+      "{{site.data.keyword.arch_framework}}"
+		],
+		"body": [
+			"{{site.data.keyword.arch_framework}}"
+		],
+    "description": "Architecture Design Framework"
+	},
 	"backup_full": {
 	  "scope": "markdown",
 		"prefix": [
@@ -4367,6 +4380,32 @@
 		],
     "description": "Direct Link on Classic"
 	},
+	"dpx": {
+	  "scope": "markdown",
+		"prefix": [
+			"Data Product Hub",
+			"ibm.Data Product Hub",
+			"site.Data Product Hub",
+      "{{site.data.keyword.dpx}}"
+		],
+		"body": [
+			"{{site.data.keyword.dpx}}"
+		],
+    "description": "Data Product Hub"
+	},
+	"dpx_long": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Data Product Hub",
+			"ibm.IBM&reg; Data Product Hub",
+			"site.IBM&reg; Data Product Hub",
+      "{{site.data.keyword.dpx_long}}"
+		],
+		"body": [
+			"{{site.data.keyword.dpx_long}}"
+		],
+    "description": "IBM&reg; Data Product Hub"
+	},
 	"dns_full": {
 	  "scope": "markdown",
 		"prefix": [
@@ -6238,6 +6277,45 @@
 			"{{site.data.keyword.mandbserv_notm}}"
 		],
     "description": "IBM Cloud Managed Database Server"
+	},
+	"prodname_imas_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Maximo Application Suite&reg;",
+			"ibm.IBM Maximo Application Suite&reg;",
+			"site.IBM Maximo Application Suite&reg;",
+      "{{site.data.keyword.prodname_imas_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.prodname_imas_full}}"
+		],
+    "description": "IBM Maximo Application Suite&reg;"
+	},
+	"prodname_imas_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Maximo Application Suite",
+			"ibm.IBM Maximo Application Suite",
+			"site.IBM Maximo Application Suite",
+      "{{site.data.keyword.prodname_imas_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.prodname_imas_full_notm}}"
+		],
+    "description": "IBM Maximo Application Suite"
+	},
+	"prodname_imas_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"Maximo Application Suite",
+			"ibm.Maximo Application Suite",
+			"site.Maximo Application Suite",
+      "{{site.data.keyword.prodname_imas_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.prodname_imas_short}}"
+		],
+    "description": "Maximo Application Suite"
 	},
 	"mfd_full": {
 	  "scope": "markdown",
@@ -10285,41 +10363,41 @@
 	"vmware-service_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud&reg; for VMware as a Service",
-			"ibm.IBM Cloud&reg; for VMware as a Service",
-			"site.IBM Cloud&reg; for VMware as a Service",
+			"IBM Cloud&reg; for VMware Cloud Foundation as a Service",
+			"ibm.IBM Cloud&reg; for VMware Cloud Foundation as a Service",
+			"site.IBM Cloud&reg; for VMware Cloud Foundation as a Service",
       "{{site.data.keyword.vmware-service_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.vmware-service_full}}"
 		],
-    "description": "IBM Cloud&reg; for VMware as a Service"
+    "description": "IBM Cloud&reg; for VMware Cloud Foundation as a Service"
 	},
 	"vmware-service_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM Cloud for VMware as a Service",
-			"ibm.IBM Cloud for VMware as a Service",
-			"site.IBM Cloud for VMware as a Service",
+			"IBM Cloud for VMware Cloud Foundation as a Service",
+			"ibm.IBM Cloud for VMware Cloud Foundation as a Service",
+			"site.IBM Cloud for VMware Cloud Foundation as a Service",
       "{{site.data.keyword.vmware-service_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.vmware-service_notm}}"
 		],
-    "description": "IBM Cloud for VMware as a Service"
+    "description": "IBM Cloud for VMware Cloud Foundation as a Service"
 	},
 	"vmware-service_short": {
 	  "scope": "markdown",
 		"prefix": [
-			"VMware as a Service",
-			"ibm.VMware as a Service",
-			"site.VMware as a Service",
+			"VMware Cloud Foundation as a Service",
+			"ibm.VMware Cloud Foundation as a Service",
+			"site.VMware Cloud Foundation as a Service",
       "{{site.data.keyword.vmware-service_short}}"
 		],
 		"body": [
 			"{{site.data.keyword.vmware-service_short}}"
 		],
-    "description": "VMware as a Service"
+    "description": "VMware Cloud Foundation as a Service"
 	},
 	"vmwaresolutions_short": {
 	  "scope": "markdown",
@@ -10710,6 +10788,58 @@
 			"{{site.data.keyword.assistant_classic_short}}"
 		],
     "description": "Watson Assistant"
+	},
+	"wxbia_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; watsonx&trade; BI Assistant",
+			"ibm.IBM&reg; watsonx&trade; BI Assistant",
+			"site.IBM&reg; watsonx&trade; BI Assistant",
+      "{{site.data.keyword.wxbia_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.wxbia_full}}"
+		],
+    "description": "IBM&reg; watsonx&trade; BI Assistant"
+	},
+	"wxbia_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM watsonx BI Assistant",
+			"ibm.IBM watsonx BI Assistant",
+			"site.IBM watsonx BI Assistant",
+      "{{site.data.keyword.wxbia_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.wxbia_full_notm}}"
+		],
+    "description": "IBM watsonx BI Assistant"
+	},
+	"wxbia_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"watsonx BI Assistant",
+			"ibm.watsonx BI Assistant",
+			"site.watsonx BI Assistant",
+      "{{site.data.keyword.wxbia_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.wxbia_short}}"
+		],
+    "description": "watsonx BI Assistant"
+	},
+	"wxbia_short_cap": {
+	  "scope": "markdown",
+		"prefix": [
+			"Watsonx BI Assistant",
+			"ibm.Watsonx BI Assistant",
+			"site.Watsonx BI Assistant",
+      "{{site.data.keyword.wxbia_short_cap}}"
+		],
+		"body": [
+			"{{site.data.keyword.wxbia_short_cap}}"
+		],
+    "description": "Watsonx BI Assistant"
 	},
 	"watsondatakits_full": {
 	  "scope": "markdown",
@@ -11361,6 +11491,45 @@
 		],
     "description": "IBM Watson&reg; User Modeling"
 	},
+	"verify_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; Verify",
+			"ibm.IBM&reg; Verify",
+			"site.IBM&reg; Verify",
+      "{{site.data.keyword.verify_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.verify_full}}"
+		],
+    "description": "IBM&reg; Verify"
+	},
+	"verify_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Verify",
+			"ibm.IBM Verify",
+			"site.IBM Verify",
+      "{{site.data.keyword.verify_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.verify_full_notm}}"
+		],
+    "description": "IBM Verify"
+	},
+	"verify_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM Verify",
+			"ibm.IBM Verify",
+			"site.IBM Verify",
+      "{{site.data.keyword.verify_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.verify_short}}"
+		],
+    "description": "IBM Verify"
+	},
 	"iva_full": {
 	  "scope": "markdown",
 		"prefix": [
@@ -11585,54 +11754,158 @@
 	"wca_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM watsonx&reg; Code Assistant",
-			"ibm.IBM watsonx&reg; Code Assistant",
-			"site.IBM watsonx&reg; Code Assistant",
+			"IBM&reg; watsonx&trade; Code Assistant",
+			"ibm.IBM&reg; watsonx&trade; Code Assistant",
+			"site.IBM&reg; watsonx&trade; Code Assistant",
       "{{site.data.keyword.wca_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.wca_full}}"
 		],
-    "description": "IBM watsonx&reg; Code Assistant"
+    "description": "IBM&reg; watsonx&trade; Code Assistant"
 	},
 	"wca_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"watsonx Code Assistant",
-			"ibm.watsonx Code Assistant",
-			"site.watsonx Code Assistant",
+			"IBM watsonx Code Assistant",
+			"ibm.IBM watsonx Code Assistant",
+			"site.IBM watsonx Code Assistant",
       "{{site.data.keyword.wca_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.wca_full_notm}}"
 		],
+    "description": "IBM watsonx Code Assistant"
+	},
+	"wca_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"watsonx Code Assistant",
+			"ibm.watsonx Code Assistant",
+			"site.watsonx Code Assistant",
+      "{{site.data.keyword.wca_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.wca_short}}"
+		],
     "description": "watsonx Code Assistant"
+	},
+	"wca_short_cap": {
+	  "scope": "markdown",
+		"prefix": [
+			"Watsonx Code Assistant",
+			"ibm.Watsonx Code Assistant",
+			"site.Watsonx Code Assistant",
+      "{{site.data.keyword.wca_short_cap}}"
+		],
+		"body": [
+			"{{site.data.keyword.wca_short_cap}}"
+		],
+    "description": "Watsonx Code Assistant"
 	},
 	"wcaal_full": {
 	  "scope": "markdown",
 		"prefix": [
-			"IBM watsonx&reg; Code Assistant for Red Hat Ansible Lightspeed",
-			"ibm.IBM watsonx&reg; Code Assistant for Red Hat Ansible Lightspeed",
-			"site.IBM watsonx&reg; Code Assistant for Red Hat Ansible Lightspeed",
+			"IBM&reg; watsonx&trade; Code Assistant for Red Hat&reg; Ansible&reg; Lightspeed",
+			"ibm.IBM&reg; watsonx&trade; Code Assistant for Red Hat&reg; Ansible&reg; Lightspeed",
+			"site.IBM&reg; watsonx&trade; Code Assistant for Red Hat&reg; Ansible&reg; Lightspeed",
       "{{site.data.keyword.wcaal_full}}"
 		],
 		"body": [
 			"{{site.data.keyword.wcaal_full}}"
 		],
-    "description": "IBM watsonx&reg; Code Assistant for Red Hat Ansible Lightspeed"
+    "description": "IBM&reg; watsonx&trade; Code Assistant for Red Hat&reg; Ansible&reg; Lightspeed"
 	},
 	"wcaal_full_notm": {
 	  "scope": "markdown",
 		"prefix": [
-			"watsonx Code Assistant for Red Hat Ansible Lightspeed",
-			"ibm.watsonx Code Assistant for Red Hat Ansible Lightspeed",
-			"site.watsonx Code Assistant for Red Hat Ansible Lightspeed",
+			"IBM watsonx Code Assistant for Red Hat Ansible Lightspeed",
+			"ibm.IBM watsonx Code Assistant for Red Hat Ansible Lightspeed",
+			"site.IBM watsonx Code Assistant for Red Hat Ansible Lightspeed",
       "{{site.data.keyword.wcaal_full_notm}}"
 		],
 		"body": [
 			"{{site.data.keyword.wcaal_full_notm}}"
 		],
+    "description": "IBM watsonx Code Assistant for Red Hat Ansible Lightspeed"
+	},
+	"wcaal_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"watsonx Code Assistant for Red Hat Ansible Lightspeed",
+			"ibm.watsonx Code Assistant for Red Hat Ansible Lightspeed",
+			"site.watsonx Code Assistant for Red Hat Ansible Lightspeed",
+      "{{site.data.keyword.wcaal_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.wcaal_short}}"
+		],
     "description": "watsonx Code Assistant for Red Hat Ansible Lightspeed"
+	},
+	"wcaal_short_cap": {
+	  "scope": "markdown",
+		"prefix": [
+			"Watsonx Code Assistant for Red Hat Ansible Lightspeed",
+			"ibm.Watsonx Code Assistant for Red Hat Ansible Lightspeed",
+			"site.Watsonx Code Assistant for Red Hat Ansible Lightspeed",
+      "{{site.data.keyword.wcaal_short_cap}}"
+		],
+		"body": [
+			"{{site.data.keyword.wcaal_short_cap}}"
+		],
+    "description": "Watsonx Code Assistant for Red Hat Ansible Lightspeed"
+	},
+	"wcaz_full": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM&reg; watsonx&trade; Code Assistant for Z",
+			"ibm.IBM&reg; watsonx&trade; Code Assistant for Z",
+			"site.IBM&reg; watsonx&trade; Code Assistant for Z",
+      "{{site.data.keyword.wcaz_full}}"
+		],
+		"body": [
+			"{{site.data.keyword.wcaz_full}}"
+		],
+    "description": "IBM&reg; watsonx&trade; Code Assistant for Z"
+	},
+	"wcaz_full_notm": {
+	  "scope": "markdown",
+		"prefix": [
+			"IBM watsonx Code Assistant for Z",
+			"ibm.IBM watsonx Code Assistant for Z",
+			"site.IBM watsonx Code Assistant for Z",
+      "{{site.data.keyword.wcaz_full_notm}}"
+		],
+		"body": [
+			"{{site.data.keyword.wcaz_full_notm}}"
+		],
+    "description": "IBM watsonx Code Assistant for Z"
+	},
+	"wcaz_short": {
+	  "scope": "markdown",
+		"prefix": [
+			"watsonx Code Assistant for Z",
+			"ibm.watsonx Code Assistant for Z",
+			"site.watsonx Code Assistant for Z",
+      "{{site.data.keyword.wcaz_short}}"
+		],
+		"body": [
+			"{{site.data.keyword.wcaz_short}}"
+		],
+    "description": "watsonx Code Assistant for Z"
+	},
+	"wcaz_short_cap": {
+	  "scope": "markdown",
+		"prefix": [
+			"Watsonx Code Assistant for Z",
+			"ibm.Watsonx Code Assistant for Z",
+			"site.Watsonx Code Assistant for Z",
+      "{{site.data.keyword.wcaz_short_cap}}"
+		],
+		"body": [
+			"{{site.data.keyword.wcaz_short_cap}}"
+		],
+    "description": "Watsonx Code Assistant for Z"
 	},
 	"wearablefitness": {
 	  "scope": "markdown",
