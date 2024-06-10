@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-03-04"
-lasttested: "2023-09-14"
+lastupdated: "2024-06-10"
+lasttested: "2024-06-10"
 
 content-type: tutorial
 services: containers, Registry, secrets-manager
