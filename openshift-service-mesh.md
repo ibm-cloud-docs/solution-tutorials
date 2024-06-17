@@ -64,7 +64,7 @@ To avoid the installation of these tools, you can use the [{{site.data.keyword.c
 {: note}
 
 
-<!--This section is identical in all openshift tutorials, copy/paste any changes-->
+
 ## Create a {{site.data.keyword.openshiftshort}} cluster
 {: #openshift-service-mesh-create_openshift_cluster}
 {: step}
@@ -516,7 +516,7 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 1. Navigate to [OpenShift clusters](/kubernetes/clusters?platformType=openshift) page.
 2. Click on the action menu next to `<your-initials>-myopenshiftcluster` and select **Delete**.
 3. Select **Delete the persistent storage used by the cluster** and enter the name of the cluster to confirm.
-4. Click on **Delete**<!-- markdownlint-disable-line -->
+4. Click on **Delete**
 
 ## Related content
 {: #openshift-service-mesh-0}

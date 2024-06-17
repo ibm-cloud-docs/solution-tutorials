@@ -449,7 +449,7 @@ ibmcloud ce application create --name frontend-fromsource --build-source . --env
    
 2. Navigate to [Resource List](/resources/){: external}, then delete the services you created:
    * {{site.data.keyword.cos_full}}
-   * {{site.data.keyword.nlufull}}<!-- markdownlint-disable-line -->
+   * {{site.data.keyword.nlufull}}
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}

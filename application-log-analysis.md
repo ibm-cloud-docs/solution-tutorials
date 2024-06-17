@@ -394,7 +394,7 @@ To add another panel:
 {: #application-log-analysis-remove_resource}
 {: step}
 
-- If you created them as part of this tutorial, remove the logging and monitoring instances from [Observability](/observe) page.<!-- markdownlint-disable-line -->
+- If you created them as part of this tutorial, remove the logging and monitoring instances from [Observability](/observe) page.
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
    ```sh
    ibmcloud ks cluster rm --cluster $MYCLUSTER -f --force-delete-storage

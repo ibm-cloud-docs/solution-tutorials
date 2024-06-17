@@ -32,8 +32,8 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create Kubernetes cluster
 ## Objectives
 {: #scalable-webapp-openshift-objectives}
 
-* Deploy a web application to the {{site.data.keyword.openshiftlong_notm}} cluster.<!-- markdownlint-disable-line -->
-* Bind a custom domain.<!-- markdownlint-disable-line -->
+* Deploy a web application to the {{site.data.keyword.openshiftlong_notm}} cluster.
+* Bind a custom domain.
 * Monitor the logs and health of the cluster.
 * Scale {{site.data.keyword.openshiftshort}} pods.
 
@@ -68,7 +68,7 @@ To avoid the installation of these tools, you can use the [{{site.data.keyword.c
 In addition, make sure you [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup).
 
 
-<!--This section is identical in all openshift tutorials, copy/paste any changes-->
+
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #scalable-webapp-openshift-create_openshift_cluster}
 {: step}

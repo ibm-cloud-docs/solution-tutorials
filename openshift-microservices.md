@@ -30,7 +30,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 ## Objectives
 {: #openshift-microservices-objectives}
 
-* Deploy a {{site.data.keyword.openshiftshort}} cluster<!-- markdownlint-disable-line -->
+* Deploy a {{site.data.keyword.openshiftshort}} cluster
 * Deploy a microservice
 * Scale the microservice
 * Use an operator to deploy {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
@@ -67,7 +67,7 @@ To avoid the installation of these tools, you can use the [{{site.data.keyword.c
 {: note}
 
 
-<!--This section is identical in all openshift tutorials, copy/paste any changes-->
+
 ## Create a {{site.data.keyword.openshiftshort}} cluster
 {: #openshift-microservices-create_openshift_cluster}
 {: step}

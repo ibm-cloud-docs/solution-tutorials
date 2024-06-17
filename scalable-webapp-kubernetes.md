@@ -32,8 +32,8 @@ Containers are a standard way to package apps and all their dependencies so that
 ## Objectives
 {: #scalable-webapp-kubernetes-objectives}
 
-* Deploy a web application to the Kubernetes cluster.<!-- markdownlint-disable-line -->
-* Bind a custom subdomain.<!-- markdownlint-disable-line -->
+* Deploy a web application to the Kubernetes cluster.
+* Bind a custom subdomain.
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
@@ -414,7 +414,7 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    ```
    {: pre}
 
-9. Access your application at `https://$MYAPP.$CUSTOM_DOMAIN/`.<!-- markdownlint-disable-line -->
+9. Access your application at `https://$MYAPP.$CUSTOM_DOMAIN/`.
    ```sh
    curl -I https://$MYAPP.$CUSTOM_DOMAIN
    ```
@@ -501,7 +501,7 @@ Once the autoscaler is successfully created, you should see
    ```
    {: pre}
 
-* Delete the cluster.<!-- markdownlint-disable-line -->
+* Delete the cluster.
 
 ## Related content
 {: #scalable-webapp-kubernetes-20}
