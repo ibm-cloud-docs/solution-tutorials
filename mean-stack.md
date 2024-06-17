@@ -20,11 +20,9 @@ use-case: ApplicationModernization
 {: toc-services="codeengine, databases-for-mongodb"}
 {: toc-completion-time="1h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through the creation of a web application using the popular MEAN stack. It is composed of a **M**ongoDB, **E**xpress web framework, **A**ngular front end framework and a **N**ode.js runtime. You will learn how to run a MEAN sample app locally, create and use a managed database-as-a-service (DBasS), deploy the app to {{site.data.keyword.cloud_notm}} and scale both the runtime and database resources.
 {: shortdesc}
@@ -44,7 +42,6 @@ This tutorial walks you through the creation of a web application using the popu
 1. The user accesses the application using a web browser.
 2. The Node.js app running in {{site.data.keyword.codeengineshort}} accesses the {{site.data.keyword.databases-for-mongodb}} database to fetch data.
 
-<!--##istutorial#-->
 ## Before you begin
 {: #mean-stack-prereqs}
 
@@ -62,7 +59,6 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 This tutorial demonstrates the use of the command line to create the database, {{site.data.keyword.codeenginefull}} project and application. There are instructions in the companion [GitHub repository](https://github.com/IBM-Cloud/nodejs-MEAN-stack/#provision-with-schematics) to provision with Terraform locally on your workstation or even simpler provision with {{site.data.keyword.bpshort}} in just a few clicks.
 
-<!--#/istutorial#-->
 
 ## Create an instance of MongoDB database in the cloud
 {: #mean-stack-2}

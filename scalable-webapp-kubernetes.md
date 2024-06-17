@@ -20,13 +20,11 @@ use-case: ApplicationModernization, Cybersecurity, Containers
 {: toc-services="containers, Registry, secrets-manager"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
-This tutorial walks you through how to run a web application locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](/kubernetes/catalog/about). As an optional step you can build a container image and push the image to a private registry. Additionally, you will learn how to <!--##istutorial#-->bind a custom subdomain,<!--#/istutorial#--> monitor the health of the environment, and scale the application.
+This tutorial walks you through how to run a web application locally in a container, and then deploy it to a Kubernetes cluster created with [{{site.data.keyword.containershort_notm}}](/kubernetes/catalog/about). As an optional step you can build a container image and push the image to a private registry. Additionally, you will learn how to bind a custom subdomain, monitor the health of the environment, and scale the application.
 {: shortdesc}
 
 Containers are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
@@ -35,9 +33,7 @@ Containers are a standard way to package apps and all their dependencies so that
 {: #scalable-webapp-kubernetes-objectives}
 
 * Deploy a web application to the Kubernetes cluster.<!-- markdownlint-disable-line -->
-<!--##istutorial#-->
 * Bind a custom subdomain.<!-- markdownlint-disable-line -->
-<!--#/istutorial#-->
 * Monitor the logs and health of the cluster.
 * Scale Kubernetes pods.
 
@@ -50,7 +46,6 @@ Containers are a standard way to package apps and all their dependencies so that
 1. The application is deployed to a Kubernetes cluster.
 1. Users access the application.
 
-<!--##istutorial#-->
 ## Before you begin
 {: #scalable-webapp-kubernetes-prereqs}
 
@@ -119,19 +114,7 @@ The {{site.data.keyword.containerlong_notm}} is a managed offering to create you
       5. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
       6. Enter a **Cluster name** and select the **Resource group** to create these resources under.
       7. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-
-## Start a new {{site.data.keyword.cloud-shell_notm}}
-{: #scalable-webapp-kubernetes-3}
-{: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
-
--->
-<!--#/isworkshop#-->
 
 ## Clone a sample application
 {: #scalable-webapp-kubernetes-clone_application}
@@ -217,7 +200,7 @@ Note: If you want to build and push the application to your own container regist
 
 1. Install the Helm chart:
    ```sh
-   helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> install $MYAPP --namespace $KUBERNETES_NAMESPACE . --set image.repository=icr.io/solution-tutorials/tutorial-scalable-webapp-kubernetes
+   helm install $MYAPP --namespace $KUBERNETES_NAMESPACE . --set image.repository=icr.io/solution-tutorials/tutorial-scalable-webapp-kubernetes
    ```
    {: pre}
 
@@ -298,7 +281,6 @@ Use Ingress to set up the cluster inbound connection to the service.
    ```
    {: pre}
 
-<!--##istutorial#-->
 ## Use your own custom subdomain
 {: #scalable-webapp-kubernetes-custom_domain}
 {: step}
@@ -438,7 +420,6 @@ In order to access the {{site.data.keyword.secrets-manager_short}} service insta
    ```
    {: pre}
 
-<!--#/istutorial#-->
 
 ## Monitor application health
 {: #scalable-webapp-kubernetes-monitor_application}
@@ -488,7 +469,6 @@ Once the autoscaler is successfully created, you should see
    {: pre}
 
 * Delete the resources applied:
-   <!--##istutorial#-->
    ```sh
    kubectl delete -f ingress-customdomain-https.yaml
    kubectl delete -f ingress-customdomain-http.yaml
@@ -496,23 +476,12 @@ Once the autoscaler is successfully created, you should see
    ```
    {: pre}
 
-   <!--#/istutorial#-->
-   <!--##isworkshop#-->
-   <!--
-   ```sh
-   kubectl delete -f ingress-ibmsubdomain.yaml
-   ```
-   {: pre}
-
-   -->
-   <!--#/isworkshop#-->
 * Delete the Kubernetes artifacts created for this application:
    ```sh
-   helm<!--##isworkshop#--><!--3--><!--#/isworkshop#--> uninstall $MYAPP --namespace $KUBERNETES_NAMESPACE
+   helm uninstall $MYAPP --namespace $KUBERNETES_NAMESPACE
    ```
    {: pre}
 
-<!--##istutorial#-->  
 * Delete the Kubernetes secret:
    ```sh
    kubectl -n $KUBERNETES_NAMESPACE delete secret kubernetesnodeapp-api-key 
@@ -533,7 +502,6 @@ Once the autoscaler is successfully created, you should see
    {: pre}
 
 * Delete the cluster.<!-- markdownlint-disable-line -->
-<!--#/istutorial#-->
 
 ## Related content
 {: #scalable-webapp-kubernetes-20}

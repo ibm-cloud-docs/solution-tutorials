@@ -19,11 +19,9 @@ use-case: AIAndML, ApplicationModernization
 {: toc-services="codeengine, containers, cloud-object-storage, natural-language-understanding"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 In this tutorial, you will learn about {{site.data.keyword.codeenginefull}} by deploying a text analysis with {{site.data.keyword.nlushort}} application. You will create a {{site.data.keyword.codeengineshort}} project, select the project and deploy {{site.data.keyword.codeengineshort}} entities - applications and jobs - to the project. You will learn how to bind {{site.data.keyword.cloud_notm}} services to your {{site.data.keyword.codeengineshort}} entities. Moreover, you will also understand the autoscaling capability of {{site.data.keyword.codeengineshort}} where instances are scaled up or down (to zero) based on incoming workload.
 {: shortdesc}
@@ -51,7 +49,6 @@ The platform is designed to address the needs of developers who just want their 
 You can use the [{{site.data.keyword.codeengineshort}} console](/codeengine/overview){: external} to view your progress while working through this tutorial.
 {: tip}
 
-<!--##istutorial#-->
 ## Before you begin
 {: #text-analysis-code-engine-prereqs}
 
@@ -69,18 +66,7 @@ To avoid the installation of these tools, this tutorial will use the [{{site.dat
 
 From the [{{site.data.keyword.cloud_notm}}](/){: external} console in your browser click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell){: external}.
 
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-## Start a new {{site.data.keyword.cloud-shell_notm}}
-{: #text-analysis-code-engine-shell}
-{: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
-
--->
-<!--#/isworkshop#-->
 
 ## Create an {{site.data.keyword.codeenginefull_notm}} project
 {: #text-analysis-code-engine-create_code_engine_project}
@@ -90,7 +76,6 @@ In this section, you will create a {{site.data.keyword.codeengineshort}} project
 
 Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. For more details read the [documentation on {{site.data.keyword.codeengineshort}} projects](/docs/codeengine?topic=codeengine-manage-project).
 
-<!--##istutorial#-->
 1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/codeengine/overview){: external} page.
 2. On the left pane, click on **Projects** and then click **Create**.
    - Select a location.
@@ -117,24 +102,7 @@ Putting entities into a single project enables you to manage access control more
    ```
    {: pre}
 
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-1. Target the resource group where to create the project:
-   ```
-   ibmcloud target -g <ASSIGNED_RESOURCE_GROUP_NAME>
-   ```
-   {: pre}
-
-1. Create a new project with a unique name like `<your-initials>-ceproject`:
-   ```
-   ibmcloud code-engine project create --name $PROJECT_NAME
-   ```
-   {: pre}
-
--->
-<!--#/isworkshop#-->
 
 ## Deploy the frontend and backend apps as {{site.data.keyword.codeengineshort}} applications
 {: #text-analysis-code-engine-deploy_app}
@@ -155,11 +123,9 @@ We've already built images for the two applications and pushed them to the publi
 
    After running this command, you should see some output with a URL to your application. It should look something like: `https://frontend.305atabsd0w.us-south.codeengine.appdomain.cloud`. Copy or make note of this application URL for the next step. With just these two pieces of data (application name and image name), {{site.data.keyword.codeengineshort}} has deployed your application and will handle the complexities of configuring it and managing it for you.
 
-   <!--##istutorial#-->
    The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis){: external} for your reference. If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
    {: tip}
    
-   <!--#/istutorial#-->
 
 2. Open the application URL from the previous step in a browser to see an output similar to this:
    ![Frontend is running](images/solution54-code-engine/frontend-501.png){: caption="Frontend is running" caption-side="bottom"}
@@ -311,7 +277,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 
 5. Create an instance of [{{site.data.keyword.nlushort}}](/catalog/services/natural-language-understanding){: external}
    1. Select a location and select **Lite** plan.
-   2. Set **Service name** to **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->code-engine-nlu** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
+   2. Set **Service name** to **code-engine-nlu** and select the resource group where you created the {{site.data.keyword.codeengineshort}} project.
    3. Read the license agreement and then check **I have read and agree to the following license agreements:**.
    4. Click on **Create**.
    5. Capture the service name in a shell variable:
@@ -320,40 +286,6 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
       ```
       {: pre}
 
-<!--##isworkshop#-->
-<!--
-### Create a Service ID
-{: #text-analysis-code-engine-create_service_id}
-
-To give your {{site.data.keyword.codeengineshort}} project access to the services you provisioned, you will create a [service ID](/iam/serviceids) and configure it with the right access policies.
-
-1. Go the page to manage [Service IDs](/iam/serviceids).
-1. **Create** a new service ID with a unique name, e.g `<PROJECT-NAME>-serviceId`.
-1. Click **Details** and make note of the `ID` of the Service ID. You will need it later.
-1. Select the **Access policies** tab.
-1. Click **Assign access**
-1. Add one access policy for the {{site.data.keyword.cos_short}} service:
-   1. Select **IAM services**.
-   2. Select **Cloud Object Storage** from the list.
-   3. Select **Services based on attribute**, then **Service instance**, then pick the instance you previously created from the list.
-   4. Check **Operator** and **Writer** as roles.
-   5. Add the policy.
-1. Add another policy for the {{site.data.keyword.nlushort}} service:
-   1. Select **IAM services**.
-   2. Select **{{site.data.keyword.nlushort}}** from the list.
-   3. Select **Services based on attribute**, then **Service instance**, then pick the instance you previously created from the list.
-   4. Check **Operator** and **Writer** as roles.
-   5. Add the policy.
-1. Click **Assign**.
-
-Now that you have configured the service ID, you need to update the {{site.data.keyword.codeengineshort}} project so that this service ID will be used when binding services.
-
-1. From the command line, update the project:
-   ```
-   ibmcloud code-engine project update --binding-service-id <ID-of-the-Service-ID-retrieved-from-Details-panel>
-   ```
--->
-<!--#/isworkshop#-->
 
 ### Bind the {{site.data.keyword.cos_short}} service to the backend application
 {: #text-analysis-code-engine-9}
@@ -485,7 +417,6 @@ Instead of running the job manually, you can automate the job run by creating an
 
 5. Now, just upload new files and hit the **refresh** button to see the results. Going forward, you don't have to resubmit the **jobrun** as it is taken care by the subscription.
 
-<!--##istutorial#-->
 ## Optional: Build and push the container images to {{site.data.keyword.registrylong_notm}}
 {: #text-analysis-code-engine-private-registry}
 {: step}
@@ -505,7 +436,6 @@ ibmcloud ce application create --name frontend-fromsource --build-source . --env
 ```
 {: pre}
 
-<!--#/istutorial#-->
 
 ## Remove resources
 {: #text-analysis-code-engine-cleanup}
@@ -520,11 +450,6 @@ ibmcloud ce application create --name frontend-fromsource --build-source . --env
 2. Navigate to [Resource List](/resources/){: external}, then delete the services you created:
    * {{site.data.keyword.cos_full}}
    * {{site.data.keyword.nlufull}}<!-- markdownlint-disable-line -->
-<!--##isworkshop#-->
-<!--
-1. [Delete the Service ID](/iam/serviceids) used for the project.
--->
-<!--#/isworkshop#-->
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}

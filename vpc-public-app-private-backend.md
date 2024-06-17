@@ -19,11 +19,9 @@ use-case: ApplicationModernization, Cybersecurity, VirtualPrivateCloud
 {: toc-services="vpc"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through creating your own {{site.data.keyword.vpc_full}} (VPC) with multiple subnets and a virtual server instance (VSI) in each subnet. A VPC is your own, private cloud on shared cloud infrastructure with logical isolation from other virtual networks.
 {: shortdesc}

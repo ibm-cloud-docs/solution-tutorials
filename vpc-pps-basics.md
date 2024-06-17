@@ -22,11 +22,9 @@ use-case: VirtualPrivateCloud, CloudNetworkSecurity, NetworkSecurity
 The beta release of IBM Cloud Private Path services is only available to allowlisted users. Contact your IBM Support representative if you are interested in getting early access to this beta offering.
 {: beta}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through the steps to set up a [{{site.data.keyword.pp_short}}](/docs/vpc?topic=vpc-private-path-service-intro) between a provider and a set of consumers. With {{site.data.keyword.pp_short}}, consumers access the application or service implemented by the provider through the IBM backbone without traversing the internet.
 {: shortdesc}

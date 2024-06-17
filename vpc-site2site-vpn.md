@@ -19,11 +19,9 @@ use-case: Cybersecurity, VirtualPrivateCloud
 {: toc-services="schematics, vpc, cloud-object-storage, databases-for-postgresql, dns-svcs"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial will incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 IBM offers a number of ways to securely extend an on-premises computer network with resources in the {{site.data.keyword.cloud_notm}}. This allows you to benefit from the elasticity of provisioning cloud resources when you need them and removing them when no longer required. Moreover, you can easily and securely connect your on-premises capabilities to the {{site.data.keyword.cloud_notm}} services.
 
@@ -61,9 +59,7 @@ This tutorial requires:
 * `git` to optionally clone source code repository,
 * `Terraform CLI` to optionally run Terraform on your desktop instead of the Schematics service.
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-<!--#/istutorial#-->
 
 The on-premises data center in this tutorial will be simulated using a VSI within a VPC.
 

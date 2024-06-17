@@ -21,11 +21,9 @@ use-case: ApplicationModernization, Vmware
 {: toc-services="vmware-service"}
 {: toc-completion-time="1h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} single-tenant or multitenant virtual data center (VDC) after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [a {{site.data.keyword.vmware-service_short}} instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a VDC](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned. This tutorial uses an example Terraform template, which can be customized and modified for your use case, if needed.
 {: shortdesc}
@@ -80,9 +78,7 @@ This tutorial requires:
 * [`jq` to query JSON files](https://stedolan.github.io/jq/){: external}, and
 * [Terraform](https://www.terraform.io){: external} with [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} to use Infrastructure as Code to provision resources.
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-<!--#/istutorial#-->
 
 
 ## Clone examples repo

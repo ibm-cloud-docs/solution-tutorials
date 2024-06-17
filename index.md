@@ -8,17 +8,9 @@ lasttested: "2023-10-10"
 ---
 {{site.data.keyword.attribute-definition-list}}
 
-<!--##istutorial#-->
 # Getting started with solution tutorials
 {: #tutorials}
 
-<!--#/istutorial#-->
-<!--##isworkshop#-->
-<!--
-# Getting started with workshops<!-- markdownlint-disable-line -->
-{: #tutorials}<!-- markdownlint-disable-line -->
--->
-<!--#/isworkshop#-->
 
 Solution tutorials provide step-by-step instructions on how to use IBM Cloud to implement common patterns based on best practices and proven technologies.
 

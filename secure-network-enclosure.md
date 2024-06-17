@@ -22,11 +22,9 @@ use-case: Cybersecurity, CloudInfrastructure
 This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [Direct Link](/docs/vpc?topic=vpc-interconnectivity), [virtual server instances](/docs/vpc?topic=vpc-vsi_best_practices), [security groups](/docs/vpc?topic=vpc-using-security-groups), [VPN](/docs/vpc?topic=vpc-using-vpn) and [flow logs](/docs/vpc?topic=vpc-flow-logs)
 {: note}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 The need for isolated and secure private network environments is central to the IaaS application deployment model on public cloud. Firewalls, VLANs, routing, and VPNs are all necessary components in the creation of isolated private environments. This isolation enables virtual machines and bare-metal servers to be securely deployed in complex multi-tier application topologies while proving protection from risks on the public internet.
 

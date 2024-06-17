@@ -19,11 +19,9 @@ use-case: Analytics, Cybersecurity, AIAndML
 {: toc-services="codeengine, Db2onCloud, appid"}
 {: toc-completion-time="1h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 In this tutorial, you create an application to automatically collect GitHub traffic statistics for repositories and provide the foundation for traffic analytics. GitHub only provides access to the traffic data for the last 14 days. If you want to analyze statistics over a longer period of time, you need to download and store that data yourself. In this tutorial, you deploy a serverless app in a {{site.data.keyword.codeenginefull_notm}} project. The app manages the metadata for GitHub repositories and provides access to the statistics for data analytics. The traffic data is collected from GitHub either on-demand in the app or when triggered by {{site.data.keyword.codeengineshort}} events, e.g., daily. The app discussed in this tutorial implements a multi-tenant-ready solution with the initial set of features supporting a single-tenant mode.
 {: shortdesc}
@@ -51,9 +49,7 @@ This tutorial requires:
 
 You can run the sections requiring a shell in the [{{site.data.keyword.cloud-shell_full}}](/docs/cloud-shell?topic=cloud-shell-getting-started).
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-<!--#/istutorial#-->
 
 ## Service and Environment Setup (shell)
 {: #serverless-github-traffic-analytics-1}

@@ -20,11 +20,9 @@ use-case: ApplicationModernization, VirtualPrivateCloud
 {: toc-services="vpc"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/topics/vpc){: external}. This combination of software - more commonly called a [LAMP stack](https://www.ibm.com/topics/lamp-stack){: external} - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
 {: shortdesc}
@@ -57,11 +55,9 @@ This tutorial requires:
 * `jq` to query JSON files,
 * `git` to clone source code repository,
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide. To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell){: external}.
 {: tip}
 
-<!--#/istutorial#-->
 
 ## Create services
 {: #lamp-stack-on-vpc-2}

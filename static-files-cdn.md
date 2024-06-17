@@ -19,11 +19,9 @@ use-case: ApplicationPerformance
 {: toc-services="CDN, cloud-object-storage"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through how to host and serve website assets (images, videos, documents) and user-generated content in a {{site.data.keyword.cos_full_notm}}, and how to use a [{{site.data.keyword.cdn_full}} (CDN)](/catalog/infrastructure/cdn-powered-by-akamai) for fast and secure delivery to users around the world.
 {: shortdesc}
@@ -57,13 +55,11 @@ This tutorial requires:
 * `git` to clone the source code repository,
 * `jq` to query JSON files.
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell){: external} from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-<!--#/istutorial#-->
 
 In addition, you need the following permissions on Classic Infrastructure:
 * [Manage CDN Account](/docs/CDN?topic=CDN-faqs#how-do-i-use-cloud-to-give-users-permission-to-create-or-manage-cdn)

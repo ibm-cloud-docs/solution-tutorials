@@ -20,11 +20,9 @@ use-case: ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement
 {: toc-services="vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker"}
 {: toc-completion-time="1h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through different options on how to share cloud-based resources across accounts.
 {: shortdesc}

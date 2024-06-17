@@ -19,11 +19,9 @@ use-case: Analytics, ApplicationModernization
 {: toc-services="containers, log-analysis, Registry, monitoring"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial shows how the [{{site.data.keyword.la_full_notm}}](/observe/logging) service can be used to configure and access logs of a Kubernetes application that is deployed on {{site.data.keyword.Bluemix_notm}}. You will deploy a Python application to a cluster provisioned on {{site.data.keyword.containerlong_notm}}, configure a logging agent, generate different levels of application logs and access worker logs, pod logs or network logs. Then, you will search, filter and visualize those logs through {{site.data.keyword.la_short}} Web UI.
 {: shortdesc}
@@ -46,7 +44,6 @@ Moreover, you will also setup the [{{site.data.keyword.mon_full_notm}}](/observe
 1. The user will configure {{site.data.keyword.la_full_notm}} service agent to access application and cluster-level logs.
 1. The user will configure {{site.data.keyword.mon_full_notm}} service agent to monitor the health and performance of the {{site.data.keyword.containerlong_notm}} cluster and also the app deployed to the cluster.
 
-<!--##istutorial#-->
 ## Before you begin
 {: #application-log-analysis-prereqs}
 
@@ -66,20 +63,8 @@ In addition if you are not the Admin of your account you will require IAM privil
 - [grant permissions to a user to view logs](/docs/log-analysis?topic=log-analysis-work_iam#user_log_analysis)
 * and [grant permissions to a user to view monitoring metrics](/docs/monitoring?topic=monitoring-iam#iam_users)
 
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-## Start a new {{site.data.keyword.cloud-shell_notm}}
-{: #application-log-analysis-2}
-{: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
 
--->
-<!--#/isworkshop#-->
-
-<!--##istutorial#-->
 ## Create a Kubernetes cluster
 {: #application-log-analysis-create_cluster}
 {: step}
@@ -109,26 +94,7 @@ Open the [Kubernetes clusters](/kubernetes/clusters) and click **Create cluster*
 - Choose the smallest **Worker Pool flavor**.
 - Enter a **Cluster name**.
 - Click **Create**.
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-## Configure the access to your cluster
-{: #application-log-analysis-access-cluster}
-{: step}
-
-In this step, you'll configure `kubectl` to point to the cluster assigned to you.
-
-1. Navigate to your cluster from the [cluster list](/kubernetes/clusters) and click on the **Access** tab under the cluster name.
-1. Under **After your cluster provisions, gain access** section, follow instructions to log into your cluster on a terminal.
-1. Run the below command to see all the namespaces in your cluster:
-   ```sh
-   kubectl get namespaces
-   ```
-   {: pre}
-    
--->
-<!--#/isworkshop#-->
 
 ## Deploy and configure a Kubernetes app to forward logs
 {: #application-log-analysis-deploy_configure_kubernetes_app}
@@ -429,14 +395,12 @@ To add another panel:
 {: step}
 
 - If you created them as part of this tutorial, remove the logging and monitoring instances from [Observability](/observe) page.<!-- markdownlint-disable-line -->
-<!--##istutorial#-->
 - Delete the cluster including worker node, app and containers. This action cannot be undone.
    ```sh
    ibmcloud ks cluster rm --cluster $MYCLUSTER -f --force-delete-storage
    ```
    {: pre}
 
-<!--#/istutorial#-->
 
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}

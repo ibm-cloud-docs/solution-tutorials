@@ -19,11 +19,9 @@ use-case: ApplicationIntegration, Cybersecurity, VirtualPrivateCloud
 {: toc-services="vpc, cis, secrets-manager"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through steps for setting up highly available and isolated workloads by provisioning {{site.data.keyword.vpc_full}}s (VPCs). You will create virtual server instances (VSIs) in multiple zones within one region to ensure the high availability of the application. You will create additional VSIs in a second region and configure a global load balancer (GLB) to offer high availability between regions and reduce network latency for users in different geographies.
 {: shortdesc}

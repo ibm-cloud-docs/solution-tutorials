@@ -20,11 +20,9 @@ use-case: AIAndML, Chatbots
 {: toc-services="codeengine, watson-assistant, Db2onCloud"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 In this tutorial, you are going to build a Slackbot which allows to search and create entries in a backend {{site.data.keyword.Db2_on_Cloud_short}} database. The Slackbot is backed by the {{site.data.keyword.conversationfull}} service. You will integrate Slack and {{site.data.keyword.conversationfull}} using an Assistant integration. {{site.data.keyword.Db2_on_Cloud_short}} is made available to {{site.data.keyword.conversationshort}} as custom extension.
 {: shortdesc}
@@ -59,9 +57,7 @@ This tutorial requires:
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-<!--#/istutorial#-->
 
 ## Set up services and deploy backend
 {: #slack-chatbot-database-watson-2}

@@ -19,11 +19,9 @@ use-case: Cybersecurity, VirtualPrivateCloud
 {: toc-services="vpc"}
 {: toc-completion-time="1h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through the deployment of a bastion host to securely access remote instances within a Virtual Private Cloud (VPC). A bastion host is an instance that is provisioned with a public IP address and can be accessed via SSH. Once set up, the bastion host acts as a **jump** server, allowing secure connection to instances provisioned without a public IP address.
 {: shortdesc}

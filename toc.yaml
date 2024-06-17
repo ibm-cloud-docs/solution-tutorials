@@ -22,12 +22,6 @@ toc:
             topics:
 
             - topicgroup:
-                label: (Hidden) Work In Progress
-                topics:
-                - solution-template.md
-                - satellite-tour.hidden.md
-
-            - topicgroup:
                 label: Websites and Web Apps
                 topics:
                 - scalable-webapp-kubernetes.md
@@ -97,7 +91,6 @@ toc:
                 topics:
                 - vmware-as-a-service-tf.md
                 - vmware-as-a-service-vdc.md
-                - vmware-as-a-service-vpn-vsrx.hidden.md
 
         - topicgroup:
             label: By Compute Options

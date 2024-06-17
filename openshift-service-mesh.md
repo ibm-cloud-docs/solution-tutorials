@@ -19,11 +19,9 @@ use-case: ApplicationModernization, Containers
 {: toc-services="openshift, containers"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through how to install {{site.data.keyword.redhat_openshift_notm}} Service Mesh alongside microservices for a sample app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](/kubernetes/catalog/about?platformType=openshift) cluster. You will also learn how to configure an Istio ingress-gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and use of metrics, logging and tracing to observe services.
 {: shortdesc}
@@ -52,7 +50,6 @@ Based on the open source Istio project, {{site.data.keyword.redhat_openshift_not
 5. The user securely(HTTPS) accesses the application via browser.
 6. The admin monitors the health and performance of the microservices using the metrics, traces, logs.
 
-<!--##istutorial#-->
 ## Before you begin
 {: #openshift-service-mesh-prereqs}
 
@@ -66,9 +63,7 @@ You will find instructions to download and install these tools for your operatin
 To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.13.x`). If they do not match, install the matching version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
 {: note}
 
-<!--#/istutorial#-->
 
-<!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
 ## Create a {{site.data.keyword.openshiftshort}} cluster
 {: #openshift-service-mesh-create_openshift_cluster}
@@ -106,19 +101,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {: note}
 
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-## Configure the access to your cluster
-{: #openshift-service-mesh-access-cluster}
-{: step}
-
-1. Log in to the {{site.data.keyword.cloud_notm}} console.
-2. Select the account where you have been invited by clicking on the account name in the top bar.
-3. Find the cluster assigned to you in the [cluster list](/kubernetes/clusters?platformType=openshift).
--->
-<!--#/isworkshop#-->
 
 ### Access the cluster using the {{site.data.keyword.cloud-shell_notm}}
 {: #openshift-service-mesh-3}
@@ -525,7 +508,6 @@ You can either gradually remove individual resources or skip those steps and dir
 3. Click **Uninstall** on the prompt.
 4. Repeat steps 2 and 3 for each of the operator in the list.
 
-<!--##istutorial#-->
 ### Delete the cluster
 {: #openshift-service-mesh-22}
 
@@ -535,7 +517,6 @@ Delete the cluster to delete everything in one-go. This action is irreversible.
 2. Click on the action menu next to `<your-initials>-myopenshiftcluster` and select **Delete**.
 3. Select **Delete the persistent storage used by the cluster** and enter the name of the cluster to confirm.
 4. Click on **Delete**<!-- markdownlint-disable-line -->
-<!--#/istutorial#-->
 
 ## Related content
 {: #openshift-service-mesh-0}

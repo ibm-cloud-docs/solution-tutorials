@@ -23,11 +23,9 @@ use-case: ApplicationPerformance, Cybersecurity, CloudInfrastructure
 This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [Direct Link](/docs/vpc?topic=vpc-interconnectivity), [virtual server instances](/docs/vpc?topic=vpc-vsi_best_practices), [security groups](/docs/vpc?topic=vpc-using-security-groups), [network ACLs](/docs/vpc?topic=vpc-using-acls) and [transit gateway](/docs/transit-gateway).
 {: note}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 As the need for global reach and 24-7 operations of web application increases, the need to host services in multiple cloud data centers increases. Data centers across multiple locations provide resilience in the case of a geographic failure and also bring workloads closer to globally distributed users reducing latency and increasing perceived performance. The [{{site.data.keyword.Bluemix_notm}} network](https://www.ibm.com/cloud/data-centers/){: external} enables users to link workloads hosted in secure private networks across data centers and locations.
 

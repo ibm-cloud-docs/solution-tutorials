@@ -19,11 +19,9 @@ use-case: ApplicationIntegration, ApplicationModernization, Cybersecurity, Virtu
 {: toc-services="vpc, account, transit-gateway, dns-svcs"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 Microservices are popular because they allow an enterprise to organize their development teams around the services they deliver. This tutorial walks you through the steps of creating infrastructure for a {{site.data.keyword.vpc_full}} (VPC) based microservice architecture. In this architecture, VPCs are connected to each other using the {{site.data.keyword.tg_full}}. A set of shared microservices is accessed through host names registered in the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate team isolated by {{site.data.keyword.iamlong}}. Optionally, a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared microservice.
 {: shortdesc}
@@ -64,9 +62,7 @@ This tutorial requires:
 * `git` to clone source code repository.
 * `terraform` CLI to run the Terraform commands.
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-<!--#/istutorial#-->
 
 In addition:
 

@@ -20,11 +20,9 @@ use-case: ApplicationModernization, Containers
 {: toc-services="openshift, log-analysis, monitoring, containers, Cloudant"}
 {: toc-completion-time="3h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial demonstrates how to deploy applications to [{{site.data.keyword.openshiftlong_notm}}](/kubernetes/catalog/about?platformType=openshift). {{site.data.keyword.openshiftshort}} provides a great experience for developers to deploy software applications and for System Administrators to scale and observe the applications in production.
 {: shortdesc}
@@ -32,9 +30,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 ## Objectives
 {: #openshift-microservices-objectives}
 
-<!--##istutorial#-->
 * Deploy a {{site.data.keyword.openshiftshort}} cluster<!-- markdownlint-disable-line -->
-<!--#/istutorial#-->
 * Deploy a microservice
 * Scale the microservice
 * Use an operator to deploy {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
@@ -57,7 +53,6 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 
 There are [scripts](https://github.com/IBM-Cloud/patient-health-frontend/tree/master/scripts){: external} that will perform some of the steps below.  It is described in the [README.md](https://github.com/IBM-Cloud/patient-health-frontend){: external}. If you run into trouble and want to start over just execute the `destroy.sh` script and sequentially go through the scripts that correspond to the steps to recover.
 
-<!--##istutorial#-->
 ## Before you begin
 {: #openshift-microservices-prereqs}
 
@@ -71,9 +66,7 @@ You will find instructions to download and install these tools for your operatin
 To avoid the installation of these tools, you can use the [{{site.data.keyword.cloud-shell_short}}](/shell) from the {{site.data.keyword.cloud_notm}} console. Use `oc version` to ensure the version of the {{site.data.keyword.openshiftshort}} CLI matches your cluster version (`4.12.x`). If they do not match, install the matching version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
 {: note}
 
-<!--#/istutorial#-->
 
-<!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
 ## Create a {{site.data.keyword.openshiftshort}} cluster
 {: #openshift-microservices-create_openshift_cluster}
@@ -111,19 +104,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
 Take a note of the resource group selected above.  This same resource group will be used for all resources in this lab.
 {: note}
 
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-## Configure the access to your cluster
-{: #openshift-microservices-access-cluster}
-{: step}
-
-1. Log in to the {{site.data.keyword.cloud_notm}} console.
-1. Select the account where you have been invited by clicking on the account name in the top bar (next to `Manage`).
-1. Find the cluster assigned to you in the [cluster list](/kubernetes/clusters?platformType=openshift).
--->
-<!--#/isworkshop#-->
 
 ### Initialize a Cloud Shell
 {: #openshift-microservices-3}
@@ -715,12 +696,6 @@ Your application is now backed by the mock patient data in the Cloudant DB! You 
 
 It can take a few minutes for logging and metric data to flow through the analysis systems so it is best to connect both at this time for later use.
 
-<!--##isworkshop#-->
-<!--
-{% hint style='info' %} If you've been invited to a lab account where an instance of {{site.data.keyword.mon_short}} or {{site.data.keyword.la_short}} has already been connected, skip the connect steps. Find your {{site.data.keyword.mon_short}} instance by looking at the cluster name in the tags attached to the instance. {% endhint %}
-
--->
-<!--#/isworkshop#-->
 
 
 1. Navigate to [{{site.data.keyword.openshiftshort}} clusters](/kubernetes/clusters?platformType=openshift)
@@ -1120,23 +1095,6 @@ Find more about {{site.data.keyword.mon_full_notm}} in the [IBM Cloud documentat
 {: #openshift-microservices-cleanup}
 {: step}
 
-<!--##isworkshop#-->
-<!--
-* Delete all application resource objects:
-   ```sh
-   oc delete all --selector app=$MYPROJECT
-   ```
-   {: pre}
-
-* Delete the project:
-   ```sh
-   oc delete project $MYPROJECT
-   ```
-   {: pre}
-
--->
-<!--#/isworkshop#-->
-<!--##istutorial#-->
 In the [Resource List](/resources) locate and delete the resources you wish to remove:
 * Delete the {{site.data.keyword.openshiftshort}} cluster
 * To delete the {{site.data.keyword.redhat_openshift_notm}} resources without deleting the cluster, run the below commands:
@@ -1154,7 +1112,6 @@ In the [Resource List](/resources) locate and delete the resources you wish to r
 Depending on the resource it might not be deleted immediately, but retained (by default for 7 days). You can reclaim the resource by deleting it permanently or restore it within the retention period. See this document on how to [use resource reclamation](/docs/account?topic=account-resource-reclamation).
 {: tip}
 
-<!--#/istutorial#-->
 
 ## Related content
 {: #openshift-microservices-13}

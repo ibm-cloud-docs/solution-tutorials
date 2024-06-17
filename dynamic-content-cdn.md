@@ -19,11 +19,9 @@ use-case: ApplicationPerformance
 {: toc-services="CDN, containers, Registry, dns"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 Web applications are composed of static content like text, images, cascading style sheets, and JavaScript files. The tutorial [Accelerate delivery of static files using a CDN](/docs/solution-tutorials?topic=solution-tutorials-static-files-cdn) shows how to host and serve static assets (images, videos, and documents) of a website from {{site.data.keyword.cos_full_notm}} with [{{site.data.keyword.cdn_full}} (CDN)](/catalog/infrastructure/cdn-powered-by-akamai).
 {: shortdesc}
@@ -67,9 +65,7 @@ You can run the tutorial in the [{{site.data.keyword.cloud-shell_short}}](/shell
 * `git` to clone source code repository.
 
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-<!--#/istutorial#-->
 
 In addition: A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
 

@@ -20,11 +20,9 @@ use-case: ApplicationModernization, Cybersecurity, Containers
 {: toc-services="containers, Registry, cis"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 Users are less likely to experience downtime when an application is designed with resiliency in mind. When implementing a solution with {{site.data.keyword.containershort_notm}}, you benefit from built-in capabilities, like load balancing and isolation, increased resiliency against potential failures with hosts, networks, or apps. By creating many clusters and if an outage occurs with one cluster, users can still access an app that is also deployed in another cluster. With many clusters in different locations, users can also access the closest cluster and reduce network latency. For additional resiliency, you have the option to also select the multi-zone clusters, meaning your nodes are deployed across many zones within a location.
 
@@ -59,9 +57,7 @@ This tutorial requires:
    * {{site.data.keyword.containerfull_notm}} plugin (`kubernetes-service`),
 * `kubectl` to interact with Kubernetes clusters,
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with solution tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-<!--#/istutorial#-->
 
 In addition, make sure you:
 - own a custom domain so you can configure the DNS for this domain to point to {{site.data.keyword.cis_full_notm}} name servers.

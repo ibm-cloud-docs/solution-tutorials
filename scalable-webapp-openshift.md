@@ -20,11 +20,9 @@ use-case: ApplicationModernization, Cybersecurity, Containers
 {: toc-services="openshift, containers, Registry"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through how to deploy an application to a [{{site.data.keyword.openshiftlong_notm}}](/kubernetes/catalog/about?platformType=openshift) cluster from a remote Git repository, expose the application on a route, monitor the health of the environment, and scale the application. Additionally, you will learn how to use a private container registry, deploy an application from a private Git repository and bind a custom domain to the application.
 {: shortdesc}
@@ -35,9 +33,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create Kubernetes cluster
 {: #scalable-webapp-openshift-objectives}
 
 * Deploy a web application to the {{site.data.keyword.openshiftlong_notm}} cluster.<!-- markdownlint-disable-line -->
-<!--##istutorial#-->
 * Bind a custom domain.<!-- markdownlint-disable-line -->
-<!--#/istutorial#-->
 * Monitor the logs and health of the cluster.
 * Scale {{site.data.keyword.openshiftshort}} pods.
 
@@ -52,7 +48,6 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create Kubernetes cluster
 4. The application is deployed to a {{site.data.keyword.openshiftshort}} cluster by pulling the image.
 5. Users access the application through a public route.
 
-<!--##istutorial#-->
 ## Before you begin
 {: #scalable-webapp-openshift-prereqs}
 
@@ -71,25 +66,8 @@ To avoid the installation of these tools, you can use the [{{site.data.keyword.c
 {: note}
 
 In addition, make sure you [set up a registry namespace](/docs/Registry?topic=Registry-registry_setup_cli_namespace#registry_namespace_setup).
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-## Before you begin
-{: #scalable-webapp-openshift-prereqs-workshop}
 
-This tutorial requires:
-* {{site.data.keyword.cloud_notm}} GitLab configured with your **SSH key**. Check the instructions under the `Generate an SSH key pair` and `Add an SSH key to your GitLab account` sections of the [documentation here](https://us-south.git.cloud.ibm.com/help/user/ssh.md)
-
-## Start a new {{site.data.keyword.cloud-shell_notm}}
-{: #scalable-webapp-openshift-2}
-{: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
--->
-<!--#/isworkshop#-->
-
-<!--##istutorial#-->
 <!--This section is identical in all openshift tutorials, copy/paste any changes-->
 ## Create an {{site.data.keyword.openshiftshort}} cluster
 {: #scalable-webapp-openshift-create_openshift_cluster}
@@ -141,34 +119,7 @@ In this step, you'll configure `oc` to point to your newly created cluster. The 
    ```
    {: pre}
 
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-## Configure the access to your cluster
-{: #scalable-webapp-openshift-access-cluster}
-{: step}
-
-In this step, you'll configure `oc` to point to the cluster assigned to you. The [{{site.data.keyword.openshiftshort}} Container Platform CLI](https://docs.openshift.com/container-platform/4.13/cli_reference/openshift_cli/getting-started-cli.html){: external} exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
-
-1. Check the version of the {{site.data.keyword.openshiftshort}} CLI:
-   ```sh
-   oc version
-   ```
-   {: pre}
-
-1. If the version does not match your cluster version, install the matching version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell).
-1. Navigate to your cluster from the [cluster list](/kubernetes/clusters?platformType=openshift) and click on the **Access** tab under the cluster name.
-1. Open the **{{site.data.keyword.openshiftshort}} web console**.
-1. From the dropdown menu in the upper right of the page, click **Copy Login Command**. Paste the copied command in your local terminal.
-1. Once logged-in using the `oc login` command, run the command below to see all the namespaces in your cluster
-   ```sh
-   oc get ns
-   ```
-   {: pre}
-
--->
-<!--#/isworkshop#-->
 
 ## Create a new {{site.data.keyword.openshiftshort}} application
 {: #scalable-webapp-openshift-create_openshift_app}
@@ -711,7 +662,6 @@ In this step, you will automate the build and deploy process. Whenever you updat
    {: tip}
 
 
-<!--##istutorial#-->
 ## (Optional) Use your own custom domain
 {: #scalable-webapp-openshift-custom_domain}
 {: step}
@@ -744,7 +694,6 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
    Here, you have used Edge termination. To learn about other secured routes and termination types like passthrough and re-encryption, run `oc create route --help` command)
    {: tip}
    
-<!--#/istutorial#-->
 
 ## Remove resources
 {: #scalable-webapp-openshift-cleanup}
@@ -777,10 +726,8 @@ Steps for setting up the CNAME record vary depending on your DNS provider. Under
    - Select the image(s) created as part of this tutorial and delete them.
 
 
-<!--##istutorial#-->
 * Delete the cluster you created.
 
-<!--#/istutorial#-->
 
 ## Related content
 {: #scalable-webapp-openshift-0}

@@ -20,11 +20,9 @@ use-case: ApplicationModernization, Vmware
 {: toc-services="vmware-service"}
 {: toc-completion-time="1h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} single-tenant or multitenant virtual data center (VDC) after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [a {{site.data.keyword.vmware-service_short}} instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a VDC](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
 {: shortdesc}

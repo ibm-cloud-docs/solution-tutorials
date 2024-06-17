@@ -20,11 +20,9 @@ use-case: Cybersecurity
 {: toc-services="containers, openshift, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through key security services available in the {{site.data.keyword.cloud}} catalog and how to use them together. An application that provides file sharing will put security concepts into practice.
 {: shortdesc}
@@ -43,9 +41,7 @@ Authenticating and authorizing users' access to specific resources is another co
 
 The tutorial features a sample application that enables groups of users to upload files to a common storage pool and to provides access to those files via shareable links. The application is written in Node.js and deployed as a container to either {{site.data.keyword.containerfull_notm}} or {{site.data.keyword.openshiftlong_notm}}. It leverages several security-related services and features to improve the application's security posture.
 
-<!--##istutorial#-->
 This tutorial will work with a cluster running in Classic Infrastructure or VPC Infrastructure.
-<!--#/istutorial#-->
 
 ![Architecture](images/solution34-cloud-e2e-security/architecture-e2e-security.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -59,7 +55,6 @@ This tutorial will work with a cluster running in Classic Infrastructure or VPC 
 6. Object storage buckets, {{site.data.keyword.appid_short}}, and {{site.data.keyword.secrets-manager_short}} services leverage a user-provided key to encrypt data.
 7. Application management activities are logged by {{site.data.keyword.at_full_notm}}.
 
-<!--##istutorial#-->
 ## Before you begin
 {: #cloud-e2e-security-prereqs}
 
@@ -75,18 +70,7 @@ You will find instructions to download and install these tools for your operatin
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell){: external} from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-## Start a new {{site.data.keyword.cloud-shell_notm}}
-{: #cloud-e2e-security-2}
-{: step}
-1. From the {{site.data.keyword.cloud_notm}} console in your browser, select the account where you have been invited.
-1. Click the button in the upper right corner to create a new [{{site.data.keyword.cloud-shell_short}}](/shell).
-
--->
-<!--#/isworkshop#-->
 
 ## Create services
 {: #cloud-e2e-security-setup}
@@ -94,14 +78,11 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 
 In the next section, you are going to create the services used by the application.
 
-<!--##istutorial#-->
 ### Decide where to deploy the application
 {: #cloud-e2e-security-4}
 
 The **location** and **resource group** of all resources that you create should match with the **location** and **resource group** of the Kubernetes cluster.
-<!--#/istutorial#-->
 
-<!--##istutorial#-->
 ### Capture user and application activities
 {: #cloud-e2e-security-activity-tracker }
 
@@ -110,9 +91,7 @@ The {{site.data.keyword.at_full_notm}} service records user-initiated activities
 1. Access the {{site.data.keyword.cloud_notm}} catalog and create an instance of [{{site.data.keyword.at_full_notm}}](/observe/activitytracker/create). Note that there can only be one instance of {{site.data.keyword.at_short}} per region. Set the **Service name** to **secure-file-storage-activity-tracker**.
 1. Ensure you have the right permissions assigned to manage the service instance by following [these instructions](/docs/activity-tracker?topic=activity-tracker-iam_manage_events#admin_account_opt1).
 
-<!--#/istutorial#-->
 
-<!--##istutorial#-->
 ### Create a cluster for the application
 {: #cloud-e2e-security-6}
 
@@ -122,7 +101,6 @@ Skip this section if you have an existing Kubernetes cluster you want to reuse w
 {: tip}
 
 A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial. To create a {{site.data.keyword.containerfull_notm}} cluster, follow the steps for either [Creating VPC clusters](/docs/containers?topic=containers-cluster-create-vpc-gen2&interface=ui) or [Creating classic clusters](/docs/containers?topic=containers-cluster-create-classic). To create a {{site.data.keyword.openshiftlong_notm}} cluster, follow the steps for either [Creating VPC clusters](/docs/openshift?topic=openshift-cluster-create-vpc-gen2&interface=ui) or [Creating classic clusters](/docs/openshift?topic=openshift-cluster-create-classic).
-<!--#/istutorial#-->
 
 ### Use your own encryption keys
 {: #cloud-e2e-security-7}
@@ -131,18 +109,16 @@ A minimal cluster with one (1) zone, one (1) worker node and the smallest availa
 
 1. Create an instance of [{{site.data.keyword.keymanagementserviceshort}}](/catalog/services/kms){: external}.
    1. Select a **location**.
-   2. Set the name to `<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-kp`.
+   2. Set the name to `secure-file-storage-kp`.
    3. Select the **resource group** where to create the service instance and click **Create**.
 2. Under **Keys**, click the **Add** button to create a new root key. It will be used to encrypt the storage bucket and {{site.data.keyword.appid_short}} data.
    1. Set the key type to **Root key**.
    2. Set the name to `secure-file-storage-root-enckey`.
    3. Then **Add key**.
 
-<!--##istutorial#-->
 Bring your own key (BYOK) by [importing an existing root key](/docs/key-protect?topic=key-protect-import-root-keys#import-root-keys).
 {: tip}
 
-<!--#/istutorial#-->
 
 ### Setup storage for user files
 {: #cloud-e2e-security-8}
@@ -153,7 +129,7 @@ The file sharing application saves files to a {{site.data.keyword.cos_short}} bu
 {: #cloud-e2e-security-9}
 
 1. Create an instance of [{{site.data.keyword.cos_short}}](/objectstorage/create){: external}.
-   1. Select a **Standard** plan and Set the **name** to `<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-cos`.
+   1. Select a **Standard** plan and Set the **name** to `secure-file-storage-cos`.
    2. Use the same **resource group** as for the previous services and click **Create**.
 2. Under **Service credentials**, create a *New credential*.
    1. Set the **name** to `secure-file-storage-cos-acckey`.
@@ -201,7 +177,7 @@ The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for
 1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](/catalog/services/cloudant){: external} service.
    1. Select **Cloudant** as the offering. 
    2. Select a **Multitenant** environment and a **region** same as the previous services.
-   3. Set the **name** to `<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-cloudant`.
+   3. Set the **name** to `secure-file-storage-cloudant`.
    4. Use the same **resource group** as for the previous services.
    5. Set **Authentication method** to **IAM**.
    6. Click **Create**.
@@ -233,7 +209,7 @@ Now, Create an instance of the {{site.data.keyword.appid_short}} service.
 1. Navigate to the [{{site.data.keyword.appid_short}}](/catalog/services/AppID){: external} service creation page.
    1. Use the same **location** used for the previous services.
    2. Select the **Graduated tier** as plan.
-   3. Set the **Service name** to `<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-appid`.
+   3. Set the **Service name** to `secure-file-storage-appid`.
    4. Select a **resource group** same as the previous services.
    5. Select the authorized {{site.data.keyword.keymanagementserviceshort}} service **name** and the **root key** from the respective dropdowns.
    6. Click **Create**.
@@ -316,7 +292,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
    5. Set additional environment variables by replacing the default values:
       ```sh
-      export BASENAME=<!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage
+      export BASENAME=secure-file-storage
       ```
       {: pre}
 
@@ -343,7 +319,7 @@ All services have been configured. In this section you will deploy the tutorial 
    | `$TARGET_NAMESPACE` | *default* |   the Kubernetes namespace where the app will be pushed. |
    | `$INGRESS_SUBDOMAIN` | *secure-file-stora-123456.us-south.containers.appdomain.cloud* | Retrieve from the cluster overview page or with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
    | `$INGRESS_SECRET` | *secure-file-stora-123456* | Retrieve with `ibmcloud ks cluster get --cluster <your-cluster-name>`. |
-   | `$BASENAME` | *<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage* | The prefix used to identify resources. |
+   | `$BASENAME` | *secure-file-storage* | The prefix used to identify resources. |
    {: caption="Environment variables used by the script" caption-side="bottom"}
 
 4. Copy `credentials.template.env` to `credentials.env`:
@@ -354,7 +330,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
 5. Edit `credentials.env` and fill in the blanks with these values:
    * the {{site.data.keyword.cos_short}} service regional endpoint, the bucket name, the credentials created for the {{site.data.keyword.cos_short}} service,
-   * the credentials for **<!--##isworkshop#--><!--&lt;your-initials&gt;---><!--#/isworkshop#-->secure-file-storage-cloudant**,
+   * the credentials for **secure-file-storage-cloudant**,
    * and the credentials for {{site.data.keyword.appid_short}}. The variable `appid_redirect_uris` is a comma-separated list of redirect URIs as discussed above.
 
    When using {{site.data.keyword.cloud-shell_short}}, you can use `nano credentials.env` to edit the file.
@@ -364,7 +340,6 @@ All services have been configured. In this section you will deploy the tutorial 
 ### Deploy to the cluster
 {: #cloud-e2e-security-16}
 
-<!--##istutorial#-->
 1. Gain access to your cluster as described in the instructions **Connect via CLI** accessible from the **Actions...** menu in your console overview page.
    ```sh
    ibmcloud ks cluster config --cluster $MYCLUSTER --admin
@@ -408,36 +383,7 @@ All services have been configured. In this section you will deploy the tutorial 
    {: codeblock}
 
 
-<!--#/istutorial#-->
 
-<!--##isworkshop#-->
-<!--
-1. Gain access to your cluster as described in the **Connect via CLI** instructions accessible from the **Actions...** menu in your console overview page.
-   ```sh
-   ibmcloud ks cluster config --cluster $MYCLUSTER --admin
-   ```
-   {: codeblock}
-
-2. Create the secret used by the application to obtain service credentials:
-   ```sh
-   kubectl create secret generic YOUR-INITIALS-secure-file-storage-credentials --from-env-file=credentials.env
-   ```
-   {: codeblock}
-
-3. Deploy the app.
-   ```sh
-   kubectl apply -f secure-file-storage.yaml
-   ```
-   {: codeblock}
-
-4. Deploy the network routing (a ClusterIP service and Ingress) for your app to make it accessible from the public internet.
-   ```sh
-   kubectl apply -f secure-file-storage-ingress.yaml
-   ```
-   {: codeblock}
-
--->
-<!--#/isworkshop#-->
 
 ## Test the application
 {: #cloud-e2e-security-5}
@@ -465,7 +411,6 @@ Now that the application and its services have been successfully deployed, you c
 1. From the [**Observability**](/observe/activitytracker) dashboard, locate the {{site.data.keyword.at_short}} instance for the region where your application is deployed and click **Open dashboard**.
 2. Review all logs sent to the service as you were provisioning and interacting with resources.
 
-<!--##istutorial#-->
 ## Optional: Use a custom domain and encrypt network traffic
 {: #cloud-e2e-security-19}
 {: step}
@@ -609,7 +554,6 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
    * In the **Add web redirect URLs** form add `https://secure-file-storage.example.com/redirect_uri` as another URL.
 11. Everything should be in place now. Test the app by accessing it at your configured custom domain `https://secure-file-storage.<your custom domain>`.
 
-<!--#/istutorial#-->
 
 ## Security: Rotate service credentials
 {: #cloud-e2e-security-20}
@@ -623,7 +567,6 @@ In this tutorial, services are utilized for different purposes, from storing fil
 - replacing the access data in existing Kubernetes secrets and applying the changes,
 - and, after verification, deactivating the old credentials by deleting the old service keys.
 
-<!--##istutorial#-->
 ## Expand the tutorial
 {: #cloud-e2e-security-21}
 
@@ -631,9 +574,7 @@ Security is never done. Try the below suggestions to enhance the security of you
 
 * Replace {{site.data.keyword.keymanagementservicelong_notm}} by [{{site.data.keyword.hscrypto}}](/docs/hs-crypto?topic=hs-crypto-get-started) for even greater security and control over encryption keys.
 
-<!--#/istutorial#-->
 
-<!--##istutorial#-->
 ## Share resources
 {: #cloud-e2e-security-22}
 
@@ -650,7 +591,6 @@ You can find information on the individual services and their available IAM acce
 * [{{site.data.keyword.secrets-manager_short}}](/docs/secrets-manager?topic=secrets-manager-iam)
 
 To get started, check out the [best practices for access management and how to define access groups](/docs/account?topic=account-account_setup#resource-group-strategy).
-<!--#/istutorial#-->
 
 ## Remove resources
 {: #cloud-e2e-security-23}
@@ -675,7 +615,7 @@ If you share an account with other users, always make sure to delete only your o
 
 2. Delete the secrets for the deployment:
    ```sh
-   kubectl delete secret <!--##isworkshop#--><!--<your-initials>---><!--#/isworkshop#-->secure-file-storage-credentials
+   kubectl delete secret secure-file-storage-credentials
    ```
    {: codeblock}
 

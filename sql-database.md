@@ -19,11 +19,9 @@ use-case: ApplicationModernization
 {: toc-services="codeengine, Db2whc"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeenginefull}}](/codeengine/){: external}. The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com){: external}.
 {: shortdesc}
@@ -50,9 +48,7 @@ This tutorial requires:
 To avoid the installation of these tools you can use the [{{site.data.keyword.cloud-shell_short}}](/shell){: external} from the {{site.data.keyword.cloud_notm}} console.
 {: tip}
 
-<!--##istutorial#-->
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
-<!--#/istutorial#-->
 
 
 1. Clone the [Github repository for this tutorial](https://github.com/IBM-Cloud/cloud-sql-database){: external} and change into its directory. In a terminal, execute the following lines:

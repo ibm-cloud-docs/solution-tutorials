@@ -20,11 +20,9 @@ use-case: AIAndML
 {: toc-services="cloud-object-storage, ai-openscale"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through the process of building a predictive machine learning model, deploying the generated model as an API to be used in your applications and testing the model all of this happening in an integrated and unified self-service experience on {{site.data.keyword.Bluemix_notm}}. You will then monitor the deployed model with {{site.data.keyword.aios_full_notm}}.
 {: shortdesc}

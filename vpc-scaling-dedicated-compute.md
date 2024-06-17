@@ -19,11 +19,9 @@ use-case: ApplicationModernization, Cybersecurity, VirtualPrivateCloud
 {: toc-services="vpc, databases-for-postgresql, schematics, cloud-object-storage"}
 {: toc-completion-time="2h"}
 
-<!--##istutorial#-->
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 This tutorial walks you through the steps of setting up isolated workloads in a shared (multi-tenant) environment and a dedicated (single-tenant) environment. Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. Furthermore, configure load balancers to provide high availability between zones within one region. Configure Virtual Private Endpoints (VPE) for your VPC providing private routes to services on the IBM Cloud.
 
@@ -248,11 +246,9 @@ For checking the logs of other VPC resources, refer to [VPC logging](/docs/vpc?t
 {: #vpc-scaling-dedicated-compute-dedicated}
 {: step}
 
-<!--##istutorial#-->
 Provisioning dedicated hosts will incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-<!--#/istutorial#-->
 
 In this section, you will create a dedicated host in a group and provision an instance with an encrypted data volume. 
 
