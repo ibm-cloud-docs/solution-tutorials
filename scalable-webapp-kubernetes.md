@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-06-10"
+lastupdated: "2024-06-21"
 lasttested: "2024-06-10"
 
 content-type: tutorial
@@ -323,98 +323,40 @@ Now, import your certificate into the {{site.data.keyword.secrets-manager_short}
 4. You can select either **Public certificate**, **Imported certificate** or **Private certificate**. Detailed steps are available in the respective documentation topics: [Ordering SSL/TLS public certificates](/docs/secrets-manager?topic=secrets-manager-public-certificates&interface=ui), [Importing SSL/TLS certificates](/docs/secrets-manager?topic=secrets-manager-certificates&interface=ui) or [Creating SSL/TLS private certificates](/docs/secrets-manager?topic=secrets-manager-private-certificates&interface=ui). If you selected to import a certificate, make sure to upload the certificate, private key and intermediate certificate files.
 5. Locate the entry for the imported or ordered certificate and click on it.
    * Verify the domain name matches your $CUSTOM_DOMAIN. If you uploaded a wildcard certificate, an asterisk is included in the domain name.
-   * Click the **copy** icon next to the certificate's **ID**.
+   * Click the **copy** icon next to the certificate's **CRN**.
    * Create an environment variable pointing to the value you just copied:
 
    ```sh
-   export CERTIFICATE_ID=<certificate ID>
+   export CERTIFICATE_CRN=<certificate CRN>
    ```
    {: pre}
 
-6. In {{site.data.keyword.secrets-manager_short}}, certificates that you import to the service are imported certificates (imported_cert). Certificates that you order through {{site.data.keyword.secrets-manager_short}} from a third-party certificate authority are public certificates (public_cert). This information is needed in the helm chart you will be using later on to configure the ingress. Select and run the command that is appropriate for your selection in the previous step.  
+6. Create an Ingress secret in your cluster for the SSL/TLS certificate:
    ```sh
-   export CERTIFICATE_TYPE=imported_cert
+   ibmcloud ks ingress secret create --name nodeapp-tls-cert --cluster $MYCLUSTER --cert-crn $CERTIFICATE_CRN --namespace $KUBERNETES_NAMESPACE
    ```
    {: pre}
 
-   or 
-
+7. Create an environment variable pointing to your custom domain:
    ```sh
-   export CERTIFICATE_TYPE=public_cert
+   export CUSTOM_DOMAIN=<example.com>
    ```
    {: pre}
 
-7. Click on **Endpoints** in the left navigation.
-8. Locate the **Public** endpoint for the **Service API**.
-   * Create an environment variable pointing to the endpoint:
 
+8. Create an Ingress file `ingress-customdomain-https.yaml` pointing to your domain from the template `ingress-customdomain-https-template-sm.yaml`:
    ```sh
-   export SECRETS_MANAGER_URL=<public endpoint>
+   ./ingress.sh customdomain_https_sm
    ```
    {: pre}
 
-In order to access the {{site.data.keyword.secrets-manager_short}} service instance from your cluster, we will use the [External Secrets Operator](https://external-secrets.io/){: external} and configure a service ID and API key for it.  
-
-1. Create a service ID and set it as an environment variable:
-   ```sh
-   export SERVICE_ID=`ibmcloud iam service-id-create kubernetesnodeapp-tutorial --description "A service ID for scalable-webapp-kubernetes tutorial." --output json | jq -r ".id"`; echo $SERVICE_ID
-   ```
-   {: codeblock}
-
-2. Assign the service ID permissions to read secrets from {{site.data.keyword.secrets-manager_short}}:
-   ```sh
-   ibmcloud iam service-policy-create $SERVICE_ID --roles "SecretsReader" --service-name secrets-manager
-   ```
-   {: codeblock}
-
-3. Create an API key for your service ID:
-   ```sh
-   export IBM_CLOUD_API_KEY=`ibmcloud iam service-api-key-create kubernetesnodeapp-tutorial $SERVICE_ID --description "An API key for scalable-webapp-kubernetes tutorial." --output json | jq -r ".apikey"`
-   ```
-   {: codeblock}
-
-4. Create a secret in your cluster for that API key:
-   ```sh
-   kubectl -n $KUBERNETES_NAMESPACE create secret generic kubernetesnodeapp-api-key --from-literal=apikey=$IBM_CLOUD_API_KEY
-   ```
-   {: codeblock}
-   
-5. Run the following commands to install the External Secrets Operator:
-   ```sh
-   helm repo add external-secrets https://charts.external-secrets.io
-   ```
-   {: codeblock}
-
-   ```sh   
-   helm install external-secrets external-secrets/external-secrets
-   ```
-   {: codeblock}
-
-6. Create an Ingress file `ingress-customdomain-https.yaml` pointing to your domain from the template `ingress-customdomain-https-template.yaml`:
-   ```sh
-   ./ingress.sh customdomain_https
-   ```
-   {: pre}
-
-7. Deploy the Ingress:
+9. Deploy the Ingress:
    ```sh
    kubectl apply -f ingress-customdomain-https.yaml
    ```
    {: pre}
 
-8. Validate the secret was created:
-   ```sh
-   kubectl get secret kubernetesnodeapp-certificate -n $KUBERNETES_NAMESPACE
-   ```
-   {: pre}
-
-   If you encounter any errors running the above command, you can run the following command to obtain more details on the reasons for that error. 
-   ```sh
-    kubectl get externalsecret.external-secrets.io/kubernetesnodeapp-external-secret -o json
-   ```
-   {: pre}
-
-9. Access your application at `https://$MYAPP.$CUSTOM_DOMAIN/`.
+10. Access your application at `https://$MYAPP.$CUSTOM_DOMAIN/`.
    ```sh
    curl -I https://$MYAPP.$CUSTOM_DOMAIN
    ```
