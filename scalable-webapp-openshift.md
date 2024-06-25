@@ -1,9 +1,9 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2023
-lastupdated: "2024-01-09"
-lasttested: "2023-10-16"
+  years: 2024
+lastupdated: "2024-06-25"
+lasttested: "2024-06-25"
 
 content-type: tutorial
 services: openshift, containers, Registry
@@ -92,7 +92,7 @@ In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} c
       - Select **Single zone** as **Availability**.
       - Choose a **Worker zone**.
       - For more details, see the [Creating classic clusters](/docs/openshift?topic=openshift-cluster-create-classic) instructions.
-4. Set the **OpenShift version** to **4.13.x**.
+4. Set the **OpenShift version** to **4.13.x** (Note: If you choose to use a version of 4.15.xx and higher, you need to switch off **Outbound traffic protection**).
 5. Select your **OpenShift Container Platform (OCP) license**.      
 6. Under **Worker pool**,
    - Select **4 vCPUs 16GB Memory** as the flavor.
