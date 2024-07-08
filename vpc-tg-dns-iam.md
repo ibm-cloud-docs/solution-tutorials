@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-30"
+lastupdated: "2024-07-08"
 lasttested: "2024-01-30"
 
 content-type: tutorial
@@ -74,7 +74,7 @@ In addition:
 
 The admin team will enable the other teams to administer their resources as much as possible. The admin team will manage users and control access but will not create and destroy the resources shown in the architecture diagram. 
 
-Editor, Operator, Viewer and Manager are [IAM access roles](/docs/account?topic=account-userroles#iamusermanrol). Each service defines the exact meaning of the roles and the associated actions. For VPC see the [Required permissions](/docs/vpc?topic=vpc-resource-authorizations-required-for-api-and-cli-calls) section.
+Editor, Operator, Viewer and Manager are [IAM access roles](/docs/account?topic=account-userroles#iamusermanrol). Each service defines the exact meaning of the roles and the associated actions.
 
 Teams:
 - Admin - define the account structure such as resource groups, access groups, users, roles.
