@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-11"
+lastupdated: "2024-07-19"
 lasttested: "2023-09-26"
 
 content-type: tutorial
@@ -651,7 +651,7 @@ Now you'll create the Node.js app that will populate your Cloudant DB with patie
 
 1. The following new-app commmand will make a build configuration and Deployment Configuration.  The following demonstrates the CLI invocation of the add application (remember using the GUI console for the frontend):
    ```sh
-   oc new-app --name=patient-health-backend --as-deployment-config centos/nodejs-10-centos7~https://github.com/IBM-Cloud/patient-health-backend
+   oc new-app --name=patient-health-backend --as-deployment-config registry.access.redhat.com/ubi9/nodejs-20-minimal:latest~https://github.com/IBM-Cloud/patient-health-backend
    ```
    {: pre}
 
