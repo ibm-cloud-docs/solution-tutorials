@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-04"
+lastupdated: "2024-07-19"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -210,7 +210,7 @@ A virtual server is created at this point to aid in diagnosis of VRA configurati
    - Set **Location** to the same as the VRA.
    - Set **Profile** to **C1.1x1**
    - Add the **SSH Key** you specified earlier.
-   - Set **Operating System** to **CentOS 7.x - Minimal**
+   - Set **Operating System** to **CentOS Stream 9.x - Minimal**
    - In **Uplink Port Speeds**, the network interface must be changed from the default of _public and private_ to only specify a **Private Network Uplink**. This ensures that the new server has no direct access to the Internet.
    - Set **Private VLAN** to the VLAN number of the private VLAN ordered earlier.
 3. Select the checkbox to accept the 'Third-Party' service agreements, then click **Create**.
