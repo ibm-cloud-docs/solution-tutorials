@@ -77,8 +77,8 @@ toc:
             - topicgroup:
                 label: VMware Solutions
                 topics:
-                - vmware-as-a-service-tf.md
-                - vmware-as-a-service-vdc.md
+                - vcf-as-a-service-tf.md
+                - vcf-as-a-service-vdc.md
         - topicgroup:
             label: By Compute Options
             topics:
