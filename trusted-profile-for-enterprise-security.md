@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-02"
+lastupdated: "2024-08-02"
 lasttested: "2023-10-10"
 
 content-type: tutorial
@@ -228,7 +228,7 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
        spec:
          containers:
          - name: tptest-container
-           image: icr.io/solution-tutorials/tutorial-trusted-profile-enterprise-security:v1.0.2
+           image: icr.io/solution-tutorials/tutorial-trusted-profile-enterprise-security:v1.0.3
            imagePullPolicy: Always
            ports:
            - containerPort: 8080
