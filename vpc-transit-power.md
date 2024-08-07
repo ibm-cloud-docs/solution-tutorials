@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-05-08"
+lastupdated: "2024-08-07"
 lasttested: "2024-02-05"
 
 content-type: tutorial
@@ -18,6 +18,7 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 {: toc-content-type="tutorial"}
 {: toc-services="power-iaas, vpc, transit-gateway, dns-svcs"}
 {: toc-completion-time="2h"}
+{: toc-use-case="ApplicationModernization, Cybersecurity, DevOps"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}

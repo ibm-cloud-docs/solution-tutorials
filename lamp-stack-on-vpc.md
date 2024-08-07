@@ -19,7 +19,7 @@ use-case: ApplicationModernization, VirtualPrivateCloud
 {: toc-content-type="tutorial"}
 {: toc-services="vpc"}
 {: toc-completion-time="2h"}
-{: toc-use-case="ApplicationModernization, VirtualPrivateCloud" }
+{: toc-use-case="ApplicationModernization, VirtualPrivateCloud"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}

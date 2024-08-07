@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-05-08"
+lastupdated: "2024-08-07"
 lasttested: "2024-01-17"
 
 content-type: tutorial
@@ -19,6 +19,7 @@ use-case: Cybersecurity
 {: toc-content-type="tutorial"}
 {: toc-services="containers, openshift, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis, cis"}
 {: toc-completion-time="2h"}
+{: toc-use-case="Cybersecurity"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}

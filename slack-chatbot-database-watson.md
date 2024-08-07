@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-30"
+lastupdated: "2024-08-07"
 lasttested: "2023-09-29"
 
 content-type: tutorial
@@ -19,6 +19,7 @@ use-case: AIAndML, Chatbots
 {: toc-content-type="tutorial"}
 {: toc-services="codeengine, watson-assistant, Db2onCloud"}
 {: toc-completion-time="2h"}
+{: toc-use-case="AIAndML, Chatbots"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}

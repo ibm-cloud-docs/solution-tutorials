@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-04-16"
+lastupdated: "2024-08-07"
 lasttested: "2024-04-16"
 
 content-type: tutorial
@@ -18,6 +18,7 @@ use-case: ApplicationIntegration, Cybersecurity, VirtualPrivateCloud
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, cis, secrets-manager"}
 {: toc-completion-time="2h"}
+{: toc-use-case="ApplicationIntegration, Cybersecurity, VirtualPrivateCloud"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
@@ -208,7 +209,7 @@ To allow traffic to the application, you need to enable inbound and outbound rul
    - **Interval(sec)**: `15`
    - **Timeout(sec)**: `5`
    - **Max retries**: `2`
-   Click on **Create**.
+   - Click on **Create**.
 5. Click **Attach server** to add server instances to the pool.
    - From the **Subnets** dropdown, select **vpc-region1-zone1-subnet** and **vpc-region1-zone2-subnet**.
    - Select the instances your created and set `80` as the **port**.

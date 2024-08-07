@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2024
-lastupdated: "2024-04-17"
+lastupdated: "2024-08-07"
 lasttested: "2024-04-17"
 
 content-type: tutorial
@@ -19,6 +19,7 @@ use-case: ApplicationModernization, Cybersecurity, Containers
 {: toc-content-type="tutorial"}
 {: toc-services="containers, Registry, cis"}
 {: toc-completion-time="2h"}
+{: toc-use-case="ApplicationModernization, Cybersecurity, Containers"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}

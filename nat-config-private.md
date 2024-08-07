@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-04"
+lastupdated: "2024-08-07"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -19,6 +19,7 @@ use-case: Cybersecurity, CloudInfrastructure
 {: toc-content-type="tutorial"}
 {: toc-services="virtual-router-appliance"}
 {: toc-completion-time=""}
+{: toc-use-case="Cybersecurity, CloudInfrastructure"}
 
 This tutorial describes the use of **Classic Infrastructure**.  Most workloads can be implemented using [{{site.data.keyword.vpc_full}}](/docs/vpc) resources.  Use {{site.data.keyword.vpc_short}} to create your own private cloud-like computing environment on shared public cloud infrastructure. A VPC gives an enterprise the ability to define and control a virtual network that is logically isolated from all other public cloud tenants, creating a private, secure place on the public cloud.  Specifically, [virtual server instances](/docs/vpc?topic=vpc-vsi_best_practices), [security groups](/docs/vpc?topic=vpc-using-security-groups), [network ACLs](/docs/vpc?topic=vpc-using-acls) and [public gateways](/docs/vpc?topic=vpc-about-networking-for-vpc#external-connectivity).
 {: note}

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-04-15"
+lastupdated: "2024-08-07"
 lasttested: "2024-04-15"
 
 content-type: tutorial
@@ -18,6 +18,7 @@ use-case: ApplicationModernization
 {: toc-content-type="tutorial"}
 {: toc-services="codeengine, Cloudant, cloud-object-storage"}
 {: toc-completion-time="1h"}
+{: toc-use-case="ApplicationModernization"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}

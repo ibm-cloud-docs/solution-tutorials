@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-01-11"
+lastupdated: "2024-08-07"
 lasttested: "2023-10-11"
 
 content-type: tutorial
@@ -18,6 +18,7 @@ use-case: ApplicationModernization, Containers
 {: toc-content-type="tutorial"}
 {: toc-services="openshift, containers"}
 {: toc-completion-time="2h"}
+{: toc-use-case="ApplicationModernization, Containers"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
