@@ -17,7 +17,7 @@ use-case: ApplicationModernization
 {: #sql-database}
 {: toc-content-type="tutorial"}
 {: toc-services="codeengine, Db2whc"}
-{: toc-completion-time="2h"}
+{: toc-completion-time="1h"}
 {: toc-use-case="ApplicationModernization"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
