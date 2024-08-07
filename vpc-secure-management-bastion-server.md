@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-04-25"
+lastupdated: "2024-08-07"
 lasttested: "2024-04-25"
 
 content-type: tutorial
@@ -18,6 +18,7 @@ use-case: Cybersecurity, VirtualPrivateCloud
 {: toc-content-type="tutorial"}
 {: toc-services="vpc"}
 {: toc-completion-time="1h"}
+{: toc-use-case="Cybersecurity, VirtualPrivateCloud"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}

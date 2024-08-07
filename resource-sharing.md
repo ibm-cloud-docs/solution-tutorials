@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-03-04"
+lastupdated: "2024-08-07"
 lasttested: "2023-12-18"
 
 content-type: tutorial
@@ -19,6 +19,7 @@ use-case: ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker"}
 {: toc-completion-time="1h"}
+{: toc-use-case="ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-05-06"
+lastupdated: "2024-08-07"
 lasttested: "2024-04-23"
 
 content-type: tutorial
@@ -18,6 +18,7 @@ use-case: ApplicationModernization, Cybersecurity, VirtualPrivateCloud
 {: toc-content-type="tutorial"}
 {: toc-services="vpc, transit-gateway, direct-link, dns-svcs, cloud-databases, databases-for-postgresql"}
 {: toc-completion-time="2h"}
+{: toc-use-case="ApplicationModernization, Cybersecurity, VirtualPrivateCloud"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}

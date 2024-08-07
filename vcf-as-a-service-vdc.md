@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-01"
+lastupdated: "2024-08-07"
 lasttested: "2024-01-04"
 
 content-type: tutorial
@@ -19,6 +19,7 @@ use-case: ApplicationModernization, Vmware
 {: toc-content-type="tutorial"}
 {: toc-services="vmware-service"}
 {: toc-completion-time="1h"}
+{: toc-use-case="ApplicationModernization, Vmware"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}

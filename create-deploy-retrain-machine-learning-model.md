@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-04-19"
+lastupdated: "2024-08-07"
 lasttested: "2024-04-19"
 
 content-type: tutorial
@@ -19,6 +19,7 @@ use-case: AIAndML
 {: toc-content-type="tutorial"}
 {: toc-services="cloud-object-storage, ai-openscale"}
 {: toc-completion-time="2h"}
+{: toc-use-case="AIAndML"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}

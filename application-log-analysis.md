@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2024-01-08"
+lastupdated: "2024-08-07"
 lasttested: "2023-09-17"
 
 content-type: tutorial
@@ -18,6 +18,7 @@ use-case: Analytics, ApplicationModernization
 {: toc-content-type="tutorial"}
 {: toc-services="containers, log-analysis, Registry, monitoring"}
 {: toc-completion-time="2h"}
+{: toc-use-case="Analytics, ApplicationModernization"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}

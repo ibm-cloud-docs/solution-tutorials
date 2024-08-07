@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-02"
+lastupdated: "2024-08-07"
 lasttested: "2023-10-10"
 
 content-type: tutorial
@@ -19,6 +19,7 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 {: toc-content-type="tutorial"}
 {: toc-services="secure-enterprise, containers, activity-tracker, Registry"}
 {: toc-completion-time="2h"}
+{: toc-use-case="IdentityAndAccessManagement, ApplicationIntegration"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}

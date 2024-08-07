@@ -2,14 +2,14 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-07-19"
+lastupdated: "2024-08-07"
 lasttested: "2023-10-09"
 
 content-type: tutorial
 services: vpc
 account-plan: paid
 completion-time: 2h
-use-case: ApplicationModernization, DevOpsS, VirtualPrivateCloud
+use-case: ApplicationModernization, DevOps, VirtualPrivateCloud
 ---
 {{site.data.keyword.attribute-definition-list}}
 
@@ -18,6 +18,7 @@ use-case: ApplicationModernization, DevOpsS, VirtualPrivateCloud
 {: toc-content-type="tutorial"}
 {: toc-services="vpc"}
 {: toc-completion-time="2h"}
+{: toc-use-case="ApplicationModernization, DevOps, VirtualPrivateCloud"}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
