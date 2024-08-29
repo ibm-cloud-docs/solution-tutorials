@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-08-29"
 lasttested: "2024-04-17"
 
 content-type: tutorial
@@ -73,8 +73,7 @@ This tutorial deploys a Kubernetes application to clusters in many locations. Yo
 ### Create a Kubernetes cluster
 {: #multi-region-k8s-cis-3}
 
-A minimal cluster with one (1) zone, one (1) worker node and the smallest available size (**Flavor**) is sufficient for this tutorial.
-
+A minimal cluster with one (1) zone, one (1) worker node is sufficient for this tutorial.
 
 When creating the following Kubernetes cluster:
 1. Set **Cluster name** to **my-us-cluster**.
@@ -91,7 +90,7 @@ When creating the following Kubernetes cluster:
       5. Uncheck **Create subnet in every zone**.
       5. Click on **Create**.
       6. Under **Worker zones and subnets**, uncheck the two zones for which the subnet wasn't created.
-      7. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
+      7. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node flavor of your choice.
       8. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
       8. Enter a **Cluster name** and select the same **Resource group** that you used for the VPC.
       9. Logging or Monitoring aren't required in this tutorial, disable those options and click on **Create**.
@@ -102,7 +101,7 @@ When creating the following Kubernetes cluster:
    - The following steps are if you select **Classic** for Kubernetes on Classic infrastructure. Reference the [Creating a standard classic cluster](/docs/containers?topic=containers-cluster-create-classic&interface=ui) documentation for more details.
       1. Under the **Location** section, select a **Geography**, multizone **Availability**, and **Metro** for example `North America` and `Dallas`.
       2. Under **Worker zones and VLANs**, uncheck all zones except for one.
-      3. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node size of your choice.
+      3. Set the **Worker nodes per zone** to `1` and click on **Change flavor** to explore and change to the worker node flavor of your choice.
       4. Under **Master service endpoint**, select **Both private & public endpoints**.
       5. Under **Ingress**, enable **Ingress secrets management** and select your existing {{site.data.keyword.secrets-manager_short}} instance.
       6. Enter a **Cluster name** and select the **Resource group** to create these resources under.

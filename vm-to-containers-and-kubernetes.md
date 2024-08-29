@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-08-29"
 lasttested: "2023-09-05"
 
 content-type: tutorial
@@ -29,7 +29,7 @@ This tutorial walks you through the process of moving a VM based app to a Kubern
 
 The lessons in this tutorial include concepts for how to take an existing app, containerize the app, and deploy the app to a Kubernetes cluster. To containerize your VM based app, you can choose between the following options.
 
-1. Identify components of a large monolith app that can be separated into their own microservice. You can containerize these microservices and deploy them to a Kubernetes cluster.
+1. Identify components of a monolith app that can be separated into their own microservice. You can containerize these microservices and deploy them to a Kubernetes cluster.
 2. Containerize the entire app and deploy the app to a Kubernetes cluster.
 
 Depending on the type of app that you have, the steps to migrate your app might vary. You can use this tutorial to learn about the general steps that you have to take and things that you have to consider before migrating your app.
@@ -86,7 +86,7 @@ The following diagram shows an example of a modern container architecture that r
 #### Virtual machines vs containers
 {: #vm-to-containers-and-kubernetes-5}
 
-**VMs**, traditional apps run on native hardware. A single app does not typically use the full resources of a single compute host. Most organizations try to run multiple apps on a single compute host to avoid wasting resources. You could run multiple copies of the same app, but to provide isolation, you can use VMs to run multiple app instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively large and inefficient due to duplication both at runtime and on disk.
+**VMs**, traditional apps run on native hardware. A single app does not typically use the full resources of a single compute host. Most organizations try to run multiple apps on a single compute host to avoid wasting resources. You could run multiple copies of the same app, but to provide isolation, you can use VMs to run multiple app instances (VMs) on the same hardware. These VMs have full operating system stacks that make them relatively inefficient due to duplication both at runtime and on disk.
 
 **Containers** are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, runtime, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
@@ -112,7 +112,7 @@ By using Kubernetes clusters with {{site.data.keyword.containerlong_notm}}, you 
 ## Sizing clusters
 {: #vm-to-containers-and-kubernetes-sizing_clusters}
 
-As you design your cluster architecture, you want to balance costs against availability, reliability, complexity, and recovery. Kubernetes clusters in {{site.data.keyword.containerlong_notm}} provide architectural options based on the needs of your apps. With a bit of planning, you can get the most out of your cloud resources without over-architecting or over-spending. Even if you over or underestimate, you can easily scale up or down your cluster, by changing either the number or size of worker nodes.
+As you design your cluster architecture, you want to balance costs against availability, reliability, complexity, and recovery. Kubernetes clusters in {{site.data.keyword.containerlong_notm}} provide architectural options based on the needs of your apps. With a bit of planning, you can get the most out of your cloud resources without over-architecting or over-spending. Even if you over or underestimate, you can easily scale up or down your cluster, by changing either the number or flavor of worker nodes.
 
 To run a production app in the cloud by using Kubernetes, consider the following items:
 
@@ -121,12 +121,12 @@ To run a production app in the cloud by using Kubernetes, consider the following
 3. What [hardware](/docs/containers?topic=containers-strategy#env_flavors_node) do you need for the worker nodes? Virtual machines or bare metal?
 4. How many worker nodes do you need? This depends highly on the apps scale, the more nodes you have the more resilient your app will be.
 5. How many replicas should you have for higher availability? Deploy replica clusters in multiple locations to make your app more available and protect the app from being down due to a location failure.
-6. Which is the minimal set of resources your app needs to start up? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods. At a minimum, your worker node must be large enough to support one pod for the app.
+6. Which is the minimal set of resources your app needs to start up? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods.
 7. When to increase the number of worker nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis).
 8. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind an {{site.data.keyword.cloud_notm}} database service to your pod.
 9. Do you need to deploy a cluster on [Virtual Private Cloud infrastructure](/docs/containers?topic=containers-plan_vpc_basics) or in [Classic infrastructure](/docs/containers?topic=containers-plan_basics)? VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud.
 
-To make the preceding steps more specific, let's assume you want to run a production web application in the cloud and expect a medium to high load of traffic. Let's explore what resources you would need:
+To make the preceding steps more specific, let's assume you want to run a production web application in the cloud and expect a moderate to high load of traffic. Let's explore what resources you would need:
 
 1. Setup three clusters, one for development, one for testing and one for production.
 2. The development and testing clusters can start with minimum RAM and CPU option (for example 2 CPUs, 4GB of RAM and one worker node for each cluster).
@@ -163,7 +163,7 @@ Containers and pods are, by design, short-lived and can fail unexpectedly. You c
 You can persist app data and container data on [NFS file storage](https://www.ibm.com/products/file-storage){: external} or [block storage](https://www.ibm.com/products/block-storage){: external} by using native Kubernetes persistent volumes.
 {: shortdesc}
 
-To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage size in gigabytes, IOPS, the data retention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.cloud_notm}}. You can mount the PVC to your pod to read from and write to the PV. Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM to provide high availability for your data.
+To provision NFS file storage or block storage, you must request storage for your pod by creating a persistent volume claim (PVC). In your PVC, you can choose from predefined storage classes that define the type of storage, storage capacity in gigabytes, IOPS, the data retention policy, and the read and write permissions for your storage. A PVC dynamically provisions a persistent volume (PV) that represents an actual storage device in {{site.data.keyword.cloud_notm}}. You can mount the PVC to your pod to read from and write to the PV. Data that is stored in PVs is available, even if the container crashes, or the pod reschedules. The NFS file storage and block storage that backs the PV is clustered by IBM to provide high availability for your data.
 
 To learn how to create a PVC, follow the steps covered in the [{{site.data.keyword.containershort_notm}} storage documentation](/docs/containers?topic=containers-file_storage#file_storage).
 
@@ -273,7 +273,7 @@ To build your own Dockerfile for your existing app, you might use the following 
 - ENV NAME - Define environment variables.
 - CMD - Define commands that run when the container launches.
 
-Images are typically stored in a registry that can either be accessible by the public (public registry) or set up with limited access for a small group of users (private registry). Public registries, such as Docker Hub, can be used to get started with Docker and Kubernetes to create your first containerized app in a cluster. But when it comes to enterprise apps, use a private registry, like the one provided in {{site.data.keyword.registrylong_notm}} to protect your images from being used and changed by unauthorized users.
+Images are typically stored in a registry that can either be accessible by the public (public registry) or set up with limited access for a group of users (private registry). Public registries, such as Docker Hub, can be used to get started with Docker and Kubernetes to create your first containerized app in a cluster. But when it comes to enterprise apps, use a private registry, like the one provided in {{site.data.keyword.registrylong_notm}} to protect your images from being used and changed by unauthorized users.
 
 To containerize an app and store it in {{site.data.keyword.registrylong_notm}}:
 
