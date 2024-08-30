@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-08-30"
 lasttested: "2024-04-25"
 
 content-type: tutorial
@@ -73,7 +73,7 @@ In this section, you will create and configure a bastion host along with a secur
 3. Click **Create subnet** to provision it.
 
 ### Create and configure bastion security group
-{: #vpc-secure-management-bastion-server-create-configure-security-group }
+{: #vpc-secure-management-bastion-server-create-configure-security-group}
 
 Let's create a security group and configure inbound rules to your bastion VSI (virtual server instance).
 
