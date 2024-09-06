@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-09-06"
 lasttested: "2024-03-18"
 
 content-type: tutorial
@@ -270,7 +270,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 
 4. On the bucket page.
    1. Click the **Configuration** tab
-   2. The **Direct** endpoint will keep data within {{site.data.keyword.cloud_notm}}. Capture the direct endpoint in a shell variable.  In the Dallas, us-south, region it might be:
+   2. The **Direct** endpoint will keep data within {{site.data.keyword.cloud_notm}}. Capture the direct endpoint in a shell variable.  In the Dallas (us-south), region it might be:
       ```sh
       COS_ENDPOINT=s3.direct.us-south.cloud-object-storage.appdomain.cloud
       ```
