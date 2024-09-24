@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "title": "Solution Tutorials",
+  "introduction": "Solution tutorials provide step-by-step instructions on how to use IBM Cloud to implement common patterns based on best practices and proven technologies.",
+  "section_topics": {
+    "links": [
+      {
+        "title": "Getting started with solution tutorials",
+        "href": "/docs/solution-tutorials?topic=solution-tutorials-tutorials"
+      },
+      {
+        "title": "Feature Tutorial 1",
+        "href": "/docs/solution-tutorials?topic=solution-tutorials-tutorials"
+      },
+      {
+        "title": "Feature Tutorial 2",
+        "href": "/docs/solution-tutorials?topic=solution-tutorials-tutorials"
+      }
+    ]
+  }
+}
