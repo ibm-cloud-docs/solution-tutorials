@@ -9,12 +9,12 @@
         "href": "/docs/solution-tutorials?topic=solution-tutorials-tutorials"
       },
       {
-        "title": "Feature Tutorial 1",
-        "href": "/docs/solution-tutorials?topic=solution-tutorials-tutorials"
+        "title": "Centralize communication through a VPC Transit Hub and Spoke architecture",
+        "href": "/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1"
       },
       {
-        "title": "Feature Tutorial 2",
-        "href": "/docs/solution-tutorials?topic=solution-tutorials-tutorials"
+        "title": "Serverless web application and API with Code Engine",
+        "href": "/docs/solution-tutorials?topic=solution-tutorials-serverless-webapp"
       }
     ]
   }
