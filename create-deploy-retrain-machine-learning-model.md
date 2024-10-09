@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2024-04-19"
 
 content-type: tutorial
@@ -45,7 +45,7 @@ In the terminology of machine learning, classification is considered an instance
 * Monitor the deployed model
 * Retrain your model.
 
-![Architecture Diagram](images/solution22-build-machine-learning-model/architecture_diagram.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture Diagram](images/solution22-build-machine-learning-model/architecture_diagram.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The admin uploads a CSV file from a local machine.

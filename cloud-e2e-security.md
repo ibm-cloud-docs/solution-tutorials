@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-30"
+lastupdated: "2024-10-09"
 lasttested: "2024-01-17"
 
 content-type: tutorial
@@ -44,7 +44,7 @@ The tutorial features a sample application that enables groups of users to uploa
 
 This tutorial will work with a cluster running in Classic Infrastructure or VPC Infrastructure.
 
-![Architecture](images/solution34-cloud-e2e-security/architecture-e2e-security.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution34-cloud-e2e-security/architecture-e2e-security.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

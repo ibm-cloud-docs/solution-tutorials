@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -41,7 +41,7 @@ This tutorial presents setup of a privately routed IP connection over the {{site
 - Configure routing between sites
 
 
-![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution43-linking-secure-network-enclosures/vlan-spanning.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

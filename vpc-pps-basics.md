@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2023-12-06"
 
 content-type: tutorial
@@ -38,7 +38,7 @@ This tutorial walks you through the steps to set up a [{{site.data.keyword.pp_sh
 * Expose the application with {{site.data.keyword.pp_short}}.
 * Access the application from a consumer client through private connectivity only.
 
-![Architecture](images/vpc-pps-basics/architecture.png){: caption="Figure 1. Architecture showing {{site.data.keyword.pp_short}}" caption-side="bottom"}
+![Architecture](images/vpc-pps-basics/architecture.png){: caption="Architecture showing {{site.data.keyword.pp_short}}" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. A provider implements a resilient application supported by multiple virtual servers spread across multiple zones.
@@ -101,7 +101,7 @@ Running {{site.data.keyword.bpshort}} for the provider creates the following res
 * a {{site.data.keyword.ppnlb_short}} configured with a backend pool including all the virtual server instances,
 * and a {{site.data.keyword.pp_short}}.
 
-![Architecture](images/vpc-pps-basics/provider.png){: caption="Figure 2. Architecture of the provider resources" caption-side="bottom"}
+![Architecture](images/vpc-pps-basics/provider.png){: caption="Architecture of the provider resources" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Navigate to [Virtual Private Clouds](/vpc-ext/network/vpcs), [Subnets](/vpc-ext/network/subnets) and [Virtual server instances](/vpc-ext/compute/vs) to review the provisioned resources.
@@ -157,7 +157,7 @@ Running {{site.data.keyword.bpshort}} for the consumer creates the following res
 * one virtual server instance in each subnet,
 * one virtual private endpoint gateway configured with the {{site.data.keyword.pp_short}} CRN and with one IP address in each subnet.
 
-![Architecture](images/vpc-pps-basics/consumer.png){: caption="Figure 3. Architecture of the consumer resources" caption-side="bottom"}
+![Architecture](images/vpc-pps-basics/consumer.png){: caption="Architecture of the consumer resources" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Navigate to [Virtual server instances](/vpc-ext/compute/vs) to review the provisioned instances.

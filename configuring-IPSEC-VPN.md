@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -56,7 +56,7 @@ VPN, GRE tunnel and static routing. More complex VPN configurations that use dyn
 - Route traffic through a GRE tunnel
 
 
-![Architecture](images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution36-configuring-IPSEC-VPN/sec-priv-vpn.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

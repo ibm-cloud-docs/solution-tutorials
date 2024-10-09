@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -39,7 +39,7 @@ This tutorial presents the setup of Network Address Translation (NAT) masquerade
 -	Setup Source Network Address Translation (SNAT) on a Virtual Router Appliance (VRA)
 -	Setup firewall rules for Internet access
 
-![Architecture](images/solution35-nat-config-private/vra-nat.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution35-nat-config-private/vra-nat.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
@@ -197,4 +197,3 @@ The VRA is on a monthly paid plan. Cancellation does not result in a refund. It 
 -	[VRA Network Address Translation](/docs/virtual-router-appliance?topic=virtual-router-appliance-about-the-vra#network-address-translation-nat-)
 -	[NAT Masquerade](/docs/virtual-router-appliance?topic=virtual-router-appliance-setting-up-nat-rules-on-vyatta-5400#one-to-many-nat-rule-masquerade-)
 -	[Supplemental VRA documentation](/docs/virtual-router-appliance?topic=virtual-router-appliance-supplemental-vra-documentation#supplemental-vra-documentation).
-

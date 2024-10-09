@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-09-24"
+lastupdated: "2024-10-09"
 lasttested: "2024-03-18"
 
 content-type: tutorial
@@ -38,7 +38,7 @@ The platform is designed to address the needs of developers who just want their 
 * Understand how easy it is to deploy and scale an application using {{site.data.keyword.codeengineshort}}.
 * Learn the use of jobs to execute run to completion workloads.
 
-![Architecture](images/solution54-code-engine/architecture_diagram.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution54-code-engine/architecture_diagram.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Developer creates a {{site.data.keyword.codeengineshort}} project and deploys a frontend and a backend {{site.data.keyword.codeengineshort}} application.

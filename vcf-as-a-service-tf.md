@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2024-01-04"
 
 
@@ -40,7 +40,7 @@ In this tutorial, you will learn:
 
 The following diagram presents an overview of the solution to be deployed.
 
-![Architecture](images/solution66-vcf-as-a-service/vcfaas-example-diagrams-tf-vcfaas-basic.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution66-vcf-as-a-service/vcfaas-example-diagrams-tf-vcfaas-basic.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Use IBM Cloud Console to create a VDC in your single tenant instance. Your instance may have one or more VDCs, so you can have a dedicated VDC for testing purposes. This example VDC uses only a `2 IOPS/GB` storage pool.
@@ -194,7 +194,7 @@ This example infrastructure Terraform template is located in folder [`vcd-demo-i
 
 This demo Terraform template deploys the following example infrastructure, which consists of two routed and one isolated VDC networks, three VMs as well as example SNAT, DNAT and firewall rules.
 
-![Basic infrastructure](images/solution66-vcf-as-a-service/vcfaas-example-diagrams-tf-vcfaas-basic-no-steps.svg){: caption="Figure 2. Basic infrastructure" caption-side="bottom"}
+![Basic infrastructure](images/solution66-vcf-as-a-service/vcfaas-example-diagrams-tf-vcfaas-basic-no-steps.svg){: caption="Basic infrastructure" caption-side="bottom"}
 {: style="text-align: center;"}
 
 The Terraform uses [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} and the main provider resources in the example used are:

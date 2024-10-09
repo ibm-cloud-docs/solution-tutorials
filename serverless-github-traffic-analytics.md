@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2023-10-10"
 
 content-type: tutorial
@@ -28,7 +28,7 @@ In this tutorial, you create an application to automatically collect GitHub traf
 {: shortdesc}
 
 
-![Architecture Diagram](images/solution24-github-traffic-analytics/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture Diagram](images/solution24-github-traffic-analytics/Architecture.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

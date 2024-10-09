@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2024-01-30"
 
 content-type: tutorial
@@ -39,7 +39,7 @@ Microservices are popular because they allow an enterprise to organize their dev
 ### Abstract Architecture:
 {: #vpc-tg-dns-iam-1}
 
-![Architecture](images/solution59-vpc-tg-dns-iam/simple.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution59-vpc-tg-dns-iam/simple.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 In the diagram above the end user is accessing the applications. The applications are leveraging shared microservices. The company has separate DevOps teams that own application1, application2 and shared. A networking team focuses on connectivity and network security. The DevOps teams manage Virtual Service Instances, VSIs, used to implement the services they create and support.

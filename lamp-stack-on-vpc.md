@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2024-05-22"
 
 content-type: tutorial
@@ -37,7 +37,7 @@ This tutorial walks you through the creation of an Ubuntu **L**inux virtual serv
 * Configure logging and monitoring to detect outages and monitor for slow performance (optional).
 * Resize the VSI (optional).
 
-![Architecture diagram](images/solution56-lamp-stack-on-vpc/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture diagram](images/solution56-lamp-stack-on-vpc/Architecture.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

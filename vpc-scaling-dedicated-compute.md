@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2024-03-18"
 
 content-type: tutorial
@@ -39,7 +39,7 @@ You will provision all of these services and VPC resources using {{site.data.key
 * Learn how to scale instances dynamically or periodically.
 * Learn the use of dedicated hosts.
 
-![Architecture](images/solution62-vpc-scaling-dedicated/architecture_diagram.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution62-vpc-scaling-dedicated/architecture_diagram.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The frontend app deployed on VSI(s) communicates to the backend app via the private load balancer.
