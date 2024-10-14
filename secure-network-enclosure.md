@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2019-04-23"
 
 content-type: tutorial
@@ -47,7 +47,7 @@ This tutorial is a starting point for classic networking on the {{site.data.keyw
 * Secure the VRA and enclosure with firewall rules
 
 
-![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution33-secure-network-enclosure/Secure-priv-enc.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Configure VPN

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2024-04-29"
 
 content-type: tutorial
@@ -44,7 +44,7 @@ In short, using VPC you can:
 - Know how to apply security groups to secure access to the servers
 
 
-![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution40-vpc-public-app-private-backend/Architecture.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The admin (DevOps) sets up the required infrastructure (VPC, subnets, security groups with rules, VSIs) on the cloud.

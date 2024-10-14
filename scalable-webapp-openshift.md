@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2024-06-25"
 
 content-type: tutorial
@@ -39,7 +39,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you can create Kubernetes cluster
 * Scale {{site.data.keyword.openshiftshort}} pods.
 
 
-![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution50-scalable-webapp-openshift/Architecture.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

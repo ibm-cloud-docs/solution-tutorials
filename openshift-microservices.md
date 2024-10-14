@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2023-09-26"
 
 content-type: tutorial
@@ -39,7 +39,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 * Observe the cluster using {{site.data.keyword.mon_full_notm}}
 
 
-![Architecture](images/solution55-openshift-microservices/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution55-openshift-microservices/Architecture.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

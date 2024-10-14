@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-09-06"
+lastupdated: "2024-10-09"
 lasttested: "2024-04-23"
 
 content-type: tutorial
@@ -25,7 +25,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 
 A Virtual Private Cloud (VPC) provides network isolation and security in the {{site.data.keyword.cloud_notm}}. A VPC can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. VPCs can be connected to an on-premises enterprise and each other. This may create the need to route traffic through centralized firewall-gateway appliances. This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
 
-![vpc-transit-overview](images/vpc-transit/vpc-transit-overview.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![vpc-transit-overview](images/vpc-transit/vpc-transit-overview.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 This is part two of a two part tutorial. This part will focus on routing all traffic between VPCs through a transit hub firewall-router. A scalable firewall-router using a Network Load Balancer is discussed and implemented. Private DNS is used for both for microservice identification and {{site.data.keyword.cloud_notm}} service instance identification using a Virtual Private Endpoint (VPE) gateway.
@@ -174,9 +174,9 @@ If you were following along in part one some additional ingress routes were adde
 
 Zone|Destination|Next hop
 --|--|--
-us-south-1|10.1.0.0/16|10.1.15.196
-us-south-2|10.2.0.0/16|10.2.15.196
-us-south-3|10.3.0.0/16|10.3.15.196
+Dallas 1|10.1.0.0/16|10.1.15.196
+Dallas 2|10.2.0.0/16|10.2.15.196
+Dallas 3|10.3.0.0/16|10.3.15.196
 
 To observe this:
 1. Open the [VPCs](/vpc-ext/network/vpcs) in the {{site.data.keyword.cloud_notm}}.
@@ -187,45 +187,45 @@ To observe this:
 ### Route Spoke and Transit to the firewall-router
 {: #vpc-transit2-route-spoke-and-transit-to-firewall-router}
 
-Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone as the originating instance is accomplished by these routes in the spoke's default egress routing table shown for Dallas (us-south):
+Routing all cloud traffic originating at the spokes through the transit VPC firewall-router in the same zone as the originating instance is accomplished by these routes in the spoke's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-us-south-1|10.0.0.0/8|10.1.15.196
-us-south-2|10.0.0.0/8|10.2.15.196
-us-south-3|10.0.0.0/8|10.3.15.196
+Dallas 1|10.0.0.0/8|10.1.15.196
+Dallas 2|10.0.0.0/8|10.2.15.196
+Dallas 3|10.0.0.0/8|10.3.15.196
 
 Similarly in the transit VPC - route all enterprise and cloud traffic through the firewall-router in the same zone as the originating instance. For example a transit test instance 10.1.15.4 (transit zone 1) attempting to connect with 10.2.0.4 (spoke 0, zone 2) will be sent through the firewall-router in zone 1: 10.1.15.196.
 
-Routes in transit's default egress routing table shown for Dallas (us-south):
+Routes in transit's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-us-south-1|10.0.0.0/8|10.1.15.196
-us-south-2|10.0.0.0/8|10.2.15.196
-us-south-3|10.0.0.0/8|10.3.15.196
-us-south-1|192.168.0.0/16|10.1.15.196
-us-south-2|192.168.0.0/16|10.2.15.196
-us-south-3|192.168.0.0/16|10.3.15.196
+Dallas 1|10.0.0.0/8|10.1.15.196
+Dallas 2|10.0.0.0/8|10.2.15.196
+Dallas 3|10.0.0.0/8|10.3.15.196
+Dallas 1|192.168.0.0/16|10.1.15.196
+Dallas 2|192.168.0.0/16|10.2.15.196
+Dallas 3|192.168.0.0/16|10.3.15.196
 
 ### Do not route Intra VPC traffic to the firewall-router
 {: #vpc-transit2-do-not-route-intra-zone-traffic-to-firewall-router}
 
 In this example Intra-VPC traffic will not pass through the firewall-router. For example resources in spoke 0 can connect to other resources on spoke 0 directly. To accomplish this additional more specific routes can be added to delegate internal traffic. For example in spoke 0, which has the CIDR ranges: 10.1.0.0/24, 10.2.0.0/24, 10.3.0.0/24 the internal routes can be delegated.
 
-Routes in spoke 0's default egress routing table shown for Dallas (us-south):
+Routes in spoke 0's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-us-south-1|10.1.0.0/24|delegate
-us-south-1|10.2.0.0/24|delegate
-us-south-1|10.3.0.0/24|delegate
-us-south-2|10.1.0.0/24|delegate
-us-south-2|10.2.0.0/24|delegate
-us-south-2|10.3.0.0/24|delegate
-us-south-3|10.1.0.0/24|delegate
-us-south-3|10.2.0.0/24|delegate
-us-south-3|10.3.0.0/24|delegate
+Dallas 1|10.1.0.0/24|delegate
+Dallas 1|10.2.0.0/24|delegate
+Dallas 1|10.3.0.0/24|delegate
+Dallas 2|10.1.0.0/24|delegate
+Dallas 2|10.2.0.0/24|delegate
+Dallas 2|10.3.0.0/24|delegate
+Dallas 3|10.1.0.0/24|delegate
+Dallas 3|10.2.0.0/24|delegate
+Dallas 3|10.3.0.0/24|delegate
 
 Similar routes are added to the transit and other spokes.
 
@@ -264,7 +264,7 @@ The green path is an example of the originator spoke 0 zone 2 10.2.0.4 routing t
 
 Zone|Destination|Next hop
 --|--|--
-us-south-2|10.0.0.0/8|10.2.15.196
+Dallas 2|10.0.0.0/8|10.2.15.196
 
 Moving left to right the firewall-router in the middle zone, zone 2, of the diagram is selected. On the return path zone 1 is selected.
 
@@ -273,13 +273,13 @@ To fix this a few more specific routes need to be added to force the higher numb
 ![Cross zone routing enabled](images/vpc-transit/vpc-transit-asymmetric-spoke-fw-fix.svg){: caption="Cross zone routing enabled" caption-side="bottom"}
 {: style="text-align: center;"}
 
-Routes in each spoke's default egress routing table shown for Dallas (us-south):
+Routes in each spoke's default egress routing table (shown for Dallas/us-south):
 
 Zone|Destination|Next hop
 --|--|--
-us-south-2|10.1.0.0/16|10.1.15.196
-us-south-3|10.1.0.0/16|10.1.15.196
-us-south-3|10.2.0.0/16|10.2.15.196
+Dallas 2|10.1.0.0/16|10.1.15.196
+Dallas 3|10.1.0.0/16|10.1.15.196
+Dallas 3|10.2.0.0/16|10.2.15.196
 
 These routes are also going to correct a similar transit <--> spoke cross zone asymmetric routing problem. Consider transit worker 10.1.15.4 -> spoke worker 10.2.0.4. Traffic from transit worker in zone 1 will choose the firewall-router in the zone 1 (same zone). On the return trip instead of firewall-router in zone 2 (same zone) now firewall-router in zone 1 will be used.
 
@@ -327,7 +327,7 @@ This diagram shows a single zone with a Network Load Balancer (NLB) configured i
 Observe the changes that were made:
 
 1. Open the [Load balancers for VPC](/vpc-ext/network/loadBalancers).
-1. Select the load balancer in zone 1 (us-south-1) it has the suffix **fw-z1-s3**.
+1. Select the load balancer in zone 1 (Dallas 1/us-south-1) it has the suffix **fw-z1-s3**.
 1. Note the **Private IPs**.
 
 Compare the Private IPs with those in the transit VPC ingress route table:
@@ -373,13 +373,13 @@ NLB route mode will rewrite route table entries - always keeping the active NLB 
 
 It will be required to maintain an ingress route in the transit VPC which will be rewritten by the NLB to reflect the active appliance.  The spoke egress route will deliver packets to the correct zone of the transit VPC. Routing within the transit VPC zone will find the matching ingress rule which will contain the active appliance.
 
-Below is the transit VPC ingress route table discussed earlier.  The next hop will be kept up to date with the active NLB appliance.  Note that us-south-3 has a change written by the NLB route mode service to reflect the active appliance.
+Below is the transit VPC ingress route table discussed earlier.  The next hop will be kept up to date with the active NLB appliance.  Note that Dallas 3 has a change written by the NLB route mode service to reflect the active appliance.
 
 Zone|Destination|Next hop
 --|--|--
-us-south-1|10.0.0.0/8|10.1.15.196
-us-south-2|10.0.0.0/8|10.2.15.196
-us-south-3|10.0.0.0/8|10.3.15.197
+Dallas 1|10.0.0.0/8|10.1.15.196
+Dallas 2|10.0.0.0/8|10.2.15.196
+Dallas 3|10.0.0.0/8|10.3.15.197
 
 The NLB requires that a IAM authorization be created that allows the NLB to write to the VPC. This authorization was created by the `apply.sh` script. See [creating a network load balancer with routing mode](/docs/vpc?topic=vpc-deploy-nlb) for more details on the configuration that was performed by the script.
 {: note}

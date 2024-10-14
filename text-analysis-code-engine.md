@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-09-06"
+lastupdated: "2024-10-09"
 lasttested: "2024-03-18"
 
 content-type: tutorial
@@ -38,7 +38,7 @@ The platform is designed to address the needs of developers who just want their 
 * Understand how easy it is to deploy and scale an application using {{site.data.keyword.codeengineshort}}.
 * Learn the use of jobs to execute run to completion workloads.
 
-![Architecture](images/solution54-code-engine/architecture_diagram.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution54-code-engine/architecture_diagram.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. Developer creates a {{site.data.keyword.codeengineshort}} project and deploys a frontend and a backend {{site.data.keyword.codeengineshort}} application.
@@ -270,7 +270,7 @@ With {{site.data.keyword.nlufull}}, developers can analyze semantic features of 
 
 4. On the bucket page.
    1. Click the **Configuration** tab
-   2. The **Direct** endpoint will keep data within {{site.data.keyword.cloud_notm}}. Capture the direct endpoint in a shell variable.  In the Dallas (us-south), region it might be:
+   2. The **Direct** endpoint will keep data within {{site.data.keyword.cloud_notm}}. Capture the direct endpoint in a shell variable.  In the Dallas, us-south, region it might be:
       ```sh
       COS_ENDPOINT=s3.direct.us-south.cloud-object-storage.appdomain.cloud
       ```

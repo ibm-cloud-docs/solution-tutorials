@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "title": "Solution Tutorials",
+  "introduction": "Solution tutorials provide step-by-step instructions on how to use IBM Cloud to implement common patterns based on best practices and proven technologies.",
+  "section_topics": {
+    "links": [
+      {
+        "title": "Getting started with solution tutorials",
+        "href": "/docs/solution-tutorials?topic=solution-tutorials-tutorials"
+      },
+      {
+        "title": "Centralize communication through a VPC Transit Hub and Spoke architecture",
+        "href": "/docs/solution-tutorials?topic=solution-tutorials-vpc-transit1"
+      },
+      {
+        "title": "Serverless web application and API with Code Engine",
+        "href": "/docs/solution-tutorials?topic=solution-tutorials-serverless-webapp"
+      }
+    ]
+  }
+}

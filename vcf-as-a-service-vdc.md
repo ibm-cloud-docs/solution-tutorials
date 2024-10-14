@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2024-01-04"
 
 content-type: tutorial
@@ -40,7 +40,7 @@ In this tutorial, you will learn:
 
 The following diagram presents an overview of the solution to be deployed.
 
-![Architecture](images/solution66-vcf-as-a-service/vcfaas-example-diagrams-ui-vcfaas-vdc-tutorial.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution66-vcf-as-a-service/vcfaas-example-diagrams-ui-vcfaas-vdc-tutorial.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 This tutorial is divided into the following steps:
@@ -89,7 +89,7 @@ Next, you will create the following VDC networks:
 | routed network   | `net-application`   | `192.168.100.1/24`
 | routed network   | `net-db`            | `192.168.101.1/24`
 | isolated         | `net-isolated-db`   | `192.168.102.1/24`
-{: caption="Table 1. VDC networks" caption-side="bottom"}
+{: caption="VDC networks" caption-side="bottom"}
 
 Routed VDC networks are attached to the edge gateway while an isolated VDC network is a standalone network without any platform provided routing capabilities. You can create more networks based on your needs by following the same logic and steps.
 
@@ -123,7 +123,7 @@ You will create the following VMs:
 | `jump-server-1`        | Windows Server 2022  | `net-application`
 | `application-server-1` | RedHat Linux 8       | `net-application`
 | `db-server-1`          | RedHat Linux 8       | `net-db`, `net-isolated-db`
-{: caption="Table 2. Virtual machines" caption-side="bottom"}
+{: caption="Virtual machines" caption-side="bottom"}
 
 The first server will be used as a jump server, which you can optionally reach through the public Internet. The other two servers are examples of application and database servers.
 
@@ -168,7 +168,7 @@ You will create the following IP Sets and Static Groups:
 | IP Set          | `ipset-dnat-to-jump`  | `public-ip-0`
 | IP Set          | `ipset-snat`          | `public-ip-1`
 | Static Group    | `sg-private-networks` | `net-application` and `net-db`
-{: caption="Table 3. IP Sets and Static Groups" caption-side="bottom"}
+{: caption="IP Sets and Static Groups" caption-side="bottom"}
 
 To create an IP Set:
 
@@ -271,7 +271,7 @@ The next step is to create firewall rules. By default, the {{site.data.keyword.v
 | `dnat-to-jump`   | `RDP`, `ICMP ALL`  | `Any`                 | `ipset-dnat-to-jump` | Allow      | IPv4
 | `egress-to-inet` | N/A                | `sg-private-networks` | `Any`                | Allow      | IPv4
 | `default_rule`   | N/A                | `Any`                 | `Any`                | Drop       | IPv4
-{: caption="Table 5. Firewall rules" caption-side="bottom"}
+{: caption="Firewall rules" caption-side="bottom"}
 
 The `default_rule` has been pre-provisioned by {{site.data.keyword.cloud_notm}}. It is listed above just for illustration purposes.
 {: note}

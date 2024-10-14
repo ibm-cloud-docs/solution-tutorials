@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2024-04-15"
 
 content-type: tutorial
@@ -39,7 +39,7 @@ Static websites are great for performance and security. Their architectural mode
 
 The application shown in this tutorial is a simple guestbook website where users can post messages.
 
-![Architecture](./images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](./images/solution64-serverless-webapp/architecture-serverless-api-webapp.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 

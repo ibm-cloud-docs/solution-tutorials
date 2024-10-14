@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2023-10-10"
 
 content-type: tutorial
@@ -39,7 +39,7 @@ This tutorial provides the automation to create resources that demonstrate Virtu
 
 The following diagram shows the resources created by this tutorial
 
-![Architecture](images/solution46-vpc-vpn/vpc-site2site-vpn-tutorial.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution46-vpc-vpn/vpc-site2site-vpn-tutorial.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 A terraform configuration will create the following resources:

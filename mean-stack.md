@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2024-04-22"
 
 content-type: tutorial
@@ -37,7 +37,7 @@ This tutorial walks you through the creation of a web application using the popu
 - Scale runtime CPU and memory resources.
 - Scale database memory and disk resources.
 
-![Architecture diagram](images/solution7/Architecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture diagram](images/solution7/Architecture.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The user accesses the application using a web browser.

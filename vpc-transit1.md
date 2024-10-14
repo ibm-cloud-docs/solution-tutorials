@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-09-06"
+lastupdated: "2024-10-09"
 lasttested: "2024-04-19"
 
 content-type: tutorial
@@ -26,7 +26,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 A Virtual Private Cloud (VPC) provides network isolation and security in the {{site.data.keyword.cloud_notm}}. A VPC can be a building block that encapsulates a corporate division (marketing, development, accounting, ...) or a collection of microservices owned by a DevSecOps team. VPCs can be connected to an on-premises enterprise and each other. This may create the need to route traffic through centralized firewall-gateway appliances. This tutorial will walk through the implementation of a hub and spoke architecture depicted in this high-level view:
 {: shortdesc}
 
-![vpc-transit-overview](images/vpc-transit/vpc-transit-overview.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![vpc-transit-overview](images/vpc-transit/vpc-transit-overview.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 This is part one of a two part tutorial. This part will introduce the VPC transit hub as the conduit to the enterprise. Enterprise to spoke VPC connectivity between microservices will be discussed and implemented. This architecture will support a number of scenarios:
@@ -95,10 +95,10 @@ This diagram shows just zone 1 in more detail. The subnet sizes and layout are i
 
 Above the enterprise is on the left and the {{site.data.keyword.cloud_notm}} on the right. In the {{site.data.keyword.cloud_notm}} for simplictiy a single zone is depicted for the transit VPC and Spoke 0. Notice the CIDR blocks do not overlap and VPCs all consume a CIDR block in each zone:
 - The on-premises CIDR is 192.168.0.0/16.
-- The zones in this [multi-zone region](/docs/overview?topic=overview-locations) are 10.\*.0.0/16. The second digit: 1, 2, 3 is the zone number. For Dallas (us-south):
-   - 10.1.0.0/16, zone 1, us-south-1.
-   - 10.2.0.0/16, zone 2, us-south-2.
-   - 10.3.0.0/16, zone 3, us-south-3.
+- The zones in this [multi-zone region](/docs/overview?topic=overview-locations) are 10.\*.0.0/16. The second digit: 1, 2, 3 is the zone number (shown for Dallas/us-south):
+   - 10.1.0.0/16, zone 1, Dallas 1, us-south-1.
+   - 10.2.0.0/16, zone 2, Dallas 2, us-south-2.
+   - 10.3.0.0/16, zone 3, Dallas 3, us-south-3.
 - The transit VPC consumes CIDRs 10.\*.15.0/24:
    - 10.1.15.0/24, zone 1.
    - 10.2.15.0/24, zone 2.
@@ -337,18 +337,18 @@ Traffic reaches the firewall-router appliance through routing tables.
 
 The zone is determined by the {{site.data.keyword.tg_short}} which will examine the destination IP address of each packet and route it to the matching zone based on the routes learned. The {{site.data.keyword.tg_short}} learns the routes advertised from the connections. Each VPC will advertise its address prefixes which allows VPCs to communicate with each other after connecting to a {{site.data.keyword.tg_short}}. But how would the spokes learn the routes to the enterprise?  How does the enterprise learn the routes to the spokes? The enterprise and spokes are not connected to the same {{site.data.keyword.tg_short}}.
 
-Both sets of routes are in the transit's ingress routing table are shown for Dallas (us-south). And the **Advertise** flag is set to **ON** to pass those routes to all {{site.data.keyword.tg_short}}s.
+Both sets of routes are in the transit's ingress routing table (shown for Dallas/us-south). And the **Advertise** flag is set to **ON** to pass those routes to all {{site.data.keyword.tg_short}}s.
 
 Zone|Destination|Next hop|Advertise
 --|--|--|--
-us-south-1|10.1.0.0/16|10.1.15.197|On
-us-south-2|10.2.0.0/16|10.2.15.197|On
-us-south-3|10.3.0.0/16|10.3.15.197|On
-us-south-1|192.168.0.0/16|10.1.15.197|On
-us-south-2|192.168.0.0/16|10.2.15.197|On
-us-south-3|192.168.0.0/16|10.3.15.197|On
+Dallas 1|10.1.0.0/16|10.1.15.197|On
+Dallas 2|10.2.0.0/16|10.2.15.197|On
+Dallas 3|10.3.0.0/16|10.3.15.197|On
+Dallas 1|192.168.0.0/16|10.1.15.197|On
+Dallas 2|192.168.0.0/16|10.2.15.197|On
+Dallas 3|192.168.0.0/16|10.3.15.197|On
 
-The next_hop identifies the firewall-router. In the table above 10.1.15.196 zone us-south-1 and 10.2.15.196 zone us-south-2, etc. You can observe this using the {{site.data.keyword.cloud_notm}} console.
+The next_hop identifies the firewall-router. In the table above 10.1.15.196 zone Dallas 1 and 10.2.15.196 zone Dallas 2, etc. You can observe this using the {{site.data.keyword.cloud_notm}} console.
 
 1. Open [Virtual server instances for VPC](/vpc-ext/compute/vs) to find the **fw** instances and associated **Reserved IP** (click the **Name** column header to sort).
 1. Match them up with the table above to verify the next hop relationship.
@@ -384,9 +384,9 @@ This routing can be achieved by adding these routes to the transit ingress route
 
 Zone|Destination|Next hop
 --|--|--
-us-south-1|10.1.15.0/24|Delegate
-us-south-2|10.2.15.0/24|Delegate
-us-south-3|10.3.15.0/24|Delegate
+Dallas 1|10.1.15.0/24|Delegate
+Dallas 2|10.2.15.0/24|Delegate
+Dallas 3|10.3.15.0/24|Delegate
 
 1. To observe the current value of the ingress route table visit the [Routing tables for VPC](/vpc-ext/network/routingTables) in the {{site.data.keyword.cloud_notm}} console. Select the **transit** VPC from the drop down and then select the **tgw-ingress** routing table.
 

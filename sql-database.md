@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2023-09-11"
 
 content-type: tutorial
@@ -27,7 +27,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 This tutorial shows how to provision a SQL (relational) database service. As administrator, you create a table and load a large data set (city information) into the database. Then, you deploy a web app "worldcities" to [{{site.data.keyword.codeenginefull}}](/codeengine/){: external}. The app allows regular users to look up records from the cloud database. The app is written in Python using the [Flask framework](https://flask.palletsprojects.com){: external}.
 {: shortdesc}
 
-![Architecture diagram](images/solution5/cloud-sql-database.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture diagram](images/solution5/cloud-sql-database.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 ## Objectives

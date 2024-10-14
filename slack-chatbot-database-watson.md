@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-09"
 lasttested: "2023-09-29"
 
 content-type: tutorial
@@ -38,7 +38,7 @@ The Slack integration sends messages between Slack and {{site.data.keyword.conve
 * Create and deploy a Python database app to {{site.data.keyword.codeengineshort}}
 * Access a {{site.data.keyword.Db2_on_Cloud_short}} database via a {{site.data.keyword.conversationshort}} custom extension
 
-![Architecture](images/solution19/SlackbotArchitecture.svg){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Architecture](images/solution19/SlackbotArchitecture.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 1. The user interacts with [{{site.data.keyword.conversationfull}}](/docs/watson-assistant), either through Slack or using a web chat client

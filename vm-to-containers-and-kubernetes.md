@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2024
-lastupdated: "2024-08-29"
+lastupdated: "2024-10-09"
 lasttested: "2023-09-05"
 
 content-type: tutorial
@@ -51,7 +51,7 @@ Depending on the type of app that you have, the steps to migrate your app might 
 
 The following diagram shows an example of a traditional app architecture that is based on virtual machines.
 
-![Diagram of traditional app architecture](images/solution30/traditional_architecture.png){: caption="Figure 1. Architecture diagram of the tutorial" caption-side="bottom"}
+![Diagram of traditional app architecture](images/solution30/traditional_architecture.png){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
 
 
