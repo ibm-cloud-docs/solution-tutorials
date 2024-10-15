@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2024-10-15"
 lasttested: "2024-05-22"
 
 content-type: tutorial
@@ -367,12 +367,11 @@ You can monitor CPU, volume, memory, and network usage of your VSI instances aft
 ### Server logging
 {: #lamp-stack-on-vpc-12}
 
-You can use {{site.data.keyword.la_full_notm}} to manage system and application logs in the IBM Cloud.
+You can create a {{site.data.keyword.logs_full_notm}} instance to manage system and application logs in the IBM Cloud.
 
-{{site.data.keyword.la_full_notm}} offers administrators, DevOps teams, and developers advanced features to filter, search, and tail log data, define alerts, and design custom views to monitor application and system logs
+{{site.data.keyword.logs_full_notm}} offers administrators, DevOps teams, and developers advanced features to filter, search, and tail log data, define alerts, and design custom views to monitor application and system logs
 
-If you would like to configure the logging service follow the steps outlined in the [Managing Ubuntu logs with {{site.data.keyword.la_full_notm}}](/docs/log-analysis?topic=log-analysis-ubuntu)
-
+Follow the instructions outlined in the [Managing the Logging agent for Linux](/docs/cloud-logs?topic=cloud-logs-agent-linux)
 
 ## Configure a Bring-Your-Own-Key (BYOK) Encrypted Data Volume (Optional)
 {: #lamp-stack-on-vpc-configure_data_volume}

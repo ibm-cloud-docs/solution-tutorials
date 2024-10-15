@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
-lasttested: "2023-10-10"
+lastupdated: "2024-10-15"
+lasttested: "2024-10-03"
 
 content-type: tutorial
-services: secure-enterprise, containers, activity-tracker, Registry
+services: secure-enterprise, containers, cloud-logs, atracker, Registry
 account-plan: paid
 completion-time: 2h
 use-case: IdentityAndAccessManagement, ApplicationIntegration
@@ -17,7 +17,7 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 # Use trusted profiles as foundation for secure cloud environments
 {: #trusted-profile-for-enterprise-security}
 {: toc-content-type="tutorial"}
-{: toc-services="secure-enterprise, containers, activity-tracker, Registry"}
+{: toc-services="secure-enterprise, containers, cloud-logs, atracker, Registry"}
 {: toc-completion-time="2h"}
 {: toc-use-case="IdentityAndAccessManagement, ApplicationIntegration"}
 
@@ -41,14 +41,14 @@ In this tutorial, you are going to learn about trusted profiles, their use cases
 - The container image for the application is pulled from the {{site.data.keyword.registryshort_notm}} and deployed to the Kubernetes cluster into a namespace.
 - The user connects to the application.
 - The application reads a special access token from the Kubernetes environment and turns it into an IAM access token for a trusted profile.
-- IAM logs events to {{site.data.keyword.at_short}}.
+- IAM logs auditing events to {{site.data.keyword.atracker_full_notm}}.
 
 ## Before you begin
 {: #trusted-profile-for-enterprise-security-prereqs}
 
 This tutorial does not require any installation and is only using the [{{site.data.keyword.cloud_notm}} console](/){: external}.
 
-An instance of [{{site.data.keyword.at_short}}](/docs/activity-tracker?topic=activity-tracker-getting-started#gs_objectives) in the Frankfurt region is required to see global IAM events produced when utilizing trusted profiles. An instance with streaming logs is sufficient, but persisted logs are recommended.
+The [{{site.data.keyword.atracker_full_notm}}](/docs/atracker?topic=atracker-about) must be configured to route auditing events to a {{site.data.keyword.logs_full_notm}} target instance. Route global audit events as described in [configuring an IBM Logs target](/docs/atracker?topic=atracker-getting-started-target-cloud-logs) if not currently configured in your account.
 
 ## Overview: Trusted profiles
 {: #trusted-profile-for-enterprise-security-overview}
@@ -120,7 +120,7 @@ Similar to a service ID, it is possible to specify the cloud resource name (CRN)
 {: #trusted-profile-for-enterprise-security-cr0}
 {: step}
 
-To put theory into praxis, you are going to authorize a containerized app to perform tasks in an {{site.data.keyword.cloud_notm}} account. The app is deployed to a Kubernetes cluster. It serves as compute resource which is going to be used to establish trust to use the trusted profile. You can perform all the following steps in a web browser with multiple open tabs. Make sure to leave the browser tabs open as instructed.
+To put theory into practice, you are going to authorize a containerized app to perform tasks in an {{site.data.keyword.cloud_notm}} account. The app is deployed to a Kubernetes cluster. It serves as compute resource which is going to be used to establish trust to use the trusted profile. You can perform all the following steps in a web browser with multiple open tabs. Make sure to leave the browser tabs open as instructed.
 
 For security reasons, the app is operating in a read-only mode. It tries to gather a list of your deployed resources. You will assign privileges to the app which determine which resources it can read. Moreover, you will deploy the app in a way, so that it is accessible from within the Kubernetes cluster only, not from the public internet.
 
@@ -158,7 +158,7 @@ Open the [Kubernetes clusters](/kubernetes/clusters){: external} and click **Cre
 - Scale down to 1 **Worker nodes per zone**.
 - Choose the smallest **Worker Pool flavor**.
 - For the **Cluster name** use **mycluster-tpcr**.
-- Click **Create**.
+- Turn off all security options for this demonstration cluster that will be deleted after completing this tutorial. It will be important to carefully evaluate these for other clusters you create.
   
 When the cluster is provisioned, leave the browser (*cluster overview*) tab open and available for later. You can move on to the next steps nonetheless.
 
@@ -187,7 +187,7 @@ When the cluster is provisioned, leave the browser (*cluster overview*) tab open
 
 With the Kubernetes cluster and the trusted profile in place, it is time to deploy a simple test app. The source code for the app and the configuration is in the GitHub repository [**trusted-profile-enterprise-security**](https://github.com/IBM-Cloud/trusted-profile-enterprise-security){: external}. You don't need it for the deployment, but might be interested in how it works nonetheless.
 
-1. In the browser tab *cluster overview*, check that the cluster has been fully deployed.  You might want to refresh the browser and check that all checkmarks are green. If this is the case, click on **Kubernetes dashboard** and a new browser tab opens (*Kubernetes dashboard*).
+1. In the browser tab *cluster overview*, check that the cluster has been fully deployed. In a one node configuration the ingress status may report a warning. You might want to refresh the browser and check that other checkmarks are green. If this is the case, click on **Kubernetes dashboard** and a new browser tab opens (*Kubernetes dashboard*).
 2. In the top left, find the namespace selector and switch to **All namespaces**.
 3. On the upper right, click on **+** to create a new resource. Paste the following content into the text form **Create from input**.
    ```yaml
@@ -260,11 +260,11 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
 {: #trusted-profile-for-enterprise-security-cr4}
 {: step}
 
-With the trusted profile and the Kubernetes cluster with the running app in place, it is time to test. Start by opening a browser-based shell to run commands, a tab for the container logs, and another one for {{site.data.keyword.at_short}} logs.
+With the trusted profile and the Kubernetes cluster with the running app in place, it is time to test. Start by opening a browser-based shell to run commands, a tab for the container logs, and another one for {{site.data.keyword.logs_full_notm}} logs.
 
 1. In the currently active tab *Kubernetes dashboard* with the pods, click on the menu with three dots on the right and *right-click* on **Exec** in that menu. Choose to open the link in a new tab (*container shell*). It opens a shell for the running container. Still in the browser tab *Kubernetes dashboard*, click on the three dots menu again and then with a left-click on **Logs**. In the new three dots menu enable **Auto refresh**.
   
-   Last, open a tab with the [{{site.data.keyword.at_short}} services](/observe/activitytracker){: external} and select the Frankfurt instance (*{{site.data.keyword.at_short}} logs*). 
+   Last, open a tab with the [{{site.data.keyword.logs_full_notm}} service](/observability/logging){: external} and select the **Cloud Logs** tab and click the name of the instance that is receiving the auditing events.
 2. In the browser tab *container shell*, run the following command in the shell to test the app:
    ```sh
    curl -s localhost:8080
@@ -291,9 +291,9 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
    {: note}
 
 
-4. Switch to the *{{site.data.keyword.at_short}} logs* browser tab and use the search box at the bottom to look for the term **profile**. It should return at least one line with `IAM Identity Service: login.computeresource-token TPwithCR`. Expand the record to examine details, look for the **initiator** section. It lists the trusted profile which was used for the request and information on the compute resource. The **authName** should match your deployment from the *Kubernetes dashboard* browser tab.
+4. Switch to the *{{site.data.keyword.logs_full_notm}}* browser tab and use the search box at the bottom to look for the term **profile**. This must be the instance configured as an auditing event target. It should return at least one line with `IAM Identity Service: login.computeresource-token TPwithCR`. `Open the info panel` to expand the record to examine details, look for the **initiator** section. It lists the trusted profile which was used for the request and information on the compute resource. The **authName** should match your deployment from the *Kubernetes dashboard* browser tab.
    
-   ![{{site.data.keyword.at_short}} showing details of the trusted profile request](/images/solution68-trusted-profile-for-enterprise-security/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
+   ![{{site.data.keyword.logs_full_notm}} showing details of the trusted profile request](/images/solution68-trusted-profile-for-enterprise-security/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
 
 5. Now, visit the browser tab *Kubernetes dashboard* and check the container log. The app prints details on the [JWT access token](https://www.ibm.com/blog/json-web-tokens-as-building-blocks-for-cloud-security){: external} it uses to authenticate for listing the resources. Examine the individual key/value pairs, including **sub** (subject) twice. They relate to the trusted profile and the compute resource.
 6. Switch to the browser tab *IAM trusted profile* with the configuration for **TPwithCR**. In the form, click on the **Access** tab, then on the three dot menu for **All Identity and Access enabled services**, select **Edit**. Now, it should show **Edit policy for TPwithCR**. Click on **Edit** for **Resources** and select **Specific resources**. Pick **Region** as **Attribute type** and as **Value**, for example, **Frankfurt**. Finish by pressing **Save**.
@@ -303,7 +303,7 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
    ```
    {: pre}
 
-   The result can be different from above, depending on where you deployed other resources in your account. Revisit the *{{site.data.keyword.at_short}} logs* and *Kubernetes dashboard* browser tabs for new log activity.
+   The result can be different from above, depending on where you deployed other resources in your account. Revisit the *{{site.data.keyword.logs_full_notm}} logs* and *Kubernetes dashboard* browser tabs for new log activity.
 8. You might want to go back to step 6 and edit the access policy again, then retest with step 7. Some ideas for editing the access policy would be to add regions or restrict to specific services instead of **All Identity and Access enabled services**.
 
 

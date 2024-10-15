@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
-lasttested: "2024-03-18"
+lastupdated: "2024-10-15"
+lasttested: "2024-10-15"
 
 content-type: tutorial
 services: vpc, databases-for-postgresql, schematics, cloud-object-storage
@@ -56,6 +56,12 @@ The tutorial requires:
 * An {{site.data.keyword.cloud_notm}} [billable account](/docs/account?topic=account-accounts).
 * A local shell with `curl`.
 
+## Enable logging and monitoring
+{: #vpc-scaling-dedicated-compute-metrics}
+
+1. Configure a {{site.data.keyword.logs_full_notm}} instance as a target of {{site.data.keyword.logs_routing_full_notm}}.  See [Getting started with {{site.data.keyword.logs_routing_full}}](/docs/logs-router?topic=logs-router-getting-started)
+1. Configure a {{site.data.keyword.mon_short}} instance to collect platform metrics.  See [Enabling platform metrics](/docs/monitoring?topic=monitoring-platform_metrics_enabling)
+
 ## Provision required cloud services
 {: #vpc-scaling-dedicated-compute-services}
 {: step}
@@ -78,29 +84,12 @@ In this section, you will create the following cloud services required for the a
 
 Navigate to the [resource list](/resources). Here, you can filter by the `basename` used to create the resources, i.e., **vpc-scaling**, and you will see the cloud services required for this tutorial provisioned in the resource group you specified. All the data stored with these services is encrypted with a key generated and stored in {{site.data.keyword.keymanagementservicefull_notm}}.
 
-### Enable logging and monitoring
-{: #vpc-scaling-dedicated-compute-metrics}
-
-You can have multiple {{site.data.keyword.loganalysislong_notm}} instances in a region. However, only one instance can be configured to receive platform logs from [enabled cloud services](/docs/log-analysis?topic=log-analysis-cloud_services) in that {{site.data.keyword.Bluemix_notm}} region. Similarly, you should configure one instance of the {{site.data.keyword.monitoringlong_notm}} service per region to collect platform metrics.
-{: important}
-
-1. Navigate to the [Observability](/observe) page and under Logging/Monitoring, look for any existing {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} services with `Platform logs` and/or `Platform metrics` enabled. If you do not have one, you can use the steps below to create and/or enable one.
-2. To create a new {{site.data.keyword.loganalysislong_notm}} and/or {{site.data.keyword.monitoringlong_notm}} service(s), navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step1_create_logging` variable to **true** and **Save** the setting. **Repeat** the same with the `step1_create_monitoring` variable.
-3. To configure platform logs, navigate to the [Observability](/observe) page and click on **Logging** in the navigation pane.
-   1. Click on **Options > Edit platform** and **select** a region in which you plan to provision the VPC resources.
-   2. Select the log analysis service instance from the dropdown menu and click **Select**.
-4. To configure platform metrics, repeat the above step by clicking **Monitoring** in the navigation pane.
-
-   For more information, see [Configuring {{site.data.keyword.Bluemix_notm}} platform logs](/docs/log-analysis?topic=log-analysis-config_svc_logs) and [Enabling platform metrics](/docs/monitoring?topic=monitoring-platform_metrics_enabling)
-   {: tip}
-
-
 ## Set up a multizone Virtual Private Cloud
 {: #vpc-scaling-dedicated-compute-vpc-setup}
 {: step}
 
 In this section, you will:
-- Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two availability zones (in short: zones). To ensure the high availability of your frontend app and backend app, you will create multiple VSIs across these zones.
+- Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two zones. To ensure the high availability of your frontend app and backend app, you will create multiple VSIs across these zones.
 - Configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones. 
 - Create an instance template used to provision instances in your instance group.
 
@@ -184,10 +173,10 @@ You can check the logs and monitor your load balancers later in the tutorial.
       ```
       {: pre}
 
-   3. Run the following script to generate some load. You can repeat it to create more traffic.
+   3. Run the following script to generate some load. You can repeat it to create more traffic. The `[1-1000]` asks each curl call to make that many GETs. The `--retry` will capture each of the numbers from the `seq` command.
 
       ```sh
-      seq 1 90000 | xargs -n1 -P300  curl -s  $APPURL -o /dev/null
+      seq 1 1000 | xargs -n1 -P100  curl -s $APPURL/"[1-1000]" -o /dev/null --retry
       ```
       {: pre}
 
@@ -221,6 +210,7 @@ Load balancers calculate the metrics and send those metrics to your monitoring i
    1. Clicking on the **name** of the load balancer.
    2. Under `Monitoring preview` tile of the load balancer, click on **Launch monitoring**.
 2. Alternatively, you can also monitor the load balancers by navigating to the [Observability](/observe) page and click **Monitoring** on the left pane 
+   1. Click **Instances**
    1. Click on **Open dashboard** next to the instance marked as `Platform metrics`.
    2. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer for VPC Monitoring Metrics dashboard.
    3. Under Dashboard templates, expand **IBM** > Load Balancer for VPC Monitoring Metrics. _The default dashboard is not editable_.
@@ -231,15 +221,13 @@ Load balancers calculate the metrics and send those metrics to your monitoring i
 
 VPC services generate platform logs in the same region where they are available. You can view, monitor, and manage VPC logs through the {{site.data.keyword.loganalysislong_notm}} instance that is marked as platform logs in the region.
 
-Platform logs are logs that are exposed by logging-enabled services and the platform in {{site.data.keyword.Bluemix_notm}}. For more information, see Configuring [{{site.data.keyword.Bluemix_notm}} platform logs](/docs/log-analysis?topic=log-analysis-config_svc_logs).
+Platform logs are logs that are exposed by logging-enabled services and the platform in {{site.data.keyword.Bluemix_notm}}. For more information, see Configuring [{{site.data.keyword.Bluemix_notm}} platform logs](/docs/logs-router?topic=logs-router-getting-started)
 
-1. Navigate to the [Observability](/observe) page and click **Logging** on the left pane.
-2. Click on **Open dashboard** next to the instance marked as `Platform logs`.
-3. Under **Apps** from the top menu, check the load balancer CRN for which you want to see the logs and click **Apply**. 
-4. Alternatively, you can check the logs of a load balancer from the [Load balancers for VPC](/vpc-ext/network/loadBalancers) page by 
-    1. Clicking on the load balancer name for which you want to check the logs.
-    2. Under `Overview` tab of the load balancer, **Enable** Data logging and then click on **Launch logging**.
-    3. Remember to generate load against your application to see the logs.
+1. Navigate to the [Observability](/observability/overview) page and click **Logging > Instances** on the left pane.
+1. Click **Cloud Logs** at the top of the pane
+2. Click on **Open dashboard** next to the instance configured earlier to capture the logs.
+3. Click **Explore logs > Logs** on the left hand tool selector.
+4. Paste the the load balancer CRN into the search bar to see the logs.
 
 For checking the logs of other VPC resources, refer to [VPC logging](/docs/vpc?topic=vpc-logging).
    

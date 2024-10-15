@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2024-08-07"
-lasttested: "2023-12-20"
+lastupdated: "2024-10-15"
+lasttested: "2024-10-11"
 
 content-type: tutorial
-services: containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis
+services: containers, cloud-object-storage, atracker, Registry, secrets-manager, appid, Cloudant, key-protect, cloud-logs
 account-plan: paid
 completion-time: 2h
 use-case: Cybersecurity
@@ -16,7 +16,7 @@ use-case: Cybersecurity
 # Enhance cloud security by applying context-based restrictions
 {: #cbr-enhanced-security}
 {: toc-content-type="tutorial"}
-{: toc-services="containers, cloud-object-storage, activity-tracker, Registry, secrets-manager, appid, Cloudant, key-protect, log-analysis"}
+{: toc-services="containers, cloud-object-storage, atracker, Registry, secrets-manager, appid, Cloudant, key-protect, cloud-logs"}
 {: toc-completion-time="2h"}
 {: toc-use-case="Cybersecurity"}
 
@@ -62,7 +62,7 @@ In a later step, [Use Terraform to configure context-based restrictions](#cbr-se
 
 1. [Deploy resources using Terraform managed by {{site.data.keyword.bpshort}}](https://github.com/IBM-Cloud/secure-file-storage#deploy-resources-using-terraform-managed-by-schematics){: external} as described in the companion GitHub repository.
 
-2. To monitor events for context-based restrictions, you must have an instance of the {{site.data.keyword.cloudaccesstrailshort}} service in the Frankfurt (eu-de) region. For more information, see [Provisioning an instance](/docs/activity-tracker?topic=activity-tracker-provision).
+2. The [{{site.data.keyword.atracker_full_notm}}](/docs/atracker?topic=atracker-about) must be configured to route auditing events to a {{site.data.keyword.logs_full_notm}} target instance. Route audit events as described in [configuring an IBM Logs target](/docs/atracker?topic=atracker-getting-started-target-cloud-logs) if not currently configured in your account.
 
 ## Overview: Context-based restrictions
 {: #cbr-security-strategy-overview}
@@ -88,13 +88,13 @@ At the moment, not all cloud services support the report-only mode. Moreover, th
 
 For evaluating the impact of context-based restrictions, you are going to create a rule governing the access to a namespace in {{site.data.keyword.registryshort_notm}}. You start by creating that namespace, then a network zone to identify a VPC as traffic source.
 
-1. Go to the [{{site.data.keyword.registryshort_notm}} namespaces](/registry/namespaces) and select the region you want to work with. Click **Create** and enter **YOUR_INITIALS-e2esec** as **Name**. Use your initials or something else to make sure the namespace is unique within the region. Last, **Create** the new namespace.
+1. Go to the [{{site.data.keyword.registryshort_notm}} namespaces](/registry/namespaces) and note the name of the namespace configured earlier.
 2. In the [{{site.data.keyword.cloud_notm}}](/) console, click on the **Manage** menu and select [**Context-based restrictions**](/context-based-restrictions). In the overview page, click on **Create a network zone**.
 3. Enter **VPCzone** as name. Under **Allowed VPCs**, select the one with your {{site.data.keyword.containershort_notm}} cluster. Click **Next** to review, then **Create** the zone.
 4. Next, create a rule using the zone by clicking on **Rules** in the navigation on the left, then **Create**.
 5. Select **{{site.data.keyword.registryshort_notm}}** in the **Service** section and click **Next**.
 5. Leave the **APIs** section with **All** Service APIs click **Next**.
-6. Then, under **Resources**, choose **Specific resources**. Pick **Resource Type** as attribute and specify **namespace** as value. Add another condition and configure **Resource Name** as **YOUR_INITIALS-e2esec** (the same value as in step 1). Click **Review**, then **Continue**.
+6. Then, under **Resources**, choose **Specific resources**. Pick **Resource Type** as attribute and specify **namespace** as value. Add another condition and configure **Resource Name** as **NAMESPACE** (the same value as in step 1). Click **Review**, then **Continue**.
 7. Select the **VPCzone** you created earlier from the list. Then use **Add** and **Continue** to get to the last step of the dialog. Mark the **Enforcement** as **Report-only**. Thereafter, **Create** the rule.
 
 Be aware that CBR zones and rules are deployed asynchronously. It may take up to few minutes for them to become active (eventually consistent).
@@ -104,7 +104,7 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 {: #cbr-security-in-action}
 {: step}
 
-1. In a new browser tab, open the [{{site.data.keyword.at_short}} platform logs](/observe/activitytracker) to monitor IAM-related events (Frankfurt region).
+1. In a new browser tab, open the [{{site.data.keyword.logs_full_notm}} service](/observability/logging){: external} and select the **Cloud Logs** tab and click the name of the instance that is receiving the auditing events.
 2. Start a new session of [{{site.data.keyword.cloud-shell_notm}}](/shell) in another browser tab.
 3. In the shell, perform the following commands:
    Set an environment variable to the cloud region you are going to use for the {{site.data.keyword.registryshort_notm}}, e.g., **us** or **de**.
@@ -113,9 +113,9 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
    ```
    {: codeblock}
 
-   Set another variable with your initials (or the prefix you picked above):
+   Set another variable for the {{site.data.keyword.registryshort_notm}} namespace:
    ```sh
-   export YOUR_INITIALS=MI
+   export NAMESPACE=<YOUR_NAMESPACE>
    ```
    {: codeblock}
 
@@ -133,17 +133,17 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 
    Re-tag the image to upload it to your registry namespace.
    ```sh
-   docker tag docker.io/library/hello-world $REGION.icr.io/$YOUR_INITIALS-e2esec/hello-world
+   docker tag docker.io/library/hello-world $REGION.icr.io/$NAMESPACE/hello-world
    ```
    {: codeblock}
 
    Last, push the container image to the registry.
    ```sh
-   docker push $REGION.icr.io/$YOUR_INITIALS-e2esec/hello-world
+   docker push $REGION.icr.io/$NAMESPACE/hello-world
    ```
    {: codeblock}
 
-4. Switch to the browser tab with the activity logs. When in report mode, log entries are written to {{site.data.keyword.at_short}} when a rule matches, regardless of the decision outcome. The log record has details on the request. In the image below, the rule to allow access to a {{site.data.keyword.registryshort_notm}} namespace matched in report mode.
+4. Switch to the browser tab with the {{site.data.keyword.logs_full_notm}} showing auditing logs. When in report mode, log entries are written to {{site.data.keyword.atracker_full_notm}} when a rule matches, regardless of the decision outcome. The log record has details on the request. In the image below, the rule to allow access to a {{site.data.keyword.registryshort_notm}} namespace matched in report mode.
 
    ![Verify rules in report mode](images/solution67-cbr-enhanced-security/CBR_rule_warning_registry.png){: caption="A context restriction matched in reporting mode" caption-side="bottom"}
 
@@ -151,14 +151,14 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 
 5. Back in the browser tab with the shell, list the container images in the namespace.
    ```sh
-   ibmcloud cr images --restrict $YOUR_INITIALS-e2esec
+   ibmcloud cr images --restrict $NAMESPACE
    ```
    {: codeblock}
 
 6. In a third browser tab, navigate to the [CBR rules](/context-based-restrictions/rules). Next to the registry-related rule you created earlier, click on the dot menu and select **Edit**. Go to **Describe your rule (Step 3)** and switch the rule from **Report-only** to **Enabled**. Activate the change by pressing the **Apply** button.
 7. Go back to the browser tab with {{site.data.keyword.cloud-shell_notm}}. Issue the same command as before to list the images:
    ```sh
-   ibmcloud cr images --restrict $YOUR_INITIALS-e2esec
+   ibmcloud cr images --restrict $NAMESPACE
    ```
    {: codeblock}
 
@@ -169,7 +169,7 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
 
    The rule has been enforced and, based on how you tried to access the registry, the access has been denied. The reason is that rule allows access from a specific VPC only. The {{site.data.keyword.cloud-shell_short}} environment and its IP address, as documented in the logs in the **requestData->environment** fields, differ. Therefore, the request is denied.
 
-When working with the {{site.data.keyword.at_short}} logs, you can utilize query strings like the following to easily find the relevant log records:
+When working with the {{site.data.keyword.logs_full_notm}} logs, you can utilize query strings like the following to easily find the relevant log records:
 - When in report mode, `"context restriction" permit OR deny` returns the log lines with access which would have rendered a **Permit** or **Deny**.
 - In report mode, you can use `"context restriction" permit` to only show access which would have been permitted. Similarly, use `"context restriction" deny` for denied access.
 - Last, when in **enforced** mode, use a query string like `context restriction rendered` for log lines related to denied access.
@@ -317,10 +317,10 @@ Tests should be performed on {{site.data.keyword.registryshort_notm}}, {{site.da
 
 To test the new rule for access to {{site.data.keyword.cos_short}}, follow these steps:
 1. In a browser tab, go to the [list of {{site.data.keyword.cos_short}} instances](/objectstorage). Click on the service name for the tutorial, e.g., **secure-file-storage-cos**.
-2. In a second browser tab, visit the already used {{site.data.keyword.at_short}} dashboard with the activity logs.
+2. In a second browser tab, visit the already used {{site.data.keyword.logs_full_notm}} dashboard with the auditing logs.
 3. Back in the tab with the {{site.data.keyword.cos_short}} overview, in the list of **Buckets**, click on the storage bucket.
 4. Use **Upload** to import a file into the bucket. Leave the setting as **Standard transfer** and use the **Upload files (objects)** area to select a file. Finish by clicking **Upload**.
-5. Back in the browser tab with the activity logs, there should be CBR-related log records titled `Context restriction matched while in report mode`. This is due to the fact that the rules have been deployed in **report** mode. Expand some records to check the reported **decision** and **isEnforced** data. Depending on the configured IP range for the homezone, **decision** might be **Permit** or **Deny**. The value for **isEnforced** should be **false** because of the reporting mode.
+5. Back in the browser tab with the auditing logs, there should be CBR-related log records titled `Context restriction matched while in report mode`. This is due to the fact that the rules have been deployed in **report** mode. Expand some records to check the reported **decision** and **isEnforced** data. Depending on the configured IP range for the homezone, **decision** might be **Permit** or **Deny**. The value for **isEnforced** should be **false** because of the reporting mode.
 
 For further testing, you might want to change the IP range of the homezone. It is the variable **homezone_iprange** in the {{site.data.keyword.bpshort}} settings.
 
