@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-08-07"
+lastupdated: "2024-10-15"
 lasttested: "2023-12-18"
 
 content-type: tutorial
-services: vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker
+services: vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker, cloud-logs
 account-plan: paid
 completion-time: 1h
 use-case: ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement
@@ -17,7 +17,7 @@ use-case: ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement
 # Resource sharing across accounts
 {: #resource-sharing}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker"}
+{: toc-services="vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker, cloud-logs"}
 {: toc-completion-time="1h"}
 {: toc-use-case="ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement"}
 
@@ -66,7 +66,7 @@ Often, security is managed on a corporate level with company-wide rules in place
 The above diagram shows the following scenarios:
 1. Instances of {{site.data.keyword.cos_short}} and {{site.data.keyword.databases-for-mongodb}} in **Account A** and **Account B** utilize encryption keys managed in the **Main Account** in {{site.data.keyword.keymanagementserviceshort}}.
 2. {{site.data.keyword.compliance_short}} in the **Main Account** governs resources in all three accounts (see black lines above).
-3. Instances of {{site.data.keyword.at_short}} in **Account A** and **Account B** direct security logs with {{site.data.keyword.atracker_short}} to {{site.data.keyword.cos_short}} buckets in the **Main Account** (see blue lines above).
+3. Instances of {{site.data.keyword.atracker_full_notm}} in **Account A** and **Account B** direct audit logs to {{site.data.keyword.logs_full_notm}} in the **Main Account** (see blue lines above). The {{site.data.keyword.logs_full_notm}} is configured to persist the audit logs to meet analysis and corporate requirements.
 
 Sharing can be between accounts in an [IBM Cloud Enterprise environment](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) or without a formal enterprise organization.
 
@@ -83,15 +83,15 @@ In almost all environments, data is stored encrypted. By default, encryption is 
 The [{{site.data.keyword.compliance_short}}](/security-compliance/overview) features Posture Management functionality. It helps to monitor deployed environments for security and assess them against compliance goals. In an enterprise, you can [define scopes to monitor and assess multiple accounts or account groups](/docs/security-compliance?topic=security-compliance-best-practices#bp-enterprise) from a central instance.
 
 
-### {{site.data.keyword.at_short}}
-{: #resource-sharing-security-at}
-
-All {{site.data.keyword.cloud_notm}} services produce events for security-related actions. They are logged into {{site.data.keyword.at_short}} instances. By utilizing {{site.data.keyword.atracker_short}}, the security records can be centralized to one or few instances with either event search (`logdna`) or {{site.data.keyword.cos_short}} as storage options. By aggregating all records in one location, security events can be easily correlated and thereby increasing insights into incidents or even allowing an early detection.
-
-### {{site.data.keyword.la_short}}
+### {{site.data.keyword.logs_full_notm}}
 {: #resource-sharing-security-la}
 
-{{site.data.keyword.la_full}} allows managing operating system logs, application logs, and platform logs and provides search and filtering capabilities. Logs can be streamed from one {{site.data.keyword.la_short}} instance to either [{{site.data.keyword.messagehub}}](/docs/log-analysis?topic=log-analysis-streaming-configure) or [to another {{site.data.keyword.la_short}} instance](/docs/log-analysis?topic=log-analysis-streaming-configure-l2l). Thus, by streaming to a central instance, logs can be consolidated for analysis in greater context, thereby improving (security) insights.
+{{site.data.keyword.logs_full}} allows managing operating system logs, application logs, platform logs and audit logs and provides search and filtering capabilities. The {{site.data.keyword.logs_routing_full}} is used to route the platform logs to a {{site.data.keyword.logs_full_notm}} instance or other supported instances. Consolidate for analysis in greater context, thereby improving (security) insights. Configure to persist in your own {{site.data.keyword.cos_short}} buckets for long term storage. See [about Logs Routing](/docs/logs-router?topic=logs-router-about) that describes tenants and account specific targets.
+
+### {{site.data.keyword.atracker_full_notm}}
+{: #resource-sharing-security-at}
+
+All {{site.data.keyword.cloud_notm}} services produce events for security-related actions. By utilizing {{site.data.keyword.atracker_full_notm}}, security records can be centralized to one or few instances of {{site.data.keyword.logs_full_notm}} with long term storage in {{site.data.keyword.cos_short}} buckets that you manage. By aggregating all records in one location, security events can be easily correlated and thereby increasing insights into incidents or even allowing an early detection.
 
 
 ## Sharing of network resources
@@ -200,10 +200,9 @@ Other typical (target) services for service-to-service authorization and candida
 - [{{site.data.keyword.en_short}}](/docs/event-notifications?topic=event-notifications-getting-started): To push out information about events to subscribers, service instances need to access an {{site.data.keyword.en_short}} instance.
 - [{{site.data.keyword.secrets-manager_short}}](/docs/secrets-manager?topic=secrets-manager-getting-started): This service stores and provides to other services IAM API keys, SSL/TLS certificates, and other secrets. Hence, the dependent (source) services need to access {{site.data.keyword.secrets-manager_short}}.
 - [{{site.data.keyword.cis_short}}](/docs/cis?topic=cis-getting-started): It manages domain names and other network data and, therefore, can be used for, e.g., certificate validation.
+- [{{site.data.keyword.logs_routing_full_notm}}](/docs/logs-router?topic=logs-router-getting-started) and [{{site.data.keyword.atracker_full_notm}}](/docs/atracker?topic=atracker-getting-started-target-cloud-logs): needs service access to targets like {{site.data.keyword.logs_full_notm}}.
 
 Note that the above list is not complete.
-
-
 
 ## Summary
 {: #resource-sharing-summary}
@@ -214,8 +213,8 @@ Accessing resources in different accounts, even sharing resources is common prac
 | ------- | ---------- |
 | **Security and Observability** | |
 | {{site.data.keyword.compliance_short}} | [Scan multiple accounts or account groups in an enterprise](/docs/security-compliance?topic=security-compliance-best-practices#bp-enterprise) |
-| {{site.data.keyword.at_short}} | [Route your {{site.data.keyword.at_short}} events to another account and consolidate event data](/docs/atracker?topic=atracker-scenarios#scenarios-3)|
-| {{site.data.keyword.la_short}} | Stream logs from one {{site.data.keyword.la_short}} instance to either [{{site.data.keyword.messagehub}}](/docs/log-analysis?topic=log-analysis-streaming-configure) or [to another {{site.data.keyword.la_short}} instance](/docs/log-analysis?topic=log-analysis-streaming-configure-l2l)|
+| {{site.data.keyword.atracker_full_notm}} | [Route your {{site.data.keyword.atracker_full_notm}} events to another account and consolidate event data](/docs/atracker?topic=atracker-scenarios#scenarios-3)|
+| {{site.data.keyword.logs_routing_full_notm}} | Route logs to target like {{site.data.keyword.logs_full_notm}} or [{{site.data.keyword.messagehub}}](/docs/log-analysis?topic=log-analysis-streaming-configure)|
 | {{site.data.keyword.keymanagementserviceshort}} | Use [service-to-service authorizations](/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](/docs/key-protect?topic=key-protect-grouping-keys) for simpler management and enhanced security.|
 | {{site.data.keyword.hscrypto}} | Use [service-to-service authorizations](/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](/docs/hs-crypto?topic=hs-crypto-managing-key-rings) for simpler management and enhanced security.|
 | {{site.data.keyword.hscrypto}} with {{site.data.keyword.uko_full_notm}}| [Connect your {{site.data.keyword.hscrypto}} instance to keystores in {{site.data.keyword.cloud_notm}} and third-party clouds](/docs/hs-crypto?topic=hs-crypto-uko-overview&interface=ui).|
@@ -243,4 +242,3 @@ The following document provides details on some cross-account scenarios:
 Blog posts related to sharing resource across multiple accounts:
 - [Terraform multi-account setup for {{site.data.keyword.cloud_notm}}](https://blog.4loeser.net/2022/09/terraform-setup-multi-account-ibm-cloud.html){: external}
 - [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/blog/tips-and-tricks-for-using-the-ibm-cloud-cli/){: external} discusses [**IBMCLOUD_HOME**](/docs/cli?topic=cli-ibmcloud_env_var#IBMCLOUD_PATH_TO_DIR) which can be used to work with multiple accounts from the CLI.
-

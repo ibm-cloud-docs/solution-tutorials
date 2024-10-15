@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2024
-lastupdated: "2024-10-09"
+lastupdated: "2024-10-15"
 lasttested: "2023-09-05"
 
 content-type: tutorial
@@ -122,7 +122,7 @@ To run a production app in the cloud by using Kubernetes, consider the following
 4. How many worker nodes do you need? This depends highly on the apps scale, the more nodes you have the more resilient your app will be.
 5. How many replicas should you have for higher availability? Deploy replica clusters in multiple locations to make your app more available and protect the app from being down due to a location failure.
 6. Which is the minimal set of resources your app needs to start up? You might want to test your app for the amount of memory and CPU it requires to run. Your worker node should then have enough resources to deploy and start the app. Make sure to then set resource quotas as part of the pod specifications. This setting is what Kubernetes uses to select (or schedule) a worker node that has enough capacity to support the request. Estimate how many pods will run on the worker node and the resource requirements for those pods.
-7. When to increase the number of worker nodes? You can monitor the cluster usage and increase nodes when needed. See this tutorial to understand how to [analyze logs and monitor the health of Kubernetes applications](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis).
+7. When to increase the number of worker nodes? You can monitor the cluster usage and increase nodes when needed. See [Monitoring cluster health](/docs/containers?topic=containers-health-monitor).
 8. Do you need redundant, reliable storage? If yes, create a persistent volume claim for NFS storage or bind an {{site.data.keyword.cloud_notm}} database service to your pod.
 9. Do you need to deploy a cluster on [Virtual Private Cloud infrastructure](/docs/containers?topic=containers-plan_vpc_basics) or in [Classic infrastructure](/docs/containers?topic=containers-plan_basics)? VPC gives you the security of a private cloud environment with the dynamic scalability of a public cloud.
 
@@ -352,7 +352,7 @@ To put everything you've learned in practice, follow the [demonstration](https:/
 - Kubernetes main [docs](https://kubernetes.io/){: external}.
 - [Persistent storage](/docs/containers?topic=containers-storage-plan) in {{site.data.keyword.containershort_notm}}.
 - [Best practices solution guide](/docs/account?topic=account-account_setup) for organizing resources and assigning access.
-- [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis).
+- [Logging for clusters](/docs/containers?topic=containers-health)
 - Set up [continuous integration and delivery pipeline](/docs/ContinuousDelivery?topic=ContinuousDelivery-tutorial-cd-kubernetes) for containerized apps that run in Kubernetes.
 - Use [multiple clusters across multiple locations](/docs/containers?topic=containers-regions-and-zones) for high availability.
 - Re-platform applications to Kubernetes using [Konveyor Move2Kube](https://move2kube.konveyor.io/){: external}.
