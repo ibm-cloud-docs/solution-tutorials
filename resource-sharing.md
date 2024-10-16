@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-15"
+lastupdated: "2024-10-16"
 lasttested: "2023-12-18"
 
 content-type: tutorial
-services: vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker, cloud-logs
+services: vpc, log-analysis, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker, cloud-logs
 account-plan: paid
 completion-time: 1h
 use-case: ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement
@@ -17,7 +17,7 @@ use-case: ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement
 # Resource sharing across accounts
 {: #resource-sharing}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, log-analysis, activity-tracker, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker, cloud-logs"}
+{: toc-services="vpc, log-analysis, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker, cloud-logs"}
 {: toc-completion-time="1h"}
 {: toc-use-case="ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement"}
 
