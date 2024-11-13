@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-15"
+lastupdated: "2024-10-18"
 lasttested: "2024-10-15"
 
 content-type: tutorial
@@ -219,15 +219,13 @@ Load balancers calculate the metrics and send those metrics to your monitoring i
 ### Check the logs
 {: #vpc-scaling-dedicated-compute-logs}
 
-VPC services generate platform logs in the same region where they are available. You can view, monitor, and manage VPC logs through the {{site.data.keyword.loganalysislong_notm}} instance that is marked as platform logs in the region.
-
-Platform logs are logs that are exposed by logging-enabled services and the platform in {{site.data.keyword.Bluemix_notm}}. For more information, see Configuring [{{site.data.keyword.Bluemix_notm}} platform logs](/docs/logs-router?topic=logs-router-getting-started)
+VPC services generate platform logs in the same region where they are available. Platform logs are logs that are exposed by logging-enabled services and the platform in {{site.data.keyword.Bluemix_notm}}. For more information, see Configuring [{{site.data.keyword.Bluemix_notm}} platform logs](/docs/logs-router?topic=logs-router-getting-started)
 
 1. Navigate to the [Observability](/observability/overview) page and click **Logging > Instances** on the left pane.
 1. Click **Cloud Logs** at the top of the pane
 2. Click on **Open dashboard** next to the instance configured earlier to capture the logs.
 3. Click **Explore logs > Logs** on the left hand tool selector.
-4. Paste the the load balancer CRN into the search bar to see the logs.
+4. Paste the load balancer CRN into the search bar to see the logs.
 
 For checking the logs of other VPC resources, refer to [VPC logging](/docs/vpc?topic=vpc-logging).
    
