@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2024-11-13"
 lasttested: "2023-12-06"
 
 content-type: tutorial
@@ -19,9 +19,6 @@ use-case: VirtualPrivateCloud, CloudNetworkSecurity, NetworkSecurity
 {: toc-services="vpc"}
 {: toc-completion-time="1h"}
 {: toc-use-case="VirtualPrivateCloud, CloudNetworkSecurity, NetworkSecurity"}
-
-The beta release of IBM Cloud Private Path services is only available to allowlisted users. Contact your IBM Support representative if you are interested in getting early access to this beta offering.
-{: beta}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
