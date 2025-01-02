@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-01-02"
 lasttested: "2024-04-15"
 
 content-type: tutorial
@@ -76,7 +76,7 @@ In this section, you will create the serverless backend app with {{site.data.key
 ### Create a {{site.data.keyword.codeengineshort}} project
 {: #serverless-webapp-4}
 
-1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/codeengine/overview){: external} page.
+1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/containers/serverless/overview){: external} page.
 2. On the left pane, click on **Projects** and then click **Create**,
    - Select a location.
    - Use `<yourinitials>-guestbook` as project name and select the same resource group as before.
@@ -167,7 +167,7 @@ To delete the created {{site.data.keyword.cloudant_short_notm}} service,
 3. Click **Delete**
 
 To delete the application and project {{site.data.keyword.codeengineshort}},
-1. Navigate to the [{{site.data.keyword.codeengineshort}}](/codeengine/) landing page.
+1. Navigate to the [{{site.data.keyword.codeengineshort}}](/containers/serverless/overview) landing page.
 2. On the left pane, click on **Projects**.
 3. In the list of projects, check the guestbook project, then click **Delete**.
 
@@ -177,6 +177,6 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 ## Related content
 {: #serverless-webapp-8}
 
-* [Serverless Computing](https://www.ibm.com/topics/serverless){: external}
+* [Serverless Computing](https://www.ibm.com/think/topics/serverless){: external}
 * [Serverless Deployment Model](https://developer.ibm.com/depmodels/serverless/){: external}
 * [Getting started with {{site.data.keyword.codeenginefull_notm}}](/docs/codeengine?topic=codeengine-getting-started)

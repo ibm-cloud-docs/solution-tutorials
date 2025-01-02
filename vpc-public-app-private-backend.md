@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-01-02"
 lasttested: "2024-04-29"
 
 content-type: tutorial
@@ -316,7 +316,7 @@ In this tutorial, you deployed two tiers of an application, one frontend server 
 {: #vpc-public-app-private-backend-remove-resources}
 {: step}
 
-1. In the [VPC Infrastructure console](/vpc-ext/overview){: external}, click on **Floating IPs** under **Network**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
+1. In the [VPC Infrastructure console](/infrastructure/overview){: external}, click on **Floating IPs** under **Network**, then on the IP address for your VSIs, then in the action menu select **Release**. Confirm that you want to release the IP address.
 2. Next, switch to **Virtual server instances**, **Stop** and **Delete** your instances by clicking on the respective action menu.
 3. Once the VSIs are gone, switch to **Subnets**. If the subnet has an attached public gateway, then click on the subnet name. In the subnet details, detach the public gateway. Subnets without public gateway can be deleted from the overview page. Delete your subnets.
 4. After the subnets have been deleted, switch to **VPCs** tab and delete your VPC.

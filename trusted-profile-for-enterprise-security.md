@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-15"
+lastupdated: "2025-01-02"
 lasttested: "2024-10-03"
 
 content-type: tutorial
@@ -24,7 +24,7 @@ use-case: IdentityAndAccessManagement, ApplicationIntegration
 This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} to generate a cost estimate based on your projected usage.
 {: tip}
 
-{{site.data.keyword.cloud_notm}} [Identity and Access Management (IAM)](/docs/account?topic=account-cloudaccess) enables you to control which users see, create, use, and manage resources in your cloud environment. Your environment might be a single {{site.data.keyword.cloud_notm}} account, multiples accounts, or an [enterprise](/docs/secure-enterprise?topic=secure-enterprise-what-is-enterprise) with a hierarchy of many account groups and accounts. When operating with account resources, often, users and service IDs are involved. Yet, there are more options available to manage access, assign privileges, and to identify: [Trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract).
+{{site.data.keyword.cloud_notm}} [Identity and Access Management (IAM)](/docs/account?topic=account-cloudaccess) enables you to control which users see, create, use, and manage resources in your cloud environment. Your environment might be a single {{site.data.keyword.cloud_notm}} account, multiples accounts, or an [enterprise](/docs/enterprise-management?topic=enterprise-management-what-is-enterprise) with a hierarchy of many account groups and accounts. When operating with account resources, often, users and service IDs are involved. Yet, there are more options available to manage access, assign privileges, and to identify: [Trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract).
 
 In this tutorial, you are going to learn about trusted profiles, their use cases, and how to utilize them for enhanced security. Trusted profiles can serve as foundation for secure cloud environments, as building block for secure cloud solutions. As part of this tutorial, you will create a trusted profile which is utilized by an app to perform administrative tasks.
 
@@ -78,7 +78,7 @@ The following scenarios are such use cases for trusted profiles, differing by th
 - **Map federated users and their group membership to {{site.data.keyword.cloud_notm}} privileges**: Configure a trusted profile to let users of a federated identity provider assume its identity. You can define which IdP and what user attributes to consider.
 - **Perform administrative tasks from dedicated compute resources**: You can configure a trusted profile to establish trust through a well-known compute resource. Such a resource might be a specific pod in a Kubernetes cluster (including {{site.data.keyword.openshiftlong_notm}}) or a virtual server instance (VSI) in a virtual private cloud ({{site.data.keyword.vpc_short}}).
 - **Perform administrative tasks from a well-known service ID**: A service ID from the same or another account is allowed to assume the identity of the trusted profile.
-- **Deploy cloud resources from an instance of a special cloud service**: Configure an instance of an {{site.data.keyword.cloud_notm}} service, identified by its CRN ([cloud resource name](/docs/overview?topic=overview-glossary#x9494304)) to be allowed to assume the identity of a trusted profile. A typical scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project).
+- **Deploy cloud resources from an instance of a special cloud service**: Configure an instance of an {{site.data.keyword.cloud_notm}} service, identified by its CRN ([cloud resource name](/docs/overview?topic=overview-glossary#x9494304)) to be allowed to assume the identity of a trusted profile. A typical scenario is for an [enterprise project to deploy an architecture](/docs/enterprise-management?topic=enterprise-management-understanding-projects).
 
 ## Establish trust
 {: #trusted-profile-for-enterprise-security-trust}
@@ -113,7 +113,7 @@ Another method to establish trust is by specifying a service ID. The service ID 
 ### Cloud service instance
 {: #trusted-profile-for-enterprise-security-service-instance}
 
-Similar to a service ID, it is possible to specify the cloud resource name (CRN) of an {{site.data.keyword.cloud_notm}} service instance, so that the instance is a trusted resource. That service instance can be located in the same or another account. Right now, its only supported scenario is for an [enterprise project to deploy an architecture](/docs/secure-enterprise?topic=secure-enterprise-tp-project). Projects, as service instances, with deployable architectures can be managed centrally in one account. By establishing trust through the project's CRN, it can assume the identity of a trusted profile in another account in the same or another enterprise account hierarchy, then deploy a solution pattern with its resources.
+Similar to a service ID, it is possible to specify the cloud resource name (CRN) of an {{site.data.keyword.cloud_notm}} service instance, so that the instance is a trusted resource. That service instance can be located in the same or another account. Right now, its only supported scenario is for an [enterprise project to deploy an architecture](/docs/enterprise-management?topic=enterprise-management-understanding-projects). Projects, as service instances, with deployable architectures can be managed centrally in one account. By establishing trust through the project's CRN, it can assume the identity of a trusted profile in another account in the same or another enterprise account hierarchy, then deploy a solution pattern with its resources.
 
 
 ## Trusted profile with compute resource
@@ -124,7 +124,7 @@ To put theory into practice, you are going to authorize a containerized app to p
 
 For security reasons, the app is operating in a read-only mode. It tries to gather a list of your deployed resources. You will assign privileges to the app which determine which resources it can read. Moreover, you will deploy the app in a way, so that it is accessible from within the Kubernetes cluster only, not from the public internet.
 
-The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/blog/turn-your-container-into-a-trusted-cloud-identity){: external} discusses the same scenario.
+The blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/think/insights/turn-your-container-into-a-trusted-cloud-identity){: external} discusses the same scenario.
 {: tip}
 
 ## Kubernetes cluster as compute resource
@@ -323,5 +323,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: #trusted-profile-for-enterprise-security-related}
 
 - The source code for the app and the configuration is in the [GitHub repository **trusted-profile-enterprise-security**](https://github.com/IBM-Cloud/trusted-profile-enterprise-security){: external}
-- Blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/blog/turn-your-container-into-a-trusted-cloud-identity){: external}
+- Blog post [Turn Your Container Into a Trusted Cloud Identity](https://www.ibm.com/think/insights/turn-your-container-into-a-trusted-cloud-identity){: external}
 - Blog post [Secure Onboarding for Your Workshops and Hackathons](https://www.ibm.com/blog/secure-onboarding-for-your-workshops-and-hackathons){: external}

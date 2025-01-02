@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-01-02"
 lasttested: "2023-10-10"
 
 content-type: tutorial
@@ -190,7 +190,7 @@ The following steps are all performed using your Internet browser. First, you co
 {: #serverless-github-traffic-analytics-5}
 {: step}
 
-After the preparation, you configure and test the app. The app is written in Python using the popular [Flask](https://flask.palletsprojects.com/){: external} microframework. You can add repositories for statistics collection or remove them. You can access the traffic data in a tabular view or as line chart.
+After the preparation, you configure and test the app. The app is written in Python using the popular [Flask](https://flask.palletsprojects.com/en/stable/){: external} microframework. You can add repositories for statistics collection or remove them. You can access the traffic data in a tabular view or as line chart.
 
 1. In a browser, open the URI of the deployed app. You should see a welcome page.
    ![Welcome Screen](images/solution24-github-traffic-analytics/WelcomeScreen.png){: caption="Welcome Screen" caption-side="bottom"}
