@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-01-02"
 lasttested: "2024-06-25"
 
 content-type: tutorial
@@ -25,7 +25,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 {: tip}
 
 
-This tutorial walks you through how to deploy an application to a [{{site.data.keyword.openshiftlong_notm}}](/kubernetes/catalog/about?platformType=openshift) cluster from a remote Git repository, expose the application on a route, monitor the health of the environment, and scale the application. Additionally, you will learn how to use a private container registry, deploy an application from a private Git repository and bind a custom domain to the application.
+This tutorial walks you through how to deploy an application to a [{{site.data.keyword.openshiftlong_notm}}](/containers/cluster-management/catalog/about?platformType=openshift) cluster from a remote Git repository, expose the application on a route, monitor the health of the environment, and scale the application. Additionally, you will learn how to use a private container registry, deploy an application from a private Git repository and bind a custom domain to the application.
 {: shortdesc}
 
 With {{site.data.keyword.openshiftlong_notm}}, you can create Kubernetes clusters with worker nodes that come installed with the OpenShift Container Platform. For more information about the OpenShift Container Platform architecture, see the [{{site.data.keyword.redhat_openshift_notm}} docs](https://docs.openshift.com/container-platform/4.13/architecture/architecture.html){: external}. You get all the [advantages of a managed service](/docs/openshift?topic=openshift-responsibilities_iks) for your cluster.
@@ -78,7 +78,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
-1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](/kubernetes/catalog/create?platformType=openshift).
+1. Create an {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.Bluemix}} catalog](/containers/cluster-management/catalog/create?platformType=openshift).
 2. Under **Infrastructure** choose **VPC** or **Classic**,
    - For {{site.data.keyword.openshiftshort}} on VPC infrastructure, you are required to create a VPC and one subnet prior to creating the cluster. Create or use an existing VPC keeping in mind the following requirements:
       - One subnet that can be used for this tutorial, take note of the subnet's zone and name.

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-01-02"
 lasttested: "2024-03-18"
 
 content-type: tutorial
@@ -47,7 +47,7 @@ The platform is designed to address the needs of developers who just want their 
 4. User uploads a text file(s) via the frontend app that is stored in {{site.data.keyword.cos_short}} through the backend application.
 5. User runs a {{site.data.keyword.codeengineshort}} job via the backend to analyze text by pushing the text to {{site.data.keyword.nlushort}}. The result is then saved to {{site.data.keyword.cos_short}} and displayed in the frontend app when the user clicks the refresh button.
 
-You can use the [{{site.data.keyword.codeengineshort}} console](/codeengine/overview){: external} to view your progress while working through this tutorial.
+You can use the [{{site.data.keyword.codeengineshort}} console](/containers/serverless/overview){: external} to view your progress while working through this tutorial.
 {: tip}
 
 ## Before you begin
@@ -77,7 +77,7 @@ In this section, you will create a {{site.data.keyword.codeengineshort}} project
 
 Putting entities into a single project enables you to manage access control more easily. The entities within a project share the same private network, which enables them to talk to each other securely. For more details read the [documentation on {{site.data.keyword.codeengineshort}} projects](/docs/codeengine?topic=codeengine-manage-project).
 
-1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/codeengine/overview){: external} page.
+1. Navigate to [{{site.data.keyword.codeenginefull_notm}} Overview](/containers/serverless/overview){: external} page.
 2. On the left pane, click on **Projects** and then click **Create**.
    - Select a location.
    - Provide a project name.
@@ -134,7 +134,7 @@ We've already built images for the two applications and pushed them to the publi
    Run `ibmcloud code-engine application get -n frontend` command to see the details of the application. You should see details like the ID, project information, age of the application, the URL to access the application, a Console URL to access your application configuration, Image, Resource allocation, and various revisions, conditions and runtime for your application. Since you only have one revision, you should see that 100% of the traffic is going to the latest revision. You can also check the number of instances and their status.
    {: tip}
 
-3. For troubleshooting and to [check the logs of your application](/docs/codeengine?topic=codeengine-view-logs), run the following command by replacing the `<INSTANCE_NAME>` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
+3. For troubleshooting and to [check the logs of your application](/docs/codeengine?topic=codeengine-logging), run the following command by replacing the `<INSTANCE_NAME>` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
    
    If you do not see any running instances, make sure to open the application URL from step 2 again.
    {: tip}

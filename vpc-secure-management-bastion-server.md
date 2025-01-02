@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-01-02"
 lasttested: "2024-04-25"
 
 content-type: tutorial
@@ -49,7 +49,7 @@ To reduce exposure of servers within the VPC, you will create and use a bastion 
 
 - Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources. See the list of [required permissions](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC.
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
-- The tutorial assumes that you are adding the bastion host in an existing virtual private cloud. **If you don't have a VPC in your account, [create a VPC](/vpc-ext/provision/vpc){: external} before proceeding with the next steps.**
+- The tutorial assumes that you are adding the bastion host in an existing virtual private cloud. **If you don't have a VPC in your account, [create a VPC](/infrastructure/provision/vpc){: external} before proceeding with the next steps.**
 
 ## Create a bastion host
 {: #vpc-secure-management-bastion-server-create-bastion-host}

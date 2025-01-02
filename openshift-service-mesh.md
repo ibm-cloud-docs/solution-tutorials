@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-01-02"
 lasttested: "2023-10-11"
 
 content-type: tutorial
@@ -24,12 +24,12 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 {: tip}
 
 
-This tutorial walks you through how to install {{site.data.keyword.redhat_openshift_notm}} Service Mesh alongside microservices for a sample app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](/kubernetes/catalog/about?platformType=openshift) cluster. You will also learn how to configure an Istio ingress-gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and use of metrics, logging and tracing to observe services.
+This tutorial walks you through how to install {{site.data.keyword.redhat_openshift_notm}} Service Mesh alongside microservices for a sample app called BookInfo in a [{{site.data.keyword.openshiftlong_notm}}](/containers/cluster-management/catalog/about?platformType=openshift) cluster. You will also learn how to configure an Istio ingress-gateway to expose a service outside of the service mesh, perform traffic management to set up important tasks like A/B testing and canary deployments, secure your microservice communication and use of metrics, logging and tracing to observe services.
 {: shortdesc}
 
 Based on the open source Istio project, {{site.data.keyword.redhat_openshift_notm}} Service Mesh adds a transparent layer on existing distributed applications. {{site.data.keyword.redhat_openshift_notm}} Service Mesh provides a platform for behavioral insight and operational control over your networked microservices in a service mesh. With {{site.data.keyword.redhat_openshift_notm}}, you can connect, secure, and monitor microservices in your {{site.data.keyword.openshiftlong_notm}} cluster.
 
-[Istio](https://www.ibm.com/topics/istio){: external} is an open platform to connect, secure, control and observe microservices, also known as a service mesh, on cloud platforms such as Kubernetes in {{site.data.keyword.openshiftshort}}.
+[Istio](https://www.ibm.com/think/topics/istio){: external} is an open platform to connect, secure, control and observe microservices, also known as a service mesh, on cloud platforms such as Kubernetes in {{site.data.keyword.openshiftshort}}.
 
 ## Objectives
 {: #openshift-service-mesh-objectives}
@@ -74,7 +74,7 @@ With {{site.data.keyword.openshiftlong_notm}}, you have a fast and secure way to
 
 In this section, you will provision a {{site.data.keyword.openshiftlong_notm}} cluster in one (1) zone with two (2) worker nodes:
 
-1. Log into your {{site.data.keyword.cloud_notm}} account and create a {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.openshiftshort}} cluster create page](/kubernetes/catalog/create?platformType=openshift).
+1. Log into your {{site.data.keyword.cloud_notm}} account and create a {{site.data.keyword.openshiftshort}} cluster from the [{{site.data.keyword.openshiftshort}} cluster create page](/containers/cluster-management/catalog/create?platformType=openshift).
 2. Set the **Orchestration service** to **4.13.x version of {{site.data.keyword.openshiftshort}}**.
 3. Select your OCP entitlement.
 4. Under **Infrastructure** choose Classic or VPC

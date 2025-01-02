@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-15"
+lastupdated: "2025-01-02"
 lasttested: "2024-05-22"
 
 content-type: tutorial
@@ -25,7 +25,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 {: tip}
 
 
-This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/topics/vpc){: external}. This combination of software - more commonly called a [LAMP stack](https://www.ibm.com/topics/lamp-stack){: external} - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
+This tutorial walks you through the creation of an Ubuntu **L**inux virtual server with **A**pache web server, **M**ySQL database and **P**HP scripting on {{site.data.keyword.Bluemix_notm}} [Virtual Private Cloud (VPC) Infrastructure](https://www.ibm.com/think/topics/vpc){: external}. This combination of software - more commonly called a [LAMP stack](https://www.ibm.com/think/topics/lamp-stack){: external} - is often used to deliver websites and web applications. Using {{site.data.keyword.vpc_short}} you will quickly deploy your LAMP stack and if desired add logging and monitoring. To experience the LAMP server in action, you will also install and configure the free and open source [WordPress](https://wordpress.org/){: external} content management system.
 {: shortdesc}
 
 ## Objectives

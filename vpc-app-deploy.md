@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-01-02"
 lasttested: "2023-10-09"
 
 content-type: tutorial
@@ -420,7 +420,7 @@ Now that Terraform has deployed resources, you can validate they were correctly 
 {: #vpc-app-deploy-ansible}
 {: step}
 
-[Ansible](https://www.ansible.com/){: external} is a configuration management and provisioning tool, similar to [Chef](https://www.chef.io/products/chef-infra/){: external} and [Puppet](https://puppet.com/){: external}, and is designed to automate multitier app deployments and provisioning in the cloud. Written in Python, Ansible uses YAML syntax to describe automation tasks, which makes Ansible easy to learn and use.
+[Ansible](https://www.redhat.com/en/ansible-collaborative){: external} is a configuration management and provisioning tool, similar to [Chef](https://www.chef.io/products/chef-infra/){: external} and [Puppet](https://puppet.com/){: external}, and is designed to automate multitier app deployments and provisioning in the cloud. Written in Python, Ansible uses YAML syntax to describe automation tasks, which makes Ansible easy to learn and use.
 
 Although Ansible could be used to provision the VPC resources and install software, this section uses Terraform to provision the VPC resources and Ansible to deploy the software.
 

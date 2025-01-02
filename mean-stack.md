@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-01-02"
 lasttested: "2024-04-22"
 
 content-type: tutorial
@@ -186,7 +186,7 @@ We've already built a container image for the application and pushed it to the p
 {{site.data.keyword.codeengineshort}} monitors the number of requests in the system and [scales the application](/docs/codeengine?topic=codeengine-app-scale) instances up and down in order to meet the load of incoming requests, including any HTTP connections to your application. If your service needs additional compute resources, or you want to reduce the amount of compute resource allocated you can make these changes in your specific application page.
 {: shortdesc}
 
-1. Navigate to the Code Engine [Projects page](/codeengine/projects){: external}.
+1. Navigate to the Code Engine [Projects page](/containers/serverless/projects){: external}.
 2. Click on the **mean-stack** project created earlier.
 2. Under **Summary**, click on **Applications**. 
 3. Click on the **mean-stack-application** created earlier. 

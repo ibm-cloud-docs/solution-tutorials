@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-01-02"
 lasttested: "2024-02-05"
 
 content-type: tutorial
@@ -502,7 +502,7 @@ Your architecture might not be the same as the one presented, but will likely be
 - Use a VPC load balancer](/docs/openshift?topic=openshift-vpc-lbaas) to balance traffic between multiple {{site.data.keyword.powerSys_notm}} instances.
 - Integrate incoming public Internet access using [{{site.data.keyword.cis_full}}](/docs/cis?topic=cis-getting-started).
 - Add [{{site.data.keyword.fl_full}} capture](/docs/vpc?topic=vpc-flow-logs) in the transit.
-- Put each of the spokes in a separate account in an [enterprise](/docs/secure-enterprise?topic=secure-enterprise-enterprise-tutorial#account_groups_tutorial).
+- Put each of the spokes in a separate account in an [enterprise](/docs/enterprise-management?topic=enterprise-management-enterprise-tutorial#account_groups_tutorial).
 
 ## Related content
 {: #vpc-transit-power-related}
