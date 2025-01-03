@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-01-03"
 lasttested: "2024-02-05"
 
 content-type: tutorial
@@ -499,7 +499,7 @@ Run `terraform destroy` in all directories in reverse order using the `./apply.s
 
 Your architecture might not be the same as the one presented, but will likely be constructed from the fundamental components discussed here. Ideas to expand this tutorial:
 
-- Use a VPC load balancer](/docs/openshift?topic=openshift-vpc-lbaas) to balance traffic between multiple {{site.data.keyword.powerSys_notm}} instances.
+- Use a VPC load balancer](/docs/openshift?topic=openshift-vpclb-about) to balance traffic between multiple {{site.data.keyword.powerSys_notm}} instances.
 - Integrate incoming public Internet access using [{{site.data.keyword.cis_full}}](/docs/cis?topic=cis-getting-started).
 - Add [{{site.data.keyword.fl_full}} capture](/docs/vpc?topic=vpc-flow-logs) in the transit.
 - Put each of the spokes in a separate account in an [enterprise](/docs/enterprise-management?topic=enterprise-management-enterprise-tutorial#account_groups_tutorial).
