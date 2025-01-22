@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2024
-lastupdated: "2024-10-09"
+  years: 2024, 2025
+lastupdated: "2025-01-22"
 lasttested: "2024-01-04"
 
 content-type: tutorial
@@ -146,7 +146,7 @@ The new VM will be created. Provisioning of the VM may take several minutes to c
 VM `db-server-1` requires two NICs, but as the default template only has one. So, you need to [add that post initial provisioning](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html){: external}. After the VM has been created, click **Details**. Then select **NICs** under the Hardware, and you can add the 2nd NIC to the VM and attach that to the correct network segment.
 {: tip}
 
-Review the other hardware options and see what you can change and how. See [Edit Virtual Machine Properties section on VMware Cloud Director Tenant Guide](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html){: external} for more details.  
+Review the other hardware options and see what you can change and how. See [Edit Virtual Machine Properties section on VMware Cloud Director Tenant Guide](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-virtual-machines-tenant/editing-virtual-machine-properties-tenant.html){: external} for more details.
 {: tip}
 
 
@@ -336,6 +336,7 @@ To connect to the VM through the Internet:
 
 Check the following VMware Cloud Director™ Tenant Portal Guides for more detailed information:
 
-* [Managing Organization Virtual Data Center Networks](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-B208CDD2-5D46-4841-8F3C-BED9E4F27F07.html){: external}
-* [Managing NSX Edge Gateways](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-45C0FEDF-84F2-4487-8DB8-3BC281EB25CD.html){: external}
-* [Working with Virtual Machines](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-DF0C111D-B638-4EC3-B805-CC33994F8D53.html){: external}
+* [Managing Organization Virtual Data Center Networks in the VMware Cloud Director Tenant Portal](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-networks-tenant/managing-organization-vdc-networks-tenant.html){: external}
+* [Managing NSX Edge Gateways in VMware Cloud Director Tenant Portal](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-networks-tenant/managing-nsx-t-edge-gateways-in-vcd-tenant.html){: external}
+* [Working with Virtual Machines](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-virtual-machines-tenant.html){: external}
+* 
