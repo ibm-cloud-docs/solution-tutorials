@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2024
-lastupdated: "2024-10-09"
+  years: 2024, 2025
+lastupdated: "2025-01-22"
 lasttested: "2024-01-04"
 
 
@@ -233,7 +233,7 @@ You can use it as such, add more networks, more VMs and customize NAT or firewal
    #vmwaas_password = "put-your-password-here"              # Note. When using a username and password, create a new local user in Director for terraform.
    ```
 
-   To create an API token, see [VMware Docs](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-A1B3B2FA-7B2C-4EE1-9D1B-188BE703EEDE.html).
+   To create an API token, see [VMware Cloud Director Docs](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6.html).
    {: tip}
 
    For these variables, you could alternatively create environment variables named TF_VAR_ for `vmwaas_api_token`, `vmwaas_user` and `vmwaas_password` rather than defining them in `terraform.tfvars` as shown through the `vmwaas.sh` script. In this case, comment these lines out in your `terraform.tfvars`.
@@ -871,9 +871,9 @@ To connect to the virtual machine through the Internet:
 
 Check the following VMware Cloud Director™ Tenant Portal Guides for more detailed information about managing VDCs:
 
-* [Managing Organization Virtual Data Center Networks](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-B208CDD2-5D46-4841-8F3C-BED9E4F27F07.html){: external}
-* [Managing NSX Edge Gateways](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-45C0FEDF-84F2-4487-8DB8-3BC281EB25CD.html){: external}
-* [Working with Virtual Machines](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-DF0C111D-B638-4EC3-B805-CC33994F8D53.html){: external}
+* [Managing Organization Virtual Data Center Networks in the VMware Cloud Director Tenant Portal](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-networks-tenant/managing-organization-vdc-networks-tenant.html){: external}
+* [Managing NSX Edge Gateways in VMware Cloud Director Tenant Portal](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-networks-tenant/managing-nsx-t-edge-gateways-in-vcd-tenant.html){: external}
+* [Working with Virtual Machines](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-virtual-machines-tenant.html){: external}
 
 Check the Terraform registry for more detailed information about the provider, resources and data sources:
 
