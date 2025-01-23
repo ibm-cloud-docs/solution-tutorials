@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024, 2025
-lastupdated: "2025-01-22"
+lastupdated: "2025-01-23"
 lasttested: "2024-01-04"
 
 content-type: tutorial
@@ -27,7 +27,6 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 
 This tutorial is to demonstrate the basic steps to operationalize an {{site.data.keyword.vmware-service_full}} single-tenant or multitenant virtual data center (VDC) after initial instance provisioning. This tutorial should take about 20-30 minutes to complete and assumes that [a {{site.data.keyword.vmware-service_short}} instance](/docs/vmware-service?topic=vmware-service-tenant-ordering) and [a VDC](/docs/vmware-service?topic=vmware-service-vdc-adding) have already been provisioned.
 {: shortdesc}
-
 
 ## Objectives
 {: #vmware-as-a-service-vdc-objectives}
@@ -65,7 +64,6 @@ This tutorial requires:
 * Check for user permissions. Be sure that your user account has sufficient permissions [to create and manage {{site.data.keyword.vmware-service_short}} resources](/docs/vmware-service?topic=vmware-service-getting-started).
 * [A pre-provisioned {{site.data.keyword.vmware-service_short}} single-tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering).
 * [A pre-provisioned VDC on the {{site.data.keyword.vmware-service_short}} single-tenant instance](/docs/vmware-service?topic=vmware-service-vdc-adding).
-
 
 ## Log in to the instance and deploy the initial network
 {: #vmware-as-a-service-vdc-deploy-network}
@@ -143,12 +141,11 @@ To create a VM:
 
 The new VM will be created. Provisioning of the VM may take several minutes to complete. Upon completion, the VM will automatically power on. Repeat the process for the other VMs, `application-server-1` and `db-server-1`.
 
-VM `db-server-1` requires two NICs, but as the default template only has one. So, you need to [add that post initial provisioning](https://docs.vmware.com/en/VMware-Cloud-Director/10.4/VMware-Cloud-Director-Tenant-Portal-Guide/GUID-FA8C101E-241E-41A5-A3C3-83BDBB4467F1.html){: external}. After the VM has been created, click **Details**. Then select **NICs** under the Hardware, and you can add the 2nd NIC to the VM and attach that to the correct network segment.
+The VM `db-server-1` requires two NICs. However, since it is the default template, it has only one NIC. So, you need to add that post initial provisioning. After the VM has been created, click **Details**. Then select **NICs** under the Hardware, and you can add the 2nd NIC to the VM and attach that to the correct network segment. For more information, see [Change the Hardware Properties of a Virtual Machine](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/change-virtual-machine-hardware-properties.html){: external}.
 {: tip}
 
 Review the other hardware options and see what you can change and how. See [Edit Virtual Machine Properties section on VMware Cloud Director Tenant Guide](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-virtual-machines-tenant/editing-virtual-machine-properties-tenant.html){: external} for more details.
 {: tip}
-
 
 ## Create IP Sets and Static Groups
 {: #vmware-as-a-service-vdc-deploy-ip-set-sg}
@@ -191,7 +188,6 @@ To create a Static Group:
 
 Upon completion of these tasks, the new IP Sets and Static Groups will be added.
 
-
 ## Create NAT rules to allow VMs to access the Internet
 {: #vmware-as-a-service-vdc-configure-nat}
 {: step}
@@ -206,12 +202,10 @@ You will create the following NAT rules in this tutorial.
 | `snat-to-inet-db`  | SNAT            | `public-ip-1`     | `192.168.101.0/24`  | any            | 100          | Match Internal Address |
 {: caption="SNAT rules" caption-side="bottom"}
 
-
 | Name               | Type            | External IP       | Internal IP         | Application    | Priority     | Firewall Match         |
 | -------------------|-----------------|-------------------|---------------------|----------------|--------------|------------------------|
 | `dnat-to-jump`     | DNAT            | `public-ip-0`     | `192.168.100.10/32` | -              | 90           | Match External Address |
 {: caption="DNAT rules" caption-side="bottom"}
-
 
 Double-check the IP addresses of the VMs you created using the VMware Cloud Director Console. You can use the info button during the rule creation to check available external IP addresses.
 {: important}
@@ -259,7 +253,6 @@ To create a source NAT (SNAT) rule:
 
 The new NAT rule will be created. This may take a few seconds to complete. Repeat the process for other source NAT rules, if needed in your solution.
 
-
 ## Create firewall rules
 {: #vmware-as-a-service-vdc-configure-fw}
 {: step}
@@ -276,10 +269,8 @@ The next step is to create firewall rules. By default, the {{site.data.keyword.v
 The `default_rule` has been pre-provisioned by {{site.data.keyword.cloud_notm}}. It is listed above just for illustration purposes.
 {: note}
 
-
 The IP addresses used in the firewall rules must match with the settings in your NAT rules. In this example, two different ways have been used for illustration purposes.
 {: note}
-
 
 It is generally not advised to use RDP over public Internet. The rule listed above is just used for illustration purposes.
 {: note}
@@ -300,7 +291,6 @@ To create a firewall rule:
 
 The new firewall rule will be created. This may take a few seconds to complete. Repeat the process for the other firewall rules, or more if needed in your solution.
 
-
 ## Connect to the VM using the web console
 {: #vmware-as-a-service-vdc-connect-to-vmconsole}
 {: step}
@@ -318,7 +308,6 @@ To connect to the VM using the web console:
 1. Click **Launch Web Console** to open a local console to the VM.
 2. Using the web console, log in to the VM using root as the user ID and the password you captured from the previous step.
 3. You should then be able to ping Internet resources such as `www.ibm.com`, showing that the networking is complete and working.
-
 
 ## Connect to the VMs though the Internet and validate connectivity
 {: #vmware-as-a-service-vdc-connect-to-vm}
@@ -339,4 +328,3 @@ Check the following VMware Cloud Director™ Tenant Portal Guides for more detai
 * [Managing Organization Virtual Data Center Networks in the VMware Cloud Director Tenant Portal](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-networks-tenant/managing-organization-vdc-networks-tenant.html){: external}
 * [Managing NSX Edge Gateways in VMware Cloud Director Tenant Portal](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-networks-tenant/managing-nsx-t-edge-gateways-in-vcd-tenant.html){: external}
 * [Working with Virtual Machines](https://techdocs.broadcom.com/us/en/vmware-cis/cloud-director/vmware-cloud-director/10-6/map-for-vmware-cloud-director-tenant-portal-guide-10-6/working-with-virtual-machines-tenant.html){: external}
-* 
