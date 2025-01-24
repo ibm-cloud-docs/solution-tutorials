@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-03"
+lastupdated: "2025-01-24"
 lasttested: "2024-10-03"
 
 content-type: tutorial
@@ -100,7 +100,7 @@ Instead of through user properties supplied by an identity provider, in this cas
 
 The benefit of utilizing a trusted profile based on a compute resource is that this solution avoids using an API key. Thus, there are no requirements and challenges on how to create, store and protect any shared API key, how to assign and manage privileges. The app which assumes the identity of a trusted profile simply fetches a special compute resource token, then turns it into a regular IAM access token for the trusted profile. Thereafter, the intended tasks can be performed with the token provided for authentication.
 
-See the blog post [Developer Tricks: Simulate Cloud Security for Local App Development](https://www.ibm.com/blog/developer-tricks-simulate-cloud-security-for-local-app-development){: external} for some background on the compute resource token. Learn how to locally develop and test apps utilizing that token.
+See the blog post [Developer Tricks: Simulate Cloud Security for Local App Development](https://www.ibm.com/products/blog/developer-tricks-simulate-cloud-security-for-local-app-development){: external} for some background on the compute resource token. Learn how to locally develop and test apps utilizing that token.
 {: tip}
 
 

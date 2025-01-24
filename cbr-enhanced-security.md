@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2024-10-15"
+lastupdated: "2025-01-24"
 lasttested: "2024-10-11"
 
 content-type: tutorial
@@ -337,5 +337,5 @@ To remove the resource, use the browser and navigate to the [{{site.data.keyword
 
 * Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/blog/towards-zero-trust-with-context-based-restrictions){: external}
 * Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/blog/announcement/introducing-context-based-restrictions/){: external}
-* [What is Zero Trust?](https://www.ibm.com/topics/zero-trust){: external}
+* [What is Zero Trust?](https://www.ibm.com/think/topics/zero-trust){: external}
 * [Best practices for organizing users, teams, applications](/docs/account?topic=account-account_setup)
