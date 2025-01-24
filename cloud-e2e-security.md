@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-01-24"
 lasttested: "2024-01-17"
 
 content-type: tutorial
@@ -586,7 +586,7 @@ You can find information on the individual services and their available IAM acce
 * [{{site.data.keyword.appid_short}}](/docs/appid?topic=appid-service-access-management)
 * [{{site.data.keyword.cloudant_short_notm}}](/docs/Cloudant?topic=Cloudant-managing-access-for-cloudant)
 * [{{site.data.keyword.cos_short}}](/docs/cloud-object-storage?topic=cloud-object-storage-iam)
-* [{{site.data.keyword.atracker_full_notm}}](/docs/atracker?topic=atracker-iam_by_role)
+* [{{site.data.keyword.atracker_full_notm}}](/docs/atracker?topic=atracker-iam)
 * [{{site.data.keyword.keymanagementserviceshort}}](/docs/key-protect?topic=key-protect-manage-access)
 * [{{site.data.keyword.secrets-manager_short}}](/docs/secrets-manager?topic=secrets-manager-iam)
 
