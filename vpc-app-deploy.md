@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-02-25"
 lasttested: "2023-10-09"
 
 content-type: tutorial
@@ -211,7 +211,7 @@ The CLI has a [plugin for all VPC-related functionality](/docs/cli?topic=cli-vpc
    ```
    {: pre}
 
-1. To provision a virtual server instance, run the `ibmcloud is create-instance` CLI command. In [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh){: external} is the cloud-init file used to initialize the frontend and the backend servers. You can pass the script with the `--user-data` parameter like this:
+1. To provision a virtual server instance, run the `ibmcloud is instance-create` CLI command. In [`shared/install.sh`](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh){: external} is the cloud-init file used to initialize the frontend and the backend servers. You can pass the script with the `--user-data` parameter like this:
 
    ```sh
    ibmcloud is instance-create ... --user-data @shared/install.sh
