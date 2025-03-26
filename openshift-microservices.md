@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-03-26"
 lasttested: "2023-09-26"
 
 content-type: tutorial
-services: openshift, log-analysis, monitoring, containers, Cloudant
+services: openshift, cloud-logs, monitoring, containers, Cloudant
 account-plan: paid
 completion-time: 3h
 use-case: ApplicationModernization, Containers
@@ -17,7 +17,7 @@ use-case: ApplicationModernization, Containers
 # Deploy microservices with {{site.data.keyword.openshiftshort}}
 {: #openshift-microservices}
 {: toc-content-type="tutorial"}
-{: toc-services="openshift, log-analysis, monitoring, containers, Cloudant"}
+{: toc-services="openshift, cloud-logs, monitoring, containers, Cloudant"}
 {: toc-completion-time="3h"}
 {: toc-use-case="ApplicationModernization, Containers"}
 
@@ -35,7 +35,7 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 * Deploy a microservice
 * Scale the microservice
 * Use an operator to deploy {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
-* Observe the cluster using {{site.data.keyword.la_short}}
+* Observe the cluster using {{site.data.keyword.logs_full_notm}}
 * Observe the cluster using {{site.data.keyword.mon_full_notm}}
 
 
@@ -48,9 +48,9 @@ This tutorial demonstrates how to deploy applications to [{{site.data.keyword.op
 1. Users access the frontend application.
 1. The {{site.data.keyword.cloudant_short_notm}} database instance is provisioned through an IBM Cloud Operator Service.
 1. The backend application is connected to the database with an IBM Cloud Operator Binding.
-1. {{site.data.keyword.la_short}} is provisioned and agent deployed.
+1. {{site.data.keyword.logs_full_notm}} is provisioned and agent deployed.
 1. {{site.data.keyword.mon_short}} is provisioned and agent deployed.
-1. An Administrator monitors the app with {{site.data.keyword.la_short}} and {{site.data.keyword.mon_short}}.
+1. An Administrator monitors the app with {{site.data.keyword.logs_full_notm}} and {{site.data.keyword.mon_short}}.
 
 There are [scripts](https://github.com/IBM-Cloud/patient-health-frontend/tree/master/scripts){: external} that will perform some of the steps below.  It is described in the [README.md](https://github.com/IBM-Cloud/patient-health-frontend){: external}. If you run into trouble and want to start over just execute the `destroy.sh` script and sequentially go through the scripts that correspond to the steps to recover.
 
@@ -780,7 +780,7 @@ In the [Resource List](/resources) locate and delete the resources you wish to r
    ```
    {: pre}
    
-* Delete {{site.data.keyword.la_short}} instance
+* Delete {{site.data.keyword.logs_full_notm}} instance
 * Delete {{site.data.keyword.mon_full_notm}}
 * Delete {{site.data.keyword.cloudant_short_notm}} and bind to a microservice
 * {{site.data.keyword.cloudant_short_notm}} service
@@ -794,5 +794,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 
 - [{{site.data.keyword.openshiftlong_notm}}](/docs/openshift)
 - [{{site.data.keyword.cloudant_short_notm}}](/catalog/services/cloudant)
-- [Analyze logs and monitor application health](/docs/solution-tutorials?topic=solution-tutorials-application-log-analysis#application-log-analysis)
 - [Horizontal Pod Autoscaling](https://docs.openshift.com/container-platform/4.12/nodes/pods/nodes-pods-autoscaling.html){: external}

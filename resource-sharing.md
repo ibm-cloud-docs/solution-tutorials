@@ -2,11 +2,11 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-03-26"
 lasttested: "2023-12-18"
 
 content-type: tutorial
-services: vpc, log-analysis, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker, cloud-logs
+services: vpc, cloud-logs, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker, cloud-logs
 account-plan: paid
 completion-time: 1h
 use-case: ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement
@@ -17,7 +17,7 @@ use-case: ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement
 # Resource sharing across accounts
 {: #resource-sharing}
 {: toc-content-type="tutorial"}
-{: toc-services="vpc, log-analysis, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker, cloud-logs"}
+{: toc-services="vpc, cloud-logs, secrets-manager, appid, key-protect, hs-crypto, cloud-object-storage, atracker, cloud-logs"}
 {: toc-completion-time="1h"}
 {: toc-use-case="ApplicationIntegration, Cybersecurity, IdentityAndAccessManagement"}
 
@@ -214,7 +214,7 @@ Accessing resources in different accounts, even sharing resources is common prac
 | **Security and Observability** | |
 | {{site.data.keyword.compliance_short}} | [Scan multiple accounts or account groups in an enterprise](/docs/security-compliance?topic=security-compliance-best-practices#bp-enterprise) |
 | {{site.data.keyword.atracker_full_notm}} | [Route your {{site.data.keyword.atracker_full_notm}} events to another account and consolidate event data](/docs/atracker?topic=atracker-scenarios#scenarios-3)|
-| {{site.data.keyword.logs_routing_full_notm}} | Route logs to target like {{site.data.keyword.logs_full_notm}} or [{{site.data.keyword.messagehub}}](/docs/log-analysis?topic=log-analysis-streaming-configure)|
+| {{site.data.keyword.logs_routing_full_notm}} | Route logs to target like {{site.data.keyword.logs_full_notm}} or {{site.data.keyword.messagehub}}|
 | {{site.data.keyword.keymanagementserviceshort}} | Use [service-to-service authorizations](/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](/docs/key-protect?topic=key-protect-grouping-keys) for simpler management and enhanced security.|
 | {{site.data.keyword.hscrypto}} | Use [service-to-service authorizations](/docs/account?topic=account-serviceauth&interface=ui) to share encryption keys. [Organize the keys in key rings](/docs/hs-crypto?topic=hs-crypto-managing-key-rings) for simpler management and enhanced security.|
 | {{site.data.keyword.hscrypto}} with {{site.data.keyword.uko_full_notm}}| [Connect your {{site.data.keyword.hscrypto}} instance to keystores in {{site.data.keyword.cloud_notm}} and third-party clouds](/docs/hs-crypto?topic=hs-crypto-uko-overview&interface=ui).|
