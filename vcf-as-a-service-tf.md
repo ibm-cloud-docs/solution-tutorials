@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024, 2025
-lastupdated: "2025-01-22"
+lastupdated: "2025-04-16"
 lasttested: "2024-01-04"
 
 
@@ -77,7 +77,7 @@ This tutorial requires:
 * [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cli-getting-started),
 * [{{site.data.keyword.cloud_notm}} API KEY](/docs/account?topic=account-userapikey&interface=ui),
 * [`jq` to query JSON files](https://stedolan.github.io/jq/){: external}, and
-* [Terraform](https://www.terraform.io){: external} with [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} to use Infrastructure as Code to provision resources.
+* [Terraform](https://developer.hashicorp.com/terraform){: external} with [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} to use Infrastructure as Code to provision resources.
 
 You will find instructions to download and install these tools for your operating environment in the [Getting started with tutorials](/docs/solution-tutorials?topic=solution-tutorials-tutorials) guide.
 
