@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-02-25"
+lastupdated: "2025-04-25"
 lasttested: "2023-10-09"
 
 content-type: tutorial
@@ -240,7 +240,7 @@ The CLI has a [plugin for all VPC-related functionality](/docs/cli?topic=cli-vpc
 {: #vpc-app-deploy-terraform}
 {: step}
 
-[Terraform](https://www.terraform.io/){: external} enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
+[Terraform](https://developer.hashicorp.com/terraform){: external} enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
 ### Before you begin
 {: #vpc-app-deploy-terraform-before-you-begin}
