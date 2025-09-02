@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2025
-lastupdated: "2025-04-02"
+lastupdated: "2025-09-02"
 lasttested: "2025-04-02"
 
 content-type: tutorial
@@ -358,7 +358,7 @@ For a secured connection with HTTPS, you can either obtain a certificate from [L
 ### Increase performance and protect from Denial of Service attacks
 {: #multi-region-k8s-cis-proxy_setting}
 
-A distributed denial of service ([DDoS](https://en.wikipedia.org/wiki/Denial-of-service_attack){: external}) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. {{site.data.keyword.cis_short_notm}} is equipped to protect your domain from DDoS.
+A distributed denial of service ([DDoS](https://en.m.wikipedia.org/wiki/Denial-of-service_attack){: external}) attack is a malicious attempt to disrupt normal traffic of a server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of internet traffic. {{site.data.keyword.cis_short_notm}} is equipped to protect your domain from DDoS.
 
 1. In the {{site.data.keyword.cis_short_notm}} dashboard, select **Reliability** > **Global Load Balancer**.
 1. Locate the GLB you created in the **Load Balancers** table.
