@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-24"
+lastupdated: "2025-10-08"
 lasttested: "2024-01-17"
 
 content-type: tutorial
@@ -175,7 +175,7 @@ Finally, create the bucket.
 The {{site.data.keyword.cloudant_short_notm}} database will contain metadata for all files uploaded from the application.
 
 1. Create an instance of [{{site.data.keyword.cloudant_short_notm}}](/catalog/services/cloudant){: external} service.
-   1. Select **Cloudant** as the offering. 
+   1. Select **Cloudant** as the offering.
    2. Select a **Multitenant** environment and a **region** same as the previous services.
    3. Set the **name** to `secure-file-storage-cloudant`.
    4. Use the same **resource group** as for the previous services.
@@ -246,7 +246,7 @@ All services have been configured. In this section you will deploy the tutorial 
    git clone https://github.com/IBM-Cloud/secure-file-storage
    ```
    {: codeblock}
-   
+
 2. Go to the **secure-file-storage/app** directory:
    ```sh
    cd secure-file-storage/app
@@ -265,7 +265,7 @@ All services have been configured. In this section you will deploy the tutorial 
 
    You can find more CLI commands in the [General IBM Cloud CLI (ibmcloud) commands](/docs/cli?topic=cli-ibmcloud_cli) topic in the documentation.
 
-2. Set the environment variables required for generating configuration files in the next step. 
+2. Set the environment variables required for generating configuration files in the next step.
    1. Start by setting the cluster name by replacing `<YOUR_CLUSTER_NAME>`:
       ```sh
       export MYCLUSTER=<YOUR_CLUSTER_NAME>
@@ -304,14 +304,14 @@ All services have been configured. In this section you will deploy the tutorial 
 
    7. Optionally set `$IMAGE_PULL_SECRET` environment variable only if you are using another Kubernetes namespace than the `default` namespace and the {{site.data.keyword.registryfull_notm}} for the image. This requires additional Kubernetes configuration (e.g. [creating a container registry secret in the new namespace](/docs/containers?topic=containers-registry#other)).
 
-3. Run the below command to generate `secure-file-storage.yaml` and `secure-file-storage-ingress.yaml`. It will use the environment variables you just configured together with the template files `secure-file-storage.template.yaml` and `secure-file-storage-ingress.template.yaml`. 
+3. Run the below command to generate `secure-file-storage.yaml` and `secure-file-storage-ingress.yaml`. It will use the environment variables you just configured together with the template files `secure-file-storage.template.yaml` and `secure-file-storage-ingress.template.yaml`.
       ```sh
       ./generate_yaml.sh
       ```
       {: pre}
 
    As example, assuming the application is deployed to the *default* Kubernetes namespace:
-   
+
    | Variable | Value | Description |
    | -------- | ----- | ----------- |
    | `$IMAGE_PULL_SECRET` | Do not define when using provided image| A secret to access the registry.  |
@@ -346,23 +346,23 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-2. Check that an Ingress secret is available in your target namespace. If not, you need to create it. 
+2. Check that an Ingress secret is available in your target namespace. If not, you need to create it.
    ```sh
    ibmcloud ks ingress secret ls -c $MYCLUSTER
    ```
-   {: codeblock}   
+   {: codeblock}
 
    If the Ingress secret has a CRN, use its name and CRN to create a secret in your target namespace:
    ```sh
    ibmcloud ks ingress secret create -c $MYCLUSTER -n $TARGET_NAMESPACE --cert-crn <crn-shown-in-the-output-above> --name <secret-name-shown-above>
    ```
-   {: codeblock}   
+   {: codeblock}
 
    If the Ingress secret does not have a CRN, use the following command to recreate it in the target namespace:
    ```sh
    kubectl get secret $INGRESS_SECRET --namespace=ibm-cert-store -oyaml | grep -v '^\s*namespace:\s'| kubectl apply  --namespace=$TARGET_NAMESPACE -f -
    ```
-   {: codeblock}   
+   {: codeblock}
 
 3. Create the secret used by the application to obtain service credentials:
    ```sh
@@ -376,7 +376,7 @@ All services have been configured. In this section you will deploy the tutorial 
    ```
    {: codeblock}
 
-5. Deploy the network routing (a ClusterIP service and Ingress) for your app to make it accessible from the public internet. 
+5. Deploy the network routing (a ClusterIP service and Ingress) for your app to make it accessible from the public internet.
    ```sh
    kubectl apply -f secure-file-storage-ingress.yaml
    ```
@@ -504,7 +504,7 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
    5. Click **Next**.
    6. Review your selections and click on **Add**.
    7. Click the three vertical dots menu for the active secret and choose **Details** and copy the **CRN** from the dialog. Export the value in the shell. It will look something like this:
-      ```sh   
+      ```sh
       export PUBLIC_CERT_CRN=crn:v1:bluemix:public:secrets-manager:eu-de:a/abc123abc123abc123abc123:99999999-9999-9999-9999-999999999999:secret:aaaaaaaa-9999-9999-aaaa-123456781234
       ```
       {: codeblock}
@@ -517,7 +517,7 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
    4. Finally, under **Roles** select **Manager** and grant the authorization by clicking **Authorize**.
 
 6. Verify the values for MYDOMAIN and PUBLIC_CERT_CRN have been exported into the environment:
-   ```sh   
+   ```sh
    echo MYDOMAIN $(printenv MYDOMAIN)
    echo PUBLIC_CERT_CRN $(printenv PUBLIC_CERT_CRN)
    ```
@@ -542,7 +542,7 @@ Connect {{site.data.keyword.secrets-manager_short}} instance to Let's Encrypt.
    ```
    {: pre}
 
-   
+
 9. Apply the configuration changes to your cluster:
    ```sh
    kubectl apply -f secure-file-storage-ingress.yaml
@@ -585,7 +585,7 @@ You can find information on the individual services and their available IAM acce
 * [{{site.data.keyword.registryshort_notm}}](/docs/Registry?topic=Registry-iam#iam)
 * [{{site.data.keyword.appid_short}}](/docs/appid?topic=appid-service-access-management)
 * [{{site.data.keyword.cloudant_short_notm}}](/docs/Cloudant?topic=Cloudant-managing-access-for-cloudant)
-* [{{site.data.keyword.cos_short}}](/docs/cloud-object-storage?topic=cloud-object-storage-iam)
+* [{{site.data.keyword.cos_short}}](/docs/cloud-object-storage?topic=cloud-object-storage-iam-overview)
 * [{{site.data.keyword.atracker_full_notm}}](/docs/atracker?topic=atracker-iam)
 * [{{site.data.keyword.keymanagementserviceshort}}](/docs/key-protect?topic=key-protect-manage-access)
 * [{{site.data.keyword.secrets-manager_short}}](/docs/secrets-manager?topic=secrets-manager-iam)
@@ -631,7 +631,4 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 {: related}
 
 * [{{site.data.keyword.Bluemix_notm}} Platform security](/docs/overview?topic=overview-security#security)
-* [Security in the IBM Cloud](https://www.ibm.com/cloud/security){: external}
-* Blog: [Secure Apps on IBM Cloud with Wildcard Certificates](https://www.ibm.com/blog/secure-apps-on-ibm-cloud-with-wildcard-certificates){: external}
-* Blog: [Cloud Offboarding: How to Remove a User and Maintain Security](https://www.ibm.com/blog/cloud-offboarding-how-to-remove-a-user-and-maintain-security){: external}
-* Blog: [Going Passwordless on IBM Cloud Thanks to FIDO2](https://www.ibm.com/blog/going-passwordless-on-ibm-cloud-thanks-to-fido2){: external}
+* [Security in the IBM Cloud](https://www.ibm.com/products/cloud/security){: external}
