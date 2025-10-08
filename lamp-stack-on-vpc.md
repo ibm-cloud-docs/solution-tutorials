@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-10-08"
 lasttested: "2024-05-22"
 
 content-type: tutorial
@@ -65,7 +65,7 @@ You will find instructions to download and install these tools for your operatin
 {: step}
 
 In this section, you will provision a VPC, Subnet, Security Group and a Virtual Server Instance (VSI) using the [{{site.data.keyword.cloud-shell_notm}}](/shell){: external} and the {{site.data.keyword.cloud_notm}} CLI. VSIs often address peaks in demand after which they can be [suspended or powered down](/docs/vpc?topic=vpc-suspend-billing#billing-details) so that the cloud environment perfectly fits your infrastructure needs.
-   
+
 If you prefer to use a Terraform template to generate these resources, you can use the template that is available here: https://github.com/IBM-Cloud/vpc-tutorials/tree/master/vpc-lamp and follow the instructions in the README.md. This template can also be used in [{{site.data.keyword.bpshort}}](/schematics/overview){: external}.
 {: tip}
 
@@ -79,7 +79,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 ### Create SSH Key(s)
 {: #lamp-stack-on-vpc-3}
 
-1. In VPC an SSH key is used for administrator access to a VSI instead of a password. Create an SSH Key by running the following command and accept the defaults when prompted. For more information on SSH keys, see the docs [SSH Keys](/docs/vpc?topic=vpc-ssh-keys). 
+1. In VPC an SSH key is used for administrator access to a VSI instead of a password. Create an SSH Key by running the following command and accept the defaults when prompted. For more information on SSH keys, see the docs [SSH Keys](/docs/vpc?topic=vpc-ssh-keys).
    ```sh
    ssh-keygen -t rsa -b 4096
    ```
@@ -90,7 +90,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
    If you have an existing SSH key that you would like to re-use, you can upload it to your {{site.data.keyword.cloud-shell_short}} session instead.
    {: tip}
-   
+
 1. Add the SSH key to your account.
    ```sh
    SSHKEY_ID=$(ibmcloud is key-create sshkey-lamp-tutorial @$HOME/.ssh/id_rsa.pub --json | jq -r '.id')
@@ -106,13 +106,13 @@ If you prefer to use a Terraform template to generate these resources, you can u
    ```
    {: pre}
 
-1. Create the subnet for your VPC. 
+1. Create the subnet for your VPC.
    ```sh
    SUBNET_ID=$(ibmcloud is subnet-create subnet-lamp-1 $VPC_ID --zone $(ibmcloud target --output json | jq -r '.region.name')-1 --ipv4-address-count 256 --json | jq -r '.id')
    ```
    {: pre}
 
-1. Create the security group for your VPC. 
+1. Create the security group for your VPC.
    ```sh
    SG_ID=$(ibmcloud is security-group-create sg-lamp-1 $VPC_ID --json | jq -r '.id')
    ```
@@ -120,7 +120,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
 1. Add a rule to limit inbound to SSH port 22.
    ```sh
-   ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 22 --port-max 22 --json
+   ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 22 --port-max 22
    ```
    {: pre}
 
@@ -129,7 +129,7 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
 1. Add a rule to limit inbound to HTTP port 80.
    ```sh
-   ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 80 --port-max 80 --json
+   ibmcloud is security-group-rule-add $SG_ID inbound tcp --port-min 80 --port-max 80
    ```
    {: pre}
 
@@ -138,14 +138,14 @@ If you prefer to use a Terraform template to generate these resources, you can u
 
 1. Add a rule to allow outbound to all, this is required to install software, it can be disabled or removed later on.
    ```sh
-   ibmcloud is security-group-rule-add $SG_ID outbound all --json
+   ibmcloud is security-group-rule-add $SG_ID outbound all
    ```
    {: pre}
 
 ### Create Virtual Server Instance
 {: #lamp-stack-on-vpc-5}
 
-1. IBM Cloud periodically updates the Ubuntu image with the latest software, obtain the image ID for latest Ubuntu 20.x by running the following command.  
+1. IBM Cloud periodically updates the Ubuntu image with the latest software, obtain the image ID for latest Ubuntu 20.x by running the following command.
    ```sh
    IMAGE_ID=$(ibmcloud is images --json | jq -r '.[] | select (.name=="ibm-ubuntu-22-04-1-minimal-amd64-3") | .id')
    ```
@@ -176,41 +176,41 @@ If you prefer to use a Terraform template to generate these resources, you can u
 {: #lamp-stack-on-vpc-6}
 {: step}
 
-In this section, you'll run commands to update Ubuntu package sources and install Apache, MySQL and PHP with latest version. 
+In this section, you'll run commands to update Ubuntu package sources and install Apache, MySQL and PHP with latest version.
 
 When the server is spun up for the first time, it is possible that it is already running system updates and blocks you from running the commands below, you can check the status of system updates by running `ps aux | grep -i apt`, and either wait for the automated system updates task to complete or kill the task.
 {: tip}
 
-1. Disable interactive mode during updates 
+1. Disable interactive mode during updates
    ```sh
    export DEBIAN_FRONTEND=noninteractive
    ```
    {: pre}
 
-1. Update packages 
+1. Update packages
    ```sh
    apt update
    ```
    {: pre}
 
-1. Install the Apache 
+1. Install the Apache
    ```sh
    apt install apache2 -y
    ```
-   {: pre}      
+   {: pre}
 
-1. Install the MySQL 
+1. Install the MySQL
    ```sh
    apt install mysql-server -y
    ```
    {: pre}
 
-1. Install the PHP 
+1. Install the PHP
    ```sh
    apt install php libapache2-mod-php php-mysql php-common php-cli -y
    ```
    {: pre}
-  
+
 ## Verify the installation and configuration
 {: #lamp-stack-on-vpc-7}
 {: step}
@@ -362,7 +362,7 @@ To ensure server availability and the best user experience, monitoring should be
 ### Server monitoring
 {: #lamp-stack-on-vpc-11}
 
-You can monitor CPU, volume, memory, and network usage of your VSI instances after you set up an instance of the {{site.data.keyword.mon_full_notm}} service. If you would like to configure the monitoring service follow the steps outlined in the [Monitoring a Linux host](/docs/monitoring?topic=monitoring-ubuntu) documentation. 
+You can monitor CPU, volume, memory, and network usage of your VSI instances after you set up an instance of the {{site.data.keyword.mon_full_notm}} service. If you would like to configure the monitoring service follow the steps outlined in the [Monitoring a Linux host](/docs/monitoring?topic=monitoring-ubuntu) documentation.
 
 ### Server logging
 {: #lamp-stack-on-vpc-12}
@@ -387,12 +387,12 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
 
    In VPC you also have a choice of using a customer managed encryption key. For storing your own encryption keys, you can use one of two available services: (1) A FIPS 140-2 Level 3 service [{{site.data.keyword.keymanagementservicelong_notm}}](https://www.ibm.com/products/key-protect){: external}.  See the [Provisioning the {{site.data.keyword.keymanagementservicelong_notm}} service](/docs/key-protect?topic=key-protect-provision) topic in the documentation. (2) A FIPS 140-2 Level 4 service [{{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](https://www.ibm.com/products/hyper-protect-crypto){: external}, see the [Getting started with {{site.data.keyword.Bluemix_notm}} {{site.data.keyword.hscrypto}}](/docs/hs-crypto?topic=hs-crypto-get-started) topic in the documentation. While creating the volume you can specify the `--encryption-key` parameter with the CRN to the encryption key you want to use.
    {: tip}
-   
+
 1. Capture the ID of the VSI created earlier by listing all instances and filtering based on the instance name:
    ```sh
    VSI_ID=$(ibmcloud is instances --json | jq -r '.[] | select(.name == "vsi-lamp-1") | .id')
    ```
-   {: pre}   
+   {: pre}
 
 1. Attach the data volume to your existing VSI.
    ```sh
@@ -406,7 +406,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```
    {: pre}
 
-1. Configure the newly created data volume on the VSI, run each line below one at a time.  
+1. Configure the newly created data volume on the VSI, run each line below one at a time.
 
    ```sh
    new_bsv=$(echo $(parted -l 2>&1) | awk 'NR==1{print $2}' | sed 's/:$//')
@@ -419,7 +419,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    echo "${new_part} /data ext4 defaults,relatime 0 0" | tee -a /etc/fstab
    mount -a
    ```
-   {: pre}   
+   {: pre}
 
 ### Configure Apache to use the new /data file system
 {: #lamp-stack-on-vpc-14}
@@ -436,17 +436,17 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```
    {: pre}
 
-1. Create a link to the new location 
+1. Create a link to the new location
    ```sh
    ln -s /data/www /var/www
    ```
-   {: pre}   
+   {: pre}
 
 1. Start the Apache service
    ```sh
    service apache2 start
    ```
-   {: pre}   
+   {: pre}
 
 ### Configure MySQL to use the new /data file system
 {: #lamp-stack-on-vpc-15}
@@ -468,13 +468,13 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```
    {: pre}
 
-1. Create a link to the new location 
+1. Create a link to the new location
    ```sh
    ln -s /data/lib/mysql /var/lib/mysql
    ```
    {: pre}
 
-1. Add an alias of the new location to [AppArmor](https://wiki.ubuntu.com/AppArmor){: external}, otherwise AppArmor will block the access. 
+1. Add an alias of the new location to [AppArmor](https://wiki.ubuntu.com/AppArmor){: external}, otherwise AppArmor will block the access.
    ```sh
    echo "alias /var/lib/mysql/ -> /data/lib/mysql/," >> /etc/apparmor.d/tunables/alias
    ```
@@ -484,7 +484,7 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
    ```sh
    systemctl restart apparmor
    ```
-   {: pre}   
+   {: pre}
 
 1. Start the MySQL service
    ```sh
@@ -498,13 +498,13 @@ The VSI was created with a provider managed encrypted **Boot** volume of 100 GB,
 {: #lamp-stack-on-vpc-resizing}
 {: step}
 
-The VSI was created using one of the smallest profiles available in VPC, i.e. 2 vCPU and 4GiB RAM.  It is possible based on your usage requirements to increase - or decrease - the amount of vCPU and RAM available, see [Resizing a virtual server instance](/docs/vpc?topic=vpc-resizing-an-instance). 
+The VSI was created using one of the smallest profiles available in VPC, i.e. 2 vCPU and 4GiB RAM.  It is possible based on your usage requirements to increase - or decrease - the amount of vCPU and RAM available, see [Resizing a virtual server instance](/docs/vpc?topic=vpc-resizing-an-instance).
 
 1. Capture the ID of the VSI created earlier by listing all instances and filtering based on the instance name:
    ```sh
    VSI_ID=$(ibmcloud is instances --json | jq -r '.[] | select(.name == "vsi-lamp-1") | .id')
    ```
-   {: pre}  
+   {: pre}
 
 1. Stop the instance.
    ```sh
@@ -520,7 +520,7 @@ The VSI was created using one of the smallest profiles available in VPC, i.e. 2 
 
    You can get a list of alternative profiles by issuing the following command `ibmcloud is instance-profiles`, note however the restrictions on resizing based on current/target profiles in the [Resizing a virtual server instance](/docs/vpc?topic=vpc-resizing-an-instance) topic.
    {: tip}
-   
+
 1. Start the instance.
    ```sh
    ibmcloud is instance-start $VSI_ID
