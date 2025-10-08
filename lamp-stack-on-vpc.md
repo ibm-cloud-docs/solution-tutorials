@@ -367,7 +367,7 @@ You can monitor CPU, volume, memory, and network usage of your VSI instances aft
 ### Server logging
 {: #lamp-stack-on-vpc-12}
 
-You can create a {{site.data.keyword.logs_full_notm}} instance to manage system and application logs in the IBM Cloud.
+You can create an {{site.data.keyword.logs_full_notm}} instance to manage system and application logs in the IBM Cloud.
 
 {{site.data.keyword.logs_full_notm}} offers administrators, DevOps teams, and developers advanced features to filter, search, and tail log data, define alerts, and design custom views to monitor application and system logs
 
