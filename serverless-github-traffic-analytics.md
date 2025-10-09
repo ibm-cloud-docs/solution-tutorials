@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-10-08"
 lasttested: "2023-10-10"
 
 content-type: tutorial
@@ -73,13 +73,13 @@ In this section, you set up the needed services and prepare the environment. All
    ibmcloud resource service-instance-create ghstatsDB dashdb-for-transactions free $REGION
    ```
    {: pre}
-   
+
 4. Create an instance of the {{site.data.keyword.appid_short}} service. Use **ghstatsAppID** as name and the **Graduated tier** plan.
    ```sh
    ibmcloud resource service-instance-create ghstatsAppID appid graduated-tier $REGION
    ```
    {: pre}
- 
+
 5. Add a new namespace **ghstats** to the {{site.data.keyword.registrylong}}. You are going to use it for referencing container images. There is one global registry as well as regional registries.  Use the global registry.
    ```sh
    ibmcloud cr region-set global
@@ -121,7 +121,7 @@ With the services provisioned and the general setup done, next is to create the 
 
    The output indicates more commands to run to follow the status logs of the build as it progresses.  Something like:
    ```sh
-   ibmcloud ce buildrun logs -f -n ghstats-build-run-123456-123456789
+   ibmcloud ce buildrun logs -f --name ghstats-build-run-123456-123456789
    ```
 
 ## Deploy the app (shell)
@@ -210,7 +210,7 @@ After the preparation, you configure and test the app. The app is written in Pyt
 {: #serverless-github-traffic-analytics-6}
 {: step}
 
-With the app in place and configured, the last part is to initiate daily retrieval of GitHub traffic data. You are going to [create a cron subscription](/docs/codeengine?topic=codeengine-cli#cli-subscription-cron-create). Similar to a [cron job](https://en.wikipedia.org/wiki/Cron){: external}, the app subscribes to events on the specified schedule (eventing). 
+With the app in place and configured, the last part is to initiate daily retrieval of GitHub traffic data. You are going to [create a cron subscription](/docs/codeengine?topic=codeengine-cli#cli-subscription-cron-create). Similar to a [cron job](https://en.wikipedia.org/wiki/Cron){: external}, the app subscribes to events on the specified schedule (eventing).
 
 1. Create the cron subscription **ghstats-daily** with a daily schedule at 6 am UTC with a POST event at the path **/collectStats**. Replace **SECRET_TOKEN_AS_IDENTIFIER** with your chosen secret value. It is used to identify the event giver to the app.
    ```sh
@@ -274,7 +274,7 @@ To clean up the resources used for this tutorial, you can delete the related pro
 
 2. Delete the project and its components.
    ```sh
-   ibmcloud ce project delete --name ghstats --hard -f
+   ibmcloud ce project delete --name ghstats --hard
    ```
    {: pre}
 
@@ -283,7 +283,7 @@ To clean up the resources used for this tutorial, you can delete the related pro
    ibmcloud resource service-instance-delete -f ghstatsDB
    ```
    {: pre}
-   
+
    ```sh
    ibmcloud resource service-instance-delete -f ghstatsAppID
    ```
@@ -312,7 +312,7 @@ Want to add to or change this tutorial? Here are some ideas:
 ## Related Content
 {: #serverless-github-traffic-analytics-11}
 
-Here are links to additional information on the topics covered in this tutorial. The app itself is available in this [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats){: external}. 
+Here are links to additional information on the topics covered in this tutorial. The app itself is available in this [GitHub repository](https://github.com/IBM-Cloud/github-traffic-stats){: external}.
 
 Documentation:
 * [{{site.data.keyword.appid_short}} documentation](/docs/appid?topic=appid-getting-started)

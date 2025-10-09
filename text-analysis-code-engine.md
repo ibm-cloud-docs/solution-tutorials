@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-10-08"
 lasttested: "2024-03-18"
 
 content-type: tutorial
@@ -126,7 +126,7 @@ We've already built images for the two applications and pushed them to the publi
 
    The application source code used to build the container images is available in a [GitHub repo](https://github.com/IBM-Cloud/code-engine-text-analysis){: external} for your reference. If you wish to build the container images from source code and push the images to a private Container Registry, follow the [instructions here](/docs/solution-tutorials?topic=solution-tutorials-text-analysis-code-engine#text-analysis-code-engine-private-registry).
    {: tip}
-   
+
 
 2. Open the application URL from the previous step in a browser to see an output similar to this:
    ![Frontend is running](images/solution54-code-engine/frontend-501.png){: caption="Frontend is running" caption-side="bottom"}
@@ -135,7 +135,7 @@ We've already built images for the two applications and pushed them to the publi
    {: tip}
 
 3. For troubleshooting and to [check the logs of your application](/docs/codeengine?topic=codeengine-logging), run the following command by replacing the `<INSTANCE_NAME>` with the **name** of one of the instances from the `ibmcloud code-engine application get -n frontend` command.
-   
+
    If you do not see any running instances, make sure to open the application URL from step 2 again.
    {: tip}
 
@@ -173,7 +173,7 @@ Most of these values have a default set if nothing is provided as an option when
 
 2. In your {{site.data.keyword.cloud-shell_short}} session from the previous sections, run the below command to see the instance(pod) count incrementing as part of the autoscaling.
    ```sh
-   ibmcloud code-engine application get -n frontend
+   ibmcloud code-engine application get --name frontend
    ```
    {: pre}
 
@@ -185,7 +185,7 @@ Most of these values have a default set if nothing is provided as an option when
     ibmcloud code-engine application update --name frontend --max-scale 5
     ```
     {: pre}
-    
+
 4. Once load generation is stopped, wait for a few minutes to see the instances terminating, eventually scaling down to zero instances.
 5. In your local window with the load generator command, run the script again to create requests against the app. In the {{site.data.keyword.cloud-shell_short}} session, run the `ibmcloud code-engine application get -n frontend` command to see the instance count increasing to 5.
 
@@ -407,7 +407,7 @@ This job will read text files from {{site.data.keyword.cos_full_notm}}, and then
 ### Automate the job run
 {: #text-analysis-code-engine-automate}
 
-Instead of running the job manually, you can automate the job run by creating an {{site.data.keyword.cos_full_notm}} subscription that listens for changes to an {{site.data.keyword.cos_short}} bucket. When you create a [subscription](/docs/codeengine?topic=codeengine-subscribing-events) to a bucket, your job receives a separate event for each successful change to that bucket. 
+Instead of running the job manually, you can automate the job run by creating an {{site.data.keyword.cos_full_notm}} subscription that listens for changes to an {{site.data.keyword.cos_short}} bucket. When you create a [subscription](/docs/codeengine?topic=codeengine-subscribing-events) to a bucket, your job receives a separate event for each successful change to that bucket.
 
 1. Before you can create an {{site.data.keyword.cos_short}} subscription, you must assign the `Notifications Manager` role to {{site.data.keyword.codeengineshort}}. As a Notifications Manager, {{site.data.keyword.codeengineshort}} can view, modify, and delete notifications for an {{site.data.keyword.cos_short}} bucket. [Follow the instructions here](/docs/codeengine?topic=codeengine-eventing-cosevent-producer#notify-mgr-cos) to assign the Notifications Manager role to your {{site.data.keyword.codeengineshort}} project.
 2. Run the below command to connect your `backend-job` to the {{site.data.keyword.cos_full_notm}} event producer. _Check and update the `bucket name` before running the command_
@@ -447,7 +447,7 @@ ibmcloud ce application create --name frontend-fromsource --build-source . --env
    ibmcloud code-engine project delete --name $PROJECT_NAME
    ```
    {: pre}
-   
+
 2. Navigate to [Resource List](/resources/){: external}, then delete the services you created:
    * {{site.data.keyword.cos_full}}
    * {{site.data.keyword.nlufull}}

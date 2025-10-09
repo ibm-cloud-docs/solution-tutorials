@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-10-08"
 lasttested: "2024-04-22"
 
 content-type: tutorial
@@ -84,18 +84,18 @@ In this section, you will create a {{site.data.keyword.databases-for-mongodb}} i
    {: codeblock}
 
 3. Wait for the instance to be ready. You can check the provisioning status with the following command:
-   
+
    ```sh
    ibmcloud resource service-instance mean-stack-mongodb
    ```
    {: codeblock}
 
 4. Once you have verified the service status changed to "create succeeded", you may proceed to create a service key.
-  
+
    ```sh
    ibmcloud resource service-key-create mean-stack-mongodb-key --instance-name mean-stack-mongodb
    ```
-   {: codeblock} 
+   {: codeblock}
 
 ## Run the MEAN app locally
 {: #mean-stack-runapplocally}
@@ -105,7 +105,7 @@ In this section, you will clone a MEAN sample code and run the application local
 {: shortdesc}
 
 1. Clone the MEAN sample code.
-  
+
    ```sh
    git clone https://github.com/IBM-Cloud/nodejs-MEAN-stack
    cd nodejs-MEAN-stack
@@ -113,14 +113,14 @@ In this section, you will clone a MEAN sample code and run the application local
    {: codeblock}
 
 1. Copy `.env.example` file to `.env`.
-  
+
    ```sh
    cp .env.example .env
    ```
    {: codeblock}
 
 1. In the .env file, add your own SESSION_SECRET. For MONGODB_URL and CERTIFICATE_BASE64, run the below command:
-  
+
    ```sh
    ibmcloud resource service-key mean-stack-mongodb-key --output json
    ```
@@ -129,14 +129,14 @@ In this section, you will clone a MEAN sample code and run the application local
    You can find the value required for **MONGODB_URL** under `credentials -> connection -> mongodb -> composed` and the value for **CERTIFICATE_BASE64** under `credentials -> connection -> mongodb -> certificate -> certificate_base64` in the returned JSON output. Make sure the values added to the `.env` do not include any quotation or space.
 
 1. Optional - Install the required packages.
-  
+
    ```sh
    npm install
    ```
    {: codeblock}
-   
+
 1. Optional - Run the application locally. Access the app using the URL provided in the output, create a new user and log in.
-  
+
    ```sh
    node server.js
    ```
@@ -155,23 +155,23 @@ We've already built a container image for the application and pushed it to the p
 {: shortdesc}
 
 1. Create a project in {{site.data.keyword.codeenginefull_notm}}.
-   
+
    ```sh
-   ibmcloud code-engine project create --name mean-stack
+   ibmcloud ce project create --name mean-stack
    ```
    {: codeblock}
 
 2. Create a secret in the project that contains the keys/values from the `.env` file you used earlier to run the application locally, this secret will be consumed by the application running in the cloud. For more about secrets, see [Working with secrets](/docs/codeengine?topic=codeengine-secret).
-   
+
    ```sh
-   ibmcloud code-engine secret create --name mean-stack-secrets --from-env-file .env
+   ibmcloud ce secret create --name mean-stack-secrets --from-env-file .env
    ```
    {: codeblock}
 
 3. Create the application based on the public container image that is based on the same source code downloaded from the `https://github.com/IBM-Cloud/nodejs-MEAN-stack` repository. If you are interested in the steps used to create this image, you can review [create-container-image.md](https://github.com/IBM-Cloud/nodejs-MEAN-stack/blob/master/create-container-image.md){: external}.
-   
+
    ```sh
-   ibmcloud code-engine application create --name mean-stack-application --image icr.io/solution-tutorials/tutorial-mean-stack --env-from-secret mean-stack-secrets
+   ibmcloud ce application create --name mean-stack-application --image icr.io/solution-tutorials/tutorial-mean-stack --env-from-secret mean-stack-secrets
    ```
    {: codeblock}
 
@@ -188,12 +188,12 @@ We've already built a container image for the application and pushed it to the p
 
 1. Navigate to the Code Engine [Projects page](/containers/serverless/projects){: external}.
 2. Click on the **mean-stack** project created earlier.
-2. Under **Summary**, click on **Applications**. 
-3. Click on the **mean-stack-application** created earlier. 
+2. Under **Summary**, click on **Applications**.
+3. Click on the **mean-stack-application** created earlier.
 4. Click on **Configuration** and then **Runtime** to view the current configuration.
 
    ![Scale Resources](images/solution7/CodeEngine_ScaleResources.png){: caption="Scale Resources" caption-side="bottom"}
-5. Click on **Edit and create new revision** to adjust not only the **CPU and memory**, the **Minimum/Maximum number of instances** as well as the **Concurrency**. 
+5. Click on **Edit and create new revision** to adjust not only the **CPU and memory**, the **Minimum/Maximum number of instances** as well as the **Concurrency**.
 6. Click on **Save and create** to trigger the changes. It will indicate that the application is `Deploying` and `Ready` when complete.
 
 

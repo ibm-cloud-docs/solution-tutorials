@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2025-01-24"
+lastupdated: "2025-10-08"
 lasttested: "2024-10-11"
 
 content-type: tutorial
@@ -24,7 +24,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 {: tip}
 
 
-This tutorial walks you through the process of implementing [context-based restrictions](/docs/account?topic=account-context-restrictions-whatis) (CBRs) in your {{site.data.keyword.cloud_notm}} account. CBRs help you to secure the cloud environment further and move towards a [zero trust security model](https://en.wikipedia.org/wiki/Zero_trust_security_model){: external}.
+This tutorial walks you through the process of implementing [context-based restrictions](/docs/account?topic=account-context-restrictions-whatis) (CBRs) in your {{site.data.keyword.cloud_notm}} account. CBRs help you to secure the cloud environment further and move towards a [zero trust architecture](https://en.wikipedia.org/wiki/Zero_trust_architecture){: external}.
 {: shortdesc}
 
 The tutorial discusses how to create network zones and context rules and how to verify that they work. In the tutorial, you learn how to create the CBR objects both in the browser console and as Infrastructure as Code with Terraform. You will also learn about criteria on how to define the access strategy for your cloud resources.
@@ -58,7 +58,7 @@ To avoid the installation of these tools you can use the [{{site.data.keyword.cl
 {: #cbr-security-setup}
 {: step}
 
-In a later step, [Use Terraform to configure context-based restrictions](#cbr-security-terraform), you are going to deploy CBR objects as additional security layer on top of the resources used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security). 
+In a later step, [Use Terraform to configure context-based restrictions](#cbr-security-terraform), you are going to deploy CBR objects as additional security layer on top of the resources used in the tutorial [Apply end to end security to a cloud application](/docs/solution-tutorials?topic=solution-tutorials-cloud-e2e-security).
 
 1. [Deploy resources using Terraform managed by {{site.data.keyword.bpshort}}](https://github.com/IBM-Cloud/secure-file-storage#deploy-resources-using-terraform-managed-by-schematics){: external} as described in the companion GitHub repository.
 
@@ -124,7 +124,7 @@ Be aware that CBR zones and rules are deployed asynchronously. It may take up to
    ibmcloud cr login
    ```
    {: codeblock}
-  
+
    Next, pull a container image to the shell environment.
    ```sh
    docker pull docker.io/library/hello-world:latest
@@ -223,7 +223,7 @@ The documentation has a [list of resources which are supported as service refere
 {: #cbr-security-terraform}
 {: step}
 
-Instead of manually creating the network zones and context rules for a project, it is recommended to automate the deployment. Context-based restrictions can be deployed utilizing Infrastructure as Code (IaC) - namely [Terraform code](/docs/ibm-cloud-provider-for-terraform). You can first deploy the zones and rules with rules in report-only mode for testing. Then, after thorough tests, switch to enforced mode by updating the deployed configuration. 
+Instead of manually creating the network zones and context rules for a project, it is recommended to automate the deployment. Context-based restrictions can be deployed utilizing Infrastructure as Code (IaC) - namely [Terraform code](/docs/ibm-cloud-provider-for-terraform). You can first deploy the zones and rules with rules in report-only mode for testing. Then, after thorough tests, switch to enforced mode by updating the deployed configuration.
 
 ### Terraform resources for zones and rules
 {: #cbr-security-terraform-resources}
@@ -295,9 +295,9 @@ resource "ibm_cbr_rule" "cbr_rule_cos_k8s" {
 ### Deploy the Terraform resources
 {: #cbr-security-terraform-deploy}
 
-With the understanding of the CBR-related Terraform resources, it is time to deploy them on top of the existing resources to create zones and rules. 
+With the understanding of the CBR-related Terraform resources, it is time to deploy them on top of the existing resources to create zones and rules.
 
-1. In the browser, navigate to the [{{site.data.keyword.bpfull_notm}} workspaces](/schematics/workspaces). Select the workspace with the existing resources from the earlier setup.   
+1. In the browser, navigate to the [{{site.data.keyword.bpfull_notm}} workspaces](/schematics/workspaces). Select the workspace with the existing resources from the earlier setup.
 2. Click on **Settings**. In the list of **Variables** and locate the row with **deploy_cbr**. Its value should be **false**, the default.
 3. In the dot menu for the variable select **Edit**. Then, in the pop-up form, uncheck **Use default** to be able to change the value. Type **true** in the field for **Value of the variable called: deploy_cbr**. Thereafter, finish the update by clicking **Save**.
 4. Once the settings page has updated, continue with **Generate plan** in the top. The plan output should indicate that CBR zones and rules would be created.
