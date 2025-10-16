@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-03-26"
+lastupdated: "2025-10-16"
 lasttested: "2023-12-18"
 
 content-type: tutorial
@@ -58,7 +58,7 @@ Some typical use cases of resource sharing are:
 ## Sharing of security resources
 {: #resource-sharing-security}
 
-Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance. 
+Often, security is managed on a corporate level with company-wide rules in place. Therefore, enforcement is managed centrally, too. This is still true with workloads moving to cloud environments. Resource sharing is at the foundation of centrally managing security as well as assessing and enforcing compliance.
 
 ![Sharing of security-related resources](images/solution65-resource-sharing/resource-sharing-architecture-security.svg){: caption="Sharing of security-related resources" caption-side="bottom"}
 
@@ -138,9 +138,9 @@ A tighter integrated approach for one service accessing another one is to [estab
 #### Cross-account authorizations
 {: #resource-sharing-implementation-s2sauth-cross-account}
 
-IAM supports establishing service-to-service authorizations between a source service in another {{site.data.keyword.cloud_notm}} account and a target in the current one. Therefore, it allows sharing resources across accounts by creating an IAM authorization policy. Such policies can be created in many ways, including [in the browser console](/iam/authorizations/grant) as shown below, utilizing the CLI or by executing Terraform code. 
+IAM supports establishing service-to-service authorizations between a source service in another {{site.data.keyword.cloud_notm}} account and a target in the current one. Therefore, it allows sharing resources across accounts by creating an IAM authorization policy. Such policies can be created in many ways, including [in the browser console](/iam/authorizations/grant) as shown below, utilizing the CLI or by executing Terraform code.
 
-In the following examples, a specific {{site.data.keyword.cos_short}} instance in the source account is granted the **Reader** role for that identified {{site.data.keyword.keymanagementserviceshort}} instance in the current account. 
+In the following examples, a specific {{site.data.keyword.cos_short}} instance in the source account is granted the **Reader** role for that identified {{site.data.keyword.keymanagementserviceshort}} instance in the current account.
 
 ![Grant a service-to-service authorization](images/solution65-resource-sharing/grant_service_authorization.png){: caption="Grant a service-to-service authorization" caption-side="bottom"}
 
@@ -153,7 +153,7 @@ resource "ibm_iam_authorization_policy" "cross_account_policy" {
   source_service_account      = data.ibm_iam_account_settings.account_a_settings.account_id
   source_service_name         = "cloud-object-storage"
   source_resource_instance_id = data.ibm_resource_instance.cos_resource_instance.guid
-  
+
   target_service_name         = "kms"
   target_resource_instance_id = data.ibm_resource_instance.kms_resource_instance.guid
 
@@ -241,4 +241,3 @@ The following document provides details on some cross-account scenarios:
 
 Blog posts related to sharing resource across multiple accounts:
 - [Terraform multi-account setup for {{site.data.keyword.cloud_notm}}](https://blog.4loeser.net/2022/09/terraform-setup-multi-account-ibm-cloud.html){: external}
-- [Tips and Tricks for Using the IBM Cloud CLI](https://www.ibm.com/blog/tips-and-tricks-for-using-the-ibm-cloud-cli/){: external} discusses [**IBMCLOUD_HOME**](/docs/cli?topic=cli-ibmcloud_env_var#IBMCLOUD_PATH_TO_DIR) which can be used to work with multiple accounts from the CLI.
