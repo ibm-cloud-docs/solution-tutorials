@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2023
-lastupdated: "2025-10-08"
+lastupdated: "2025-10-16"
 lasttested: "2024-10-11"
 
 content-type: tutorial
@@ -62,7 +62,7 @@ In a later step, [Use Terraform to configure context-based restrictions](#cbr-se
 
 1. [Deploy resources using Terraform managed by {{site.data.keyword.bpshort}}](https://github.com/IBM-Cloud/secure-file-storage#deploy-resources-using-terraform-managed-by-schematics){: external} as described in the companion GitHub repository.
 
-2. The [{{site.data.keyword.atracker_full_notm}}](/docs/atracker?topic=atracker-about) must be configured to route auditing events to a {{site.data.keyword.logs_full_notm}} target instance. Route audit events as described in [configuring an IBM Logs target](/docs/atracker?topic=atracker-getting-started-target-cloud-logs) if not currently configured in your account.
+2. The [{{site.data.keyword.atracker_full_notm}}](/docs/atracker?topic=atracker-about) must be configured to route auditing events to an {{site.data.keyword.logs_full_notm}} target instance. Route audit events as described in [configuring an IBM Logs target](/docs/atracker?topic=atracker-getting-started-target-cloud-logs) if not currently configured in your account.
 
 ## Overview: Context-based restrictions
 {: #cbr-security-strategy-overview}
@@ -335,7 +335,5 @@ To remove the resource, use the browser and navigate to the [{{site.data.keyword
 {: #cbr-security-12}
 {: related}
 
-* Blog post [Towards Zero Trust with Context-Based Restrictions](https://www.ibm.com/blog/towards-zero-trust-with-context-based-restrictions){: external}
-* Blog post [Introducing Context-Based Restrictions](https://www.ibm.com/blog/announcement/introducing-context-based-restrictions/){: external}
 * [What is Zero Trust?](https://www.ibm.com/think/topics/zero-trust){: external}
 * [Best practices for organizing users, teams, applications](/docs/account?topic=account-account_setup)
