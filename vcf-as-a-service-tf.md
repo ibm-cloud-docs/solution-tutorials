@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024, 2025
-lastupdated: "2025-04-16"
+lastupdated: "2025-10-27"
 lasttested: "2024-01-04"
 
 
@@ -21,6 +21,9 @@ use-case: ApplicationModernization, Vmware
 {: toc-services="vmware-service"}
 {: toc-completion-time="1h"}
 {: toc-use-case="ApplicationModernization, Vmware"}
+
+**End of Marketing**: As of 31 October 2025, new deployments of VMware Solutions offerings are no longer available for new customers. Existing customers can still use and expand their active VMware® workloads on {{site.data.keyword.cloud}}. For more information, see [End of Marketing for VMware on {{site.data.keyword.cloud_notm}}](/docs/vmwaresolutions?topic=vmwaresolutions-eos-vms).
+{: note}
 
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
