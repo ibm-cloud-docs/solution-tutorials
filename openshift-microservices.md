@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-03-26"
+lastupdated: "2025-11-17"
 lasttested: "2023-09-26"
 
 content-type: tutorial
@@ -112,7 +112,7 @@ Take a note of the resource group selected above.  This same resource group will
 
 The [{{site.data.keyword.redhat_openshift_notm}} Container Platform CLI](https://docs.openshift.com/container-platform/4.12/cli_reference/openshift_cli/getting-started-cli.html){: external} exposes commands for managing your applications, as well as lower level tools to interact with each component of your system. The CLI is available using the `oc` command.
 
-To avoid installing the command line tools, the recommended approach is to use the {{site.data.keyword.cloud-shell_notm}}. 
+To avoid installing the command line tools, the recommended approach is to use the {{site.data.keyword.cloud-shell_notm}}.
 
 {{site.data.keyword.Bluemix_notm}} Shell is a cloud-based shell workspace that you can access through your browser. It's preconfigured with the full {{site.data.keyword.Bluemix_notm}} CLI and many plug-ins and tools that you can use to manage apps, resources, and infrastructure.
 
@@ -124,14 +124,14 @@ In this step, you'll use the {{site.data.keyword.Bluemix_notm}} shell and config
    oc version
    ```
    {: pre}
-   
+
    > The version needs to be at minimum 4.12.x, otherwise install the latest version by following [these instructions](/docs/solution-tutorials?topic=solution-tutorials-tutorials#getting-started-cloud-shell_oc).
 
 1. Validate your cluster is shown when listing all clusters:
    ```sh
    ibmcloud oc clusters
    ```
-   {: pre}   
+   {: pre}
 
 1. Initialize the `oc` command environment by replacing the placeholder &lt;your-cluster-name&gt;:
    ```sh
@@ -344,7 +344,7 @@ Before autoscaling maximum CPU and memory resource limits must be established.
 
 The dashboards earlier showed you that the load was consuming anywhere between ".002" to ".02" cores. This translates to 2-20 "millicores". To be safe, let's bump the higher-end up to 30 millicores. In addition, the data showed that the app consumes about `25`-`65` MB of RAM. The following steps will set the resource limits in the deploymentConfig
 
-1. Make sure the script to generate traffic is running. 
+1. Make sure the script to generate traffic is running.
 1. Switch to the **Administrator** perspective.
 1. Navigate to **Workloads > DeploymentConfigs**.
 1. Select the **example-health** project.
@@ -427,7 +427,7 @@ If you're not running the script to simulate load, the number of pods should sta
 1. Check by opening the **Overview** page of the deployment config.  Click **Workloads** > **DeploymentConfigs** and click **patient-health-frontend** and make sure the **Details** panel is selected.
 2. Start simulating load (see previous section to simulate load on the application).
    ![Scaled to 4/10 pods](images/solution55-openshift-microservices/ocp48-hpa-after.png){: caption="Scaled to 4/10 pods" caption-side="bottom"}
-   
+
    It can take a few minutes for the autoscaler to make adjustments.
    {: note}
 
@@ -485,7 +485,7 @@ Let's understand exactly how Operators work. In the first exercise, you used a b
 
 Click to open it.  Scroll down to the **Prerequisites** section.
 
-An API key with the appropriate permissions to create a {{site.data.keyword.cloudant_short_notm}} database is required in this section. The API key is going to be stored in a Kubernetes Secret resource. This will need to be created using the shell. There are instructions in the **Prerequisites** section of the installed operator.  Steps:
+An API key with the appropriate permissions to create an {{site.data.keyword.cloudant_short_notm}} database is required in this section. The API key is going to be stored in a Kubernetes Secret resource. This will need to be created using the shell. There are instructions in the **Prerequisites** section of the installed operator.  Steps:
 
 1. Use the same resource group and region that is associated with your cluster.
    ```sh
@@ -760,7 +760,7 @@ Initial data may NOT be available on newly created **Monitoring** instances.
    - Click **Save**.
 
     The dashboard now shows information focused on the example-health namespace.
-    
+
     Scroll down to the TimeCharts for HTTP Requests, Latency, Error, ... to understand the performance of the application.
 
     ![Custom Network Traffic and Bandwidth](images/solution55-openshift-microservices/dashboard-img-5.png){: caption="Custom Network Traffic and Bandwidth" caption-side="bottom"}
@@ -779,7 +779,7 @@ In the [Resource List](/resources) locate and delete the resources you wish to r
    oc delete project/example-health
    ```
    {: pre}
-   
+
 * Delete {{site.data.keyword.logs_full_notm}} instance
 * Delete {{site.data.keyword.mon_full_notm}}
 * Delete {{site.data.keyword.cloudant_short_notm}} and bind to a microservice

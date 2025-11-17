@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-11-17"
 lasttested: "2024-04-19"
 
 content-type: tutorial
@@ -67,7 +67,7 @@ This tutorial requires:
 * `terraform` to use Infrastructure as Code to provision resources,
 * `python` to optionally run the pytest commands,
 * Implementing a firewall-router will require that you [enable IP spoofing checks](/docs/vpc?topic=vpc-ip-spoofing-about#ip-spoofing-enable-check),
-* An SSH key to connect to the virtual servers. If you don't have an SSH key, follow [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
+* An SSH key to connect to the virtual servers. If you don't have an SSH key, follow [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 
 See the [prerequisites](https://github.com/IBM-Cloud/vpc-transit#prerequisites){: external} for a few options including a Dockerfile to easily create the prerequisite environment.
 
@@ -219,7 +219,7 @@ Each **pytest** test will SSH to one of the instances and perform a type of conn
    testpaths: py
    plugins: xdist-3.5.0
    collected 36 items / 20 deselected / 16 selected
-   
+
    py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-enterprise-z1-worker] PASSED                                   [  6%]
    py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-transit-z1-worker] FAILED                                      [ 12%]
    py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke0-z1-worker] FAILED                                       [ 18%]
@@ -236,7 +236,7 @@ Each **pytest** test will SSH to one of the instances and perform a type of conn
    py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-transit-z1-worker] PASSED                                          [ 87%]
    py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-spoke0-z1-worker] PASSED                                           [ 93%]
    py/test_transit.py::test_curl[l-spoke1-z1-worker -> r-spoke1-z1-worker] PASSED                                           [100%]
-   
+
    =================================================== short test summary info ====================================================
    FAILED py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-transit-z1-worker] - assert False
    FAILED py/test_transit.py::test_curl[l-enterprise-z1-worker -> r-spoke0-z1-worker] - assert False
@@ -264,7 +264,7 @@ The **README.md** in the companion [GitHub Repository](https://github.com/IBM-Cl
 {: #vpc-transit-enterprise-to-transit}
 {: step}
 
-Provision a {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_short}}.
+Provision an {{site.data.keyword.BluDirectLink}} using {{site.data.keyword.tg_short}}.
 
 ![Enterprise link](images/vpc-transit/vpc-transit-enterprise-link.svg){: caption="Enterprise link" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -298,7 +298,7 @@ The incentive for a transit VPC for enterprise <-> cloud traffic is typically to
 ### NFV Router
 {: #vpc-transit-nfv-router}
 
-Provision the firewall-router appliances. An ingress route table for {{site.data.keyword.tg_short}} has been added to the transit VPC as indicated by the dotted lines. A subnet has been created in each of the zones of the transit VPC to hold the firewall-router. 
+Provision the firewall-router appliances. An ingress route table for {{site.data.keyword.tg_short}} has been added to the transit VPC as indicated by the dotted lines. A subnet has been created in each of the zones of the transit VPC to hold the firewall-router.
 
 ![Firewall](images/vpc-transit/vpc-transit-firewall.svg){: caption="Firewall" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -317,7 +317,7 @@ The Terraform configuration will configure the firewall-router instance with [al
 1. Run the test suite.
 
    **Your expected results are:** Connectivity within a VPC, enterprise -> transit, enterprise <-> spoke same zone pass. But all transit -> spoke, all transit -> enterprise fail due to asymmetric routing issues.
-   
+
 
    ```sh
    pytest -m "curl and lz1 and (rz1 or rz2)"

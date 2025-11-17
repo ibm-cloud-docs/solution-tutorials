@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-03"
+lastupdated: "2025-11-17"
 lasttested: "2024-02-05"
 
 content-type: tutorial
@@ -23,7 +23,7 @@ use-case: ApplicationModernization, Cybersecurity, DevOps
 This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate a cost estimate based on your projected usage.
 {: tip}
 
-The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getting-started) can host {{site.data.keyword.powerSys_notm}} instances. The {{site.data.keyword.cloud_notm}} also supports Virtual Private Cloud (VPC). {{site.data.keyword.powerSys_notm}} can connect to VPCs via a {{site.data.keyword.tg_full}} and access VPC resources. This tutorial walks you through an example implementation and explores the architecture depicted in this high-level view:
+The [{{site.data.keyword.powerSysFull}}](/docs/power-iaas?topic=power-iaas-getting-started) can host {{site.data.keyword.powerSys_notm}} instances. The {{site.data.keyword.cloud_notm}} also supports Virtual Private Cloud (VPC). {{site.data.keyword.powerSys_notm}} can connect to VPCs via an {{site.data.keyword.tg_full}} and access VPC resources. This tutorial walks you through an example implementation and explores the architecture depicted in this high-level view:
 {: shortdesc}
 
 ![vpc-transit-overview-power](images/transit-power/vpc-transit-overview-power.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}

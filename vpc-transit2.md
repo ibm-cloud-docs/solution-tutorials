@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-02"
+lastupdated: "2025-11-17"
 lasttested: "2024-04-23"
 
 content-type: tutorial
@@ -368,7 +368,7 @@ The NLB firewall is no longer required. Remove the NLB firewall:
 
 ## Note about NLB configured in routing mode
 {: #vpc-transit2-note-about-nlb-configured-in-routing-mode}
-   
+
 NLB route mode will rewrite route table entries - always keeping the active NLB appliance IP address in the route table during a fail over. But this is only done for routes in the transit VPC that contains the NLB.  The spoke has egress routes that were initialized with one of the NLB appliance IPs.  The spoke next hop will not be updated on NLB appliance fail over!
 
 It will be required to maintain an ingress route in the transit VPC which will be rewritten by the NLB to reflect the active appliance.  The spoke egress route will deliver packets to the correct zone of the transit VPC. Routing within the transit VPC zone will find the matching ingress rule which will contain the active appliance.
@@ -410,9 +410,9 @@ Apply the dns_tf layer to create add a cloud DNS zone and an A record for each o
    {: codeblock}
 
 Inspect the DNS service created:
-1. Open the [Resource list](/resources) in the {{site.data.keyword.cloud_notm}} console. 
-1. Expand the **Networking** section and notice the **DNS Services**. 
-1. Locate and click to open the instance with the suffix **transit**. 
+1. Open the [Resource list](/resources) in the {{site.data.keyword.cloud_notm}} console.
+1. Expand the **Networking** section and notice the **DNS Services**.
+1. Locate and click to open the instance with the suffix **transit**.
 1. Click on the DNS zone **cloud.example.com**. Notice the A records associated with each test instance in the transit and spokes.
 1. Click on the **Custom resolver** tab on the left and note that a resolver resides in each of the zones.
 1. Click on the **Forwarding rules** tab and notice the forwarding rules. Notice that `enterprise.example.com` is forwarded to the on premises resolvers.
@@ -450,7 +450,7 @@ A DNS zone is created for each VPC VPE gateway. The DNS zone is automatically ad
 ![Adding virtual private endpoint gateways](images/vpc-transit/vpc-transit-vpe.svg){: caption="Adding virtual private endpoint gateways" caption-side="bottom"}
 {: style="text-align: center;"}
 
-1. Create a {{site.data.keyword.databases-for-postgresql_full_notm}} instance and VPEs for the transit and each of the spoke VPCs, by applying the vpe_transit_tf and vpe_spokes_tf layers:
+1. Create an {{site.data.keyword.databases-for-postgresql_full_notm}} instance and VPEs for the transit and each of the spoke VPCs, by applying the vpe_transit_tf and vpe_spokes_tf layers:
    ```sh
    ./apply.sh vpe_transit_tf vpe_spokes_tf
    ```

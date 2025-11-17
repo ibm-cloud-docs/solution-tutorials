@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-10-08"
+lastupdated: "2025-11-17"
 lasttested: "2023-10-10"
 
 content-type: tutorial
@@ -24,7 +24,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 {: tip}
 
 
-In this tutorial, you create an application to automatically collect GitHub traffic statistics for repositories and provide the foundation for traffic analytics. GitHub only provides access to the traffic data for the last 14 days. If you want to analyze statistics over a longer period of time, you need to download and store that data yourself. In this tutorial, you deploy a serverless app in a {{site.data.keyword.codeenginefull_notm}} project. The app manages the metadata for GitHub repositories and provides access to the statistics for data analytics. The traffic data is collected from GitHub either on-demand in the app or when triggered by {{site.data.keyword.codeengineshort}} events, e.g., daily. The app discussed in this tutorial implements a multi-tenant-ready solution with the initial set of features supporting a single-tenant mode.
+In this tutorial, you create an application to automatically collect GitHub traffic statistics for repositories and provide the foundation for traffic analytics. GitHub only provides access to the traffic data for the last 14 days. If you want to analyze statistics over a longer period of time, you need to download and store that data yourself. In this tutorial, you deploy a serverless app in an {{site.data.keyword.codeenginefull_notm}} project. The app manages the metadata for GitHub repositories and provides access to the statistics for data analytics. The traffic data is collected from GitHub either on-demand in the app or when triggered by {{site.data.keyword.codeengineshort}} events, e.g., daily. The app discussed in this tutorial implements a multi-tenant-ready solution with the initial set of features supporting a single-tenant mode.
 {: shortdesc}
 
 
@@ -68,7 +68,7 @@ In this section, you set up the needed services and prepare the environment. All
    ```
    {: pre}
 
-3. Create a {{site.data.keyword.Db2_on_Cloud_short}} instance with the **free** (lite) plan and name it **ghstatsDB**.
+3. Create an {{site.data.keyword.Db2_on_Cloud_short}} instance with the **free** (lite) plan and name it **ghstatsDB**.
    ```sh
    ibmcloud resource service-instance-create ghstatsDB dashdb-for-transactions free $REGION
    ```

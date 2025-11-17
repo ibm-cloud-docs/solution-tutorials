@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-01-24"
+lastupdated: "2025-11-17"
 lasttested: "2024-10-03"
 
 content-type: tutorial
@@ -48,14 +48,14 @@ In this tutorial, you are going to learn about trusted profiles, their use cases
 
 This tutorial does not require any installation and is only using the [{{site.data.keyword.cloud_notm}} console](/){: external}.
 
-The [{{site.data.keyword.atracker_full_notm}}](/docs/atracker?topic=atracker-about) must be configured to route auditing events to a {{site.data.keyword.logs_full_notm}} target instance. Route global audit events as described in [configuring an IBM Logs target](/docs/atracker?topic=atracker-getting-started-target-cloud-logs) if not currently configured in your account.
+The [{{site.data.keyword.atracker_full_notm}}](/docs/atracker?topic=atracker-about) must be configured to route auditing events to an {{site.data.keyword.logs_full_notm}} target instance. Route global audit events as described in [configuring an IBM Logs target](/docs/atracker?topic=atracker-getting-started-target-cloud-logs) if not currently configured in your account.
 
 ## Overview: Trusted profiles
 {: #trusted-profile-for-enterprise-security-overview}
 
-Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted access in IAM policies. Trusted profiles differ in that they cannot create and own API keys. They are an identity within a specific account which serves as "gateway" for someone or something else to work within that account without the need for an API key. They can assume the identity of that trusted profile. 
+Similar to users and service IDs, [trusted profiles](/docs/account?topic=account-identity-overview#trustedprofiles-bestpract) are identities that can be granted access in IAM policies. Trusted profiles differ in that they cannot create and own API keys. They are an identity within a specific account which serves as "gateway" for someone or something else to work within that account without the need for an API key. They can assume the identity of that trusted profile.
 
-You configure that someone or something else (see below) as part of the trusted profile setup. All the usual options are available, the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs, Terraform or the {{site.data.keyword.cloud_notm}} console. 
+You configure that someone or something else (see below) as part of the trusted profile setup. All the usual options are available, the {{site.data.keyword.cloud_notm}} API, CLI, any of the available SDKs, Terraform or the {{site.data.keyword.cloud_notm}} console.
 
 In the console, as part of the IAM category, [trusted profiles](/iam/trusted-profiles){: external} have their own section. There, you can easily create and manage them. The following screenshot shows the second step of the dialog to create a trusted profile. You can [configure how to establish trust](/docs/account?topic=account-create-trusted-profile), which entity can assume the identity of the trusted profile. It is one or more of:
 - Federated users
@@ -88,7 +88,7 @@ As outlined in the overview, there are different options available on how to est
 ### Federated identity
 {: #trusted-profile-for-enterprise-security-federated-id}
 
-[Users that utilize a corporate or enterprise single sign-on ID to log in to {{site.data.keyword.cloud_notm}}](/docs/account?topic=account-federated_id) are called federated identities. The single sign-on (SSO) provider acts as identity provider (IdP). A great advantage of utilizing federated identities is that [users do not need new credentials to use with {{site.data.keyword.cloud_notm}} and can continue to use their companies' IdP for authentication](/docs/account?topic=account-account-getting-started#signup-federated). 
+[Users that utilize a corporate or enterprise single sign-on ID to log in to {{site.data.keyword.cloud_notm}}](/docs/account?topic=account-federated_id) are called federated identities. The single sign-on (SSO) provider acts as identity provider (IdP). A great advantage of utilizing federated identities is that [users do not need new credentials to use with {{site.data.keyword.cloud_notm}} and can continue to use their companies' IdP for authentication](/docs/account?topic=account-account-getting-started#signup-federated).
 
 Federated identities can be used with trusted profiles and [in dynamic rules of IAM access groups](/docs/account?topic=account-rules).
 {: note}
@@ -159,7 +159,7 @@ Open the [Kubernetes clusters](/kubernetes/clusters){: external} and click **Cre
 - Choose the smallest **Worker Pool flavor**.
 - For the **Cluster name** use **mycluster-tpcr**.
 - Turn off all security options for this demonstration cluster that will be deleted after completing this tutorial. It will be important to carefully evaluate these for other clusters you create.
-  
+
 When the cluster is provisioned, leave the browser (*cluster overview*) tab open and available for later. You can move on to the next steps nonetheless.
 
 ## Create a trusted profile
@@ -169,10 +169,10 @@ When the cluster is provisioned, leave the browser (*cluster overview*) tab open
 1. In a new browser tab (*IAM trusted profile*), use the top navigation **Manage** > **Access (IAM)**, then **Trusted profiles** on the left to get to the [trusted profiles](https://{DomainName}/iam/trusted-profiles/create){: external} overview. Then **Create** a new trusted profile.
 2. Use **TPwithCR** as **Name** and type in a short **Description**, e.g., `Test trusted profile with compute resource`. Thereafter, click **Continue**.
 3. In the second form tab under **Select trusted entity type** pick **Compute resources** and a dialog **Create trust relationship** appears. There, choose **Kubernetes** as **Compute service type**.
-4. Next, you can decide between either all or specific service resources. 
+4. Next, you can decide between either all or specific service resources.
    - Click on **Specific resources** and the next form field appears.
-   - In **Enter or select an instance**, click **Add resource**. Then, in the field **Allow access to** select the Kubernetes cluster **mycluster-tpcr**. 
-   - Then, enter **tptest** as value for **Namespace**. Leave the field for **Service account** as is to go with the default. 
+   - In **Enter or select an instance**, click **Add resource**. Then, in the field **Allow access to** select the Kubernetes cluster **mycluster-tpcr**.
+   - Then, enter **tptest** as value for **Namespace**. Leave the field for **Service account** as is to go with the default.
    - Finish by clicking **Continue**.
 5. Next, click on **Access policy**. In the list of services, select **All Identity and Access enabled services** and click **Next**. Go with **All resources**, click **Next** again, then select **Viewer**, and again click on **Next**. In the section **Roles and actions**, select **Reader** for **Service access** and **Viewer** for **Platform access**. When done, click **Next** and finally **Add**.
 6. Review the **Summary** on the right side, then **Create** the trusted profile with the shown trust relationship and the listed access privileges. Leave the browser tab open for later.
@@ -254,7 +254,7 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
    {: tip}
 
 4. In the left navigation column, click on **Deployments** to check for the state of the new deployment **trustedprofile-test-deployment**. Next, click on **Pods** in the same navigation column and notice a pod with a name starting with **trustedprofile-test-deployment**. Once it is showing the status green, move on to the next section.
-   
+
 
 ## Test the trusted profile
 {: #trusted-profile-for-enterprise-security-cr4}
@@ -263,14 +263,14 @@ With the Kubernetes cluster and the trusted profile in place, it is time to depl
 With the trusted profile and the Kubernetes cluster with the running app in place, it is time to test. Start by opening a browser-based shell to run commands, a tab for the container logs, and another one for {{site.data.keyword.logs_full_notm}} logs.
 
 1. In the currently active tab *Kubernetes dashboard* with the pods, click on the menu with three dots on the right and *right-click* on **Exec** in that menu. Choose to open the link in a new tab (*container shell*). It opens a shell for the running container. Still in the browser tab *Kubernetes dashboard*, click on the three dots menu again and then with a left-click on **Logs**. In the new three dots menu enable **Auto refresh**.
-  
+
    Last, open a tab with the [{{site.data.keyword.logs_full_notm}} service](/observability/logging){: external} and select the **Cloud Logs** tab and click the name of the instance that is receiving the auditing events.
 2. In the browser tab *container shell*, run the following command in the shell to test the app:
    ```sh
    curl -s localhost:8080
    ```
    {: pre}
-  
+
    The above should return a JSON object with the **codeversion** and **result**. You should see some new log activity in the *Kubernetes dashboard* tab with the logs. Next, in the *container shell* tab, run the following command:
    ```sh
    curl -s localhost:8080/api/listresources_crn | jq
@@ -292,7 +292,7 @@ With the trusted profile and the Kubernetes cluster with the running app in plac
 
 
 4. Switch to the *{{site.data.keyword.logs_full_notm}}* browser tab and use the search box at the bottom to look for the term **profile**. This must be the instance configured as an auditing event target. It should return at least one line with `IAM Identity Service: login.computeresource-token TPwithCR`. `Open the info panel` to expand the record to examine details, look for the **initiator** section. It lists the trusted profile which was used for the request and information on the compute resource. The **authName** should match your deployment from the *Kubernetes dashboard* browser tab.
-   
+
    ![{{site.data.keyword.logs_full_notm}} showing details of the trusted profile request](/images/solution68-trusted-profile-for-enterprise-security/ActivityTracker_TrustedProfile_ComputeResource.png){: caption="Details in the activity log" caption-side="bottom"}
 
 5. Now, visit the browser tab *Kubernetes dashboard* and check the container log. The app prints details on the [JWT access token](https://www.ibm.com/think/topics/json-web-tokens){: external} it uses to authenticate for listing the resources. Examine the individual key/value pairs, including **sub** (subject) twice. They relate to the trusted profile and the compute resource.
