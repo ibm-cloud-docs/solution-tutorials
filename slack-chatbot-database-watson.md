@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-11-17"
 lasttested: "2023-09-29"
 
 content-type: tutorial
@@ -36,7 +36,7 @@ The Slack integration sends messages between Slack and {{site.data.keyword.conve
 * Build a chatbot using {{site.data.keyword.conversationshort}} which interacts with a database backend
 * Connect {{site.data.keyword.conversationshort}} to Slack using an integration
 * Create and deploy a Python database app to {{site.data.keyword.codeengineshort}}
-* Access a {{site.data.keyword.Db2_on_Cloud_short}} database via a {{site.data.keyword.conversationshort}} custom extension
+* Access an {{site.data.keyword.Db2_on_Cloud_short}} database via a {{site.data.keyword.conversationshort}} custom extension
 
 ![Architecture](images/solution19/SlackbotArchitecture.svg){: caption="Architecture diagram of the tutorial" caption-side="bottom"}
 {: style="text-align: center;"}
@@ -87,7 +87,7 @@ In this section, you are going to set up the needed services and deploy the back
    ibmcloud resource service-instance-create eventDB dashdb-for-transactions free us-south
    ```
    {: pre}
-   
+
    You can also use another than the **free** (lite) plan. The free plan is not available in all locations. Wait for the service to be provisioned. See the output from the above command for instructions. You can also run the next command to check the status:
 
    ```sh
@@ -141,7 +141,7 @@ In this section, you are going to set up the needed services and deploy the back
 
    Then, deploy the app naming it **slackbot-backend**. Replace the value for the **API_TOKEN** (**MY_SECRET**). Use your own text for MY_SECRET if you wish and make substitutions in all future steps. It is used to secure the calls to the REST API.
    ```sh
-   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot-database:latest --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="$DB2_URI" 
+   ibmcloud ce app create --name slackbot-backend --image icr.io/solution-tutorials/tutorial-slack-chatbot-database:latest --min-scale 1 -e API_TOKEN=MY_SECRET -e DB2_URI="$DB2_URI"
    ```
    {: pre}
 
@@ -188,13 +188,13 @@ In this part of the tutorial you are going to work with the {{site.data.keyword.
 
 
 1. In the [{{site.data.keyword.cloud_notm}} Resource List](/resources) open the overview of your services. Locate the instance of the {{site.data.keyword.conversationshort}} service under the **AI / Machine Learning** section. Click on its entry to open the service details.
-2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool. 
-3. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then click **Next** to start personalizing. 
-4. For the first question on deployment pick **Web**. 
-5. For the other questions answer for your role or with **Other** / **Not sure at this time**. 
-6. Click **Next** for the opportunity to customize the chat UI if desired. 
+2. Click on **Launch Watson Assistant** to get to the {{site.data.keyword.conversationshort}} Tool.
+3. In the welcome dialog, create a new assistant by using **slackbot** as **Assistant name**, then click **Next** to start personalizing.
+4. For the first question on deployment pick **Web**.
+5. For the other questions answer for your role or with **Other** / **Not sure at this time**.
+6. Click **Next** for the opportunity to customize the chat UI if desired.
 7. Click **Next** and finalize by clicking **Create**.
-   
+
    The new page includes a guided tour which you might want to complete if you are new to {{site.data.keyword.conversationshort}}.
    {: tip}
 
@@ -206,7 +206,7 @@ In this part of the tutorial you are going to work with the {{site.data.keyword.
 Next, you are going to add and then configure a custom extension to {{site.data.keyword.conversationshort}} and the newly created assistant.
 1. In the dashboard on the lower left, click on **Integrations**, then on **Build custom extension** under **Extensions**.
 2. In the multi-step dialog click **Next**, then enter **events** as **Extension name** and **API for events database** as **Extension description**. Click **Next**.
-3. Select and upload the local file **slackbot-openapi-spec.json**, then click **Next**. 
+3. Select and upload the local file **slackbot-openapi-spec.json**, then click **Next**.
 4. The last step lets you review the extension with included servers and operations. Once done click **Finish**.
 5. Back on the **Integrations** page note the new **events** tile in the **Extensions** section. Click **Add** on that tile to configure the extension for the assistant.
 6. The new dialog starts with a short overview. Click **Next** to get to the actual configuration. In the dropdown for **Authentication type** select **API key auth** and enter your chosen **API key** (**MY_SECRET** replacement).
@@ -217,7 +217,7 @@ Next, you are going to add and then configure a custom extension to {{site.data.
 {: step}
 
 First, you are going to create an action to retrieve information about a single event identified by its name.
-1. On the upper left, click on **Actions** and on the welcome page on **Create action**. 
+1. On the upper left, click on **Actions** and on the welcome page on **Create action**.
 2. Click on the **Start from scratch** tile.
 3. In the **New action** dialog, enter **show me event details** as example and click **Save**.
 4. The next screen shows the step editor for the action with **Step 1** open. In **Assistant says** type **What is the event name?**. Then, for **Define customer response** pick **Free text** as option. Leave **And then** as **Continue to next step**.
@@ -229,8 +229,8 @@ First, you are going to create an action to retrieve information about a single 
    For the sake of simplicity, not all errors and conditions like empty results are handled.
    {: note}
 
-9. Click on the **Save** icon on the upper right, then the **X** next to it to close the step editor. 
-10. On the bottom right select **Preview** to test the dialog. 
+9. Click on the **Save** icon on the upper right, then the **X** next to it to close the step editor.
+10. On the bottom right select **Preview** to test the dialog.
 11. In the chat, type **show me event details** and submit. The bot should respond **What is the event name?**. Now type **Think** and submit. Because the backend app uses a wildcard search, it should find the sample event with the name **Think 2022** and return the details (see screen capture below).
 
 ![chat preview showing event details](images/solution19/Slackbot_debug_preview.png){: caption="preview showing event details" caption-side="bottom"}
@@ -246,18 +246,18 @@ You can click **Inspect** to see details on how the custom extension is utilized
 Similar to retrieving a record it is possible to gather input about an event and add that data via the custom extension.
 1. Switch to **Actions** and **Created by you**. Click **New action**.
 2. Click on the **Start from scratch** tile.
-3. In the **New action** dialog, enter **add new event** and **Save**. 
+3. In the **New action** dialog, enter **add new event** and **Save**.
 4. Use **How do you want to name the event?** for **Assistant says**. The customer responds with **Free text** again.
-5. Add a **New step** and have the Assistant say **Where is the event?**. Again, the customer may respond with **Free text**. 
-6. Add another step and ask **When does the event begin?**, but use **Date** for **Define customer response**. 
-7. Repeat the same but with **When does the event end?**. 
+5. Add a **New step** and have the Assistant say **Where is the event?**. Again, the customer may respond with **Free text**.
+6. Add another step and ask **When does the event begin?**, but use **Date** for **Define customer response**.
+7. Repeat the same but with **When does the event end?**.
 8. Last, in a new step, ask **What is the URL (web address) for the event?** and let the customer respond with **Free text**.
 9. Now, to confirm the input, create a new step. Use **Is this correct?** and as bulleted list show the gathered data. Add an item for **Name**, **Location**, **Begin**, **End**, and **Contact** and use Action variables relating to the input steps for the data (see screen capture below). Use **Confirmation** as customer response type.
    ![Confirmation step](images/solution19/Slackbot_confirmation.png){: caption="Confirmation step" caption-side="bottom"}
 
 10. Add a new step with the condition the previous confirmation being **No**. The Assistant could say **Ok, let's start over**. Set **And then** to **Re-ask previous step(s)** and select all previous steps.
 11. In a new step, which should be step 8, react to the confirmation being **Yes**. Under **And then** select **Use an extension**. Configure the events extension with **Insert a new event record** as operation. Match the parameters to the Action variables for the steps, for example, **shortname** to **1. How do you want to name the event?**
-12. Create a new step with a condition **8 Ran successfully** being true. Let the Assistant say **A new record with ID VARIABLE was created**. For **VARIABLE** select **8 body.eid** from **events (Step 8)**. End the action under **And then**. 
+12. Create a new step with a condition **8 Ran successfully** being true. Let the Assistant say **A new record with ID VARIABLE was created**. For **VARIABLE** select **8 body.eid** from **events (Step 8)**. End the action under **And then**.
 13. Create a new step with the condition for **8 Ran successfully** being false. Use something like **It seems there was a problem creating the new event record** for the Assistant to say and end the action under **And then**. Save and close the action with the icons in the upper right.
 13. Save the action and then test the new action by clicking on **Preview** on the left and using the webchat. Type **add new event** and submit. When prompted by the bot, enter **my conference** as name, **home office** as location, pick dates for begin and end, and use **http://localhost** as URL. Thereafter, confirm that the data is correct.
 

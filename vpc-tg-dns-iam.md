@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-09"
+lastupdated: "2025-11-17"
 lasttested: "2024-01-30"
 
 content-type: tutorial
@@ -24,7 +24,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} 
 {: tip}
 
 
-Microservices are popular because they allow an enterprise to organize their development teams around the services they deliver. This tutorial walks you through the steps of creating infrastructure for a {{site.data.keyword.vpc_full}} (VPC) based microservice architecture. In this architecture, VPCs are connected to each other using the {{site.data.keyword.tg_full}}. A set of shared microservices is accessed through host names registered in the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate team isolated by {{site.data.keyword.iamlong}}. Optionally, a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared microservice.
+Microservices are popular because they allow an enterprise to organize their development teams around the services they deliver. This tutorial walks you through the steps of creating infrastructure for an {{site.data.keyword.vpc_full}} (VPC) based microservice architecture. In this architecture, VPCs are connected to each other using the {{site.data.keyword.tg_full}}. A set of shared microservices is accessed through host names registered in the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate team isolated by {{site.data.keyword.iamlong}}. Optionally, a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared microservice.
 {: shortdesc}
 
 ## Objectives
@@ -67,13 +67,13 @@ You will find instructions to download and install these tools for your operatin
 
 In addition:
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create a {{site.data.keyword.tg_full}} services. See the list of [required permissions](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC. You will also need the ability to create resource groups and IAM resources like access groups, policies, service IDs, ...
-- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC. 
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create an {{site.data.keyword.tg_full}} services. See the list of [required permissions](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC. You will also need the ability to create resource groups and IAM resources like access groups, policies, service IDs, ...
+- You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 
 ## Plan the Identity and Access Management Environment
 {: #vpc-tg-dns-iam-iam}
 
-The admin team will enable the other teams to administer their resources as much as possible. The admin team will manage users and control access but will not create and destroy the resources shown in the architecture diagram. 
+The admin team will enable the other teams to administer their resources as much as possible. The admin team will manage users and control access but will not create and destroy the resources shown in the architecture diagram.
 
 Editor, Operator, Viewer and Manager are [IAM access roles](/docs/account?topic=account-userroles#iamusermanrol). Each service defines the exact meaning of the roles and the associated actions.
 
@@ -140,7 +140,7 @@ In this example, a single DNS zone, `widgets.example.com` will be created and ac
 
 The *shared* team and the *network* team are now nicely separated. But how is Application1 isolated from Shared and Application2? They are Editor for the same types of services.
 
-This is where resource groups can help out. Each service instance (i.e. resource) has a resource group attribute that is initialized upon creation and cannot be changed. In other words, each resource is in one resource group. 
+This is where resource groups can help out. Each service instance (i.e. resource) has a resource group attribute that is initialized upon creation and cannot be changed. In other words, each resource is in one resource group.
 
 Resource Group diagram:
 
@@ -179,7 +179,7 @@ All the operations will be performed in a `bash` shell and making use of `terraf
    ```
    {: pre}
 
-   
+
    Next, edit `terraform.tfvars` to set these variables:
     - **ssh_key_name** - it is **required** to specify an existing SSH key in the **ibm_region** as specified in the **Before you begin** section above.
     - **ibm_region** - replace the default value, **us-south**, if required. The CLI command `ibmcloud regions` will display all possible regions.
@@ -295,7 +295,7 @@ The PI keys are the same as a password to your account. Keep the API keys safe.
    $ ibmcloud iam access-group-policies $basename-network
    Retrieving all policies of access group widget0-network under account 8675309 as jenny@example.com
    OK
-   
+
    Policy ID:   00ceb354-7360-4ad5-9fda-5c03e462c5c0
    Roles:       Editor
    Resources:
@@ -304,7 +304,7 @@ The PI keys are the same as a password to your account. Keep the API keys safe.
                 Service Name          is
                 flowLogCollectorId    *
                 Memo                  Policy applies to the resource(s) within the resource group
-   
+
    Policy ID:   115ebe9f-eea0-4308-9e7f-bb887d64426b
    Roles:       Editor
    Resources:
@@ -418,7 +418,7 @@ The Admin team has provided them just the right amount of permissions to create 
      service           = "dns-svcs"
      plan              = "standard-dns"
    }
-   
+
    resource "ibm_dns_zone" "widgets_example_com" {
      name        = "widgets.example.com"
      instance_id = ibm_resource_instance.dns.guid
@@ -435,7 +435,7 @@ The Admin team has provided them just the right amount of permissions to create 
      vpc_crn     = module.vpc_shared.vpc.crn
      type        = "vpc"
    }
-   
+
    ```
 
 1. List the DNS configuration. A {{site.data.keyword.dns_short}} instance was created. The **widgets.example.com** zone was created. Finally, the zone was added to all the VPCs.
@@ -462,21 +462,21 @@ The Admin team has provided them just the right amount of permissions to create 
    $ ibmcloud dns instances
    Retrieving service instances for service 'dns-svcs' ...
    OK
-   Name          ID                                     Location   State    Service Name   
-   widget0-dns   3b0d5546-5999-4c7e-a757-f5fd21dd44ed   global     active   dns-svcs   
+   Name          ID                                     Location   State    Service Name
+   widget0-dns   3b0d5546-5999-4c7e-a757-f5fd21dd44ed   global     active   dns-svcs
    $ ibmcloud dns zones -i $basename-dns
    Listing zones for service instance 'widget0-dns' ...
    OK
-   ID                                               Name                  Status   
-   5a1a2295-1c38-49dd-9809-aaaf5a127e79c1b          widgets.example.com   ACTIVE   
+   ID                                               Name                  Status
+   5a1a2295-1c38-49dd-9809-aaaf5a127e79c1b          widgets.example.com   ACTIVE
    $ zone_id=$(ibmcloud dns zones -i $basename-dns --output json | jq -r '.[] | .id')
    $ ibmcloud dns permitted-networks $zone_id -i $basename-dns
    Listing permitted networks for zone '5a1a2295-1c38-49dd-9809-f5a127e79c1b' ...
    OK
-   Name                   ID                                          Type   VPC_CRN                                                                                                               State   
-   widget0-shared         r006-353208ab-4e95-46fb-934b-b5566cde8975   vpc    crn:v1:bluemix:public:is:us-south:a/713c783d9a507a53135fe6793c37cc74::vpc:r006-353208ab-4e95-46fb-934b-b5566cde8975   ACTIVE   
-   widget0-application1   r006-287258c6-2eb3-4908-b326-6f03c3e47aa6   vpc    crn:v1:bluemix:public:is:us-south:a/713c783d9a507a53135fe6793c37cc74::vpc:r006-287258c6-2eb3-4908-b326-6f03c3e47aa6   ACTIVE   
-   widget0-application2   r006-fa51e99e-bd93-4451-a4eb-76eed9939d3c   vpc    crn:v1:bluemix:public:is:us-south:a/713c783d9a507a53135fe6793c37cc74::vpc:r006-fa51e99e-bd93-4451-a4eb-76eed9939d3c   ACTIVE   
+   Name                   ID                                          Type   VPC_CRN                                                                                                               State
+   widget0-shared         r006-353208ab-4e95-46fb-934b-b5566cde8975   vpc    crn:v1:bluemix:public:is:us-south:a/713c783d9a507a53135fe6793c37cc74::vpc:r006-353208ab-4e95-46fb-934b-b5566cde8975   ACTIVE
+   widget0-application1   r006-287258c6-2eb3-4908-b326-6f03c3e47aa6   vpc    crn:v1:bluemix:public:is:us-south:a/713c783d9a507a53135fe6793c37cc74::vpc:r006-287258c6-2eb3-4908-b326-6f03c3e47aa6   ACTIVE
+   widget0-application2   r006-fa51e99e-bd93-4451-a4eb-76eed9939d3c   vpc    crn:v1:bluemix:public:is:us-south:a/713c783d9a507a53135fe6793c37cc74::vpc:r006-fa51e99e-bd93-4451-a4eb-76eed9939d3c   ACTIVE
    ```
    {: screen}
 
@@ -513,7 +513,7 @@ The Admin team has provided them just the right amount of permissions to create 
      keys           = [data.ibm_is_ssh_key.ssh_key.id]
      image          = data.ibm_is_image.image.id
      profile        = var.profile[var.generation]
-   
+
      primary_network_interface {
        subnet = local.network_context.subnets["z1"].id
        security_groups = [
@@ -524,7 +524,7 @@ The Admin team has provided them just the right amount of permissions to create 
      }
      user_data = module.user_data_app.user_data_centos
    }
-   
+
    resource ibm_dns_resource_record "shared" {
      count = var.shared_lb ? 0 : 1 # shared load balancer?
      instance_id = local.network_context.dns.guid
@@ -619,7 +619,7 @@ The Admin team has provided them just the right amount of permissions to create 
    Second, the /remote link calls to a remote server IP and returns the description of that remote along with the remote_url and remote_ip addresses used to access the remote.
    ```js
    const IP='REMOTE_IP'
-   
+
    function getRemote(req, res) {
      path = '/info'
      remote_url = 'http://' + IP + ':3000' + path
@@ -662,7 +662,7 @@ The Admin team has provided them just the right amount of permissions to create 
    Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
    Outputs:
-   
+
    ibm1_private_ip = "10.1.0.4"
    ibm1_public_ip = "52.116.140.202"
    test_info = "curl 52.116.140.202:3000/info"
@@ -670,7 +670,7 @@ The Admin team has provided them just the right amount of permissions to create 
    ```
    {: screen}
 
-   Try the two curl commands (**test_info**, **test_remote**) that were suggested above. Copy the statements from your output. 
+   Try the two curl commands (**test_info**, **test_remote**) that were suggested above. Copy the statements from your output.
 
    ```sh
    curl 52.116.140.202:3000/info
@@ -722,7 +722,7 @@ The Admin team has provided them just the right amount of permissions to create 
      location          = var.ibm_region
      global            = false
      resource_group    = data.ibm_resource_group.network.id
-   } 
+   }
    ```
 
 
@@ -747,9 +747,9 @@ The Admin team has provided them just the right amount of permissions to create 
 
    ```sh
    $ ibmcloud tg gateways
-   Listing gateways under account 
+   Listing gateways under account
    OK
-   
+
    GatewayID           e2801c16-1a6d-4d47-9c58-1a3b3c1d9b1b
    CRN                 crn:v1:bluemix:public:transit:us-south:a/86785309::gateway:e2801c16-1a6d-4d47-9c58-1a3b3c1d9b1b
    Name                widget0-tgw
@@ -761,23 +761,23 @@ The Admin team has provided them just the right amount of permissions to create 
 
    $ GATEWAY_ID=$(ibmcloud tg gateways --output json | sed -e '/^OK$/d' | jq -r '.[]|select(.name=="'$basename-tgw'")|.id')
    $ ibmcloud tg connections $GATEWAY_ID
-   Listing connections for gateway e2801c16-1a6d-4d47-9c58-1a3b3c1d9b1b under account 
+   Listing connections for gateway e2801c16-1a6d-4d47-9c58-1a3b3c1d9b1b under account
    OK
-   
+
    Name                    widget0-shared
    Network Type            vpc
    Connection ID           dff6ecfd-388d-471a-908a-98880426fbee
    Status                  attached
    Default Prefix Filter   permit
    NetworkID               crn:v1:bluemix:public:is:us-south:a/86785309::vpc:r006-b08a7c2c-c0ea-4908-b0ab-b96cd8ba221a
-   
+
    Name                    widget0-application1
    Network Type            vpc
    Connection ID           bbce29f9-9ce4-47d4-911d-5341601cea07
    Status                  attached
    Default Prefix Filter   permit
    NetworkID               crn:v1:bluemix:public:is:us-south:a/86785309::vpc:r006-8fdc0e7e-3a98-4f6b-93e0-505c61e3faac
-   
+
    Name                    widget0-application2
    Network Type            vpc
    Connection ID           208c00cc-aee2-498e-8b1c-37ddc276f200
@@ -793,7 +793,7 @@ The Admin team has provided them just the right amount of permissions to create 
 
    ```sh
    $ curl 169.48.152.220:3000/remote
-   
+
    {
       "remote_url": "http://shared.widgets.example.com:3000/info",
       "remote_ip": "10.0.0.4",
@@ -867,7 +867,7 @@ The Admin team has provided them just the right amount of permissions to create 
 
    ```sh
    $ curl 169.48.152.220:3000/remote
-   
+
    {
       "remote_url": "http://shared.widgets.example.com:3000/info",
       "remote_ip": "10.0.1.4",
@@ -917,7 +917,7 @@ The second *application* team environment is identical to the first. **Optionall
    terraform apply
    ```
    {: pre}
-   
+
 1. Test the curl commands
 
 ## Remove resources
@@ -940,7 +940,7 @@ The second *application* team environment is identical to the first. **Optionall
 
 - The *Application* team is providing access to the application via a floating IP address. Consider connecting this to {{site.data.keyword.cis_full_notm}}. It can manage the public DNS and provide security. [Deploy isolated workloads across multiple locations and zones](/docs/solution-tutorials?topic=solution-tutorials-vpc-multi-region) has an example.
 - The *Application* team can scale horizontally using a load balancer like the *shared* team.
-- The *shared* team can add additional instances to the load balancer by adding instances to the `shared/main.tf`. 
+- The *shared* team can add additional instances to the load balancer by adding instances to the `shared/main.tf`.
 - The *shared* team could switch their implementation platform to Kubernetes.
 
 ### Continuous Delivery

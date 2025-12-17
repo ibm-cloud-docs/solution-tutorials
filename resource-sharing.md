@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-10-16"
+lastupdated: "2025-11-17"
 lasttested: "2023-12-18"
 
 content-type: tutorial
@@ -86,7 +86,7 @@ The [{{site.data.keyword.compliance_short}}](/security-compliance/overview) feat
 ### {{site.data.keyword.logs_full_notm}}
 {: #resource-sharing-security-la}
 
-{{site.data.keyword.logs_full}} allows managing operating system logs, application logs, platform logs and audit logs and provides search and filtering capabilities. The {{site.data.keyword.logs_routing_full}} is used to route the platform logs to a {{site.data.keyword.logs_full_notm}} instance or other supported instances. Consolidate for analysis in greater context, thereby improving (security) insights. Configure to persist in your own {{site.data.keyword.cos_short}} buckets for long term storage. See [about Logs Routing](/docs/logs-router?topic=logs-router-about) that describes tenants and account specific targets.
+{{site.data.keyword.logs_full}} allows managing operating system logs, application logs, platform logs and audit logs and provides search and filtering capabilities. The {{site.data.keyword.logs_routing_full}} is used to route the platform logs to an {{site.data.keyword.logs_full_notm}} instance or other supported instances. Consolidate for analysis in greater context, thereby improving (security) insights. Configure to persist in your own {{site.data.keyword.cos_short}} buckets for long term storage. See [about Logs Routing](/docs/logs-router?topic=logs-router-about) that describes tenants and account specific targets.
 
 ### {{site.data.keyword.atracker_full_notm}}
 {: #resource-sharing-security-at}

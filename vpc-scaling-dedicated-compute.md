@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2024-10-18"
+lastupdated: "2025-11-17"
 lasttested: "2024-10-15"
 
 content-type: tutorial
@@ -26,7 +26,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator) to generate 
 
 This tutorial walks you through the steps of setting up isolated workloads in a shared (multi-tenant) environment and a dedicated (single-tenant) environment. Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning multiple availability zones (AZs) and virtual server instances (VSIs) that can scale according to your requirements to ensure the high availability of your application. Furthermore, configure load balancers to provide high availability between zones within one region. Configure Virtual Private Endpoints (VPE) for your VPC providing private routes to services on the IBM Cloud.
 
-Isolate workloads by provisioning a dedicated host, attaching an encrypted data volume to a VSI, expanding the attached data volume, and resizing the VSI after the fact. 
+Isolate workloads by provisioning a dedicated host, attaching an encrypted data volume to a VSI, expanding the attached data volume, and resizing the VSI after the fact.
 {: shortdesc}
 
 You will provision all of these services and VPC resources using {{site.data.keyword.bpfull_notm}}, which provides Terraform-as-a-Service capabilities. The Terraform template defines the {{site.data.keyword.Bluemix_notm}} resources to be created, updated, or deleted.
@@ -45,7 +45,7 @@ You will provision all of these services and VPC resources using {{site.data.key
 1. The frontend app deployed on VSI(s) communicates to the backend app via the private load balancer.
 2. The backend app securely communicates with the cloud services via a virtual private endpoint (VPE).
 3. As the load on the application increases, scaling for VPC is enabled and dynamically adds or removes VSIs based on metrics like CPU, RAM, etc., or through scheduled scaling.
-4. As the scope expands, dedicated host isolates and performs heavy computation on the data. Resize the instance on the dedicated host by updating the profile based on your requirement. Also, expand the block storage volume capacity. 
+4. As the scope expands, dedicated host isolates and performs heavy computation on the data. Resize the instance on the dedicated host by updating the profile based on your requirement. Also, expand the block storage volume capacity.
 5. All instances communicate with IBM Cloud services over the private backbone using a virtual private endpoint (VPE). See the [About virtual private endpoint gateways](/docs/vpc?topic=vpc-about-vpe) topic for more details.
 
 
@@ -59,17 +59,17 @@ The tutorial requires:
 ## Enable logging and monitoring
 {: #vpc-scaling-dedicated-compute-metrics}
 
-1. Configure a {{site.data.keyword.logs_full_notm}} instance as a target of {{site.data.keyword.logs_routing_full_notm}}.  See [Getting started with {{site.data.keyword.logs_routing_full}}](/docs/logs-router?topic=logs-router-getting-started)
+1. Configure an {{site.data.keyword.logs_full_notm}} instance as a target of {{site.data.keyword.logs_routing_full_notm}}.  See [Getting started with {{site.data.keyword.logs_routing_full}}](/docs/logs-router?topic=logs-router-getting-started)
 1. Configure a {{site.data.keyword.mon_short}} instance to collect platform metrics.  See [Enabling platform metrics](/docs/monitoring?topic=monitoring-platform_metrics_enabling)
 
 ## Provision required cloud services
 {: #vpc-scaling-dedicated-compute-services}
 {: step}
 
-In this section, you will create the following cloud services required for the application using {{site.data.keyword.bpfull_notm}}: {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}. 
+In this section, you will create the following cloud services required for the application using {{site.data.keyword.bpfull_notm}}: {{site.data.keyword.databases-for-postgresql_full_notm}} and {{site.data.keyword.cos_full_notm}}.
 
 1. Navigate to [{{site.data.keyword.bpshort}} Workspaces](/schematics/workspaces), click on **Create workspace**.
-   1. Under the **Specify Template** section, provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL. 
+   1. Under the **Specify Template** section, provide `https://github.com/IBM-Cloud/vpc-scaling-dedicated-host` under GitHub or GitLab repository URL.
    2. Select **terraform_v1.5** as the Terraform version and click **Next**.
 2. Under **Workspace details**,
    1. Provide a workspace name : `vpc-scaling-workspace`.
@@ -90,14 +90,14 @@ Navigate to the [resource list](/resources). Here, you can filter by the `basena
 
 In this section, you will:
 - Provision an {{site.data.keyword.vpc_full}} (VPC) with subnets spanning across two zones. To ensure the high availability of your frontend app and backend app, you will create multiple VSIs across these zones.
-- Configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones. 
+- Configure a public load balancer for your frontend and a private load balancer for your backend app to provide high availability between zones.
 - Create an instance template used to provision instances in your instance group.
 
 Initially, you may not deploy all the infrastructure resources to make it scale, even if you designed it in that way. You may start with only one or a few instances, as shown below.
 
 ![Deploy one VSI](images/solution62-vpc-scaling-dedicated/one_vsi.svg){: caption="Deploy one VSI" caption-side="bottom"}
 
-As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer, you can configure specific health checks for the pool members associated with instances.   
+As the load increases, you may need more instances to serve the traffic. You may configure a public load balancer for the frontend app and a private load balancer for the backend app to equally distribute incoming requests across instances. With a load balancer, you can configure specific health checks for the pool members associated with instances.
 
 ![Deploy multiple VSIs](images/solution62-vpc-scaling-dedicated/multiple_vsi.svg){: caption="Deploy multiple VSIs" caption-side="bottom"}
 
@@ -122,7 +122,7 @@ If you want to access the VSIs directly later, you can optionally [create an SSH
 3. Follow the status logs by clicking on **Show more**.
    After the apply is successful, you should see the following resources provisioned:
     - a VPC
-    - two subnets (one in each zone) 
+    - two subnets (one in each zone)
     - a public load balancer with a [security group](/docs/vpc?topic=vpc-alb-integration-with-security-groups) driving traffic to the frontend application
     - a private load balancer with a security group driving requests from frontend to the backend
     - an instance template and an instance group for provisioning and scaling the instances
@@ -146,7 +146,7 @@ In the next section, you will choose a scaling method (static or dynamic) and cr
 
 In this section, you will start scaling the instances with the scaling method initially set to **static**. Then, you move to scaling the instances with **dynamic** scaling by setting up an instance manager and an instance group manager policy. Based on the target utilization metrics that you define, the instance group can dynamically add or remove instances to achieve your specified instance availability.
 
-### Manual scaling 
+### Manual scaling
 {: #vpc-scaling-dedicated-compute-manual-scale}
 
 1. To check **static** scaling method, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace to see that the `step3_is_dynamic` variable is set to `false`.
@@ -162,7 +162,7 @@ You can check the logs and monitor your load balancers later in the tutorial.
 {: #vpc-scaling-dedicated-compute-auto-scale}
 
 1. To switch to **dynamic** scaling method, set the `step3_is_dynamic` variable to **true**, **Save** the setting and **Apply** the plan. This setting adds an instance group manager and an instance group manager policy to the existing instance group thus switching the instance group scaling method from `static` to `dynamic`.
-   
+
    ![Scale instances](images/solution62-vpc-scaling-dedicated/autoscale.svg){: caption="Scale instances" caption-side="bottom"}
 2. To check the autoscaling capabilities, you can use a load generator against your application. The following shell script simulates a basic load of 90000 requests with up to 300 in parallel.
    1. Open a local terminal.
@@ -180,7 +180,7 @@ You can check the logs and monitor your load balancers later in the tutorial.
       ```
       {: pre}
 
-3. Under **Memberships** tab of your [instance group](/vpc-ext/autoscale/groups), you should see new instances being provisioned. 
+3. Under **Memberships** tab of your [instance group](/vpc-ext/autoscale/groups), you should see new instances being provisioned.
 
    You should see up to 5 instances taking the load as the maximum membership count is set to `5`. You can check the minimum and maximum instance group size under `Overview` tab of the instance group.
    {: tip}
@@ -206,16 +206,16 @@ In this section, you will use scheduled scaling for VPC to schedule actions that
 
 Load balancers calculate the metrics and send those metrics to your monitoring instance, which reflects different types of use and traffic. You can visualize and analyze metrics from the {{site.data.keyword.monitoringlong_notm}} dashboard.
 
-1. You can monitor your load balancers from the [Load balancers for VPC](/vpc-ext/network/loadBalancers) page by 
+1. You can monitor your load balancers from the [Load balancers for VPC](/vpc-ext/network/loadBalancers) page by
    1. Clicking on the **name** of the load balancer.
    2. Under `Monitoring preview` tile of the load balancer, click on **Launch monitoring**.
-2. Alternatively, you can also monitor the load balancers by navigating to the [Observability](/observe) page and click **Monitoring** on the left pane 
+2. Alternatively, you can also monitor the load balancers by navigating to the [Observability](/observe) page and click **Monitoring** on the left pane
    1. Click **Instances**
    1. Click on **Open dashboard** next to the instance marked as `Platform metrics`.
    2. Click on **Dashboards** on the left sidebar to open the IBM Load Balancer for VPC Monitoring Metrics dashboard.
    3. Under Dashboard templates, expand **IBM** > Load Balancer for VPC Monitoring Metrics. _The default dashboard is not editable_.
 3. Remember to generate load against your application.
-  
+
 ### Check the logs
 {: #vpc-scaling-dedicated-compute-logs}
 
@@ -228,7 +228,7 @@ VPC services generate platform logs in the same region where they are available.
 4. Paste the load balancer CRN into the search bar to see the logs.
 
 For checking the logs of other VPC resources, refer to [VPC logging](/docs/vpc?topic=vpc-logging).
-   
+
 ## Set up a dedicated host and provision a VSI with an encrypted data volume
 {: #vpc-scaling-dedicated-compute-dedicated}
 {: step}
@@ -237,14 +237,14 @@ Provisioning dedicated hosts will incur costs. Use the [Cost Estimator](/estimat
 {: tip}
 
 
-In this section, you will create a dedicated host in a group and provision an instance with an encrypted data volume. 
+In this section, you will create a dedicated host in a group and provision an instance with an encrypted data volume.
 
 The reason you create a dedicated host is to carve out a single-tenant compute node, free from users outside of your organization. Within that dedicated space, you can create virtual server instances according to your needs. Additionally, you can create dedicated host groups that contain dedicated hosts for a specific purpose. Because a dedicated host is a single-tenant space, only users within your account that have the required permissions can create instances on the host.
 
 1. Navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update the `step4_create_dedicated` variable to **true** and **Save** the setting.
 2. Click on **Apply the plan** to provision the following resources,
    - a dedicated host group
-   - a dedicated host 
+   - a dedicated host
    - a VSI with encrypted data volume (encryption using {{site.data.keyword.keymanagementservicefull_notm}}) and with a security group attached.
 
    ![Add a dedicated host](images/solution62-vpc-scaling-dedicated/dedicated_host.svg){: caption="Add a dedicated host" caption-side="bottom"}
@@ -256,7 +256,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    {: pre}
 
    Typically, you won't set a public IP (floating IP) for an instance. In this case, a floating IP is set allow curl to the app deployed on the instance.
-   {: tip} 
+   {: tip}
 
 4. Issue the following curl command to query the database. The application running on the instance will read content from the {{site.data.keyword.databases-for-postgresql}} over the private endpoint. The data is the same that is available from the frontend application.
 
@@ -267,7 +267,7 @@ The reason you create a dedicated host is to carve out a single-tenant compute n
    --data '{ "query": "query read_database { read_database { id balance transactiontime } }" }' \
    http://$INSTANCE_IP/api/bank
    ```
-   {: pre}   
+   {: pre}
 
 5. Issue the following curl command to query the COS bucket. The application running on the instance will read content from the {{site.data.keyword.cos_short}} and return the results in JSON format. The data stored in COS is only available to the application running from the instance on the dedicated host.
    ```sh
@@ -297,7 +297,7 @@ If you have observed the profile of the instance provisioned on the dedicated ho
 
 In this section, you will also expand the block storage volume attached to the VSI from 100 GB to 250 GB. To understand the maximum capacity on the selected volume profile, check [expanding block storage volume capacity](/docs/vpc?topic=vpc-expanding-block-storage-volumes&interface=ui)
 
-### Resize the VSI 
+### Resize the VSI
 {: #vpc-scaling-dedicated-compute-resize-vsi}
 
 1. To resize the VSI, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance` variable to **true** and **Save** the setting.
@@ -305,14 +305,14 @@ In this section, you will also expand the block storage volume attached to the V
     Virtual servers can only be resized to profiles supported by the dedicated host the instance is hosted on. For example, a virtual server provisioned with a profile from the Compute family, can resize to other profiles also belonging to the Compute family. For more information on profiles, see [Instance Profiles](/docs/vpc?topic=vpc-profiles).
    {: tip}
 
-2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`. 
+2. **Apply the plan** to resize the instance from `2 VCPUs | 4 GiB RAM` to `8 VCPUs | 16 GiB RAM`.
 3. You can check the profile of the instance by launching [{{site.data.keyword.cloud-shell_short}}](/shell), changing the region to the one where you provisioned your VPC with `ibmcloud target -r us-south` command and then running `ibmcloud is instances` command or from [Virtual server instances for VPC](/vpc-ext/compute/vs) UI by clicking on the dedicated instance name.
 
 ### Expand block storage volume capacity
 {: #vpc-scaling-dedicated-compute-expand-volume}
 
 1. To expand the capacity of the attached block storage volume, navigate to the **Settings** tab of your {{site.data.keyword.bpshort}} workspace, update `step5_resize_dedicated_instance_volume` variable to **true** and **Save** the setting.
-2. **Apply the plan** to increase the block storage volume capacity from `100 GB` to `250 GB`. 
+2. **Apply the plan** to increase the block storage volume capacity from `100 GB` to `250 GB`.
 3. You can check the size of the `Data volume` from [Virtual server instances for VPC](/vpc-ext/compute/vs) UI by clicking on the dedicated instance name.
 
 ## What's next?

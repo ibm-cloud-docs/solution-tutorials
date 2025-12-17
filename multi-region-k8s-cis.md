@@ -2,8 +2,8 @@
 subcollection: solution-tutorials
 copyright:
   years: 2018, 2025
-lastupdated: "2025-10-27"
-lasttested: "2025-04-02"
+lastupdated: "2025-12-17"
+lasttested: "2025-12-11"
 
 content-type: tutorial
 services: containers, Registry, cis
@@ -419,4 +419,4 @@ In addition, you can now control what content gets cached by {{site.data.keyword
 * [Manage your IBM {{site.data.keyword.cis_short_notm}} for optimal security](/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#manage-your-ibm-cis-for-optimal-security)
 * [{{site.data.keyword.containershort_notm}}](/docs/containers)
 * [Building containers from images](/docs/containers?topic=containers-images)
-* [Best practice to secure traffic and internet application via {{site.data.keyword.cis_short_notm}}](/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security#best-practice-configure-security-level-selectively)
+* [Managing {{site.data.keyword.cis_short_notm}} for optimal security](/docs/cis?topic=cis-manage-your-ibm-cis-for-optimal-security)
