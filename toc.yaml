@@ -47,6 +47,7 @@ toc:
               topics:
               - serverless-github-traffic-analytics.md
               - create-deploy-retrain-machine-learning-model.md
+              - deploy-model-openshift-ai.md
           - topicgroup:
               label: Identity and Access Management
               topics:
@@ -98,6 +99,7 @@ toc:
               - scalable-webapp-openshift.md
               - openshift-service-mesh.md
               - openshift-microservices.md
+              - deploy-model-openshift-ai.md
           - topicgroup:
               label: Code Engine
               topics:

@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-11-17"
+lastupdated: "2025-12-30"
 lasttested: "2023-09-26"
 
 content-type: tutorial
@@ -539,7 +539,7 @@ Output looks something like this:
    ```
    {: codeblock}
 
-6. Click **Create** to create a {{site.data.keyword.cloudant_short_notm}} database instance.
+6. Click **Create** to create an {{site.data.keyword.cloudant_short_notm}} database instance.
    Your context should be **Operators** > **Installed Operators**  > **IBM Cloud Operator** in the **Administrator** perspective with Project: example-health in the **Service** panel.
 7. Click on the service just created, **&lt;your-initials&gt;-cloudant-service** and over time the **state** field will change from **provisioning** to **Online** meaning it is good to go.
 8. Create a Binding resource and a Secret resource for the cloudant Service resource just created.  Navigate back to  **Operators** > **Installed Operators**  > **IBM Cloud Operator** > **Binding** tab.  Open the **Binding** tab, click **Create Binding** and select **YAML View**.  Create a cloudant-binding associated with the serviceName `<your-initials>-cloudant-service`, (this is the the name provided for the **Service** created earlier).

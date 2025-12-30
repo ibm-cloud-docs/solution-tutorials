@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-11-17"
+lastupdated: "2025-12-30"
 lasttested: "2024-01-30"
 
 content-type: tutorial
@@ -24,7 +24,7 @@ This tutorial may incur costs. Use the [Cost Estimator](/estimator){: external} 
 {: tip}
 
 
-Microservices are popular because they allow an enterprise to organize their development teams around the services they deliver. This tutorial walks you through the steps of creating infrastructure for an {{site.data.keyword.vpc_full}} (VPC) based microservice architecture. In this architecture, VPCs are connected to each other using the {{site.data.keyword.tg_full}}. A set of shared microservices is accessed through host names registered in the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate team isolated by {{site.data.keyword.iamlong}}. Optionally, a {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared microservice.
+Microservices are popular because they allow an enterprise to organize their development teams around the services they deliver. This tutorial walks you through the steps of creating infrastructure for an {{site.data.keyword.vpc_full}} (VPC) based microservice architecture. In this architecture, VPCs are connected to each other using the {{site.data.keyword.tg_full}}. A set of shared microservices is accessed through host names registered in the {{site.data.keyword.dns_full}}. Each VPC is managed by a separate team isolated by {{site.data.keyword.iamlong}}. Optionally, an {{site.data.keyword.loadbalancer_full}} can be used to scale out the shared microservice.
 {: shortdesc}
 
 ## Objectives
@@ -67,7 +67,7 @@ You will find instructions to download and install these tools for your operatin
 
 In addition:
 
-- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create a {{site.data.keyword.tg_full}} and create an {{site.data.keyword.tg_full}} services. See the list of [required permissions](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC. You will also need the ability to create resource groups and IAM resources like access groups, policies, service IDs, ...
+- Check for user permissions. Be sure that your user account has sufficient permissions to create and manage VPC resources, create an {{site.data.keyword.tg_full}} and create an {{site.data.keyword.tg_full}} services. See the list of [required permissions](/docs/vpc?topic=vpc-managing-user-permissions-for-vpc-resources) for VPC. You will also need the ability to create resource groups and IAM resources like access groups, policies, service IDs, ...
 - You need an SSH key to connect to the virtual servers. If you don't have an SSH key, see [the instructions](/docs/vpc?topic=vpc-ssh-keys) for creating a key for VPC.
 
 ## Plan the Identity and Access Management Environment
