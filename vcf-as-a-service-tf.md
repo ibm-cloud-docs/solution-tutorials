@@ -1,8 +1,8 @@
 ---
 subcollection: solution-tutorials
 copyright:
-  years: 2024, 2025
-lastupdated: "2025-10-27"
+  years: 2024, 2026
+lastupdated: "2026-04-22"
 lasttested: "2024-01-04"
 
 
@@ -78,7 +78,7 @@ This tutorial requires:
 * [A pre-provisioned {{site.data.keyword.vmware-service_short}} single-tenant instance](/docs/vmware-service?topic=vmware-service-tenant-ordering),
 * [A pre-provisioned VDC on the {{site.data.keyword.vmware-service_short}} single-tenant instance](/docs/vmware-service?topic=vmware-service-vdc-adding),
 * [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cli-getting-started),
-* [{{site.data.keyword.cloud_notm}} API KEY](/docs/account?topic=account-userapikey&interface=ui),
+* [{{site.data.keyword.cloud_notm}} API KEY](/docs/iam?topic=iam-userapikey&interface=ui),
 * [`jq` to query JSON files](https://stedolan.github.io/jq/){: external}, and
 * [Terraform](https://developer.hashicorp.com/terraform){: external} with [VMware Cloud Director Provider](https://registry.terraform.io/providers/vmware/vcd/latest/docs){: external} to use Infrastructure as Code to provision resources.
 
