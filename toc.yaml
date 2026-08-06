@@ -3,7 +3,7 @@ toc:
     subcollection: solution-tutorials
     category: platform_services
     audience: platform
-    href: /docs/solution-tutorials?topic=solution-tutorials-tutorials
+    href: /docs/solution-tutorials
     path: solution-tutorials
     label: Solution Tutorials
     version: 2
@@ -75,11 +75,6 @@ toc:
               - byoip.md
               - configuring-IPSEC-VPN.md
               - linking-secure-network-enclosures.md
-          - topicgroup:
-              label: VMware Solutions
-              topics:
-              - vcf-as-a-service-tf.md
-              - vcf-as-a-service-vdc.md
       - topicgroup:
           label: By Compute Options
           topics:
