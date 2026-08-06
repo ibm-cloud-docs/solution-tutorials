@@ -2,7 +2,7 @@
 subcollection: solution-tutorials
 copyright:
   years: 2024
-lastupdated: "2025-04-25"
+lastupdated: "2026-08-06"
 lasttested: "2023-10-09"
 
 content-type: tutorial
@@ -122,7 +122,7 @@ It will walk you through example steps on a terminal using the shell, `terraform
       ibmcloud is zones
       ```
       {: pre}
-   
+
    * `TF_VAR_ssh_agent` indicates that a passphrase-protected SSH key is used. Enable the variable by uncommenting it. Then, use `ssh-add ~/.ssh/id_rsa` to add the SSH key to the authentication agent.
 
 6. Load the variables into the environment:
@@ -150,9 +150,9 @@ Consider both *updating* the version lists available to the provisioned instance
 ### Initialize and customize cloud instances with cloud-init
 {: #vpc-app-deploy-cloud_init}
 
-When provisioning a virtual server instance, you can specify a [cloud-init](https://cloudinit.readthedocs.io/en/latest/index.html){: external} script to be executed during the server initialization. Cloud-init is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances.
+When provisioning a virtual server instance, you can specify a [cloud-init](https://docs.cloud-init.io/en/latest/index.html){: external} script to be executed during the server initialization. Cloud-init is a multi-distribution package that handles early initialization of a cloud instance. It defines a collection of file formats to encode the initialization of cloud instances.
 
-In {{site.data.keyword.cloud_notm}}, the cloud-init file contents are provided in the `user-data` parameter at the time the server is provisioned. See [User-Data Formats](https://cloudinit.readthedocs.io/en/latest/explanation/format.html#user-data-formats){: external} for acceptable user-data content. If you need to debug script execution, cloud-init logs the output of the initialization script in `/var/log/cloud-init-output.log` on virtual server instances.
+In {{site.data.keyword.cloud_notm}}, the cloud-init file contents are provided in the `user-data` parameter at the time the server is provisioned. See [User-Data Formats](https://docs.cloud-init.io/en/latest/explanation/format/index.html#user-data-formats){: external} for acceptable user-data content. If you need to debug script execution, cloud-init logs the output of the initialization script in `/var/log/cloud-init-output.log` on virtual server instances.
 
 This tutorial uses a shell script named [install.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/install.sh){: external} as initialization script:
 
@@ -176,7 +176,7 @@ In this script, upgrading the installed software and installing `nginx` and othe
 
 The `curl` command accessing www.python.org demonstrates the attempt to access and potentially install software from the internet.
 
-Based on whether the host has internet connectivity, the script modifies the `index.html` page served by `nginx`. 
+Based on whether the host has internet connectivity, the script modifies the `index.html` page served by `nginx`.
 
 ### Upload from the filesystem and execute on the instance
 {: #vpc-app-deploy-scp-ssh}
@@ -321,7 +321,7 @@ In this definition:
 - **backend_pgw** controls whether the backend server has access to the public Internet. A public gateway can be connected to the backend subnet. The frontend has a floating IP assigned which provides both a public IP and gateway to the internet. This is going to allow open Internet access for software installation.  The backend will not have access to the Internet.
 - **frontend_user_data**, **backend_user_data** point to the cloud-init initialization scripts.
 
-With Terraform, all resources can have associated provisioners. The `null_resource` provisioner does not provision a cloud resource but can be used to copy files to server instances. This construct is used in the script to copy the [uploaded.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh){: external} file and then execute it as shown below. To connect to the servers, Terraform supports [using the bastion host](https://developer.hashicorp.com/terraform/language/resources/provisioners/connection#connecting-through-a-bastion-host-with-ssh){: external} as provisioned in the tutorial:
+With Terraform, all resources can have associated provisioners. The `null_resource` provisioner does not provision a cloud resource but can be used to copy files to server instances. This construct is used in the script to copy the [uploaded.sh](https://github.com/IBM-Cloud/vpc-tutorials/blob/master/vpc-app-deploy/shared/uploaded.sh){: external} file and then execute it as shown below. To connect to the servers, Terraform supports [using the bastion host](https://developer.hashicorp.com/terraform/language/provisioners#connecting-through-a-bastion-host-with-ssh){: external} as provisioned in the tutorial:
 
 ```terraform
    resource "null_resource" "copy_from_on_prem" {
@@ -430,7 +430,7 @@ Although Ansible could be used to provision the VPC resources and install softwa
 This section uses both Terraform and Ansible.
 
 1. Follow the instructions to [install Terraform and the {{site.data.keyword.Bluemix_notm}} Provider plug-in for Terraform](/docs/ibm-cloud-provider-for-terraform) on your workstation.
-1. Follow [these instructions](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html){: external} to install Ansible.
+1. Follow [these instructions](https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html){: external} to install Ansible.
 
 ### Ansible Playbook
 {: #vpc-app-deploy-21}
@@ -527,7 +527,7 @@ The directory `vpc-app-deploy/ansible/tf` contains a [Terraform configuration](h
      -i inventory lamp.yaml
    ```
    {: pre}
-   
+
 1. Provision software on the backend server:
    ```sh
    ansible-playbook -T 40 -l BACK_NIC_IP -u root \
@@ -595,5 +595,5 @@ Depending on the resource it might not be deleted immediately, but retained (by 
 
 - [Public frontend and private backend in a Virtual Private Cloud](/docs/solution-tutorials?topic=solution-tutorials-vpc-public-app-private-backend),
 - [Deploy a LAMP stack using Terraform](/docs/solution-tutorials?topic=solution-tutorials-lamp-stack-on-vpc)
-- [Learn about repeatable and reliable end-to-end app provisioning and configuration](https://developer.ibm.com/articles/application-deployment-with-redhat-ansible-and-ibm-cloud-schematics/){: external} 
+- [Learn about repeatable and reliable end-to-end app provisioning and configuration](https://developer.ibm.com/articles/application-deployment-with-redhat-ansible-and-ibm-cloud-schematics/){: external}
 - [Discover best-practice VPC configuration for application deployment](https://developer.ibm.com/articles/secure-vpc-access-with-a-bastion-host-and-terraform/){: external}
